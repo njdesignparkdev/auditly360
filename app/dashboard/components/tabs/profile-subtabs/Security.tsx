@@ -48,7 +48,7 @@ export default function Security({ userProfile }: SecurityProps) {
 
   return (
     <motion.div 
-      className="space-y-6 w-full lg:w-1/3"
+      className="space-y-6 w-full lg:max-w-1/2"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}

@@ -291,13 +291,13 @@ export default function AdminSupport({}: AdminSupportProps) {
       duration: 0.5,
       delay: 0.1
     }}>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row justify-between">
           <div>
             <h1 className="text-2xl font-bold text-black mb-2">Support Management</h1>
             <p className="text-gray-600">Monitor support tickets and team performance</p>
           </div>
           <div className="flex space-x-3">
-            <button onClick={loadTickets} className="bg-[#ff4b01] text-white px-4 py-2 rounded-lg hover:bg-[#e64401] transition-colors">
+            <button onClick={loadTickets} className="bg-[#ff4b01] max-w-fit md:max-w-none h-fit mt-4 md:mt-0 text-white px-4 py-2 rounded-lg hover:bg-[#e64401] transition-colors">
               Refresh
             </button>
             {/* <button className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">

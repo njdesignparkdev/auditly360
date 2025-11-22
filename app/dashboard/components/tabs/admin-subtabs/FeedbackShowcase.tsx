@@ -196,7 +196,7 @@ export default function FeedbackShowcase() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
           >
-            <div className={`grid gap-4 grid-cols-${1} sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`}>
+            <div className={`flex flex-row gap-4`}>
               {pageItems.map(item => (
                 <div key={item.id} className="rounded-xl border border-gray-200 bg-white p-5">
                   <div className="flex items-center gap-3 mb-3">

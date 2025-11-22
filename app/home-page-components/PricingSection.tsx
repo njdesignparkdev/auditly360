@@ -751,8 +751,8 @@ export default function PricingSection({
               : filteredPlans.length === 2
               ? "sm:grid-cols-2"
               : filteredPlans.length === 3
-              ? "sm:grid-cols-2 lg:grid-cols-3"
-              : "sm:grid-cols-2 lg:grid-cols-3"
+              ? "sm:grid-cols-2 xl:grid-cols-3"
+              : "sm:grid-cols-2 xl:grid-cols-3"
           }`}
         >
           {loadingPlans

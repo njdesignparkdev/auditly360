@@ -534,7 +534,7 @@ export default function AdminPlans({
       duration: 0.5,
       delay: 0.1
     }}>
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col md:flex-row  justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold text-black">Plans & Usage Management</h1>
             <p className="text-gray-600 mt-1">Manage subscription plans and their features</p>
@@ -542,7 +542,7 @@ export default function AdminPlans({
           <button onClick={() => {
           resetForm();
           setShowPlanForm(true);
-        }} className="bg-[#ff4b01] text-white px-4 py-2 rounded-lg hover:bg-[#e64401] transition-colors">
+        }} className="bg-[#ff4b01] text-white px-4 py-2 max-w-40 md:max-w-none h-fit mt-4 md:mt-0 rounded-lg hover:bg-[#e64401] transition-colors">
             Add Plan
           </button>
         </div>
@@ -618,9 +618,9 @@ export default function AdminPlans({
                     {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Duration
                     </th> */}
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Features
-                    </th>
+                    </th> */}
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Status
                     </th>
@@ -678,7 +678,7 @@ export default function AdminPlans({
                           </span> : <span className="text-gray-400 text-xs">Not configured</span>}
                       </div>
                     </td>
-                    <td className="px-6 py-4">
+                    {/* <td className="px-6 py-4">
                       <div className="text-sm text-gray-500">
                         {Array.isArray(plan.features) && plan.features.length > 0 ? (
                           <div className="space-y-1">
@@ -703,7 +703,7 @@ export default function AdminPlans({
                           <span className="text-gray-400">No features</span>
                         )}
                       </div>
-                    </td>
+                    </td> */}
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${plan.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                         {plan.is_active ? 'Active' : 'Inactive'}

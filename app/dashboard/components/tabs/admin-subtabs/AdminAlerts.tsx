@@ -291,7 +291,7 @@ export default function AdminAlerts({ }: AdminAlertsProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
       >
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row justify-between">
           <div>
             <h1 className="text-2xl font-bold text-black mb-2">Admin Alerts</h1>
             <p className="text-gray-600">Create and manage alerts for all users</p>
@@ -299,13 +299,13 @@ export default function AdminAlerts({ }: AdminAlertsProps) {
           <div className="flex space-x-3">
             <button 
               onClick={() => setShowCreateModal(true)}
-              className="bg-[#ff4b01] text-white px-4 py-2 rounded-lg hover:bg-[#e64401] transition-colors"
-            >
+              className="bg-[#ff4b01] max-w-fit md:max-w-none h-fit mt-4 md:mt-0 text-white px-4 py-2 rounded-lg hover:bg-[#e64401] transition-colors"
+            > 
               Create Alert
             </button>
             <button 
               onClick={fetchAlerts}
-              className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+              className="bg-gray-600 max-w-fit md:max-w-none h-fit mt-4 md:mt-0 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
             >
               Refresh
             </button>

@@ -201,8 +201,8 @@ export default function TicketCard({
             </div>
             <p className="text-gray-700 mb-3 line-clamp-2">{ticket.description}</p>
             <div className="flex items-center space-x-4 text-sm text-gray-600">
-              <span><i className="fas fa-calendar-plus mr-1"></i>Created: {formatDate(ticket.created_at)}</span>
-              <span><i className="fas fa-edit mr-1"></i>Updated: {formatDate(ticket.updated_at)}</span>
+              <span className="hidden xl:inline"><i className="fas fa-calendar-plus mr-1"></i>Created: {formatDate(ticket.created_at)}</span>
+              <span className="hidden xl:inline"><i className="fas fa-edit mr-1"></i>Updated: {formatDate(ticket.updated_at)}</span>
               <span><i className="fas fa-comments mr-1"></i>Messages: {messages.length}</span>
             </div>
           </div>
@@ -268,7 +268,7 @@ export default function TicketCard({
                             <i className={`fas ${message.is_from_support ? 'fa-user-tie' : 'fa-user'} text-xs mr-2 mt-1 ${message.is_from_support ? 'text-gray-600' : 'text-blue-100'}`}></i>
                             <div className="flex-1">
                               <p className="text-sm">{message.message}</p>
-                              <p className={`text-xs mt-1 ${message.is_from_support ? 'text-gray-600' : 'text-blue-100'}`}>
+                              <p className={`text-xs mt-1 hidden xl:block ${message.is_from_support ? 'text-gray-600' : 'text-blue-100'}`}>
                                 {formatDate(message.created_at)}
                               </p>
                             </div>

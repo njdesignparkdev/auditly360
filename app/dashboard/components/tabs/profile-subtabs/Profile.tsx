@@ -273,7 +273,7 @@ export default function Profile({
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-black">Personal Information</h2>
-                {!isEditing && <button onClick={() => setIsEditing(true)} className="bg-[#ff4b01] text-white px-4 py-2 rounded text-sm font-medium hover:bg-[#e64401] transition-colors">
+                {!isEditing && <button onClick={() => setIsEditing(true)} className="bg-[#ff4b01] whitespace-nowrap text-white px-4 py-2 rounded text-sm font-medium hover:bg-[#e64401] transition-colors">
                     Edit Profile
                   </button>}
               </div>

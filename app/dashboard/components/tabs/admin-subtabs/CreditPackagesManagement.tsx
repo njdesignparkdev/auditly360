@@ -163,7 +163,7 @@ export default function CreditPackagesManagement() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.7 }}
       >
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col md:flex-row  justify-between mb-6">
           <div>
             <h2 className="text-xl font-bold text-black">Credit Packages Management</h2>
             <p className="text-gray-600 mt-1">Manage credit pricing for image scans (1 credit = 1 scan)</p>
@@ -174,7 +174,7 @@ export default function CreditPackagesManagement() {
               setCreditPackageForm({ credits: '', price: '', label: '', sort_order: 0 });
               setShowCreditPackageForm(true);
             }}
-            className="bg-[#ff4b01] text-white px-4 py-2 rounded-lg hover:bg-[#e64401] transition-colors"
+            className="bg-[#ff4b01] max-w-fit md:max-w-none h-fit mt-4 md:mt-0 text-white px-4 py-2 rounded-lg hover:bg-[#e64401] transition-colors"
           >
             Add Credit Package
           </button>

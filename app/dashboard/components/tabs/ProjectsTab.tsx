@@ -212,7 +212,7 @@ export default function ProjectsTab({
     }} transition={{
       duration: 0.3,
       ease: "easeOut"
-    }} className="grid grid-cols-1 md:grid-cols-4 gap-6">
+    }} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         {projectsLoading ? Array.from({
         length: 4
       }).map((_, index) => <StatsCardSkeleton key={index} />) : <>
@@ -226,7 +226,7 @@ export default function ProjectsTab({
           duration: 0.3,
           delay: 0 * 0.1,
           ease: "easeOut"
-        }} className="bg-white border border-gray-200 rounded-lg p-6">
+        }} className="bg-white border border-gray-200 rounded-lg p-6 lg">
               <div className="flex items-center">
                 <div className="p-3 bg-[#ff4b01]/10 rounded-lg">
                   <svg className="w-6 h-6 text-[#ff4b01]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
