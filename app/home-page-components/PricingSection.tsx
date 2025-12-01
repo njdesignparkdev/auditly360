@@ -69,13 +69,13 @@ export default function PricingSection({
   // Helper function to convert features to new format (with backward compatibility)
   const convertFeaturesToNewFormat = useCallback((features: unknown): Array<{ heading: string; tools: string[] }> => {
     if (!Array.isArray(features)) return [];
-    
+
     return features.map((feature: unknown) => {
       // Check if it's already in new format
       if (feature && typeof feature === 'object' && 'heading' in feature && 'tools' in feature) {
         return feature as { heading: string; tools: string[] };
       }
-      
+
       // Handle string format - could be JSON string
       if (typeof feature === 'string') {
         const trimmed = feature.trim();
@@ -109,7 +109,7 @@ export default function PricingSection({
           tools: [feature]
         };
       }
-      
+
       // Convert from old format (backward compatibility)
       if (feature && typeof feature === 'object' && 'name' in feature) {
         const oldFeature = feature as { name?: string; description?: string; icon?: string };
@@ -118,7 +118,7 @@ export default function PricingSection({
           tools: oldFeature.description ? [oldFeature.description] : []
         };
       }
-      
+
       // Fallback
       return { heading: 'Features', tools: [] };
     }).filter((f) => f.heading && f.heading.trim() !== '');
@@ -204,11 +204,11 @@ export default function PricingSection({
                 plan.price === 0
                   ? "Free"
                   : plan.currency === "INR"
-                  ? `$${plan.price.toLocaleString("en-IN", {
+                    ? `$${plan.price.toLocaleString("en-IN", {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}`
-                  : `$${plan.price.toLocaleString("en-US", {
+                    : `$${plan.price.toLocaleString("en-US", {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}`,
@@ -216,24 +216,24 @@ export default function PricingSection({
                 plan.billing_cycle === "monthly"
                   ? "per month"
                   : plan.billing_cycle === "yearly"
-                  ? "per year"
-                  : "per " + plan.billing_cycle,
+                    ? "per year"
+                    : "per " + plan.billing_cycle,
               description: plan.description || "",
               features: plan.features ? convertFeaturesToNewFormat(plan.features) : [],
               cta:
                 plan.plan_type === "Starter"
                   ? "Get Started Free"
                   : plan.planStatus === "current"
-                  ? "Current Plan"
-                  : plan.planStatus === "billing_change"
-                  ? `Switch to ${plan.billing_cycle}`
-                  : plan.planStatus === "upgrade_downgrade"
-                  ? plan.amount >
-                    (plans.find((p) => p.plan_type === currentPlanType)
-                      ?.amount || 0)
-                    ? "Upgrade"
-                    : "Downgrade"
-                  : "Get Started Now",
+                    ? "Current Plan"
+                    : plan.planStatus === "billing_change"
+                      ? `Switch to ${plan.billing_cycle}`
+                      : plan.planStatus === "upgrade_downgrade"
+                        ? plan.amount >
+                          (plans.find((p) => p.plan_type === currentPlanType)
+                            ?.amount || 0)
+                          ? "Upgrade"
+                          : "Downgrade"
+                        : "Get Started Now",
               popular: plan.is_popular || false,
               color: plan.color || "gray",
               amount: plan.price,
@@ -428,8 +428,8 @@ export default function PricingSection({
         console.error("Order creation failed:", errorData);
         throw new Error(
           errorData.details ||
-            errorData.error ||
-            "Failed to create payment order"
+          errorData.error ||
+          "Failed to create payment order"
         );
       }
       const orderResponseData = await orderResponse.json();
@@ -545,8 +545,7 @@ export default function PricingSection({
                 Object.fromEntries(successResponse.headers.entries())
               );
               alert(
-                `Payment successful but plan update failed: ${
-                  errorData.error || "Unknown error"
+                `Payment successful but plan update failed: ${errorData.error || "Unknown error"
                 }. Please contact support.`
               );
             }
@@ -670,8 +669,8 @@ export default function PricingSection({
         console.error("Fallback payment also failed:", fallbackError);
         alert(
           "Payment failed: " +
-            (error as Error).message +
-            "\n\nPlease try again or contact support."
+          (error as Error).message +
+          "\n\nPlease try again or contact support."
         );
       }
     } finally {
@@ -702,33 +701,30 @@ export default function PricingSection({
                 <div className="relative inline-flex items-center bg-gray-100 rounded-full p-1 sm:p-1.5">
                   <button
                     onClick={() => setBillingCycle("monthly")}
-                    className={`relative px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm md:text-base font-medium transition-all duration-200 z-10 focus:outline-none ${
-                      billingCycle === "monthly"
+                    className={`relative px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm md:text-base font-medium transition-all duration-200 z-10 focus:outline-none cursor-pointer ${billingCycle === "monthly"
                         ? "text-black"
                         : "text-gray-500"
-                    }`}
+                      }`}
                   >
                     Monthly
                   </button>
 
                   <button
                     onClick={() => setBillingCycle("yearly")}
-                    className={`relative px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm md:text-base font-medium transition-all duration-200 z-10 focus:outline-none ${
-                      billingCycle === "yearly"
+                    className={`relative px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm md:text-base font-medium transition-all duration-200 z-10 focus:outline-none cursor-pointer ${billingCycle === "yearly"
                         ? "text-black"
                         : "text-gray-500"
-                    }`}
+                      }`}
                   >
                     Yearly
                   </button>
 
                   {/* Active Background Slider */}
                   <span
-                    className={`absolute top-1 sm:top-1.5 bottom-1 sm:bottom-1.5 rounded-full bg-white shadow-md transition-all duration-200 ${
-                      billingCycle === "yearly"
+                    className={`absolute top-1 sm:top-1.5 bottom-1 sm:bottom-1.5 rounded-full bg-white shadow-md transition-all duration-200 ${billingCycle === "yearly"
                         ? "left-1/2 right-1 sm:right-1.5"
                         : "left-1 sm:left-1.5 right-1/2"
-                    }`}
+                      }`}
                   />
                 </div>
 
@@ -745,268 +741,253 @@ export default function PricingSection({
         {/* Pricing Cards */}
 
         <div
-          className={`grid grid-cols-1 gap-4 sm:gap-6 max-w-7xl mx-auto ${
-            filteredPlans.length === 1
+          className={`grid grid-cols-1 gap-4 sm:gap-6 max-w-7xl mx-auto ${filteredPlans.length === 1
               ? "sm:max-w-md"
               : filteredPlans.length === 2
-              ? "sm:grid-cols-2"
-              : filteredPlans.length === 3
-              ? "sm:grid-cols-2 xl:grid-cols-3"
-              : "sm:grid-cols-2 xl:grid-cols-3"
-          }`}
+                ? "sm:grid-cols-2"
+                : filteredPlans.length === 3
+                  ? "sm:grid-cols-2 xl:grid-cols-3"
+                  : "sm:grid-cols-2 xl:grid-cols-3"
+            }`}
         >
           {loadingPlans
             ? // Loading skeleton
 
-              Array.from({
-                length: filteredPlans.length || 3,
-              }).map((_, index) => (
-                <div
-                  key={index}
-                  className="bg-red rounded-3xl p-2 animate-pulse"
-                >
-                  <div className="h-8 bg-gray-200 rounded mb-4"></div>
+            Array.from({
+              length: filteredPlans.length || 3,
+            }).map((_, index) => (
+              <div
+                key={index}
+                className="bg-red rounded-3xl p-2 animate-pulse"
+              >
+                <div className="h-8 bg-gray-200 rounded mb-4"></div>
 
-                  <div className="h-12 bg-gray-200 rounded mb-4"></div>
+                <div className="h-12 bg-gray-200 rounded mb-4"></div>
 
-                  <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                <div className="h-4 bg-gray-200 rounded mb-2"></div>
 
-                  <div className="h-4 bg-gray-200 rounded mb-8"></div>
+                <div className="h-4 bg-gray-200 rounded mb-8"></div>
 
-                  <div className="h-12 bg-gray-200 rounded"></div>
-                </div>
-              ))
+                <div className="h-12 bg-gray-200 rounded"></div>
+              </div>
+            ))
             : filteredPlans.map((plan, index) => (
-                <div
-                  key={plan.id || `${plan.name}_${plan.billing_cycle}_${index}`}
-                  className={`relative rounded-2xl sm:rounded-3xl p-3 sm:p-4 ${
-                    plan.popular && plan.billing_cycle === billingCycle
-                      ? "bg-black text-white sm:scale-105"
-                      : "bg-white text-black "
-                  } border-2 ${
-                    plan.popular && plan.billing_cycle === billingCycle
-                      ? "border-black"
-                      : "border-gray-200"
+              <div
+                key={plan.id || `${plan.name}_${plan.billing_cycle}_${index}`}
+                className={`relative rounded-2xl sm:rounded-3xl p-3 sm:p-4 ${plan.popular && plan.billing_cycle === billingCycle
+                    ? "bg-black text-white sm:scale-105"
+                    : "bg-white text-black "
+                  } border-2 ${plan.popular && plan.billing_cycle === billingCycle
+                    ? "border-black"
+                    : "border-gray-200"
                   }`}
-                >
-                  {/* Popular Badge */}
+              >
+                {/* Popular Badge */}
 
-                  {plan.popular && plan.billing_cycle === billingCycle && (
-                    <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2">
-                      <span className="bg-white text-black px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold">
-                        Most Popular
-                      </span>
-                    </div>
-                  )}
+                {plan.popular && plan.billing_cycle === billingCycle && (
+                  <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2">
+                    <span className="bg-white text-black px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold">
+                      Most Popular
+                    </span>
+                  </div>
+                )}
 
-                  {/* Current Plan Badge */}
-                  {plan.planStatus === "current" && (
-                    <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2">
-                      <span className="bg-gray-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold">
-                        Current Plan
-                      </span>
-                    </div>
-                  )}
+                {/* Current Plan Badge */}
+                {plan.planStatus === "current" && (
+                  <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2">
+                    <span className="bg-gray-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold">
+                      Current Plan
+                    </span>
+                  </div>
+                )}
 
-                  {/* Billing Change Badge */}
-                  {plan.planStatus === "billing_change" && (
-                    <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2">
-                      <span className="bg-gray-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold">
-                        Switch Billing
-                      </span>
-                    </div>
-                  )}
+                {/* Billing Change Badge */}
+                {plan.planStatus === "billing_change" && (
+                  <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2">
+                    <span className="bg-gray-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold">
+                      Switch Billing
+                    </span>
+                  </div>
+                )}
 
-                  {/* Upgrade/Downgrade Badge */}
-                  {plan.planStatus === "upgrade_downgrade" && (
-                    <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2">
-                      <span className={`bg-gray-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold`}>
-                        {plan.amount >
+                {/* Upgrade/Downgrade Badge */}
+                {plan.planStatus === "upgrade_downgrade" && (
+                  <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2">
+                    <span className={`bg-gray-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold`}>
+                      {plan.amount >
                         (plans.find((p) => p.plan_type === currentPlanType)
                           ?.amount || 0)
-                          ? "Upgrade"
-                          : "Downgrade"}
-                      </span>
-                    </div>
-                  )}
+                        ? "Upgrade"
+                        : "Downgrade"}
+                    </span>
+                  </div>
+                )}
 
-                  {/* Plan Header */}
+                {/* Plan Header */}
 
-                  <div className={`p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl mb-4 sm:mb-6 md:mb-8 ${
-                    plan.plan_type === "Growth" 
-                      ? "bg-[#ff4b01] text-white" 
-                      : "bg-[#F4F4F4] text-black"
+                <div className={`p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl mb-4 sm:mb-6 md:mb-8 ${plan.plan_type === "Growth"
+                    ? "bg-[#ff4b01] text-white"
+                    : "bg-[#F4F4F4] text-black"
                   }`}>
-                    <h3 className="text-xl sm:text-2xl font-bold mb-2">{plan.name}</h3>
-                    <div className="mb-3 sm:mb-4">
-                      <span className="text-3xl sm:text-4xl  font-bold">{plan.price}</span>
+                  <h3 className="text-xl sm:text-2xl font-bold mb-2">{plan.name}</h3>
+                  <div className="mb-3 sm:mb-4">
+                    <span className="text-3xl sm:text-4xl  font-bold">{plan.price}</span>
 
-                      {plan.plan_type !== "Starter" && (
-                        <span
-                          className={`text-base sm:text-lg ml-2 ${
-                            plan.popular && plan.billing_cycle === billingCycle
-                              ? "text-gray-300"
-                              : plan.plan_type === "Growth" 
-                              ? " text-white" 
+                    {plan.plan_type !== "Starter" && (
+                      <span
+                        className={`text-base sm:text-lg ml-2 ${plan.popular && plan.billing_cycle === billingCycle
+                            ? "text-gray-300"
+                            : plan.plan_type === "Growth"
+                              ? " text-white"
                               : " text-black"
                           }`}
-                        >
-                          {plan.period}
-                        </span>
-                      )}
-                    </div>
+                      >
+                        {plan.period}
+                      </span>
+                    )}
+                  </div>
 
-                    <p
-                      className={`text-xs sm:text-sm ${
-                        plan.popular && plan.billing_cycle === billingCycle
-                          ? "text-gray-300"
-                          : "text-gray-600"
+                  <p
+                    className={`text-xs sm:text-sm ${plan.popular && plan.billing_cycle === billingCycle
+                        ? "text-gray-300"
+                        : "text-gray-600"
                       }`}
-                    >
-                      {plan.description}
-                    </p>
-{/* CTA Button */}
+                  >
+                    {plan.description}
+                  </p>
+                  {/* CTA Button */}
 
-<button
+                  <button
                     onClick={() => handlePayment(plan)}
                     disabled={loading === plan.id || !plan.canPurchase}
-                    className={`w-full py-3 sm:py-4 mt-4 sm:mt-6 md:mt-8 rounded-lg text-sm sm:text-base font-semibold transition-all duration-300 ${
-                      plan.popular && plan.billing_cycle === billingCycle
+                    className={`w-full py-3 sm:py-4 mt-4 sm:mt-6 md:mt-8 rounded-lg text-sm sm:text-base font-semibold transition-all duration-300 ${plan.popular && plan.billing_cycle === billingCycle
                         ? plan.plan_type === "Growth"
                           ? "bg-white text-black hover:bg-[#ff4b01] hover:text-white disabled:bg-gray-300 cursor-pointer"
                           : "bg-white text-black hover:bg-gray-100 disabled:bg-gray-300 cursor-pointer"
                         : plan.planStatus === "current"
-                        ? "bg-gray-500 text-white cursor-not-allowed"
-                        : plan.plan_type === "Growth"
-                        ? "bg-white border-[#ff4b01] border text-black  disabled:bg-gray-500 cursor-pointer"
-                        : "bg-white border-[#ff4b01] border text-black hover:bg-[#ff4b01] hover:text-white disabled:bg-gray-500 cursor-pointer"
-                    }`}
+                          ? "bg-gray-500 text-white cursor-not-allowed"
+                          : plan.plan_type === "Growth"
+                            ? "bg-white border-[#ff4b01] border text-black  disabled:bg-gray-500 cursor-pointer"
+                            : "bg-white border-[#ff4b01] border text-black hover:bg-[#ff4b01] hover:text-white disabled:bg-gray-500 cursor-pointer"
+                      }`}
                   >
                     {loading === plan.id ? "Processing..." : plan.cta}
                   </button>
 
-                  </div>
+                </div>
 
-                  {/* Features List with Togglable Headings and Tools */}
+                {/* Features List with Togglable Headings and Tools */}
 
-                  <div className="space-y-4 sm:space-y-5 mb-4 sm:mb-6 md:mb-8">
-                    {plan.features && Array.isArray(plan.features) && plan.features.length > 0 ? (
-                      (plan.features as unknown as Array<{ heading: string; tools: string[] }>).map(
-                        (featureGroup: { heading: string; tools: string[] }, headingIndex: number) => {
-                          const hasTools = featureGroup.tools && Array.isArray(featureGroup.tools) && featureGroup.tools.length > 0;
-                          // Default to expanded (true) if not set
-                          const isExpanded = expandedHeadings[plan.id]?.[headingIndex] ?? true;
-                          
-                          return (
-                            <div key={headingIndex} className="space-y-2">
-                              {/* Heading - Clickable if has tools */}
-                              <button
-                                onClick={() => hasTools && toggleHeading(plan.id, headingIndex)}
-                                disabled={!hasTools}
-                                className={`w-full flex items-center justify-between text-left ${
-                                  hasTools ? 'cursor-pointer hover:opacity-80' : 'cursor-default'
+                <div className="space-y-4 sm:space-y-5 mb-4 sm:mb-6 md:mb-8">
+                  {plan.features && Array.isArray(plan.features) && plan.features.length > 0 ? (
+                    (plan.features as unknown as Array<{ heading: string; tools: string[] }>).map(
+                      (featureGroup: { heading: string; tools: string[] }, headingIndex: number) => {
+                        const hasTools = featureGroup.tools && Array.isArray(featureGroup.tools) && featureGroup.tools.length > 0;
+                        // Default to expanded (true) if not set
+                        const isExpanded = expandedHeadings[plan.id]?.[headingIndex] ?? true;
+
+                        return (
+                          <div key={headingIndex} className="space-y-2">
+                            {/* Heading - Clickable if has tools */}
+                            <button
+                              onClick={() => hasTools && toggleHeading(plan.id, headingIndex)}
+                              disabled={!hasTools}
+                              className={`w-full flex items-center justify-between text-left ${hasTools ? 'cursor-pointer hover:opacity-80' : 'cursor-default'
                                 }`}
-                              >
-                                <div className="flex items-start flex-1">
-                                  <span
-                                    className={`text-base sm:text-lg mr-2 sm:mr-3 flex-shrink-0 mt-0.5 ${
-                                      plan.popular &&
+                            >
+                              <div className="flex items-start flex-1">
+                                <span
+                                  className={`text-base sm:text-lg mr-2 sm:mr-3 flex-shrink-0 mt-0.5 ${plan.popular &&
                                       plan.billing_cycle === billingCycle
-                                        ? "text-white"
-                                        : "text-black"
+                                      ? "text-white"
+                                      : "text-black"
                                     }`}
-                                  >
-                                    ✓
-                                  </span>
-                                  <span
-                                    className={`text-sm sm:text-base  ${
-                                      plan.popular &&
+                                >
+                                  ✓
+                                </span>
+                                <span
+                                  className={`text-sm sm:text-base  ${plan.popular &&
                                       plan.billing_cycle === billingCycle
-                                        ? "text-white"
-                                        : "text-black"
+                                      ? "text-white"
+                                      : "text-black"
                                     }`}
-                                  >
-                                    {featureGroup.heading}
-                                  </span>
-                                </div>
-                                {hasTools && (
-                                  <span
-                                    className={`ml-2 text-sm flex-shrink-0 transition-transform duration-200 ${
-                                      isExpanded ? 'rotate-180' : ''
-                                    } ${
-                                      plan.popular &&
+                                >
+                                  {featureGroup.heading}
+                                </span>
+                              </div>
+                              {hasTools && (
+                                <span
+                                  className={`ml-2 text-sm flex-shrink-0 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''
+                                    } ${plan.popular &&
                                       plan.billing_cycle === billingCycle
-                                        ? "text-white"
-                                        : "text-gray-500"
+                                      ? "text-white"
+                                      : "text-gray-500"
                                     }`}
-                                  >
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                  </span>
-                                )}
-                              </button>
-
-                              {/* Tools List - Show when expanded (default expanded) */}
-                              {hasTools && isExpanded && (
-                                <div className="ml-6 sm:ml-8 space-y-1.5">
-                                  {featureGroup.tools.map((tool: string, toolIndex: number) => (
-                                    <div key={toolIndex} className="flex items-start">
-                                      <span
-                                        className={`text-xs sm:text-sm mr-2 flex-shrink-0 mt-0.5 ${
-                                          plan.popular &&
-                                          plan.billing_cycle === billingCycle
-                                            ? "text-gray-400"
-                                            : "text-gray-500"
-                                        }`}
-                                      >
-                                        •
-                                      </span>
-                                      <span
-                                        className={`text-xs sm:text-sm ${
-                                          plan.popular &&
-                                          plan.billing_cycle === billingCycle
-                                            ? "text-gray-300"
-                                            : "text-gray-600"
-                                        }`}
-                                      >
-                                        {tool}
-                                      </span>
-                                    </div>
-                                  ))}
-                                </div>
+                                >
+                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                  </svg>
+                                </span>
                               )}
-                            </div>
-                          );
-                        }
-                      )
-                    ) : (
-                      <p
-                        className={`text-xs sm:text-sm ${
-                          plan.popular &&
+                            </button>
+
+                            {/* Tools List - Show when expanded (default expanded) */}
+                            {hasTools && isExpanded && (
+                              <div className="ml-6 sm:ml-8 space-y-1.5">
+                                {featureGroup.tools.map((tool: string, toolIndex: number) => (
+                                  <div key={toolIndex} className="flex items-start">
+                                    <span
+                                      className={`text-xs sm:text-sm mr-2 flex-shrink-0 mt-0.5 ${plan.popular &&
+                                          plan.billing_cycle === billingCycle
+                                          ? "text-gray-400"
+                                          : "text-gray-500"
+                                        }`}
+                                    >
+                                      •
+                                    </span>
+                                    <span
+                                      className={`text-xs sm:text-sm ${plan.popular &&
+                                          plan.billing_cycle === billingCycle
+                                          ? "text-gray-300"
+                                          : "text-gray-600"
+                                        }`}
+                                    >
+                                      {tool}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      }
+                    )
+                  ) : (
+                    <p
+                      className={`text-xs sm:text-sm ${plan.popular &&
                           plan.billing_cycle === billingCycle
-                            ? "text-gray-300"
-                            : "text-gray-600"
+                          ? "text-gray-300"
+                          : "text-gray-600"
                         }`}
-                      >
-                        No features listed
-                      </p>
-                    )}
-                  </div>
-
-                  
-
-                  {/* Payment Success Message */}
-
-                  {paymentSuccess && plan.plan_type !== "Starter" && (
-                    <div className="mt-4 p-2 sm:p-3 bg-green-50 border border-green-200 rounded-lg">
-                      <p className="text-green-800 text-xs sm:text-sm text-center">
-                        ✅ Payment successful! ID: {paymentSuccess}
-                      </p>
-                    </div>
+                    >
+                      No features listed
+                    </p>
                   )}
                 </div>
-              ))}
+
+
+
+                {/* Payment Success Message */}
+
+                {paymentSuccess && plan.plan_type !== "Starter" && (
+                  <div className="mt-4 p-2 sm:p-3 bg-green-50 border border-green-200 rounded-lg">
+                    <p className="text-green-800 text-xs sm:text-sm text-center">
+                      ✅ Payment successful! ID: {paymentSuccess}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ))}
         </div>
       </div>
     </section>

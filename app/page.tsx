@@ -12,39 +12,39 @@ import Testimonials from './home-page-components/Testimonials'
 import Footer from './home-page-components/Footer'
 
 
-
+// raul 
 export default function Page() {
-   const [IsComingSoonTrue, setIsComingSoonTrue] = useState(true)
+  const [IsComingSoonTrue, setIsComingSoonTrue] = useState(true)
 
-   useEffect(() => {
+  useEffect(() => {
     process.env.NEXT_PUBLIC_COMING_SOON_MODE === 'true' ? setIsComingSoonTrue(true) : setIsComingSoonTrue(false)
-   },[])
+  }, [])
 
   return (
     IsComingSoonTrue ? <CommingSoon /> : (
-    <div className='overflow-x-hidden'>
-      {/* <CommingSoon  now /> */}
-      <Navbar />
-      <section id="home">
-        <HeroSection />
-      </section>
-      <section id="features">
-        <WhyChooseUsSection />
-      </section>
-      <PricingSection />
-      <section id="replace-tools">
-        <ReplaceTools />
-      </section>
-      <section id="how-it-works">
-        <Steps />
-      </section>
-      <section id="testimonials">
-        <Testimonials />
-      </section>
-      <section id="contact">
-        <Footer />
-      </section>
-    </div>
+      <div className='overflow-x-hidden'>
+        {/* <CommingSoon  now /> */}
+        <Navbar />
+        <section id="home">
+          <HeroSection />
+        </section>
+        <section id="features">
+          <WhyChooseUsSection />
+        </section>
+        <PricingSection />
+        <section id="replace-tools">
+          <ReplaceTools />
+        </section>
+        <section id="how-it-works">
+          <Steps />
+        </section>
+        <section id="testimonials">
+          <Testimonials />
+        </section>
+        <section id="contact">
+          <Footer />
+        </section>
+      </div>
 
     )
   )

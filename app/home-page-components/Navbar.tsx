@@ -42,7 +42,7 @@ export default function Navbar() {
       name: 'Testimonials',
       href: '#testimonials'
     },
-    
+
   ]
 
   useEffect(() => {
@@ -197,15 +197,14 @@ export default function Navbar() {
           }
         }
       `}</style>
-      <div 
-        className={`max-w-[90rem] mx-auto flex justify-between items-center fixed top-0 left-0 right-0 z-[100] mt-2 sm:mt-4 md:mt-8 px-3 sm:px-4 md:px-6 lg:px-8 transition-all duration-500 ease-in-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'
-        }`}
+      <div
+        className={`max-w-[90rem] mx-auto flex justify-between items-center fixed top-0 left-0 right-0 z-[100] mt-2 sm:mt-4 md:mt-8 px-3 sm:px-4 md:px-6 lg:px-8 transition-all duration-500 ease-in-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'
+          }`}
       >
         {/* Logo */}
-        <Link 
-          href="/#home" 
-          onClick={(e) => handleSmoothScroll(e, '/#home')} 
+        <Link
+          href="/#home"
+          onClick={(e) => handleSmoothScroll(e, '/#home')}
           className="relative z-[101] cursor-pointer "
         >
           <span className="relative inline-block">
@@ -224,9 +223,9 @@ export default function Navbar() {
         {/* Desktop Navigation - Hidden on mobile */}
         <div className={`hidden md:flex items-center justify-between py-2 md:py-3 px-4 md:px-8 lg:px-12 ${navbarClasses} gap-4 lg:gap-8 xl:gap-12 rounded-xl md:rounded-2xl transition-all duration-300 hover:shadow-lg`}>
           {items.map((item) => (
-            <Link 
-              href={item.href} 
-              key={item.name} 
+            <Link
+              href={item.href}
+              key={item.name}
               onClick={(e) => handleSmoothScroll(e, item.href)}
               className={` relative text-xs md:text-sm lg:text-base font-medium ${textClasses} transition-all duration-300 cursor-pointer whitespace-nowrap py-1 overflow-hidden`}
             >
@@ -242,7 +241,7 @@ export default function Navbar() {
           {!loading && authChecked && (
             <>
               {isLoggedIn ? (
-                <Link 
+                <Link
                   href="/dashboard"
                   className={`${buttonClasses} px-4 md:px-6 lg:px-8 py-2 md:py-2.5 lg:py-3 rounded-xl md:rounded-2xl cursor-pointer transition-all duration-300 whitespace-nowrap text-sm md:text-base relative overflow-hidden group hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl`}
                 >
@@ -250,7 +249,7 @@ export default function Navbar() {
                   <span className="relative z-10 font-semibold">Dashboard</span>
                 </Link>
               ) : (
-                <Link 
+                <Link
                   href="/signup"
                   className={`${buttonClasses} px-4 md:px-6 lg:px-8 py-2 md:py-2.5 lg:py-3 rounded-xl md:rounded-2xl cursor-pointer transition-all duration-300 whitespace-nowrap text-sm md:text-base relative overflow-hidden group hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl`}
                 >
@@ -265,11 +264,10 @@ export default function Navbar() {
         {/* Mobile Hamburger Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className={`md:hidden z-[101] p-2 rounded-lg transition-all duration-300 hover:scale-110 active:scale-95 ${
-            isHeroSection 
-              ? 'text-white hover:bg-white/10' 
+          className={`md:hidden z-[101] p-2 rounded-lg transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer ${isHeroSection
+              ? 'text-white hover:bg-white/10'
               : 'text-gray-800 hover:bg-gray-100'
-          }`}
+            }`}
           aria-label="Toggle menu"
         >
           <div className="relative w-6 h-6">
@@ -282,27 +280,25 @@ export default function Navbar() {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 bg-black/50 z-[99] md:hidden transition-opacity duration-300 ${
-          isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 bg-black/50 z-[99] md:hidden transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
         onClick={() => setIsMobileMenuOpen(false)}
       />
 
       {/* Mobile Menu - Simple Sidebar */}
       <div
-        className={`fixed top-0 right-0 h-full w-[280px] sm:w-[300px] bg-white z-[100] md:hidden transform transition-transform duration-300 ease-out shadow-xl ${
-          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed top-0 right-0 h-full w-[280px] sm:w-[300px] bg-white z-[100] md:hidden transform transition-transform duration-300 ease-out shadow-xl ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
       >
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-gray-200/50">
-            <Link 
-              href="#home" 
+            <Link
+              href="#home"
               onClick={(e) => {
                 handleSmoothScroll(e, '#home');
                 setIsMobileMenuOpen(false);
-              }} 
+              }}
               className="relative"
             >
               <Image
@@ -314,10 +310,10 @@ export default function Navbar() {
                 priority
               />
             </Link>
-            
+
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="p-2 rounded-lg transition-colors duration-200 text-gray-800 hover:bg-gray-100"
+              className="p-2 rounded-lg transition-colors duration-200 text-gray-800 hover:bg-gray-100 cursor-pointer"
               aria-label="Close menu"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -329,11 +325,11 @@ export default function Navbar() {
           {/* Menu Items */}
           <nav className="flex-1 py-4 overflow-y-auto">
             {items.map((item) => (
-              <Link 
-                href={item.href} 
-                key={item.name} 
+              <Link
+                href={item.href}
+                key={item.name}
                 onClick={(e) => handleSmoothScroll(e, item.href)}
-                className="relative block px-6 py-3 text-gray-800 hover:text-[#ff4b01] transition-all duration-200 overflow-hidden"
+                className="relative block px-6 py-3 text-gray-800 hover:text-[#ff4b01] transition-all duration-200 overflow-hidden cursor-pointer"
               >
                 <span className="relative z-10">{item.name}</span>
                 <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-[#ff4b01] transition-all duration-300 group-hover:w-full"></span>
@@ -347,18 +343,18 @@ export default function Navbar() {
             {!loading && authChecked && (
               <>
                 {isLoggedIn ? (
-                  <Link 
+                  <Link
                     href="/dashboard"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="bg-[#ff4b01] border border-[#ff4b01] text-white hover:bg-[#e64401] block w-full px-6 py-3 rounded-lg text-base font-medium text-center transition-colors duration-200"
+                    className="bg-[#ff4b01] border border-[#ff4b01] text-white hover:bg-[#e64401] block w-full px-6 py-3 rounded-lg text-base font-medium text-center transition-colors duration-200 cursor-pointer"
                   >
                     Dashboard
                   </Link>
                 ) : (
-                  <Link 
+                  <Link
                     href="/signup"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="bg-[#ff4b01] border border-[#ff4b01] text-white hover:bg-[#e64401] block w-full px-6 py-3 rounded-lg text-base font-medium text-center transition-colors duration-200"
+                    className="bg-[#ff4b01] border border-[#ff4b01] text-white hover:bg-[#e64401] block w-full px-6 py-3 rounded-lg text-base font-medium text-center transition-colors duration-200 cursor-pointer"
                   >
                     Get Started
                   </Link>

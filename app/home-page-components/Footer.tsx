@@ -33,7 +33,7 @@ const navColumns: NavColumn[] = [
     links: [
       { label: "Privacy", href: "/privacy" },
       { label: "Terms", href: "/terms" },
-      
+
     ],
   },
   // {
@@ -48,7 +48,7 @@ const navColumns: NavColumn[] = [
 
 export default function Footer() {
   const { isAuthenticated } = useAuth();
-  
+
   return (
     <footer className="bg-black text-white">
       <div className="max-w-[90rem] mx-auto px-4 md:px-8 lg:px-12 py-12 md:py-16 lg:py-20">
@@ -63,7 +63,7 @@ export default function Footer() {
             </p>
           </div>
           <div className="flex-shrink-0">
-            <Link 
+            <Link
               href={isAuthenticated ? '/dashboard' : '/login'}
               className="bg-white text-black font-semibold px-6 md:px-8 py-3 md:py-3.5 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors duration-200 whitespace-nowrap inline-block cursor-pointer"
             >
@@ -100,7 +100,7 @@ export default function Footer() {
                       <li key={linkIndex}>
                         <Link
                           href={link.href}
-                          className="text-sm md:text-base text-gray-300 hover:text-white transition-colors duration-200"
+                          className="text-sm md:text-base text-gray-300 hover:text-white transition-colors duration-200 cursor-pointer"
                         >
                           {link.label}
                         </Link>
@@ -127,7 +127,7 @@ export default function Footer() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition-colors duration-200"
+                className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
                 aria-label="Twitter"
               >
                 <svg
@@ -145,7 +145,7 @@ export default function Footer() {
                 href="https://telegram.org"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition-colors duration-200"
+                className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
                 aria-label="Telegram"
               >
                 <svg
@@ -163,7 +163,7 @@ export default function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition-colors duration-200"
+                className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
                 aria-label="Instagram"
               >
                 <svg
@@ -180,8 +180,8 @@ export default function Footer() {
 
           {/* Action Buttons */}
           <div className="flex items-center gap-3 md:gap-4">
-            
-            <Link 
+
+            <Link
               href="/contact"
               className="bg-white text-black font-semibold px-5 md:px-6 py-2.5 md:py-3 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors duration-200 whitespace-nowrap inline-block cursor-pointer"
             >
