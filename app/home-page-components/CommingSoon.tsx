@@ -1,6 +1,6 @@
 "use client";
 
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase-client";
 
 export default function CommingSoon() {
@@ -173,145 +173,144 @@ export default function CommingSoon() {
                 Coming soon
               </span>
             </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            Complete Website Audit & Analysis Platform
-          </h1>
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+              Complete Website Audit & Analysis Platform
+            </h1>
 
-          {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl">
-            Get comprehensive website audits in minutes. Analyze SEO,
-            performance, security, content, and branding with actionable
-            insights to improve your site's quality, speed, and visibility.
-          </p>
+            {/* Subtitle */}
+            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl">
+              Get comprehensive website audits in minutes. Analyze SEO,
+              performance, security, content, and branding with actionable
+              insights to improve your site's quality, speed, and visibility.
+            </p>
 
-          {/* Email Signup Form */}
-          <div className="w-full max-w-md mb-12">
-            {/* Success/Error Message */}
-            {message && (
-              <div
-                className={`mb-4 p-4 rounded-lg ${
-                  messageType === "success"
-                    ? "bg-green-50 border border-green-200 text-green-800"
-                    : "bg-red-50 border border-red-200 text-red-800"
-                }`}
-              >
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    {messageType === "success" ? (
-                      <svg
-                        className="h-5 w-5 text-green-400"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        className="h-5 w-5 text-red-400"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    )}
-                  </div>
-                  <div className="ml-3">
-                    <p className="text-sm font-medium">{message}</p>
+            {/* Email Signup Form */}
+            <div className="w-full max-w-md mb-12">
+              {/* Success/Error Message */}
+              {message && (
+                <div
+                  className={`mb-4 p-4 rounded-lg ${messageType === "success"
+                      ? "bg-green-50 border border-green-200 text-green-800"
+                      : "bg-red-50 border border-red-200 text-red-800"
+                    }`}
+                >
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0">
+                      {messageType === "success" ? (
+                        <svg
+                          className="h-5 w-5 text-green-400"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          className="h-5 w-5 text-red-400"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      )}
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm font-medium">{message}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col sm:flex-row gap-3"
-            >
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
-                required
-                disabled={isLoading}
-              />
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed transition-colors duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col sm:flex-row gap-3"
               >
-                {isLoading ? (
-                  <div className="flex items-center justify-center">
-                    <svg
-                      className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    Subscribing...
-                  </div>
-                ) : (
-                  "Notify Me"
-                )}
-              </button>
-            </form>
-          </div>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                  required
+                  disabled={isLoading}
+                />
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed transition-colors duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer"
+                >
+                  {isLoading ? (
+                    <div className="flex items-center justify-center">
+                      <svg
+                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Subscribing...
+                    </div>
+                  ) : (
+                    "Notify Me"
+                  )}
+                </button>
+              </form>
+            </div>
 
-          {/* Features Preview */}
-          <section className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mb-12">
-            <article className="bg-white/50 backdrop-blur-sm rounded-lg p-6 border border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900 mb-2">
-                SEO Analysis
-              </h2>
-              <p className="text-gray-600 text-sm">
-                Complete SEO audit including meta tags, headings, content
-                structure, and Google tags analysis for better search engine
-                visibility.
-              </p>
-            </article>
+            {/* Features Preview */}
+            <section className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mb-12">
+              <article className="bg-white/50 backdrop-blur-sm rounded-lg p-6 border border-gray-200">
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                  SEO Analysis
+                </h2>
+                <p className="text-gray-600 text-sm">
+                  Complete SEO audit including meta tags, headings, content
+                  structure, and Google tags analysis for better search engine
+                  visibility.
+                </p>
+              </article>
 
-            <article className="bg-white/50 backdrop-blur-sm rounded-lg p-6 border border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900 mb-2">
-                Performance Audit
-              </h2>
-              <p className="text-gray-600 text-sm">
-                Comprehensive performance analysis including Core Web Vitals,
-                image optimization, and site speed recommendations.
-              </p>
-            </article>
+              <article className="bg-white/50 backdrop-blur-sm rounded-lg p-6 border border-gray-200">
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                  Performance Audit
+                </h2>
+                <p className="text-gray-600 text-sm">
+                  Comprehensive performance analysis including Core Web Vitals,
+                  image optimization, and site speed recommendations.
+                </p>
+              </article>
 
-            <article className="bg-white/50 backdrop-blur-sm rounded-lg p-6 border border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900 mb-2">
-                Security Assessment
-              </h2>
-              <p className="text-gray-600 text-sm">
-                Identify security risks, exposed API keys, broken links, and
-                vulnerabilities to protect your website and users.
-              </p>
-            </article>
-          </section>
+              <article className="bg-white/50 backdrop-blur-sm rounded-lg p-6 border border-gray-200">
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                  Security Assessment
+                </h2>
+                <p className="text-gray-600 text-sm">
+                  Identify security risks, exposed API keys, broken links, and
+                  vulnerabilities to protect your website and users.
+                </p>
+              </article>
+            </section>
           </div>
         </div>
         {/* Additional Features */}
