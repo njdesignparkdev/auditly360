@@ -959,8 +959,8 @@ export default function UIQualityTab({ page }: UIQualityTabProps) {
             <div className="bg-white rounded-xl border border-gray-200 p-8">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-6">
                 <div className="flex-1">
-                  <h2 className="text-3xl font-bold text-gray-900 mb-2">AI-Powered Page Analysis</h2>
-                  <p className="text-lg text-gray-600 leading-relaxed">{primaryAnalysis.summary || imageAnalysis.summary}</p>
+                  <h2 className="text-xl font-bold text-gray-900 mb-2">AI-Powered Page Analysis</h2>
+                  <p className="text-md text-gray-600 leading-relaxed">{primaryAnalysis.summary || imageAnalysis.summary}</p>
                 </div>
                 <div className="text-center md:text-right">
                   <div className="text-6xl font-bold text-[#ff4b01] mb-1">{imageAnalysis.overall_score}</div>
