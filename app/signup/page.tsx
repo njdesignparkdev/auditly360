@@ -52,7 +52,7 @@ export default function SignupPage() {
 
     try {
       const { error, message } = await signUp(email, password, firstName, lastName);
-      
+
       if (error) {
         setError(error.message || "An error occurred during signup");
       } else {
@@ -65,7 +65,7 @@ export default function SignupPage() {
         setPassword("");
         setRepeatPassword("");
         setAgreeToTerms(false);
-        
+
         // Redirect to login page with confirmation message after a short delay
         setTimeout(() => {
           router.push('/login?message=Please check your email and click the confirmation link to complete your registration.');
@@ -86,7 +86,7 @@ export default function SignupPage() {
 
     setIsLoading(true);
     setError("");
-    
+
     try {
       const { error } = await resendConfirmation(email);
       if (error) {
@@ -108,7 +108,7 @@ export default function SignupPage() {
 
     try {
       const { error } = await signInWithGoogle();
-      
+
       if (error) {
         setError(error.message || "Google sign-up failed");
         setIsLoading(false);
@@ -125,7 +125,7 @@ export default function SignupPage() {
     <div className="h-screen w-screen bg-white flex items-center justify-center">
       <div className="w-full h-full flex flex-col lg:flex-row">
         {/* Left Section - Branding */}
-        <div 
+        <div
           className="hidden lg:flex lg:w-1/2 flex-col justify-between p-16"
           style={{
             background: 'linear-gradient(135deg, rgba(255, 75, 1, 0.12) 0%, rgba(255, 75, 1, 0.2) 50%, rgba(255, 255, 255, 0.9) 100%)'
@@ -157,9 +157,9 @@ export default function SignupPage() {
 
           {/* Back to website */}
           <div>
-            <Link 
+            <Link
               href="/"
-              className="inline-flex items-center text-gray-700 hover:text-gray-900 transition-colors text-sm"
+              className="inline-flex items-center text-gray-700 hover:text-gray-900 transition-colors text-sm cursor-pointer"
             >
               ← Back to website
             </Link>
@@ -172,9 +172,9 @@ export default function SignupPage() {
             {/* Mobile Header */}
             <div className="lg:hidden mb-6 w-full">
               <div className="flex items-center justify-between mb-6">
-                <Link 
+                <Link
                   href="/"
-                  className="text-gray-700 hover:text-gray-900 transition-colors text-sm"
+                  className="text-gray-700 hover:text-gray-900 transition-colors text-sm cursor-pointer"
                 >
                   ← Back
                 </Link>
@@ -196,7 +196,7 @@ export default function SignupPage() {
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Create an account</h1>
               <p className="text-gray-600 text-sm sm:text-base">
                 Already have an account?{' '}
-                <Link href="/login" style={{ color: '#FF4B01' }} className="hover:opacity-80 transition-opacity font-medium">
+                <Link href="/login" style={{ color: '#FF4B01' }} className="hover:opacity-80 transition-opacity font-medium cursor-pointer">
                   Log in
                 </Link>
               </p>
@@ -228,7 +228,7 @@ export default function SignupPage() {
                       onClick={handleResendConfirmation}
                       disabled={isLoading}
                       style={{ color: '#FF4B01' }}
-                      className="text-sm font-medium hover:opacity-80 transition-opacity disabled:opacity-50"
+                      className="text-sm font-medium hover:opacity-80 transition-opacity disabled:opacity-50 cursor-pointer"
                     >
                       {isLoading ? 'Sending...' : 'Resend confirmation email'}
                     </button>
@@ -310,7 +310,7 @@ export default function SignupPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors cursor-pointer"
                   >
                     {showPassword ? (
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -345,7 +345,7 @@ export default function SignupPage() {
                   <button
                     type="button"
                     onClick={() => setShowRepeatPassword(!showRepeatPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors cursor-pointer"
                   >
                     {showRepeatPassword ? (
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -368,13 +368,13 @@ export default function SignupPage() {
                   id="agreeToTerms"
                   checked={agreeToTerms}
                   onChange={(e) => setAgreeToTerms(e.target.checked)}
-                  className="w-4 h-4 bg-white border-gray-300 rounded focus:ring-2 focus:ring-[#FF4B01] mt-1"
+                  className="w-4 h-4 bg-white border-gray-300 rounded focus:ring-2 focus:ring-[#FF4B01] mt-1 cursor-pointer"
                   style={{ accentColor: '#FF4B01' }}
                   required
                 />
                 <label htmlFor="agreeToTerms" className="ml-2 text-sm text-gray-700">
                   I agree to the{' '}
-                  <Link href="#" style={{ color: '#FF4B01' }} className="hover:opacity-80 transition-opacity font-medium">
+                  <Link href="#" style={{ color: '#FF4B01' }} className="hover:opacity-80 transition-opacity font-medium cursor-pointer">
                     Terms & Conditions
                   </Link>
                 </label>
@@ -386,7 +386,7 @@ export default function SignupPage() {
                 whileTap={{ scale: isLoading ? 1 : 0.99 }}
                 type="submit"
                 disabled={isLoading}
-                className="w-full text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF4B01] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="w-full text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF4B01] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
                 style={{ backgroundColor: '#FF4B01' }}
               >
                 {isLoading ? (
@@ -417,7 +417,7 @@ export default function SignupPage() {
                 type="button"
                 onClick={handleGoogleSignUp}
                 disabled={isLoading}
-                className="w-full flex items-center justify-center px-6 py-3 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center px-6 py-3 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
                 {isLoading ? (
                   <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
