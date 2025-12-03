@@ -100,7 +100,7 @@ export default function ModernLoader({
 
           {/* Current Step */}
           <div className="mb-6">
-            <div className="text-4xl mb-2 text-blue-600">
+            <div className="text-4xl mb-2 text-orange-500">
               <i className={steps[currentStep].icon}></i>
             </div>
             <div className="text-lg font-semibold text-gray-900 mb-1">
@@ -119,7 +119,7 @@ export default function ModernLoader({
             {[0, 1, 2].map((i) => (
               <div
                 key={i}
-                className="w-2 h-2 rounded-full bg-blue-600 animate-pulse"
+                className="w-2 h-2 rounded-full bg-orange-500 animate-pulse"
                 style={{
                   animationDelay: `${i * 0.2}s`,
                   animationDuration: '1s'
