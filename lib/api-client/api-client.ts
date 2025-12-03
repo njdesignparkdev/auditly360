@@ -1,6 +1,55 @@
 /**
  * Screenshot API Client
- * A reusable client for making authenticated requests to the screenshot API
+ * 
+ * A production-ready TypeScript client for making authenticated requests to the Screenshot API.
+ * 
+ * ## Authentication Flow
+ * 
+ * This client implements API key authentication that aligns with the server-side implementation
+ * in `/api/screenshot/route.ts`:
+ * 
+ * 1. **Client** → Sends request with `X-API-Key` header (default)
+ * 2. **Server** (`/api/screenshot`) → Validates key matches `SCREENSHOT_API_KEY` env var
+ * 3. **Server** → Forwards to external screenshot service with its own API key
+ * 4. **Response** → Returns screenshot data to client
+ * 
+ * ## Security
+ * 
+ * - API keys are sent via headers (not query params) by default
+ * - Server validates keys before processing any request
+ * - Returns 401 for missing/invalid keys with detailed error messages
+ * - Supports three authentication methods: header (default), bearer, query
+ * 
+ * ## Features
+ * 
+ * - ✅ Automatic retry with exponential backoff
+ * - ✅ Configurable timeout (default: 5 minutes)
+ * - ✅ Comprehensive error handling
+ * - ✅ TypeScript type safety
+ * - ✅ Detailed logging in development mode
+ * - ✅ Multiple authentication methods
+ * 
+ * ## Usage
+ * 
+ * ```typescript
+ * import { apiClient } from '@/lib/api-client/api-client'
+ * 
+ * // Take a screenshot
+ * const result = await apiClient.takeScreenshot('https://example.com', {
+ *   delay: 3000,
+ *   fullPage: true
+ * })
+ * 
+ * // With database storage
+ * const result = await apiClient.takeScreenshotWithPageId(
+ *   'https://example.com',
+ *   'page-id-123',
+ *   { delay: 3000 }
+ * )
+ * ```
+ * 
+ * @see README.md for complete documentation
+ * @see INTEGRATION_EXAMPLES.md for usage examples
  */
 
 import type {
@@ -13,6 +62,11 @@ import type {
   ServerStatusResponse,
 } from './types'
 
+/**
+ * API Client for Screenshot Service
+ * 
+ * Handles authentication, retries, timeouts, and error handling for all API requests.
+ */
 export class ApiClient {
   private baseURL: string
   private apiKey: string
@@ -34,6 +88,23 @@ export class ApiClient {
 
   /**
    * Create headers with API key authentication
+   * 
+   * Supports three authentication methods:
+   * 
+   * 1. **header** (default, recommended): Sends `X-API-Key: your-key`
+   *    - Most secure and standard approach
+   *    - Validated by `/api/screenshot/route.ts` lines 6-48
+   * 
+   * 2. **bearer**: Sends `Authorization: Bearer your-key`
+   *    - OAuth-style authentication
+   *    - Alternative if your server expects Bearer tokens
+   * 
+   * 3. **query**: Appends `?apiKey=your-key` to URL
+   *    - Less secure (visible in logs, browser history)
+   *    - Only use if header authentication is not possible
+   * 
+   * @param apiKeyLocation - Where to send the API key (default: 'header')
+   * @returns Headers object with authentication and content-type
    */
   private createHeaders(apiKeyLocation: ApiKeyLocation = 'header'): HeadersInit {
     const headers: HeadersInit = {
@@ -261,6 +332,29 @@ export class ApiClient {
 
   /**
    * Take a screenshot of a URL
+   * 
+   * Sends a POST request to `/api/screenshot` with the URL and options.
+   * The server validates the API key and forwards the request to the external screenshot service.
+   * 
+   * @param url - The URL to capture (must be a valid HTTP/HTTPS URL)
+   * @param options - Screenshot options (delay, fullPage, viewport, etc.)
+   * @param apiKeyLocation - Authentication method (default: 'header')
+   * 
+   * @returns Promise resolving to screenshot data with desktop/mobile URLs
+   * 
+   * @throws {ApiError} With code 'UNAUTHORIZED' if API key is invalid
+   * @throws {ApiError} With code 'TIMEOUT' if request exceeds timeout
+   * @throws {ApiError} With code 'NETWORK_ERROR' if connection fails
+   * 
+   * @example
+   * ```typescript
+   * const result = await apiClient.takeScreenshot('https://example.com', {
+   *   delay: 3000,
+   *   fullPage: true,
+   *   viewport: { width: 1920, height: 1080 }
+   * })
+   * console.log('Screenshot:', result.desktopUrl)
+   * ```
    */
   async takeScreenshot(
     url: string,
@@ -285,6 +379,28 @@ export class ApiClient {
 
   /**
    * Take a screenshot with pageId (for database storage)
+   * 
+   * Same as `takeScreenshot()` but includes a `pageId` to save the screenshot
+   * to the database. The server will update the `scraped_pages` table with the
+   * screenshot URLs and metadata.
+   * 
+   * @param url - The URL to capture
+   * @param pageId - Database ID of the page (from scraped_pages table)
+   * @param options - Screenshot options
+   * @param apiKeyLocation - Authentication method (default: 'header')
+   * 
+   * @returns Promise resolving to screenshot data
+   * 
+   * @example
+   * ```typescript
+   * // Capture and save to database
+   * const result = await apiClient.takeScreenshotWithPageId(
+   *   'https://example.com',
+   *   'page-uuid-123',
+   *   { delay: 3000, fullPage: true }
+   * )
+   * // Screenshot is now saved in database under page_image column
+   * ```
    */
   async takeScreenshotWithPageId(
     url: string,
@@ -347,7 +463,39 @@ export class ApiClient {
 
 /**
  * Create a default API client instance
- * Uses environment variables for configuration
+ * 
+ * Automatically configures the client using environment variables:
+ * 
+ * - `NEXT_PUBLIC_SCREENSHOT_API_KEY` - API key for authentication (required)
+ * - `NEXT_PUBLIC_SCREENSHOT_API_BASE_URL` - Base URL (defaults to current origin)
+ * 
+ * ## Setup
+ * 
+ * 1. Add to `.env.local`:
+ *    ```env
+ *    NEXT_PUBLIC_SCREENSHOT_API_KEY=your-secret-key
+ *    SCREENSHOT_API_KEY=your-secret-key  # Must match client key
+ *    ```
+ * 
+ * 2. Generate a secure key:
+ *    ```bash
+ *    node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+ *    ```
+ * 
+ * 3. Restart dev server:
+ *    ```bash
+ *    npm run dev
+ *    ```
+ * 
+ * @returns Configured ApiClient instance ready to use
+ * 
+ * @example
+ * ```typescript
+ * import { createApiClient } from '@/lib/api-client/api-client'
+ * 
+ * const client = createApiClient()
+ * const result = await client.takeScreenshot('https://example.com')
+ * ```
  */
 export function createApiClient(): ApiClient {
   const baseURL = process.env.NEXT_PUBLIC_SCREENSHOT_API_BASE_URL || 
