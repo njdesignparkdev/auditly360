@@ -12,6 +12,7 @@ import AdminSubscription from './admin-subtabs/AdminSubscription'
 import AdminAlerts from './admin-subtabs/AdminAlerts'
 import AdminSupport from './admin-subtabs/AdminSupport'
 import AdminEmailManagement from './admin-subtabs/AdminEmailManagement'
+import AdminBlogEditor from './admin-subtabs/AdminBlogEditor'
 
 interface UserProfile {
   id: string
@@ -27,7 +28,17 @@ interface AdminTabProps {
   userProfile: UserProfile
 }
 
-type AdminTabType = 'overview' | 'users' | 'plans' | 'features' | 'subscription' | 'revenue' | 'alerts' | 'support' | 'email'
+type AdminTabType =
+  | 'overview'
+  | 'users'
+  | 'plans'
+  | 'features'
+  | 'subscription'
+  | 'revenue'
+  | 'alerts'
+  | 'support'
+  | 'email'
+  | 'blogs'
 
 export default function AdminTab({ userProfile }: AdminTabProps) {
   const [isAdminVerified, setIsAdminVerified] = useState<boolean | null>(null)
@@ -87,7 +98,8 @@ export default function AdminTab({ userProfile }: AdminTabProps) {
     { id: 'subscription', label: 'Subscription' },
     { id: 'alerts', label: 'Alerts' },
     { id: 'support', label: 'Support' },
-    { id: 'email', label: 'Email Management' }
+    { id: 'email', label: 'Email Management' },
+    { id: 'blogs', label: 'Blog Editor' }
   ]
 
   const renderTabContent = () => {
@@ -109,10 +121,12 @@ export default function AdminTab({ userProfile }: AdminTabProps) {
         return <AdminSupport userProfile={userProfile} />
       case 'email':
         return <AdminEmailManagement userProfile={userProfile} />
+      case 'blogs':
+        return <AdminBlogEditor userProfile={userProfile} />
       default:
         return <AdminOverview userProfile={userProfile} />
     }
-    }
+  }
 
   // Show loading state while verifying admin role
   if (isLoading) {

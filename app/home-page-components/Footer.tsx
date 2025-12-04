@@ -18,6 +18,7 @@ const navColumns: NavColumn[] = [
       { label: "How it Works", href: "#how-it-works" },
       { label: "Pricing", href: "#pricing" },
       { label: "Free Audit", href: "#free-audit" },
+      { label: "Blogs", href: "/blogs" },
     ],
   },
   {
