@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import Link from 'next/link'
 
 interface BlogAuthor {
   id: string
@@ -94,12 +95,12 @@ export default async function BlogDetailPage({ params }: PageProps) {
           <p className="text-gray-600 mb-4">
             The blog post you are looking for does not exist or may have been removed.
           </p>
-          <a
+          <Link
             href="/blogs"
             className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-[#ff4b01] text-white hover:bg-[#e64401] transition-colors"
           >
             Back to Blog
-          </a>
+          </Link>
         </div>
       </div>
     )
@@ -113,9 +114,9 @@ export default async function BlogDetailPage({ params }: PageProps) {
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <p className="text-sm text-gray-500 mb-3">
-            <a href="/blogs" className="hover:text-[#ff4b01]">
+            <Link href="/blogs" className="hover:text-[#ff4b01]">
               Blog
-            </a>{' '}
+            </Link>{' '}
             / <span className="text-gray-700">Post</span>
           </p>
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
