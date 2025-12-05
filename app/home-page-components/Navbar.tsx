@@ -198,7 +198,7 @@ export default function Navbar() {
         }
       `}</style>
       <div
-        className={`max-w-[90rem] mx-auto flex justify-between items-center fixed top-0 left-0 right-0 z-[100] mt-2 sm:mt-4 md:mt-8 px-3 sm:px-4 md:px-6 lg:px-8 transition-all duration-500 ease-in-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'
+        className={`max-w-[1400px] mx-auto flex justify-between items-center fixed top-0 left-0 right-0 z-[100] mt-2 sm:mt-4 md:mt-8 px-4 md:px-8 lg:px-12 transition-all duration-500 ease-in-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'
           }`}
       >
         {/* Logo */}
@@ -243,7 +243,7 @@ export default function Navbar() {
               {isLoggedIn ? (
                 <Link
                   href="/dashboard"
-                  className={`${buttonClasses} px-4 md:px-6 lg:px-8 py-2 md:py-2.5 lg:py-3 rounded-xl md:rounded-2xl cursor-pointer transition-all duration-300 whitespace-nowrap text-sm md:text-base relative overflow-hidden group hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl`}
+                  className="bg-[#FE7F2D] text-[#121212] px-4 md:px-6 lg:px-8 py-2 md:py-2.5 lg:py-3 rounded-xl md:rounded-2xl cursor-pointer transition-all duration-300 whitespace-nowrap text-sm md:text-base relative overflow-hidden group hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl hover:bg-[#FE7F2D]/90"
                 >
                   <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></span>
                   <span className="relative z-10 font-semibold">Dashboard</span>
@@ -265,8 +265,8 @@ export default function Navbar() {
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className={`md:hidden z-[101] p-2 rounded-lg transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer ${isHeroSection
-              ? 'text-white hover:bg-white/10'
-              : 'text-gray-800 hover:bg-gray-100'
+            ? 'text-white hover:bg-white/10'
+            : 'text-gray-800 hover:bg-gray-100'
             }`}
           aria-label="Toggle menu"
         >
@@ -346,7 +346,7 @@ export default function Navbar() {
                   <Link
                     href="/dashboard"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="bg-[#ff4b01] border border-[#ff4b01] text-white hover:bg-[#e64401] block w-full px-6 py-3 rounded-lg text-base font-medium text-center transition-colors duration-200 cursor-pointer"
+                    className="bg-[#FE7F2D] text-[#121212] hover:bg-[#FE7F2D]/90 block w-full px-6 py-3 rounded-lg text-base font-medium text-center transition-colors duration-200 cursor-pointer"
                   >
                     Dashboard
                   </Link>

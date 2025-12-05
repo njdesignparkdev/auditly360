@@ -52,7 +52,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-black text-white">
-      <div className="max-w-[90rem] mx-auto px-4 md:px-8 lg:px-12 py-12 md:py-16 lg:py-20">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 py-12 md:py-16 lg:py-20">
         {/* Top Section */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 md:mb-16 lg:mb-20 gap-6 lg:gap-8">
           <div className="flex items-center gap-4 md:gap-6">

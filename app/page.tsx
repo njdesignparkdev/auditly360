@@ -1,51 +1,36 @@
-"use client";
+import { HeroSection } from "@/components/blocks/hero-section-dark"
+import NavbarV2 from './home-page-components/navbar-v2'
+import BgContainer from './home-page-components/bg-container'
+import GridOverlay from '@/components/ui/grid-layer'
 
-import React, { useEffect, useState } from 'react'
-import CommingSoon from './home-page-components/CommingSoon'
-import HeroSection from './home-page-components/HeroSection'
-import Navbar from './home-page-components/Navbar'
-import WhyChooseUsSection from './home-page-components/WhyChooseUsSection'
-import PricingSection from './home-page-components/PricingSection'
-import ReplaceTools from './home-page-components/ReplaceTools'
-import Steps from './home-page-components/Steps'
-import Testimonials from './home-page-components/Testimonials'
-import Footer from './home-page-components/Footer'
-
-
-// raul 
 export default function Page() {
-  const [IsComingSoonTrue, setIsComingSoonTrue] = useState(true)
-
-  useEffect(() => {
-    process.env.NEXT_PUBLIC_COMING_SOON_MODE === 'true' ? setIsComingSoonTrue(true) : setIsComingSoonTrue(false)
-  }, [])
-
   return (
-    IsComingSoonTrue ? <CommingSoon /> : (
-      <div className='overflow-x-hidden'>
-        {/* <CommingSoon  now /> */}
-        <Navbar />
-        <section id="home">
-          <HeroSection />
-        </section>
-        <section id="features">
-          <WhyChooseUsSection />
-        </section>
-        <PricingSection />
-        <section id="replace-tools">
-          <ReplaceTools />
-        </section>
-        <section id="how-it-works">
-          <Steps />
-        </section>
-        <section id="testimonials">
-          <Testimonials />
-        </section>
-        <section id="contact">
-          <Footer />
-        </section>
+    <BgContainer>
+      <GridOverlay />
+      <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-8 lg:px-8">
+        <NavbarV2 />
+        <HeroSection
+          title="AI Powered"
+          subtitle={{
+            regular: "Your Website,",
+            gradient: "Audited in Seconds",
+          }}
+          description="Uncover SEO, performance, and security Issues instantly with AI-powered audits."
+          ctaText="Get Started"
+          ctaHref="/signup"
+          bottomImage={{
+            light: "https://www.launchuicomponents.com/app-light.png",
+            dark: "https://www.launchuicomponents.com/app-dark.png",
+          }}
+          gridOptions={{
+            angle: 65,
+            opacity: 0.4,
+            cellSize: 50,
+            lightLineColor: "#4a4a4a",
+            darkLineColor: "#2a2a2a",
+          }}
+        />
       </div>
-
-    )
+    </BgContainer>
   )
 }

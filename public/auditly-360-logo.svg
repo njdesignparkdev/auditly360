@@ -1,0 +1,26 @@
+<svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg" width="200" height="67">
+  <!-- Background circle element -->
+  <circle cx="50" cy="50" r="35" fill="#f97316" opacity="0.1"/>
+  
+  <!-- 360 degree arc symbol -->
+  <circle cx="50" cy="50" r="28" fill="none" stroke="#f97316" stroke-width="3" stroke-dasharray="88 88" stroke-dashoffset="22" opacity="0.6"/>
+  
+  <!-- Center circle -->
+  <circle cx="50" cy="50" r="18" fill="none" stroke="#f97316" stroke-width="2.5"/>
+  
+  <!-- Inner dot -->
+  <circle cx="50" cy="50" r="6" fill="#f97316"/>
+  
+  <!-- Checkmark inside -->
+  <path d="M 45 50 L 48 54 L 56 44" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Text: auditly in orange -->
+  <text x="95" y="55" font-family="Arial, sans-serif" font-size="32" font-weight="400" letter-spacing="-0.5">
+    <tspan fill="#f97316">auditly</tspan>
+  </text>
+  
+  <!-- Text: 360 in black -->
+  <text x="195" y="42" font-family="Arial, sans-serif" font-size="20" font-weight="600">
+    <tspan fill="#1a1a1a">360</tspan>
+  </text>
+</svg>

@@ -5,14 +5,14 @@ import { ClockIcon, CheckBadgeIcon, DocumentCheckIcon } from "@heroicons/react/2
 
 export default function WhyChooseUsSection() {
   return (
-    <section className="bg-[#f7f7f7] py-16 md:py-20 lg:py-24 px-4 md:px-8 lg:px-12">
-      <div className="max-w-[90rem] mx-auto">
+    <section className="bg-[#f7f7f7] pt-8 pb-4 md:pt-10 md:pb-6 lg:pt-12 lg:pb-8 px-4 md:px-8 lg:px-12">
+      <div className="max-w-[1400px] mx-auto">
         {/* Heading Section */}
         <div className="mb-12 md:mb-16 lg:mb-20 max-w-4xl">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-black mb-4 raleway leading-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-black mb-4 raleway leading-tight lining-nums">
             Why Choose Our Auditly?
           </h2>
-          <p className="text-lg md:text-xl lg:text-2xl text-black/70 raleway">
+          <p className="text-lg md:text-xl lg:text-2xl text-black/70 raleway lining-nums">
             Get actionable insights that drive results
           </p>
         </div>
@@ -23,7 +23,7 @@ export default function WhyChooseUsSection() {
           <div className="flex flex-col md:flex-row gap-4 md:gap-5 lg:gap-6 items-stretch">
             <div className="w-full md:w-[55%] flex">
               <div className="bg-white text-black rounded-[20px] p-12 md:p-14 lg:p-8 flex flex-col gap-4 md:gap-2 h-full shadow-lg border border-slate-200">
-                <h3 className="font-semibold text-2xl md:text-3xl lg:text-4xl raleway leading-tight">
+                <h3 className="font-semibold text-2xl md:text-3xl lg:text-4xl raleway leading-tight lining-nums">
                   Improve Rankings
                 </h3>
                 <p className="text-sm md:text-base lg:text-lg leading-relaxed flex-grow text-black/70">
@@ -35,7 +35,7 @@ export default function WhyChooseUsSection() {
             </div>
             <div className="w-full md:w-[45%] flex">
               <div className="bg-gradient-to-br from-slate-50 to-slate-100 text-black rounded-[20px] p-12 md:p-14 lg:p-8 flex flex-col gap-4 md:gap-2 h-full shadow-md border border-slate-300">
-                <h3 className="font-semibold text-2xl md:text-3xl lg:text-4xl raleway leading-tight">
+                <h3 className="font-semibold text-2xl md:text-3xl lg:text-4xl raleway leading-tight lining-nums">
                   Protect Your Site
                 </h3>
                 <p className="text-sm md:text-base lg:text-lg leading-relaxed flex-grow text-black/70">
@@ -51,7 +51,7 @@ export default function WhyChooseUsSection() {
           <div className="flex flex-col md:flex-row gap-4 md:gap-5 lg:gap-6 items-stretch">
             <div className="w-full md:w-[45%] flex">
               <div className="bg-slate-50 text-black rounded-[20px] p-12 md:p-14 lg:p-8 flex flex-col gap-4 md:gap-2 h-full shadow-sm border-2 border-slate-200">
-                <h3 className="font-semibold text-2xl md:text-3xl lg:text-4xl raleway leading-tight flex items-center gap-3">
+                <h3 className="font-semibold text-2xl md:text-3xl lg:text-4xl raleway leading-tight flex items-center gap-3 lining-nums">
                   <ClockIcon className="w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-black" />
                   Save Time
                 </h3>
@@ -64,7 +64,7 @@ export default function WhyChooseUsSection() {
             </div>
             <div className="w-full md:w-[55%] flex">
               <div className="bg-white text-black rounded-[20px] p-12 md:p-14 lg:p-8 flex flex-col gap-4 md:gap-2 h-full shadow-sm border border-slate-200">
-                <h3 className="font-semibold text-2xl md:text-3xl lg:text-4xl raleway leading-tight flex items-center gap-3">
+                <h3 className="font-semibold text-2xl md:text-3xl lg:text-4xl raleway leading-tight flex items-center gap-3 lining-nums">
                   <CheckBadgeIcon className="w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-black" />
                   Ensure Consistency
                 </h3>
@@ -81,7 +81,7 @@ export default function WhyChooseUsSection() {
           <div className="flex flex-col md:flex-row gap-4 md:gap-5 lg:gap-6 items-stretch">
             <div className="w-full flex">
               <div className="bg-white text-black rounded-[20px] p-12 md:p-14 lg:p-8 flex flex-col gap-4 md:gap-2 h-full shadow-sm border border-slate-200">
-                <h3 className="font-semibold text-2xl md:text-3xl lg:text-4xl raleway leading-tight flex items-center gap-3">
+                <h3 className="font-semibold text-2xl md:text-3xl lg:text-4xl raleway leading-tight flex items-center gap-3 lining-nums">
                   <DocumentCheckIcon className="w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-black" />
                   Grammar Check
                 </h3>
@@ -99,7 +99,7 @@ export default function WhyChooseUsSection() {
           <div className="flex flex-col md:flex-row gap-4 md:gap-5 lg:gap-6 items-stretch">
             <div className="w-full md:w-[55%] flex">
               <div className="bg-gradient-to-tr from-white to-slate-50 text-black rounded-[20px] p-12 md:p-14 lg:p-8 flex flex-col gap-4 md:gap-2 h-full shadow-md border border-slate-200">
-                <h3 className="font-semibold text-2xl md:text-3xl lg:text-4xl raleway leading-tight">
+                <h3 className="font-semibold text-2xl md:text-3xl lg:text-4xl raleway leading-tight lining-nums">
                   Deliver Better UX
                 </h3>
                 <p className="text-sm md:text-base lg:text-lg leading-relaxed flex-grow text-black/70">
@@ -111,7 +111,7 @@ export default function WhyChooseUsSection() {
             </div>
             <div className="w-full md:w-[45%] flex">
               <div className="bg-white text-black rounded-[20px] p-12 md:p-14 lg:p-8 flex flex-col gap-4 md:gap-2 h-full shadow-lg ring-2 ring-slate-200 ring-offset-2">
-                <h3 className="font-semibold text-2xl md:text-3xl lg:text-4xl raleway leading-tight">
+                <h3 className="font-semibold text-2xl md:text-3xl lg:text-4xl raleway leading-tight lining-nums">
                   SEO and Structure
                 </h3>
                 <p className="text-sm md:text-base lg:text-lg leading-relaxed flex-grow text-black/70">

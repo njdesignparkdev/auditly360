@@ -680,16 +680,16 @@ export default function PricingSection({
   return (
     <section
       id="pricing"
-      className={`px-4 py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-50 via-white to-gray-100 ${className} `}
+      className={`px-4 md:px-8 lg:px-12 pt-6 sm:pt-8 md:pt-10 pb-2 sm:pb-3 md:pb-4 bg-gradient-to-br from-gray-50 via-white to-gray-100 ${className} `}
     >
-      <div className="max-w-[90rem] mx-auto ">
+      <div className="max-w-[1400px] mx-auto ">
         {/* Section Header */}
         <div className="flex flex-col justify-start">
-          <div className="mb-8 sm:mb-12 md:mb-16 lg:mb-20 max-w-4xl">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-black mb-3 sm:mb-4 raleway leading-tight">
+          <div className="mb-6 sm:mb-8 md:mb-10 lg:mb-12 max-w-4xl">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-black mb-3 sm:mb-4 raleway leading-tight lining-nums">
               Simple, Transparent Pricing
             </h2>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-black/70 raleway">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-black/70 raleway lining-nums">
               Choose the plan that fits your needs. No hidden fees, no surprises.
             </p>
           </div>
@@ -702,8 +702,8 @@ export default function PricingSection({
                   <button
                     onClick={() => setBillingCycle("monthly")}
                     className={`relative px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm md:text-base font-medium transition-all duration-200 z-10 focus:outline-none cursor-pointer ${billingCycle === "monthly"
-                        ? "text-black"
-                        : "text-gray-500"
+                      ? "text-black"
+                      : "text-gray-500"
                       }`}
                   >
                     Monthly
@@ -712,8 +712,8 @@ export default function PricingSection({
                   <button
                     onClick={() => setBillingCycle("yearly")}
                     className={`relative px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm md:text-base font-medium transition-all duration-200 z-10 focus:outline-none cursor-pointer ${billingCycle === "yearly"
-                        ? "text-black"
-                        : "text-gray-500"
+                      ? "text-black"
+                      : "text-gray-500"
                       }`}
                   >
                     Yearly
@@ -722,8 +722,8 @@ export default function PricingSection({
                   {/* Active Background Slider */}
                   <span
                     className={`absolute top-1 sm:top-1.5 bottom-1 sm:bottom-1.5 rounded-full bg-white shadow-md transition-all duration-200 ${billingCycle === "yearly"
-                        ? "left-1/2 right-1 sm:right-1.5"
-                        : "left-1 sm:left-1.5 right-1/2"
+                      ? "left-1/2 right-1 sm:right-1.5"
+                      : "left-1 sm:left-1.5 right-1/2"
                       }`}
                   />
                 </div>
@@ -742,12 +742,12 @@ export default function PricingSection({
 
         <div
           className={`grid grid-cols-1 gap-4 sm:gap-6 max-w-7xl mx-auto ${filteredPlans.length === 1
-              ? "sm:max-w-md"
-              : filteredPlans.length === 2
-                ? "sm:grid-cols-2"
-                : filteredPlans.length === 3
-                  ? "sm:grid-cols-2 xl:grid-cols-3"
-                  : "sm:grid-cols-2 xl:grid-cols-3"
+            ? "sm:max-w-md"
+            : filteredPlans.length === 2
+              ? "sm:grid-cols-2"
+              : filteredPlans.length === 3
+                ? "sm:grid-cols-2 xl:grid-cols-3"
+                : "sm:grid-cols-2 xl:grid-cols-3"
             }`}
         >
           {loadingPlans
@@ -775,8 +775,8 @@ export default function PricingSection({
               <div
                 key={plan.id || `${plan.name}_${plan.billing_cycle}_${index}`}
                 className={`relative rounded-2xl sm:rounded-3xl p-3 sm:p-4 ${plan.popular && plan.billing_cycle === billingCycle
-                    ? "bg-black text-white sm:scale-105"
-                    : "bg-white text-black "
+                  ? "bg-black text-white sm:scale-105"
+                  : "bg-white text-black "
                   } border-2 ${plan.popular && plan.billing_cycle === billingCycle
                     ? "border-black"
                     : "border-gray-200"
@@ -826,8 +826,8 @@ export default function PricingSection({
                 {/* Plan Header */}
 
                 <div className={`p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl mb-4 sm:mb-6 md:mb-8 ${plan.plan_type === "Growth"
-                    ? "bg-[#ff4b01] text-white"
-                    : "bg-[#F4F4F4] text-black"
+                  ? "bg-[#ff4b01] text-white"
+                  : "bg-[#F4F4F4] text-black"
                   }`}>
                   <h3 className="text-xl sm:text-2xl font-bold mb-2">{plan.name}</h3>
                   <div className="mb-3 sm:mb-4">
@@ -836,10 +836,10 @@ export default function PricingSection({
                     {plan.plan_type !== "Starter" && (
                       <span
                         className={`text-base sm:text-lg ml-2 ${plan.popular && plan.billing_cycle === billingCycle
-                            ? "text-gray-300"
-                            : plan.plan_type === "Growth"
-                              ? " text-white"
-                              : " text-black"
+                          ? "text-gray-300"
+                          : plan.plan_type === "Growth"
+                            ? " text-white"
+                            : " text-black"
                           }`}
                       >
                         {plan.period}
@@ -849,8 +849,8 @@ export default function PricingSection({
 
                   <p
                     className={`text-xs sm:text-sm ${plan.popular && plan.billing_cycle === billingCycle
-                        ? "text-gray-300"
-                        : "text-gray-600"
+                      ? "text-gray-300"
+                      : "text-gray-600"
                       }`}
                   >
                     {plan.description}
@@ -861,14 +861,14 @@ export default function PricingSection({
                     onClick={() => handlePayment(plan)}
                     disabled={loading === plan.id || !plan.canPurchase}
                     className={`w-full py-3 sm:py-4 mt-4 sm:mt-6 md:mt-8 rounded-lg text-sm sm:text-base font-semibold transition-all duration-300 ${plan.popular && plan.billing_cycle === billingCycle
-                        ? plan.plan_type === "Growth"
-                          ? "bg-white text-black hover:bg-[#ff4b01] hover:text-white disabled:bg-gray-300 cursor-pointer"
-                          : "bg-white text-black hover:bg-gray-100 disabled:bg-gray-300 cursor-pointer"
-                        : plan.planStatus === "current"
-                          ? "bg-gray-500 text-white cursor-not-allowed"
-                          : plan.plan_type === "Growth"
-                            ? "bg-white border-[#ff4b01] border text-black  disabled:bg-gray-500 cursor-pointer"
-                            : "bg-white border-[#ff4b01] border text-black hover:bg-[#ff4b01] hover:text-white disabled:bg-gray-500 cursor-pointer"
+                      ? plan.plan_type === "Growth"
+                        ? "bg-white text-black hover:bg-[#ff4b01] hover:text-white disabled:bg-gray-300 cursor-pointer"
+                        : "bg-white text-black hover:bg-gray-100 disabled:bg-gray-300 cursor-pointer"
+                      : plan.planStatus === "current"
+                        ? "bg-gray-500 text-white cursor-not-allowed"
+                        : plan.plan_type === "Growth"
+                          ? "bg-white border-[#ff4b01] border text-black  disabled:bg-gray-500 cursor-pointer"
+                          : "bg-white border-[#ff4b01] border text-black hover:bg-[#ff4b01] hover:text-white disabled:bg-gray-500 cursor-pointer"
                       }`}
                   >
                     {loading === plan.id ? "Processing..." : plan.cta}
@@ -898,18 +898,18 @@ export default function PricingSection({
                               <div className="flex items-start flex-1">
                                 <span
                                   className={`text-base sm:text-lg mr-2 sm:mr-3 flex-shrink-0 mt-0.5 ${plan.popular &&
-                                      plan.billing_cycle === billingCycle
-                                      ? "text-white"
-                                      : "text-black"
+                                    plan.billing_cycle === billingCycle
+                                    ? "text-white"
+                                    : "text-black"
                                     }`}
                                 >
                                   ✓
                                 </span>
                                 <span
                                   className={`text-sm sm:text-base  ${plan.popular &&
-                                      plan.billing_cycle === billingCycle
-                                      ? "text-white"
-                                      : "text-black"
+                                    plan.billing_cycle === billingCycle
+                                    ? "text-white"
+                                    : "text-black"
                                     }`}
                                 >
                                   {featureGroup.heading}
@@ -938,18 +938,18 @@ export default function PricingSection({
                                   <div key={toolIndex} className="flex items-start">
                                     <span
                                       className={`text-xs sm:text-sm mr-2 flex-shrink-0 mt-0.5 ${plan.popular &&
-                                          plan.billing_cycle === billingCycle
-                                          ? "text-gray-400"
-                                          : "text-gray-500"
+                                        plan.billing_cycle === billingCycle
+                                        ? "text-gray-400"
+                                        : "text-gray-500"
                                         }`}
                                     >
                                       •
                                     </span>
                                     <span
                                       className={`text-xs sm:text-sm ${plan.popular &&
-                                          plan.billing_cycle === billingCycle
-                                          ? "text-gray-300"
-                                          : "text-gray-600"
+                                        plan.billing_cycle === billingCycle
+                                        ? "text-gray-300"
+                                        : "text-gray-600"
                                         }`}
                                     >
                                       {tool}
@@ -965,9 +965,9 @@ export default function PricingSection({
                   ) : (
                     <p
                       className={`text-xs sm:text-sm ${plan.popular &&
-                          plan.billing_cycle === billingCycle
-                          ? "text-gray-300"
-                          : "text-gray-600"
+                        plan.billing_cycle === billingCycle
+                        ? "text-gray-300"
+                        : "text-gray-600"
                         }`}
                     >
                       No features listed

@@ -255,15 +255,15 @@ const auditly360Price = "$19 Per Month";
 export default function ReplaceTools() {
   return (
     <div className="relative">
-      <section className="relative max-w-[90rem] overflow-hidden mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20">
+      <section className="relative max-w-[1400px] overflow-hidden mx-auto px-4 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20">
         <div className="relative">
           {/* Dark Blue Top Section */}
           <div className="relative z-10 bg-[#ff4b01] rounded-t-2xl sm:rounded-t-3xl h-20 sm:h-24 md:h-32 lg:h-40"></div>
-          
+
           {/* Content Container */}
           <div className="relative mx-auto bg-white rounded-b-2xl sm:rounded-b-3xl -mt-1">
             <div className="relative z-20 -top-16 sm:-top-20 w-[95%] sm:w-[90%] mx-auto bg-slate-100 rounded-2xl sm:rounded-3xl -mt-1 p-4 sm:p-6 md:p-8">
-              
+
               {/* Mobile Cards View - Visible on small screens only */}
               <div className="md:hidden space-y-4">
                 {features.map((row, index) => (
@@ -385,7 +385,7 @@ export default function ReplaceTools() {
                       </th>
                     </tr>
                   </thead>
-                  
+
                   {/* Body Rows */}
                   <tbody>
                     {features.map((row, index) => (
@@ -423,7 +423,7 @@ export default function ReplaceTools() {
                         </td>
                       </tr>
                     ))}
-                    
+
                     {/* Summary Row */}
                     <tr className="border-t-2 border-gray-300 bg-gray-50">
                       <td className="px-4 md:px-6 lg:px-8 py-4 md:py-6 text-sm md:text-base lg:text-lg font-semibold text-gray-800">

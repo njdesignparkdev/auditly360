@@ -36,13 +36,13 @@ const steps: Step[] = [
 
 export default function Steps() {
   const { isAuthenticated } = useAuth();
-  
+
   return (
-    <section className="bg-gray-50 py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-12">
-      <div className="max-w-[90rem] mx-auto">
+    <section className="bg-gray-50 py-6 md:py-8 lg:py-10 px-4 md:px-8 lg:px-12">
+      <div className="max-w-[1400px] mx-auto">
         {/* Header Section */}
-        <div className="mb-12 md:mb-16 lg:mb-20 max-w-4xl">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-black mb-4 raleway leading-tight">
+        <div className="mb-6 md:mb-8 lg:mb-10 w-full text-left">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-black mb-4 raleway leading-tight lining-nums">
             Audit in 3 Simple Steps
           </h2>
           <p className="text-lg md:text-xl lg:text-2xl text-black/70 raleway">
@@ -80,7 +80,7 @@ export default function Steps() {
 
               {/* Button (only for step 1) */}
               {step.showButton && (
-                <Link 
+                <Link
                   href={isAuthenticated ? '/dashboard' : '/login'}
                   className="mt-auto bg-[#ff4b01] hover:bg-[#ff4b01]/90 text-white font-semibold py-2.5 md:py-3 px-4 md:px-5 rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 w-full cursor-pointer"
                 >
