@@ -66,10 +66,8 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '10');
     const offset = parseInt(searchParams.get('offset') || '0');
     // First, let's check if there are any payments in the database at all
-    const {
-      data: allPayments,
-      error: allPaymentsError
-    } = await supabaseServiceClient.from('payments').select('id, user_id, plan_name, payment_status').limit(5);
+    // First, let's check if there are any payments in the database at all
+    await supabaseServiceClient.from('payments').select('id, user_id, plan_name, payment_status').limit(5);
     // Fetch payment history with available fields using service client
     const {
       data: payments,

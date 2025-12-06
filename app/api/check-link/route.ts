@@ -20,11 +20,11 @@ export async function POST(request: NextRequest) {
     }
 
     const token = authHeader.replace('Bearer ', '');
-    
+
     // Verify user
     const supabaseAnon = createClient(supabaseUrl, supabaseAnonKey);
     const { data: { user }, error: authError } = await supabaseAnon.auth.getUser(token);
-    
+
     if (authError || !user) {
       return NextResponse.json({
         error: 'Invalid authentication token',
@@ -38,14 +38,14 @@ export async function POST(request: NextRequest) {
 
     // Check if user has access to broken_links_check feature
     const featureAccess = await checkFeatureAccess(user.id, 'broken_links_check');
-    
+
     if (!featureAccess.hasAccess) {
       console.warn('🚫 User attempted to use broken_links_check feature without access:', {
         userId: user.id,
         userPlan: featureAccess.userPlan,
         error: featureAccess.error
       });
-      
+
       return NextResponse.json({
         error: 'Feature access denied',
         code: 'FEATURE_ACCESS_DENIED',
@@ -102,12 +102,12 @@ export async function POST(request: NextRequest) {
           },
         });
         clearTimeout(timeoutId);
-      } catch (headError) {
+      } catch {
         clearTimeout(timeoutId);
         // If HEAD fails, try GET
         const getController = new AbortController();
         const getTimeoutId = setTimeout(() => getController.abort(), 10000);
-        
+
         try {
           response = await fetch(url, {
             method: 'GET',
@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
             },
           });
           clearTimeout(getTimeoutId);
-        } catch (getError) {
+        } catch {
           clearTimeout(getTimeoutId);
           return NextResponse.json({
             isBroken: true,

@@ -62,7 +62,6 @@ export async function GET(request: NextRequest) {
       try {
         // Update user to Starter plan
         const {
-          data: updateResult,
           error: updateError
         } = await supabaseServiceClient.from('users').update({
           plan_type: 'Starter',

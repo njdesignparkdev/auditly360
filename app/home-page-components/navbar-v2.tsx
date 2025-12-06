@@ -1,19 +1,52 @@
 "use client";
-"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import BorderTrailButton from "@/components/ui/border-trail-button";
-import AnimatedGlowingButton from "@/components/ui/animated-glowing-button";
-import AuditlyLogo from "@/components/blocks/auditly-logo";
+import { Menu, X, DollarSign, CreditCard, TrendingUp } from "lucide-react";
 
-const navItems = [
+import AuditlyLogo from "@/components/blocks/auditly-logo";
+import AnimatedGlowingButton from "@/components/ui/animated-glowing-button";
+import NavbarDropdown from "@/components/navbar/navbar-dropdown";
+
+interface NavItem {
+    name: string;
+    href: string;
+    dropdown?: Array<{
+        title: string;
+        description: string;
+        href: string;
+        icon?: React.ReactNode;
+    }>;
+}
+
+const navItems: NavItem[] = [
     { name: "Home", href: "#" },
     { name: "Features", href: "#features" },
-    { name: "Pricing", href: "#pricing" },
+    { 
+        name: "Pricing", 
+        href: "#pricing",
+        dropdown: [
+            {
+                title: "View Plans",
+                description: "See all pricing plans and features",
+                href: "#pricing",
+                icon: <DollarSign size={18} />
+            },
+            {
+                title: "Compare Plans",
+                description: "Compare features across all plans",
+                href: "#pricing",
+                icon: <TrendingUp size={18} />
+            },
+            {
+                title: "Billing & Payment",
+                description: "Manage your subscription and billing",
+                href: "#pricing",
+                icon: <CreditCard size={18} />
+            }
+        ]
+    },
     { name: "How it Works", href: "#how-it-works" },
     { name: "Testimonials", href: "#testimonials" },
 ];
@@ -26,7 +59,7 @@ export default function NavbarV2() {
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="w-full py-6 flex items-center justify-between sticky top-0 z-50 border-b border-black/5 backdrop-blur-md"
+            className="w-full py-4 flex items-center justify-between sticky top-0 z-50 border-b border-black/5 backdrop-blur-md"
         >
             {/* Logo */}
             <Link href="/" className="flex-shrink-0">
@@ -37,13 +70,22 @@ export default function NavbarV2() {
             <div className="hidden md:flex items-center justify-center">
                 <div className="flex items-center gap-1">
                     {navItems.map((item) => (
-                        <Link
-                            key={item.name}
-                            href={item.href}
-                            className="px-5 py-2 text-base font-medium text-[#29272A] font-['Raleway'] hover:text-[#f0803c] transition-colors rounded-full hover:bg-white/5"
-                        >
-                            {item.name}
-                        </Link>
+                        item.dropdown ? (
+                            <NavbarDropdown
+                                key={item.name}
+                                label={item.name}
+                                href={item.href}
+                                items={item.dropdown}
+                            />
+                        ) : (
+                            <Link
+                                key={item.name}
+                                href={item.href}
+                                className="px-5 py-2 text-base font-medium text-[#29272A] hover:text-[#f0803c] transition-colors rounded-full hover:bg-white/5"
+                            >
+                                {item.name}
+                            </Link>
+                        )
                     ))}
                 </div>
             </div>
@@ -51,7 +93,7 @@ export default function NavbarV2() {
             {/* Dashboard Button & Mobile Toggle */}
             <div className="flex items-center gap-4">
                 <div className="hidden md:block">
-                    <AnimatedGlowingButton href="/dashboard">
+                    <AnimatedGlowingButton href="/dashboard" className="rounded-xl">
                         Dashboard
                     </AnimatedGlowingButton>
                 </div>
@@ -86,14 +128,13 @@ export default function NavbarV2() {
                             </Link>
                         ))}
                         <div className="h-px bg-white/10 my-2" />
-                        <BorderTrailButton
+                        <Link
                             href="/dashboard"
-                            className="w-full"
-                            innerClassName="w-full bg-white text-[#121212] hover:bg-white/90 font-semibold"
-                            trailClassName="bg-white"
+                            className="flex items-center justify-center w-full px-4 py-3 text-sm font-bold text-[#121212] bg-white hover:bg-white/90 rounded-xl transition-colors"
+                            onClick={() => setIsMobileMenuOpen(false)}
                         >
                             Dashboard
-                        </BorderTrailButton>
+                        </Link>
                     </motion.div>
                 )}
             </AnimatePresence>

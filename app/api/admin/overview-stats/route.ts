@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 
-export async function GET(_request: NextRequest) {
+export async function GET() {
   try {
     const supabase = supabaseAdmin
 
@@ -153,7 +153,7 @@ export async function GET(_request: NextRequest) {
 
     // Calculate system uptime (mock calculation - in real scenario, this would come from monitoring)
     const systemUptime = '99.9%'
-    
+
     // Calculate average response time (mock calculation)
     const responseTime = '120ms'
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
-import { supabase } from '@/lib/supabase';
+
 
 // Initialize Razorpay instance
 const razorpay = new Razorpay({
@@ -65,6 +65,7 @@ export async function POST(request: NextRequest) {
     console.error('Error creating Razorpay order:', error);
 
     // Handle Razorpay-specific errors
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const err = error as any;
     const statusCode = typeof err?.statusCode === 'number' ? err.statusCode : 500;
     const description = err?.error?.description || err?.message || err?.error || 'Unknown error';

@@ -59,6 +59,7 @@ export async function PUT(
       }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const updateData: any = {};
 
     if (credits !== undefined) updateData.credits = parseInt(credits, 10);

@@ -39,7 +39,7 @@ export function HeroSection({
     gridOptions,
 }: HeroSectionProps) {
     return (
-        <div className="relative overflow-hidden bg-background pt-16 md:pt-24">
+        <div className="relative overflow-hidden bg-background pt-8 md:pt-12">
             {/* Grid Background */}
             <div
                 className="absolute inset-0 z-0 pointer-events-none"
@@ -53,20 +53,18 @@ export function HeroSection({
             <div className="relative z-10 flex flex-col items-center text-center px-4">
 
 
-                <h1 className="mt-8 text-4xl font-bold tracking-tight text-foreground sm:text-6xl md:text-7xl flex flex-col items-center">
-                    <span>{subtitle.regular}</span>
-                    <span className="bg-[linear-gradient(87.33deg,#FF8B42_3.83%,#EF4600_92.4%)] bg-clip-text text-transparent">
-                        {subtitle.gradient}
-                    </span>
+                <h1 className="mt-4 max-w-4xl mx-auto text-balance text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 raleway leading-tight">
+                    {subtitle.regular} <br />
+                    <span className="bg-[linear-gradient(87.33deg,#FF8B42_3.83%,#EF4600_92.4%)] bg-clip-text text-transparent">{subtitle.gradient}</span>
                 </h1>
 
                 {/* Description */}
-                <p className="mb-10 mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl">
+                <p className="mb-6 mt-4 max-w-2xl text-lg font-poppins font-semibold text-muted-foreground sm:text-xl">
                     {description}
                 </p>
 
                 {/* CTA Button */}
-                <div className="mb-16">
+                <div className="mb-8">
                     <Button
                         asChild
                         size="lg"
@@ -77,7 +75,7 @@ export function HeroSection({
                 </div>
 
                 {/* Bottom Image / Mockup Container */}
-                <div className="relative w-full max-w-5xl mx-auto mt-8">
+                <div className="relative w-full max-w-5xl mx-auto mt-4">
                     <div className="relative z-10 rounded-xl border border-white/10 bg-white/5 p-2 shadow-2xl backdrop-blur-sm">
                         <div className="relative aspect-video overflow-hidden rounded-lg bg-background/50 group">
                             <div className="animate-scroll-y flex flex-col">

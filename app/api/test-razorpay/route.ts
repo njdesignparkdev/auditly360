@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
-export async function GET(_request: NextRequest) {
+export async function GET() {
   try {
     // Check environment variables
     const hasKeyId = !!process.env.RAZORPAY_KEY_ID;
     const hasKeySecret = !!process.env.RAZORPAY_KEY_SECRET;
-    const keyId = process.env.RAZORPAY_KEY_ID;
+
     if (!hasKeyId || !hasKeySecret) {
       return NextResponse.json({
         error: 'Razorpay keys not configured',
