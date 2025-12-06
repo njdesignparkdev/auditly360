@@ -41,6 +41,10 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['@heroicons/react', 'framer-motion'],
   },
 
+  turbopack: {
+    root: __dirname,
+  },
+
   // Headers for better SEO and security
   async headers() {
     return [
