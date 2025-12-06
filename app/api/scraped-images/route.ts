@@ -33,11 +33,11 @@ export async function POST(request: NextRequest) {
     }
 
     const token = authHeader.replace('Bearer ', '');
-    
+
     // Verify user using anon client
     const supabaseAnon = createClient(supabaseUrl, supabaseAnonKey);
     const { data: { user }, error: authError } = await supabaseAnon.auth.getUser(token);
-    
+
     if (authError || !user) {
       return NextResponse.json({
         error: 'Invalid authentication token',
@@ -68,6 +68,7 @@ export async function POST(request: NextRequest) {
       extra_metadata: string | null;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const cleanedImages: CleanedImage[] = body.images.map((image: any) => ({
       scraped_page_id: image.scraped_page_id,
       audit_project_id: image.audit_project_id,
@@ -109,6 +110,7 @@ export async function POST(request: NextRequest) {
 
     // Insert images in batches to avoid overwhelming the database
     const batchSize = 100;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const allResults: any[] = [];
     let hasError = false;
     let lastError: any = null;

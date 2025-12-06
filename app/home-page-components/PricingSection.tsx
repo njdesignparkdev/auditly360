@@ -686,10 +686,10 @@ export default function PricingSection({
         {/* Section Header */}
         <div className="flex flex-col justify-start">
           <div className="mb-6 sm:mb-8 md:mb-10 lg:mb-12 max-w-4xl">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-black mb-3 sm:mb-4 raleway leading-tight lining-nums">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 font-jakarta mb-3 sm:mb-4">
               Simple, Transparent Pricing
             </h2>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-black/70 raleway lining-nums">
+            <p className="text-gray-600 text-sm sm:text-base font-poppins">
               Choose the plan that fits your needs. No hidden fees, no surprises.
             </p>
           </div>

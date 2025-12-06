@@ -101,17 +101,7 @@ export default function BlogsPage() {
     });
   };
 
-  const getAuthorName = (author: Blog['author']) => {
-    if (!author) return 'Team auditly360';
-    if (author.first_name && author.last_name) {
-      return `${author.first_name} ${author.last_name}`;
-    }
-    if (author.first_name) {
-      return author.first_name;
-    }
-    // Fallback to brand name instead of email/unknown
-    return 'Team auditly360';
-  };
+
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -249,7 +239,7 @@ export default function BlogsPage() {
                           {blog.excerpt || 'No excerpt available'}
                         </p>
                         <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
-                        
+
                           <div className="flex items-center gap-1 text-sm text-gray-500">
                             <svg
                               className="w-4 h-4"
@@ -311,11 +301,10 @@ export default function BlogsPage() {
                         <button
                           key={pageNum}
                           onClick={() => setCurrentPage(pageNum)}
-                          className={`px-4 py-2 rounded-lg transition-colors ${
-                            currentPage === pageNum
+                          className={`px-4 py-2 rounded-lg transition-colors ${currentPage === pageNum
                               ? 'bg-[#ff4b01] text-white'
                               : 'border border-gray-300 hover:bg-gray-50'
-                          }`}
+                            }`}
                         >
                           {pageNum}
                         </button>

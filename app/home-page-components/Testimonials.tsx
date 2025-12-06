@@ -38,10 +38,10 @@ export default function Testimonials() {
         {/* Header Section */}
 
         <div className="mb-6 md:mb-8 lg:mb-10 max-w-4xl">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-black mb-4 raleway leading-tight lining-nums">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 font-jakarta mb-4">
             Trusted by Professionals
           </h2>
-          <p className="text-lg md:text-xl lg:text-2xl text-black/70 raleway lining-nums">
+          <p className="text-gray-600 text-sm sm:text-base font-poppins">
             See what our users are saying
           </p>
         </div>

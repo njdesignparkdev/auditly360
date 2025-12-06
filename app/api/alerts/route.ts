@@ -5,8 +5,8 @@ import { supabase } from '@/lib/supabase'
 export async function GET(request: NextRequest) {
   try {
     // Check if user is authenticated to get user-specific alerts
-    const { data: { user } } = await supabase.auth.getUser()
-    
+    await supabase.auth.getUser()
+
     const { searchParams } = new URL(request.url)
     const userPlan = searchParams.get('plan') || 'free'
 
@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const { alertId } = await request.json()
-    
+
     if (!alertId) {
       return NextResponse.json({ error: 'Alert ID is required' }, { status: 400 })
     }

@@ -2,12 +2,14 @@ import { HeroSection } from "@/components/blocks/hero-section-dark"
 import NavbarV2 from './home-page-components/navbar-v2'
 import BgContainer from './home-page-components/bg-container'
 import GridOverlay from '@/components/ui/grid-layer'
+import { Footer } from '@/components/footer-section/Footer'
+import TestimonialSlider from '@/components/testimonial-section/TestimonialSlider'
 
 export default function Page() {
   return (
     <BgContainer>
       <GridOverlay />
-      <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-8 lg:px-8">
+      <div className="relative z-10 max-w-[1200px] mx-auto px-6">
         <NavbarV2 />
         <HeroSection
           title="AI Powered"
@@ -30,6 +32,8 @@ export default function Page() {
             darkLineColor: "#2a2a2a",
           }}
         />
+        <TestimonialSlider />
+        <Footer />
       </div>
     </BgContainer>
   )

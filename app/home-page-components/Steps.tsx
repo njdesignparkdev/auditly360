@@ -42,10 +42,10 @@ export default function Steps() {
       <div className="max-w-[1400px] mx-auto">
         {/* Header Section */}
         <div className="mb-6 md:mb-8 lg:mb-10 w-full text-left">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-black mb-4 raleway leading-tight lining-nums">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 font-jakarta mb-4">
             Audit in 3 Simple Steps
           </h2>
-          <p className="text-lg md:text-xl lg:text-2xl text-black/70 raleway">
+          <p className="text-gray-600 text-sm sm:text-base font-poppins">
             From URL input to insights in under 60 seconds
           </p>
         </div>

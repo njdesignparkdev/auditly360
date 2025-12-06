@@ -11,6 +11,7 @@ import PageAnalysisTab from './components/tabs/PageAnalysisTab';
 import ConnectionStatus from './components/ConnectionStatus';
 import { ScrapedPage } from './components/analysis-tab/types';
 import { useProjectsStore } from '@/lib/stores/projectsStore';
+import { Footer } from '@/components/footer-section/Footer';
 function DashboardContentWrapper() {
   const {
     user,
@@ -302,18 +303,22 @@ function DashboardContentWrapper() {
     <DashboardSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} activeTab={activeTab} onTabChange={handleTabChange} userProfile={userProfile} selectedProjectId={selectedProjectId} />
 
     {/* Main Content */}
-    <div className="lg:pl-60">
+    <div className="lg:pl-60 pb-8">
       {/* Header */}
       <DashboardHeader onMenuClick={() => setSidebarOpen(true)} userProfile={userProfile} />
 
       {/* Content */}
-      {activeTab === 'analysis' && selectedProjectId ? <div className="">
-        <AnalysisTab key={selectedProjectId} // Prevent unnecessary re-mounting
-          projectId={selectedProjectId} cachedData={getCachedAnalysisData(selectedProjectId)} onDataUpdate={(project, scrapedPages) => setCachedAnalysisData(selectedProjectId, project, scrapedPages)} onPageSelect={handlePageSelect} />
-      </div> : activeTab === 'page-analysis' && selectedPageId ? <div className="">
-        <PageAnalysisTab key={selectedPageId} // Prevent unnecessary re-mounting
-          pageId={selectedPageId} />
-      </div> : <DashboardContent activeTab={activeTab} userProfile={userProfile as any} onProjectSelect={handleProjectSelect} onUpdateProject={handleUpdateProject} onDeleteProject={handleDeleteProject} onRecrawlProject={handleRecrawlProject} />}
+      <div className="mb-8">
+        {activeTab === 'analysis' && selectedProjectId ? <div className="">
+          <AnalysisTab key={selectedProjectId} // Prevent unnecessary re-mounting
+            projectId={selectedProjectId} cachedData={getCachedAnalysisData(selectedProjectId)} onDataUpdate={(project, scrapedPages) => setCachedAnalysisData(selectedProjectId, project, scrapedPages)} onPageSelect={handlePageSelect} />
+        </div> : activeTab === 'page-analysis' && selectedPageId ? <div className="">
+          <PageAnalysisTab key={selectedPageId} // Prevent unnecessary re-mounting
+            pageId={selectedPageId} />
+        </div> : <DashboardContent activeTab={activeTab} userProfile={userProfile as any} onProjectSelect={handleProjectSelect} onUpdateProject={handleUpdateProject} onDeleteProject={handleDeleteProject} onRecrawlProject={handleRecrawlProject} />}
+      </div>
+
+      <Footer />
     </div>
     <ConnectionStatus />
   </div>;

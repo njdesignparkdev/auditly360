@@ -7,10 +7,10 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // GET /api/plans - Fetch all active plans for public use
-export async function GET(_request: NextRequest) {
+export async function GET() {
   try {
     const now = new Date().toISOString();
-    
+
     const { data: plans, error } = await supabase
       .from('plans')
       .select('*')
@@ -69,17 +69,17 @@ export async function GET(_request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    
+
     // Validate required fields
-    const { 
-      name, 
-      plan_type, 
-      price, 
-      currency, 
-      billing_cycle, 
-      features, 
-      can_use_features, 
-      max_projects, 
+    const {
+      name,
+      plan_type,
+      price,
+      currency,
+      billing_cycle,
+      features,
+      can_use_features,
+      max_projects,
       color,
       is_popular,
       limits,
@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
       razorpay_plan_id,
       subscription_id
     } = body;
-    
+
     if (!name || !plan_type) {
       return NextResponse.json(
         { error: 'Name and plan_type are required' },
@@ -145,13 +145,13 @@ export async function POST(request: NextRequest) {
     // If error is due to missing image_scan_credits column, retry without it
     if (error && error.message?.includes('image_scan_credits') && error.message?.includes('column')) {
       console.warn('⚠️ image_scan_credits column not found. Retrying without it. Please run: database/add_image_scan_credits_to_plans.sql');
-      const { image_scan_credits, ...planDataWithoutCredits } = planData;
+      const { image_scan_credits: _unused, ...planDataWithoutCredits } = planData;
       const retryResult = await supabase
         .from('plans')
         .insert([planDataWithoutCredits])
         .select()
         .single();
-      
+
       if (retryResult.error) {
         console.error('Error creating plan:', retryResult.error);
         return NextResponse.json(
@@ -159,7 +159,7 @@ export async function POST(request: NextRequest) {
           { status: 500 }
         );
       }
-      
+
       data = retryResult.data;
       error = null;
     } else if (error) {

@@ -1,25 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
-interface RazorpayPlan {
-  id: string;
-  amount: number;
-  currency: string;
-  interval: string;
-  interval_count: number;
-  status: string;
-  created_at: number;
-  item?: {
-    amount: number;
-    currency: string;
-    name: string;
-    description?: string;
-    notes?: {
-      features?: string[];
-      popular?: string;
-      color?: string;
-    };
-  };
-}
+
 interface RazorpaySubscription {
   id: string;
   plan_id: string;
@@ -31,7 +12,7 @@ const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID!,
   key_secret: process.env.RAZORPAY_KEY_SECRET!
 });
-export async function GET(_request: NextRequest) {
+export async function GET() {
   try {
     // Check if Razorpay keys are configured
     if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {

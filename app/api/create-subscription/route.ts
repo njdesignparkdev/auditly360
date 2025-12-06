@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { plan_id, customer_id, customer_details } = await request.json();
+    const { plan_id, customer_id } = await request.json();
 
     if (!plan_id) {
       return NextResponse.json(
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
 
     if (!plan.razorpay_plan_id || plan.razorpay_plan_id.trim() === '') {
       return NextResponse.json(
-        { 
+        {
           error: 'Razorpay plan ID not configured for this plan',
           details: 'Please configure a valid Razorpay plan ID in the admin panel before users can subscribe to this plan.'
         },
@@ -59,6 +59,7 @@ export async function POST(request: NextRequest) {
     const customerId = customer_id || undefined;
 
     // Create subscription using the razorpay_plan_id from database
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const subscriptionPayload: any = {
       plan_id: plan.razorpay_plan_id,
       customer_notify: 1,
@@ -94,6 +95,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const err = error as any;
     const statusCode = typeof err?.statusCode === 'number' ? err.statusCode : 500;
     const description = err?.error?.description || err?.message || err?.error || 'Unknown error';

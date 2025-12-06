@@ -9,10 +9,10 @@ export default function WhyChooseUsSection() {
       <div className="max-w-[1400px] mx-auto">
         {/* Heading Section */}
         <div className="mb-12 md:mb-16 lg:mb-20 max-w-4xl">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-black mb-4 raleway leading-tight lining-nums">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 font-jakarta mb-4">
             Why Choose Our Auditly?
           </h2>
-          <p className="text-lg md:text-xl lg:text-2xl text-black/70 raleway lining-nums">
+          <p className="text-gray-600 text-sm sm:text-base font-poppins">
             Get actionable insights that drive results
           </p>
         </div>

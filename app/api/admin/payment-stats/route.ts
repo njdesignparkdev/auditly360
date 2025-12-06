@@ -28,20 +28,7 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    // Helper function to build query with filters
-    const buildQuery = <T extends { gte: (col: string, val: unknown) => T; lte: (col: string, val: unknown) => T; eq: (col: string, val: unknown) => T }>(baseQuery: T): T => {
-      let query = baseQuery
-      if (startDate) {
-        query = query.gte('payment_date', startDate) as T
-      }
-      if (endDate) {
-        query = query.lte('payment_date', endDate) as T
-      }
-      if (planId) {
-        query = query.eq('plan_id', planId) as T
-      }
-      return query
-    }
+
 
     // Get total payments count
     let totalQuery = supabase.from('payments').select('*', { count: 'exact', head: true })
@@ -132,7 +119,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(stats)
   } catch (error) {
     console.error('Error in payment stats API:', error)
-    return NextResponse.json({ 
+    return NextResponse.json({
       error: 'Internal server error',
       details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 })
