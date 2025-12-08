@@ -36,8 +36,8 @@ export default function Page() {
             darkLineColor: "#2a2a2a",
           }}
         />
-        <UseCases />
         <HowItWorks />
+        <UseCases />
         <TestimonialSlider />
         <Pricing />
         <Footer />
