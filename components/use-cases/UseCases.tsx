@@ -55,17 +55,7 @@ export default function UseCases() {
             <div className="max-w-7xl mx-auto px-6">
                 
                 {/* Header */}
-                <div className="text-center mb-16">
-                    <motion.div 
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-gray-200 rounded-full text-xs font-semibold text-gray-600 mb-6 shadow-sm"
-                    >
-                        <span className="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-                        Use Cases
-                    </motion.div>
-                    
+                <div className="mb-16">
                     <motion.h2 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -81,7 +71,7 @@ export default function UseCases() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="text-lg text-gray-500 max-w-2xl mx-auto"
+                        className="text-lg text-gray-500 max-w-2xl"
                     >
                         Auditly helps professionals and businesses protect their visual content from unauthorized use across the web.
                     </motion.p>

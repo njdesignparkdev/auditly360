@@ -3,10 +3,9 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, DollarSign, CreditCard, TrendingUp } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 import AuditlyLogo from "@/components/blocks/auditly-logo";
-import AnimatedGlowingButton from "@/components/ui/animated-glowing-button";
 import NavbarDropdown from "@/components/navbar/navbar-dropdown";
 
 interface NavItem {
@@ -23,30 +22,7 @@ interface NavItem {
 const navItems: NavItem[] = [
     { name: "Home", href: "#" },
     { name: "Features", href: "#features" },
-    { 
-        name: "Pricing", 
-        href: "#pricing",
-        dropdown: [
-            {
-                title: "View Plans",
-                description: "See all pricing plans and features",
-                href: "#pricing",
-                icon: <DollarSign size={18} />
-            },
-            {
-                title: "Compare Plans",
-                description: "Compare features across all plans",
-                href: "#pricing",
-                icon: <TrendingUp size={18} />
-            },
-            {
-                title: "Billing & Payment",
-                description: "Manage your subscription and billing",
-                href: "#pricing",
-                icon: <CreditCard size={18} />
-            }
-        ]
-    },
+    { name: "Pricing", href: "#pricing" },
     { name: "How it Works", href: "#how-it-works" },
     { name: "Testimonials", href: "#testimonials" },
 ];
@@ -93,9 +69,12 @@ export default function NavbarV2() {
             {/* Dashboard Button & Mobile Toggle */}
             <div className="flex items-center gap-4">
                 <div className="hidden md:block">
-                    <AnimatedGlowingButton href="/dashboard" className="rounded-xl">
+                    <Link 
+                        href="/dashboard" 
+                        className="px-6 py-2.5 text-sm font-semibold text-gray-900 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-400 hover:scale-105 transition-all duration-200"
+                    >
                         Dashboard
-                    </AnimatedGlowingButton>
+                    </Link>
                 </div>
 
                 {/* Mobile Menu Toggle */}

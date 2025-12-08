@@ -94,7 +94,7 @@ const TestimonialSlider: React.FC = () => {
   const visibleDotIndex = ((currentIndex % testimonials.length) + testimonials.length) % testimonials.length;
 
   return (
-    <div className="px-4 py-16 bg-white">
+    <div className="px-4 py-8 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-12">

@@ -11,12 +11,23 @@ export default function HowItWorks() {
                 
                 {/* Section Header */}
                 <div className="mb-20">
+                    {/* Main Title */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.05 }}
+                        className="text-left mb-4"
+                    >
+                        <span className="text-orange-500 font-semibold text-sm uppercase tracking-wider">How It Works</span>
+                    </motion.div>
+
                     <motion.h2 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-jakarta"
+                        className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-jakarta text-left"
                     >
                         Detect Content Theft in 3 Steps
                     </motion.h2>
@@ -25,7 +36,7 @@ export default function HowItWorks() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="text-lg text-gray-500 max-w-2xl"
+                        className="text-lg text-gray-500 max-w-2xl text-left"
                     >
                         From URL input to legal-ready copyright evidence in under 60 seconds
                     </motion.p>
@@ -72,29 +83,40 @@ export default function HowItWorks() {
                                         <div className="w-3 h-3 rounded-full bg-green-400" />
                                     </div>
                                 </div>
-                                {/* Content */}
-                                <div className="p-8 space-y-4">
-                                    <div className="text-center mb-6">
-                                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-orange-50 text-orange-500 mb-4">
-                                            <Search size={32} strokeWidth={2} />
+                                
+                                {/* Content - Sequential Animation */}
+                                <div className="p-8 min-h-[320px] flex flex-col justify-center">
+                                    {/* Phase 1: URL Input (0-25%) */}
+                                    <motion.div
+                                        className="space-y-4"
+                                        animate={{
+                                            opacity: [1, 1, 1, 0, 0, 0, 0, 0, 0],
+                                            display: ['block', 'block', 'block', 'none', 'none', 'none', 'none', 'none', 'none']
+                                        }}
+                                        transition={{
+                                            duration: 12,
+                                            times: [0, 0.2, 0.25, 0.26, 0.5, 0.75, 0.8, 0.95, 1],
+                                            repeat: Infinity
+                                        }}
+                                    >
+                                        <div className="text-center mb-6">
+                                            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-orange-50 text-orange-500 mb-4">
+                                                <Search size={32} strokeWidth={2} />
+                                            </div>
+                                            <h4 className="text-xl font-bold text-gray-900 mb-2">Enter Your URL</h4>
+                                            <p className="text-sm text-gray-500">Paste your website URL below</p>
                                         </div>
-                                        <h4 className="text-xl font-bold text-gray-900 mb-2">Start Protection Scan</h4>
-                                        <p className="text-sm text-gray-500">Enter your website URL below</p>
-                                    </div>
-                                    <div className="relative">
-                                        {/* Input Box Container */}
+                                        
+                                        {/* Input with typewriter */}
                                         <div className="w-full h-[46px] px-4 bg-gray-50 border border-gray-200 rounded-xl flex items-center overflow-hidden">
-                                            {/* Typewriter Text */}
                                             <motion.div
                                                 className="text-gray-700 font-mono text-sm whitespace-nowrap overflow-hidden border-r-2 border-orange-500"
-                                                initial={{ width: "0%" }}
                                                 animate={{ 
-                                                    width: ["0%", "100%", "100%", "100%", "0%"],
-                                                    borderColor: ["transparent", "transparent", "#f97316", "transparent", "transparent"] 
+                                                    width: ["0%", "100%", "100%"],
                                                 }}
                                                 transition={{
-                                                    duration: 8,
-                                                    times: [0, 0.3, 0.35, 0.9, 1], // Type (30%), Wait, Clear
+                                                    duration: 12,
+                                                    times: [0, 0.15, 0.25],
                                                     repeat: Infinity,
                                                     ease: "linear"
                                                 }}
@@ -102,76 +124,133 @@ export default function HowItWorks() {
                                                 https://yourwebsite.com
                                             </motion.div>
                                         </div>
-
-                                        {/* Mouse Cursor Animation Sequence 
-                                            1. Hidden during typing (0-30%)
-                                            2. Appears (30%)
-                                            3. Moves to button (30-50%)
-                                            4. Clicks (55%)
-                                            5. Disappears (90%)
-                                        */}
-                                        <motion.div
-                                            className="absolute top-0 left-0 z-20 pointer-events-none"
+                                        
+                                        <motion.button
                                             animate={{
-                                                opacity: [0, 0, 1, 1, 0],
-                                                x: ['100px', '100px', '180px', '180px', '180px'],
-                                                y: ['20px', '20px', '76px', '76px', '76px'],
-                                                scale: [1, 1, 1, 0.9, 1]
+                                                scale: [1, 1, 0.95, 1],
+                                                backgroundColor: ['rgb(255, 255, 255)', 'rgb(255, 255, 255)', 'rgb(239, 70, 0)', 'rgb(239, 70, 0)'],
+                                                color: ['rgb(239, 70, 0)', 'rgb(239, 70, 0)', 'rgb(255, 255, 255)', 'rgb(255, 255, 255)']
                                             }}
                                             transition={{
-                                                duration: 8,
-                                                repeat: Infinity,
-                                                times: [0, 0.35, 0.36, 0.9, 0.95]
+                                                duration: 12,
+                                                times: [0, 0.2, 0.22, 0.25],
+                                                repeat: Infinity
                                             }}
+                                            className="w-full border border-gray-200 font-semibold py-3 px-6 rounded-xl flex items-center justify-center gap-2"
                                         >
-                                            <svg 
-                                                width="28" 
-                                                height="28" 
-                                                viewBox="0 0 24 24" 
-                                                fill="none" 
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="drop-shadow-lg"
-                                            >
-                                                <path 
-                                                    d="M3 3L10.07 19.97L12.58 12.58L19.97 10.07L3 3Z" 
-                                                    fill="#000000" 
-                                                    stroke="white" 
-                                                    strokeWidth="2" 
-                                                    strokeLinejoin="round"
-                                                />
-                                            </svg>
-                                        </motion.div>
-                                    </div>
-                                    <motion.button
+                                            <span>Scan Now</span>
+                                            <ArrowRight size={18} />
+                                        </motion.button>
+                                    </motion.div>
+
+                                    {/* Phase 2: Scanning (25-75%) */}
+                                    <motion.div
+                                        className="space-y-4"
                                         animate={{
-                                            scale: [1, 1, 1, 0.95, 1, 1],
-                                            backgroundColor: [
-                                                'rgb(255, 255, 255)',
-                                                'rgb(255, 255, 255)',
-                                                'rgb(239, 70, 0)',
-                                                'rgb(239, 70, 0)',
-                                                'rgb(255, 255, 255)',
-                                                'rgb(255, 255, 255)'
-                                            ],
-                                            color: [
-                                                'rgb(239, 70, 0)',
-                                                'rgb(239, 70, 0)',
-                                                'rgb(255, 255, 255)',
-                                                'rgb(255, 255, 255)',
-                                                'rgb(239, 70, 0)',
-                                                'rgb(239, 70, 0)'
-                                            ]
+                                            opacity: [0, 0, 0, 1, 1, 1, 0, 0, 0],
+                                            display: ['none', 'none', 'none', 'block', 'block', 'block', 'none', 'none', 'none']
                                         }}
                                         transition={{
-                                            duration: 8,
-                                            repeat: Infinity,
-                                            times: [0, 0.45, 0.5, 0.55, 0.6, 1] // Sync with cursor click at ~55%
+                                            duration: 12,
+                                            times: [0, 0.24, 0.26, 0.27, 0.5, 0.74, 0.76, 0.95, 1],
+                                            repeat: Infinity
                                         }}
-                                        className="w-full border border-gray-200 font-semibold py-3 px-6 rounded-xl flex items-center justify-center gap-2 relative overflow-hidden"
                                     >
-                                        <span className="relative z-10">Scan Now</span>
-                                        <ArrowRight size={18} className="relative z-10" />
-                                    </motion.button>
+                                        <div className="text-center mb-6">
+                                            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-50 text-blue-500 mb-4">
+                                                <motion.div
+                                                    animate={{ rotate: 360 }}
+                                                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                                >
+                                                    <Search size={32} strokeWidth={2} />
+                                                </motion.div>
+                                            </div>
+                                            <h4 className="text-xl font-bold text-gray-900 mb-2">Analyzing...</h4>
+                                            <p className="text-sm text-gray-500">Scanning your website</p>
+                                        </div>
+
+                                        {/* Skeleton bars */}
+                                        <div className="space-y-3">
+                                            {[25, 75, 50, 33, 66, 100, 40].map((width, i) => (
+                                                <div key={i} className={`h-3 bg-gray-200 rounded-md relative overflow-hidden`} style={{ width: `${width}%` }}>
+                                                    <motion.div
+                                                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent"
+                                                        animate={{ x: ['-100%', '200%'] }}
+                                                        transition={{ duration: 1.5, repeat: Infinity, ease: "linear", delay: i * 0.1 }}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        {/* Progress bar */}
+                                        <div className="relative h-2 bg-gray-200 rounded-full overflow-hidden mt-6">
+                                            <motion.div
+                                                className="absolute inset-y-0 left-0 bg-gradient-to-r from-orange-500 to-orange-600"
+                                                animate={{ width: ['0%', '100%'] }}
+                                                transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+                                            />
+                                        </div>
+                                    </motion.div>
+
+                                    {/* Phase 3: Results (75-100%) */}
+                                    <motion.div
+                                        className="space-y-4"
+                                        animate={{
+                                            opacity: [0, 0, 0, 0, 0, 0, 1, 1, 1],
+                                            display: ['none', 'none', 'none', 'none', 'none', 'none', 'block', 'block', 'block']
+                                        }}
+                                        transition={{
+                                            duration: 12,
+                                            times: [0, 0.24, 0.5, 0.74, 0.75, 0.76, 0.77, 0.95, 1],
+                                            repeat: Infinity
+                                        }}
+                                    >
+                                        <div className="flex items-center justify-between mb-4">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                                                    <FileText size={20} className="text-green-600" />
+                                                </div>
+                                                <div>
+                                                    <h4 className="font-bold text-gray-900">Scan Complete!</h4>
+                                                    <p className="text-xs text-green-600 font-semibold">3 Matches Found</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Comparison */}
+                                        <div className="flex items-stretch gap-3">
+                                            {/* Original */}
+                                            <div className="flex-1 space-y-2">
+                                                <div className="aspect-video bg-gray-100 rounded-lg border border-gray-200 relative overflow-hidden">
+                                                    <div className="absolute inset-0 bg-blue-500/10" />
+                                                    <div className="absolute top-2 left-2 w-12 h-2 bg-blue-200 rounded-sm" />
+                                                    <div className="absolute top-6 left-2 w-3/4 h-2 bg-gray-200 rounded-sm" />
+                                                    <div className="absolute bottom-0 right-0 w-12 h-12 bg-blue-500/20 rounded-tl-full" />
+                                                </div>
+                                                <p className="text-xs font-semibold text-center text-gray-500">Your Site</p>
+                                            </div>
+
+                                            {/* Match Badge */}
+                                            <div className="flex items-center justify-center">
+                                                <div className="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full">98%</div>
+                                            </div>
+
+                                            {/* Match */}
+                                            <div className="flex-1 space-y-2">
+                                                <div className="aspect-video bg-orange-50 rounded-lg border-2 border-orange-500/30 relative overflow-hidden">
+                                                    <div className="absolute inset-0 bg-orange-500/5" />
+                                                    <div className="absolute top-2 left-2 w-12 h-2 bg-orange-200 rounded-sm" />
+                                                    <div className="absolute top-6 left-2 w-3/4 h-2 bg-gray-200 rounded-sm" />
+                                                    <div className="absolute bottom-0 right-0 w-12 h-12 bg-orange-500/20 rounded-tl-full" />
+                                                </div>
+                                                <p className="text-xs font-semibold text-center text-orange-600">Match</p>
+                                            </div>
+                                        </div>
+
+                                        <button className="w-full bg-orange-600 text-white text-sm font-semibold py-2.5 rounded-lg">
+                                            View Full Report
+                                        </button>
+                                    </motion.div>
                                 </div>
                             </div>
                         </motion.div>

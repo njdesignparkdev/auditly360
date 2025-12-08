@@ -8,7 +8,7 @@ export default function GridOverlay() {
         Matches the max-w-7xl used in Navbar and Hero.
         px-4 sm:px-6 lg:px-8 aligns with the content padding.
       */}
-      <div className="mx-auto h-full max-w-[1200px]">
+      <div className="mx-auto h-full max-w-[1400px]">
         <div className="relative h-full w-full">
           {/* Left Border */}
           <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-900/20" />
