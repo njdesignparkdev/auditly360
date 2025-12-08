@@ -58,10 +58,93 @@ export async function POST(request: NextRequest) {
       error: userDataError
     } = await supabaseServiceClient.from('users').select('id, plan_type, plan_id, plan_expires_at, billing_cycle').eq('id', user.id).single();
     if (userDataError || !userData) {
-      console.error('Error fetching user data:', userDataError);
+      // Enhanced error logging with proper error extraction
+      let errorMessage = 'Unknown error';
+      let errorDetails = '';
+      let errorCode = '';
+      let errorHint = '';
+      
+      // Handle different error formats (fetch errors, Supabase errors, etc.)
+      if (userDataError) {
+        if (typeof userDataError === 'string') {
+          errorMessage = userDataError;
+          errorDetails = userDataError;
+        } else if (userDataError instanceof Error) {
+          errorMessage = userDataError.message;
+          errorDetails = userDataError.stack || userDataError.message;
+          // Check for fetch-related errors
+          if (userDataError.name === 'TypeError' && userDataError.message.includes('fetch')) {
+            errorCode = 'FETCH_ERROR';
+            errorDetails = `Network error: ${userDataError.message}`;
+          }
+        } else if (typeof userDataError === 'object') {
+          // Safely extract fields from an unknown object shape
+          const errObj = userDataError as Record<string, unknown>;
+          errorMessage =
+            (typeof errObj.message === 'string' && errObj.message) ||
+            (typeof errObj.error === 'string' && errObj.error) ||
+            'Unknown error';
+          errorDetails =
+            (typeof errObj.details === 'string' && errObj.details) ||
+            (typeof errObj.message === 'string' && errObj.message) ||
+            '';
+          errorCode = typeof errObj.code === 'string' ? errObj.code : '';
+          errorHint = typeof errObj.hint === 'string' ? errObj.hint : '';
+        }
+      }
+      
+      // Try to safely stringify the error for logging
+      let fullErrorString = '';
+      try {
+        if (userDataError instanceof Error) {
+          fullErrorString = JSON.stringify({
+            name: userDataError.name,
+            message: userDataError.message,
+            stack: userDataError.stack,
+            cause: userDataError.cause
+          }, null, 2);
+        } else {
+          fullErrorString = JSON.stringify(userDataError, Object.getOwnPropertyNames(userDataError || {}), 2);
+        }
+      } catch (stringifyError) {
+        fullErrorString = String(userDataError);
+      }
+      
+      const errorLog = {
+        message: errorMessage,
+        details: errorDetails,
+        hint: errorHint,
+        code: errorCode,
+        error: userDataError,
+        fullError: fullErrorString,
+        userId: user.id,
+        supabaseUrl: supabaseUrl ? 'configured' : 'missing',
+        hasServiceKey: !!supabaseServiceKey
+      };
+      
+      console.error('Error fetching user data:', errorLog);
+      
+      // Check for specific error types
+      let userFriendlyMessage = 'Failed to fetch user data';
+      if (errorMessage.includes('fetch failed') || errorMessage.includes('TypeError') || errorCode === 'FETCH_ERROR') {
+        userFriendlyMessage = 'Network error: Unable to connect to database. Please check:\n' +
+          '• Your Supabase URL is correct in .env.local\n' +
+          '• Your network connection is working\n' +
+          '• Supabase service is accessible\n' +
+          '• Firewall/proxy settings allow connections';
+      } else if (errorCode === 'PGRST116') {
+        userFriendlyMessage = 'User not found in database';
+      } else if (errorCode === '42501') {
+        userFriendlyMessage = 'Permission denied: Check RLS policies';
+      } else if (errorCode === 'PGRST301') {
+        userFriendlyMessage = 'Invalid API key or authentication failed';
+      }
+      
       return NextResponse.json({
-        error: 'Failed to fetch user data',
-        details: userDataError?.message || 'User not found'
+        error: userFriendlyMessage,
+        details: errorDetails || errorMessage || 'User not found',
+        code: errorCode || 'UNKNOWN_ERROR',
+        hint: errorHint
       }, {
         status: 500
       });
@@ -227,10 +310,35 @@ export async function GET(request: NextRequest) {
       error: userDataError
     } = await supabaseServiceClient.from('users').select('id, plan_type, plan_id, plan_expires_at, billing_cycle').eq('id', user.id).single();
     if (userDataError || !userData) {
-      console.error('Error fetching user data:', userDataError);
+      // Enhanced error logging
+      const errorDetails = {
+        message: userDataError?.message || 'Unknown error',
+        details: userDataError?.details || '',
+        hint: userDataError?.hint || '',
+        code: userDataError?.code || '',
+        error: userDataError,
+        fullError: JSON.stringify(userDataError, Object.getOwnPropertyNames(userDataError), 2),
+        userId: user.id,
+        supabaseUrl: supabaseUrl ? 'configured' : 'missing'
+      };
+      
+      console.error('Error fetching user data:', errorDetails);
+      
+      // Check for specific error types
+      let errorMessage = 'Failed to fetch user data';
+      if (userDataError?.message?.includes('fetch failed') || userDataError?.message?.includes('TypeError')) {
+        errorMessage = 'Network error: Unable to connect to database. Please check your Supabase configuration and network connection.';
+      } else if (userDataError?.code === 'PGRST116') {
+        errorMessage = 'User not found in database';
+      } else if (userDataError?.code === '42501') {
+        errorMessage = 'Permission denied: Check RLS policies';
+      }
+      
       return NextResponse.json({
-        error: 'Failed to fetch user data',
-        details: userDataError?.message || 'User not found'
+        error: errorMessage,
+        details: userDataError?.message || userDataError?.details || 'User not found',
+        code: userDataError?.code || 'UNKNOWN_ERROR',
+        hint: userDataError?.hint || ''
       }, {
         status: 500
       });
