@@ -39,11 +39,11 @@ export function Footer() {
                 <div className="flex flex-col gap-8 lg:w-1/4">
                     <a
                         href="mailto:hello@auditly360.com"
-                        className="inline-flex items-center gap-3 px-5 py-2.5 bg-white border border-[#FF8B42] rounded-full text-[#EF4600] hover:shadow-md transition-all shadow-sm w-fit group"
+                        className="inline-flex items-center gap-3 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-[#4A4A4A] hover:border-[#EF4600] hover:shadow-[0_4px_15px_rgba(255,139,66,0.25)] hover:scale-105 active:scale-95 transition-all duration-300 shadow-sm w-fit group"
                     >
-                        <Mail size={18} className="text-[#EF4600]" />
-                        <span className="font-medium text-sm bg-[linear-gradient(87.33deg,#FF8B42_3.83%,#EF4600_92.4%)] bg-clip-text text-transparent">hello@auditly360.com</span>
-                        <span className="text-[#EF4600] ml-1">&gt;</span>
+                        <Mail size={18} className="text-[#4A4A4A] group-hover:text-[#EF4600] group-hover:rotate-12 transition-all duration-300 ease-out" />
+                        <span className="font-medium text-sm text-[#4A4A4A] group-hover:text-[#EF4600] relative transition-colors duration-300">hello@auditly360.com</span>
+                        <span className="text-[#4A4A4A] group-hover:text-[#EF4600] ml-1 group-hover:translate-x-1 transition-all duration-300">&gt;</span>
                     </a>
 
                     {/* Social Icons - Below Email */}

@@ -4,6 +4,10 @@ import BgContainer from './home-page-components/bg-container'
 import GridOverlay from '@/components/ui/grid-layer'
 import { Footer } from '@/components/footer-section/Footer'
 import TestimonialSlider from '@/components/testimonial-section/TestimonialSlider'
+import HowItWorks from "@/components/how-it-works/HowItWorks"
+import UseCases from "@/components/use-cases/UseCases"
+
+import Pricing from "@/components/pricing-section/Pricing"
 
 export default function Page() {
   return (
@@ -32,7 +36,10 @@ export default function Page() {
             darkLineColor: "#2a2a2a",
           }}
         />
+        <UseCases />
+        <HowItWorks />
         <TestimonialSlider />
+        <Pricing />
         <Footer />
       </div>
     </BgContainer>

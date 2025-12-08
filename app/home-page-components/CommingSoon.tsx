@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { supabase } from "@/lib/supabase-client";
 
 export default function CommingSoon() {
@@ -181,7 +181,7 @@ export default function CommingSoon() {
             <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl">
               Get comprehensive website audits in minutes. Analyze SEO,
               performance, security, content, and branding with actionable
-              insights to improve your site's quality, speed, and visibility.
+              insights to improve your site&apos;s quality, speed, and visibility.
             </p>
 
             {/* Email Signup Form */}
@@ -333,7 +333,7 @@ export default function CommingSoon() {
                 Actionable Insights
               </h3>
               <p className="text-gray-600 text-sm">
-                Get specific recommendations to improve your site's quality,
+                Get specific recommendations to improve your site&apos;s quality,
                 speed, and visibility with prioritized action items.
               </p>
             </div>

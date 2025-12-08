@@ -1,0 +1,30 @@
+﻿Invoke-Expression : At 
+line:1 char:113
++ ... gram Files\nodejs/node
+_modules/npm/bin/npm-cli.js"
+ npm" "run" "build"
++                           
+                            
+                  ~
+The string is missing the 
+terminator: ".
+At C:\Program 
+Files\nodejs\npm.ps1:45 
+char:3
++   Invoke-Expression "& 
+`"$NODE_EXE`" 
+`"$NPM_CLI_JS`" $NPM_ARGS"
++   ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~
+    + CategoryInfo          
+    : ParserError: (:) [In  
+  voke-Expression], Parse   
+ Exception
+    + FullyQualifiedErrorId 
+    : TerminatorExpectedAt  
+  EndOfString,Microsoft.P   
+ owerShell.Commands.Invo    
+keExpressionCommand
+ 
+

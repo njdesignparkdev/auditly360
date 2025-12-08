@@ -70,13 +70,14 @@ export async function GET(request: NextRequest) {
 
     const planStatistics = Array.from(planStatsMap.values())
 
-
-
     // Fetch auth user data for users who might have Google auth
     const userIds = payments?.map(p => p.user_id).filter(Boolean) || [];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const authUserDataMap = new Map<string, any>();
-
+    type AuthUserData = {
+      raw_user_meta_data: Record<string, any>;
+      app_metadata: Record<string, any>;
+    };
+    const authUserDataMap = new Map<string, AuthUserData>();
+    
     // Fetch auth data for all unique user IDs
     if (userIds.length > 0) {
       try {

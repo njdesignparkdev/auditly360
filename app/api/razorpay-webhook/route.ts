@@ -86,21 +86,21 @@ export async function POST(request: NextRequest) {
 
 // Handle successful payment capture
 async function handlePaymentCaptured(_paymentData: PaymentData, _orderData: OrderData) {
-  try { } catch (error) {
+  try {} catch (error) {
     console.error('Error handling payment captured:', error);
   }
 }
 
 // Handle failed payment
 async function handlePaymentFailed(_paymentData: PaymentData, _orderData: OrderData) {
-  try { } catch (error) {
+  try {} catch (error) {
     console.error('Error handling payment failed:', error);
   }
 }
 
 // Handle order paid event
 async function handleOrderPaid(_paymentData: PaymentData, _orderData: OrderData) {
-  try { } catch (error) {
+  try {} catch (error) {
     console.error('Error handling order paid:', error);
   }
 }

@@ -13,7 +13,7 @@ export default function TestDatabase() {
 
     try {
       // Test 1: Basic connection
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('notify_me')
         .select('count')
         .limit(1);
@@ -93,7 +93,7 @@ export default function TestDatabase() {
           <h3 className="font-semibold mb-2">If tests fail, check:</h3>
           <ul className="list-disc list-inside space-y-1">
             <li>Your <code>.env.local</code> file has correct Supabase credentials</li>
-            <li>You've run the SQL script in your Supabase dashboard</li>
+            <li>You&apos;ve run the SQL script in your Supabase dashboard</li>
             <li>Your Supabase project is active and not paused</li>
             <li>RLS policies allow public inserts (as defined in the SQL script)</li>
           </ul>

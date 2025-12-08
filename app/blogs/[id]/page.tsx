@@ -27,15 +27,16 @@ interface BlogResponse {
 }
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   try {
+    const resolvedParams = await params
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-    const res = await fetch(`${baseUrl}/api/blogs/${params.id}`, {
+    const res = await fetch(`${baseUrl}/api/blogs/${resolvedParams.id}`, {
       next: { revalidate: 60 },
     })
 
@@ -80,9 +81,10 @@ const getAuthorName = (author: BlogAuthor | null) => {
 }
 
 export default async function BlogDetailPage({ params }: PageProps) {
+  const resolvedParams = await params
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
-  const res = await fetch(`${baseUrl}/api/blogs/${params.id}`, {
+  const res = await fetch(`${baseUrl}/api/blogs/${resolvedParams.id}`, {
     // Always get fresh data for now; can switch to revalidate if needed
     cache: 'no-store',
   })

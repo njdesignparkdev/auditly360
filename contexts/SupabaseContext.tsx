@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { User, Session } from "@supabase/supabase-js";
-import { supabase } from "@/lib/supabase-client";
+import { supabase, isSupabaseConfigured } from "@/lib/supabase-client";
 import type {
   UserProfile,
   SupabaseContextType,
@@ -97,6 +97,8 @@ export function SupabaseProvider({ children }: { children: React.ReactNode }) {
     retries = 3,
     delay = 1000
   ): Promise<boolean> => {
+    if (!isSupabaseConfigured) return false;
+
     for (let i = 0; i < retries; i++) {
       try {
         const {
@@ -438,7 +440,11 @@ export function SupabaseProvider({ children }: { children: React.ReactNode }) {
 
   const testDatabaseAccess = async () => {
     try {
-      // Test 1: Try to access users table with a simple query
+      // Skip test if Supabase is not configured (using fallback)
+      if (!isSupabaseConfigured) {
+        console.warn("⚠️ Supabase not configured (using fallback). Skipping connection test.");
+        return false;
+      }
 
       const {
         data: testData,

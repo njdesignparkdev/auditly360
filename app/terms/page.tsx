@@ -30,7 +30,7 @@ export default function TermsPage() {
                 1. Acceptance of Terms
               </h2>
               <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                By accessing and using Auditly360 ("the Service"), you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to abide by these terms, please do not use this service. Auditly360 provides a website auditing platform that analyzes content, SEO, performance, branding, and security risks through single-page checks and full-site crawls.
+                By accessing and using Auditly360 (&quot;the Service&quot;), you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to abide by these terms, please do not use this service. Auditly360 provides a website auditing platform that analyzes content, SEO, performance, branding, and security risks through single-page checks and full-site crawls.
               </p>
             </section>
 
@@ -150,7 +150,7 @@ export default function TermsPage() {
                 9. Disclaimer of Warranties
               </h2>
               <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                The Service is provided on an "as is" and "as available" basis. Auditly360 makes no warranties, expressed or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement. We do not warrant that the Service will be uninterrupted, error-free, or completely secure. Audit results are provided for informational purposes and should not be considered as professional advice.
+                The Service is provided on an &quot;as is&quot; and &quot;as available&quot; basis. Auditly360 makes no warranties, expressed or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement. We do not warrant that the Service will be uninterrupted, error-free, or completely secure. Audit results are provided for informational purposes and should not be considered as professional advice.
               </p>
             </section>
 

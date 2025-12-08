@@ -1,0 +1,40 @@
+﻿components/hero-section-1.tsx(80,48): error TS2322: Type '{ item: { hidden: { opacity: number; filter: string; y: number; }; visible: { opacity: number; filter: string; y: number; transition: { type: string; bounce: number; duration: number; }; }; }; }' is not assignable to type '{ container?: Variants | undefined; item?: Variants | undefined; }'.
+  Types of property 'item' are incompatible.
+    Type '{ hidden: { opacity: number; filter: string; y: number; }; visible: { opacity: number; filter: string; y: number; transition: { type: string; bounce: number; duration: number; }; }; }' is not assignable to type 'Variants'.
+      Property 'visible' is incompatible with index signature.
+        Type '{ opacity: number; filter: string; y: number; transition: { type: string; bounce: number; duration: number; }; }' is not assignable to type 'Variant'.
+          Type '{ opacity: number; filter: string; y: number; transition: { type: string; bounce: number; duration: number; }; }' is not assignable to type 'TargetAndTransition'.
+            Type '{ opacity: number; filter: string; y: number; transition: { type: string; bounce: number; duration: number; }; }' is not assignable to type '{ transition?: Transition<any> | undefined; transitionEnd?: ResolvedValues | undefined; }'.
+              Types of property 'transition' are incompatible.
+                Type '{ type: string; bounce: number; duration: number; }' is not assignable to type 'Transition<any> | undefined'.
+                  Type '{ type: string; bounce: number; duration: number; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+                    Type '{ type: string; bounce: number; duration: number; }' is not assignable to type 'ValueAnimationTransition<any>'.
+                      Types of property 'type' are incompatible.
+                        Type 'string' is not assignable to type 'AnimationGeneratorType | undefined'.
+components/hero-section-1.tsx(113,37): error TS2322: Type '{ item: { hidden: { opacity: number; filter: string; y: number; }; visible: { opacity: number; filter: string; y: number; transition: { type: string; bounce: number; duration: number; }; }; }; container: { visible: { ...; }; }; }' is not assignable to type '{ container?: Variants | undefined; item?: Variants | undefined; }'.
+  Types of property 'item' are incompatible.
+    Type '{ hidden: { opacity: number; filter: string; y: number; }; visible: { opacity: number; filter: string; y: number; transition: { type: string; bounce: number; duration: number; }; }; }' is not assignable to type 'Variants'.
+      Property 'visible' is incompatible with index signature.
+        Type '{ opacity: number; filter: string; y: number; transition: { type: string; bounce: number; duration: number; }; }' is not assignable to type 'Variant'.
+          Type '{ opacity: number; filter: string; y: number; transition: { type: string; bounce: number; duration: number; }; }' is not assignable to type 'TargetAndTransition'.
+            Type '{ opacity: number; filter: string; y: number; transition: { type: string; bounce: number; duration: number; }; }' is not assignable to type '{ transition?: Transition<any> | undefined; transitionEnd?: ResolvedValues | undefined; }'.
+              Types of property 'transition' are incompatible.
+                Type '{ type: string; bounce: number; duration: number; }' is not assignable to type 'Transition<any> | undefined'.
+                  Type '{ type: string; bounce: number; duration: number; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+                    Type '{ type: string; bounce: number; duration: number; }' is not assignable to type 'ValueAnimationTransition<any>'.
+                      Types of property 'type' are incompatible.
+                        Type 'string' is not assignable to type 'AnimationGeneratorType | undefined'.
+components/hero-section-1.tsx(152,29): error TS2322: Type '{ item: { hidden: { opacity: number; filter: string; y: number; }; visible: { opacity: number; filter: string; y: number; transition: { type: string; bounce: number; duration: number; }; }; }; container: { visible: { ...; }; }; }' is not assignable to type '{ container?: Variants | undefined; item?: Variants | undefined; }'.
+  Types of property 'item' are incompatible.
+    Type '{ hidden: { opacity: number; filter: string; y: number; }; visible: { opacity: number; filter: string; y: number; transition: { type: string; bounce: number; duration: number; }; }; }' is not assignable to type 'Variants'.
+      Property 'visible' is incompatible with index signature.
+        Type '{ opacity: number; filter: string; y: number; transition: { type: string; bounce: number; duration: number; }; }' is not assignable to type 'Variant'.
+          Type '{ opacity: number; filter: string; y: number; transition: { type: string; bounce: number; duration: number; }; }' is not assignable to type 'TargetAndTransition'.
+            Type '{ opacity: number; filter: string; y: number; transition: { type: string; bounce: number; duration: number; }; }' is not assignable to type '{ transition?: Transition<any> | undefined; transitionEnd?: ResolvedValues | undefined; }'.
+              Types of property 'transition' are incompatible.
+                Type '{ type: string; bounce: number; duration: number; }' is not assignable to type 'Transition<any> | undefined'.
+                  Type '{ type: string; bounce: number; duration: number; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+                    Type '{ type: string; bounce: number; duration: number; }' is not assignable to type 'ValueAnimationTransition<any>'.
+                      Types of property 'type' are incompatible.
+                        Type 'string' is not assignable to type 'AnimationGeneratorType | undefined'.
+components/sections/hero/default.tsx(13,25): error TS2307: Cannot find module '../../ui/section' or its corresponding type declarations.
