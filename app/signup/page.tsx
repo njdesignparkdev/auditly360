@@ -374,7 +374,7 @@ export default function SignupPage() {
                 />
                 <label htmlFor="agreeToTerms" className="ml-2 text-sm text-gray-700">
                   I agree to the{' '}
-                  <Link href="#" style={{ color: '#FF4B01' }} className="hover:opacity-80 transition-opacity font-medium cursor-pointer">
+                  <Link href="//terms" style={{ color: '#FF4B01' }} className="hover:opacity-80 transition-opacity font-medium cursor-pointer">
                     Terms & Conditions
                   </Link>
                 </label>

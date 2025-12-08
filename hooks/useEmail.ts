@@ -1,7 +1,15 @@
 import { useState } from 'react';
 
+type TemplateType =
+  | 'welcome'
+  | 'confirmation'
+  | 'password-reset'
+  | 'plan-expiry'
+  | 'plan-update'
+  | 'plan-downgrade';
+
 interface EmailOptions {
-  type: 'welcome' | 'confirmation' | 'password-reset' | 'plan-expiry';
+  type: TemplateType;
   email: string;
   firstName?: string;
   lastName?: string;
@@ -9,6 +17,12 @@ interface EmailOptions {
   resetUrl?: string;
   planName?: string;
   expiryDate?: string;
+  oldPlanName?: string;
+  newPlanName?: string;
+  effectiveDate?: string;
+  dashboardUrl?: string;
+  templateId?: string;
+  variables?: Record<string, string>;
 }
 
 interface EmailResult {
@@ -26,12 +40,17 @@ export function useEmail() {
     setError(null);
 
     try {
+      const payload = {
+        ...options,
+        templateType: options.type,
+      };
+
       const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(options),
+        body: JSON.stringify(payload),
       });
 
       const result = await response.json();
@@ -104,6 +123,44 @@ export function useEmail() {
     });
   };
 
+  const sendPlanUpdateEmail = async (
+    email: string,
+    firstName: string,
+    oldPlanName: string,
+    newPlanName: string,
+    effectiveDate: string,
+    dashboardUrl?: string
+  ): Promise<EmailResult> => {
+    return sendEmail({
+      type: 'plan-update',
+      email,
+      firstName,
+      oldPlanName,
+      newPlanName,
+      effectiveDate,
+      dashboardUrl,
+    });
+  };
+
+  const sendPlanDowngradeEmail = async (
+    email: string,
+    firstName: string,
+    oldPlanName: string,
+    newPlanName: string,
+    effectiveDate: string,
+    dashboardUrl?: string
+  ): Promise<EmailResult> => {
+    return sendEmail({
+      type: 'plan-downgrade',
+      email,
+      firstName,
+      oldPlanName,
+      newPlanName,
+      effectiveDate,
+      dashboardUrl,
+    });
+  };
+
   const testEmailConfiguration = async (email: string): Promise<EmailResult> => {
     setIsLoading(true);
     setError(null);
@@ -139,6 +196,8 @@ export function useEmail() {
     sendConfirmationEmail,
     sendPasswordResetEmail,
     sendPlanExpiryEmail,
+    sendPlanUpdateEmail,
+    sendPlanDowngradeEmail,
     testEmailConfiguration,
     isLoading,
     error,

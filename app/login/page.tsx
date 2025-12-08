@@ -134,16 +134,19 @@ function LoginPageContent() {
     setIsSendingReset(true);
 
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(forgotPasswordEmail, {
-        redirectTo: `${window.location.origin}/auth/callback?next=/reset-password`,
+      const response = await fetch('/api/auth/send-password-reset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: forgotPasswordEmail }),
       });
 
-      if (error) {
-        setError(error.message || "Failed to send password reset email");
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        setError(result.error || "Failed to send password reset email");
       } else {
         setSuccess("Password reset email sent! Please check your inbox for further instructions.");
         setForgotPasswordEmail("");
-        // Optionally hide the form after success
         setTimeout(() => {
           setShowForgotPassword(false);
         }, 3000);
@@ -268,6 +271,18 @@ function LoginPageContent() {
             {success && (
               <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
                 <p className="text-sm text-green-800">{success}</p>
+                {!showForgotPassword && (
+                  <div className="mt-3">
+                    <button
+                      onClick={handleResendEmail}
+                      disabled={isResending}
+                      style={{ color: '#FF4B01' }}
+                      className="text-sm font-medium hover:opacity-80 transition-opacity disabled:opacity-50 cursor-pointer"
+                    >
+                      {isResending ? 'Sending...' : 'Resend confirmation email'}
+                    </button>
+                  </div>
+                )}
               </div>
             )}
 

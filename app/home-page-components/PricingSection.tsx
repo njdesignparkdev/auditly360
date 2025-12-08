@@ -392,6 +392,16 @@ export default function PricingSection({
       alert("Free plan selected! No payment required.");
       return;
     }
+
+  // Require authentication before starting the payment flow
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session) {
+    window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname)}`;
+    return;
+  }
+
     setLoading(plan.id);
     setPaymentSuccess(null);
     try {

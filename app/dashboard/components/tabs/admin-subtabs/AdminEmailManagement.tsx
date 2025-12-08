@@ -702,7 +702,7 @@ export default function AdminEmailManagement({}: AdminEmailManagementProps) {
             </div>
 
             {/* All Template Types Management */}
-            <div className="mt-8">
+            {/* <div className="mt-8">
               <div className="flex justify-between items-center mb-4">
                 <h4 className="text-lg font-semibold text-black">All Template Types</h4>
                 <button
@@ -760,7 +760,7 @@ export default function AdminEmailManagement({}: AdminEmailManagementProps) {
                   <p className="text-[#ff4b01] text-sm">No custom template types yet. Click &quot;Add Custom Type&quot; to create your first one.</p>
                 </div>
               )}
-            </div>
+            </div> */}
           </div>
         )}
 

@@ -56,6 +56,7 @@ export default function AdminBlogEditor({}: AdminBlogEditorProps) {
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [creatingBucket, setCreatingBucket] = useState(false)
   const [bucketStatus, setBucketStatus] = useState<'unknown' | 'exists' | 'missing'>('unknown')
+  const [deleting, setDeleting] = useState(false)
 
   const generateSlug = (title: string) =>
     title
@@ -115,6 +116,12 @@ export default function AdminBlogEditor({}: AdminBlogEditorProps) {
   const handleNewBlog = () => {
     resetForm()
     setShowForm(true)
+  }
+
+  const getStoragePathFromUrl = (url: string | null | undefined) => {
+    if (!url) return null
+    const match = url.match(/blog-images\/([^?]+)/)
+    return match && match[1] ? decodeURIComponent(match[1]) : null
   }
 
   const handleEditBlog = (blog: BlogRow) => {
@@ -516,6 +523,51 @@ export default function AdminBlogEditor({}: AdminBlogEditorProps) {
       }
     } finally {
       setUploadingImage(false)
+    }
+  }
+
+  const handleDeleteBlog = async () => {
+    if (!editingBlog) return
+
+    const confirmDelete = confirm(
+      `Delete this blog post?\n\nTitle: ${editingBlog.title}\n\n` +
+        `This will also attempt to delete the featured image from storage if present.`
+    )
+    if (!confirmDelete) return
+
+    try {
+      setDeleting(true)
+      setError(null)
+
+      // Attempt to delete featured image if it exists
+      const imagePath = getStoragePathFromUrl(editingBlog.featured_image_url)
+      if (imagePath) {
+        const { error: storageError } = await supabase.storage
+          .from('blog-images')
+          .remove([imagePath])
+
+        if (storageError) {
+          console.warn('Failed to delete featured image from storage:', storageError)
+        }
+      }
+
+      // Delete blog record
+      const { error } = await supabase.from('blogs').delete().eq('id', editingBlog.id)
+
+      if (error) {
+        console.error('Error deleting blog:', error)
+        alert(error.message || 'Failed to delete blog')
+        return
+      }
+
+      setShowForm(false)
+      resetForm()
+      await loadBlogs()
+    } catch (err) {
+      console.error('Unexpected error deleting blog:', err)
+      alert(err instanceof Error ? err.message : 'Failed to delete blog')
+    } finally {
+      setDeleting(false)
     }
   }
 
@@ -1103,19 +1155,28 @@ export default function AdminBlogEditor({}: AdminBlogEditorProps) {
             </div>
 
             <div className="flex justify-end space-x-2 mt-6">
+              {editingBlog && (
+                <button
+                  onClick={handleDeleteBlog}
+                  disabled={saving || deleting}
+                  className="px-4 py-2 text-red-600 border border-red-300 rounded-md hover:bg-red-50 disabled:opacity-50"
+                >
+                  {deleting ? 'Deleting...' : 'Delete'}
+                </button>
+              )}
               <button
                 onClick={() => {
                   setShowForm(false)
                   resetForm()
                 }}
-                disabled={saving}
+                disabled={saving || deleting}
                 className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveBlog}
-                disabled={saving}
+                disabled={saving || deleting}
                 className="px-4 py-2 bg-[#ff4b01] text-white rounded-md hover:bg-[#e64401] disabled:opacity-50"
               >
                 {saving ? 'Saving...' : editingBlog ? 'Update Post' : 'Create Post'}

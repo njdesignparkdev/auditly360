@@ -2,6 +2,23 @@ import { supabase } from '@/lib/supabase-client';
 import { User } from '@supabase/supabase-js';
 import type { UserProfile } from './supabase-types';
 
+const sendConfirmationViaApi = async (email: string, firstName?: string, lastName?: string) => {
+  try {
+    const res = await fetch('/api/auth/send-confirmation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, firstName, lastName }),
+    });
+    const result = await res.json();
+    if (!res.ok || !result.success) {
+      return { error: { message: result.error || 'Failed to send confirmation email' } as any };
+    }
+    return { error: null };
+  } catch (error) {
+    return { error: error as any };
+  }
+};
+
 const signUp = async (
   email: string,
   password: string,
@@ -15,6 +32,9 @@ const signUp = async (
   });
 
   if (error) return { error };
+
+  // Send our branded confirmation email using DB template
+  await sendConfirmationViaApi(email, firstName, lastName);
 
   if (data.user && !data.user.email_confirmed_at) {
     return {
@@ -47,8 +67,7 @@ const signOut = async () => {
 };
 
 const resendConfirmation = async (email: string) => {
-  const { error } = await supabase.auth.resend({ type: 'signup', email });
-  return { error };
+  return sendConfirmationViaApi(email);
 };
 
 const updateProfile = async (user: User | null, updates: Partial<UserProfile>) => {

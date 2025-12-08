@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { supabase } from '@/lib/supabase-client'
+import { ResetPasswordForm } from './ResetPasswordForm'
 
 interface SecurityProps {
   userProfile: {
@@ -29,12 +30,16 @@ export default function Security({ userProfile }: SecurityProps) {
     setMessage(null)
     
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(userProfile.email, {
-        redirectTo: `${window.location.origin}/auth/callback?next=/dashboard`
+      const response = await fetch('/api/auth/send-password-reset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: userProfile.email }),
       })
-      
-      if (error) {
-        setMessage({ type: 'error', text: 'Failed to send password reset email. Please try again.' })
+
+      const result = await response.json()
+
+      if (!response.ok || !result.success) {
+        setMessage({ type: 'error', text: result.error || 'Failed to send password reset email. Please try again.' })
       } else {
         setMessage({ type: 'success', text: 'Password reset email sent! Check your inbox for further instructions.' })
         setIsResettingPassword(false)
@@ -81,14 +86,16 @@ export default function Security({ userProfile }: SecurityProps) {
             Reset Your Password
           </motion.h2>
           
-          <motion.p 
-            className="text-sm text-gray-600 mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            We&apos;ll send you a secure link to reset your password at <strong>{userProfile.email}</strong>
-          </motion.p>
+          {!isResettingPassword && (
+            <motion.p 
+              className="text-sm text-gray-600 mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              We&apos;ll send you a secure link to reset your password at <strong>{userProfile.email}</strong>
+            </motion.p>
+          )}
 
           {/* Message Display */}
           {message && (
@@ -116,39 +123,61 @@ export default function Security({ userProfile }: SecurityProps) {
             </motion.div>
           )}
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="space-y-4"
-          >
-            <button
-              onClick={handlePasswordReset}
-              disabled={isLoading}
-              className="w-full bg-[#ff4b01] text-white px-4 py-2 rounded hover:bg-[#e64401] transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+          {!isResettingPassword && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="space-y-4"
             >
-              {isLoading ? (
-                <div className="flex items-center justify-center">
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Sending Reset Email...
-                </div>
-              ) : (
-                'Send Password Reset Email'
-              )}
-            </button>
+              <button
+                onClick={handlePasswordReset}
+                disabled={isLoading}
+                className="w-full bg-[#ff4b01] text-white px-4 py-2 rounded hover:bg-[#e64401] transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+              >
+                {isLoading ? (
+                  <div className="flex items-center justify-center">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Sending Reset Email...
+                  </div>
+                ) : (
+                  'Send Password Reset Email'
+                )}
+              </button>
 
-            <motion.p 
-              className="text-xs text-gray-500"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-            >
-              Didn&apos;t receive the email? Check your spam folder or try again.
-            </motion.p>
-          </motion.div>
+              <button
+                type="button"
+                onClick={() => setIsResettingPassword(true)}
+                className="w-full text-sm text-[#ff4b01] font-semibold hover:opacity-80"
+              >
+                Already have the link? Set a new password now
+              </button>
+
+              <motion.p 
+                className="text-xs text-gray-500"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+              >
+                Didn&apos;t receive the email? Check your spam folder or try again.
+              </motion.p>
+            </motion.div>
+          )}
+
+          {isResettingPassword && (
+            <div className="mt-4">
+              <ResetPasswordForm
+                onSuccess={() => {
+                  setIsResettingPassword(false)
+                  setMessage({ type: 'success', text: 'Password updated.' })
+                }}
+                onCancel={() => setIsResettingPassword(false)}
+              />
+            </div>
+          )}
         </div>
       </motion.div>
 
