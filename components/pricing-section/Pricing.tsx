@@ -22,6 +22,7 @@ const plans = [
     {
         name: 'Pro Plan',
         price: '50.00',
+        yearlyPrice: '1188.00',
         period: 'per month',
         description: 'For growing brands and creators',
         features: [
@@ -39,6 +40,7 @@ const plans = [
     {
         name: 'Enterprise Plan',
         price: '159.00',
+        yearlyPrice: '1908.00',
         period: 'per month',
         description: 'For agencies and large organizations',
         features: [
@@ -58,8 +60,19 @@ export default function Pricing() {
     const [isYearly, setIsYearly] = useState(false);
 
     return (
-        <section className="w-full py-24 bg-white">
-            <div className="max-w-7xl mx-auto px-6">
+        <section className="w-full py-24 bg-white relative overflow-hidden" data-border="true" data-framer-name="Section Structure">
+            {/* Grid borders */}
+            <div className="absolute inset-0 pointer-events-none">
+                {/* Left border */}
+                <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-900/20" />
+                {/* Right border */}
+                <div className="absolute right-0 top-0 bottom-0 w-px bg-gray-900/20" />
+                {/* Top border */}
+                <div className="absolute top-0 left-0 right-0 h-px bg-gray-900/20" />
+                {/* Bottom border */}
+                <div className="absolute bottom-0 left-0 right-0 h-px bg-gray-900/20" />
+            </div>
+            <div className="max-w-7xl mx-auto px-6 relative z-10">
                 
                 {/* Header & Toggle */}
                 <div className="text-center mb-16 space-y-4">
@@ -67,7 +80,7 @@ export default function Pricing() {
                         Simple, transparent pricing
                     </h2>
                     
-                    <div className="flex items-center justify-center gap-4 mt-8">
+                    <div className="flex flex-col items-center justify-center gap-3 mt-8">
                         <div className="bg-gray-100 p-1 rounded-full flex items-center relative">
                             <button 
                                 onClick={() => setIsYearly(false)}
@@ -110,9 +123,15 @@ export default function Pricing() {
                                 <div className="flex items-baseline gap-1">
                                     {plan.price !== 'Free' && <span className="text-2xl font-bold text-gray-900">$</span>}
                                     <span className="text-5xl font-bold text-gray-900">
-                                        {isYearly && plan.price !== 'Free' ? (Number(plan.price) * 0.83).toFixed(2) : plan.price}
+                                        {isYearly && plan.price !== 'Free' && plan.yearlyPrice
+                                            ? plan.yearlyPrice
+                                            : plan.price}
                                     </span>
-                                    {plan.period && <span className="text-gray-500 font-medium ml-2">{plan.period}</span>}
+                                    {plan.period && (
+                                        <span className="text-gray-500 font-medium ml-2">
+                                            {isYearly && plan.price !== 'Free' ? 'per year' : plan.period}
+                                        </span>
+                                    )}
                                 </div>
                             </div>
 

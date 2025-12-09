@@ -39,7 +39,7 @@ export function HeroSection() {
                     <div className="h-[80rem] -translate-y-[350px] absolute left-0 top-0 w-56 -rotate-45 bg-[radial-gradient(50%_50%_at_50%_50%,hsla(21,90%,75%,.08)_0,hsla(21,100%,45%,.05)_80%,transparent_100%)]" />
                 </div>
                 <section>
-                    <div className="relative pt-24 md:pt-36">
+                    <div className="relative md:pt-36">
                         <AnimatedGroup
                             variants={{
                                 container: {

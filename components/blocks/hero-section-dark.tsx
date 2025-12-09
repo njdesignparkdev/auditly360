@@ -1,9 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import { DashboardMockup } from "@/components/blocks/dashboard-mockup";
 
 
@@ -65,6 +62,7 @@ export function HeroSection({
 
                 {/* CTA Button */}
                 <div className="mb-8">
+                    <span className="sr-only">{title}</span>
                     <Button
                         asChild
                         size="lg"

@@ -94,8 +94,19 @@ const TestimonialSlider: React.FC = () => {
   const visibleDotIndex = ((currentIndex % testimonials.length) + testimonials.length) % testimonials.length;
 
   return (
-    <div className="px-4 py-8 bg-white">
-      <div className="max-w-7xl mx-auto">
+    <div className="px-4 py-8 bg-white relative" data-border="true" data-framer-name="Section Structure">
+      {/* Grid borders */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Left border */}
+        <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-900/20" />
+        {/* Right border */}
+        <div className="absolute right-0 top-0 bottom-0 w-px bg-gray-900/20" />
+        {/* Top border */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gray-900/20" />
+        {/* Bottom border */}
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gray-900/20" />
+      </div>
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <div className="mb-12">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 font-jakarta mb-2">
