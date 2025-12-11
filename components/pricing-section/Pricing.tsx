@@ -60,19 +60,7 @@ export default function Pricing() {
     const [isYearly, setIsYearly] = useState(false);
 
     return (
-        <section className="w-full py-24 bg-white relative overflow-hidden" data-border="true" data-framer-name="Section Structure">
-            {/* Grid borders */}
-            <div className="absolute inset-0 pointer-events-none">
-                {/* Left border */}
-                <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-900/20" />
-                {/* Right border */}
-                <div className="absolute right-0 top-0 bottom-0 w-px bg-gray-900/20" />
-                {/* Top border */}
-                <div className="absolute top-0 left-0 right-0 h-px bg-gray-900/20" />
-                {/* Bottom border */}
-                <div className="absolute bottom-0 left-0 right-0 h-px bg-gray-900/20" />
-            </div>
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <section className="w-full mt-8 pt-8 pb-10 px-4 sm:px-6 lg:px-8 relative text-gray-900" data-border="true" data-framer-name="Section Structure">
                 
                 {/* Header & Toggle */}
                 <div className="text-center mb-16 space-y-4">
@@ -157,7 +145,6 @@ export default function Pricing() {
                     ))}
                 </div>
 
-            </div>
         </section>
     );
 }

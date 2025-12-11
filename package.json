@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "remove-console-logs": "node scripts/remove-console-logs.js",
@@ -37,6 +37,7 @@
     "framer-motion": "^12.23.25",
     "gsap": "^3.13.0",
     "lucide-react": "^0.555.0",
+    "motion": "^12.23.26",
     "next": "15.5.3",
     "next-themes": "^0.4.6",
     "nodemailer": "^7.0.9",
@@ -45,6 +46,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-quill": "^2.0.0",
+    "react-use-measure": "^2.1.7",
     "recharts": "^3.2.1",
     "tailwind-merge": "^3.4.0",
     "zustand": "^5.0.8"

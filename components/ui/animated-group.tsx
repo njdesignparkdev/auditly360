@@ -149,8 +149,6 @@ function AnimatedGroup({
   const containerVariants = variants?.container || selectedVariants.container;
   const itemVariants = variants?.item || selectedVariants.item;
 
-  const childrenArray = React.Children.toArray(children);
-
   return (
     <motion.div
       initial='hidden'
@@ -158,18 +156,11 @@ function AnimatedGroup({
       variants={containerVariants}
       className={cn(className)}
     >
-      {childrenArray.map((child, index) => {
-        // Use a more stable key - prefer React key if available, otherwise use index
-        const key = React.isValidElement(child) && child.key != null 
-          ? child.key 
-          : `animated-group-item-${index}`;
-        
-        return (
-          <motion.div key={key} variants={itemVariants}>
-            {child}
-          </motion.div>
-        );
-      })}
+      {React.Children.map(children, (child, index) => (
+        <motion.div key={index} variants={itemVariants}>
+          {child}
+        </motion.div>
+      ))}
     </motion.div>
   );
 }

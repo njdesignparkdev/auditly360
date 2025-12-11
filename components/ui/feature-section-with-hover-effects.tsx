@@ -3,14 +3,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import {
-  IconAdjustmentsBolt,
-  IconCloud,
-  IconCurrencyDollar,
-  IconEaseInOut,
-  IconHeart,
-  IconHelp,
-  IconRouteAltLeft,
-  IconTerminal2,
   IconCode,
   IconShoppingBag,
   IconFileText,
@@ -65,7 +57,7 @@ export function FeaturesSectionWithHoverEffects() {
     },
   ];
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 relative z-10 py-10 max-w-7xl mx-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 relative z-10">
       {features.map((feature, index) => (
         <Feature key={feature.title} {...feature} index={index} />
       ))}
@@ -77,8 +69,8 @@ const Feature = ({ title, description, icon, index }: FeatureItem & { index: num
   return (
     <div
       className={cn(
-        "flex flex-col lg:border-r py-10 relative group/feature dark:border-neutral-800",
-        (index === 0 || index === 3 || index === 6) && "lg:border-l dark:border-neutral-800",
+        "flex flex-col py-10 relative group/feature dark:border-neutral-800",
+        (index === 0 || index === 1 || index === 3 || index === 4) && "lg:border-r dark:border-neutral-800",
         index < 3 && "lg:border-b dark:border-neutral-800"
       )}
     >

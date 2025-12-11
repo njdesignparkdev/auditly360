@@ -1,451 +1,270 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Globe, Zap, BarChart3, ArrowRight, Search, FileText } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { UserPlus, Search, FileCheck, Globe, FileText, ArrowRight } from "lucide-react";
 
 export default function HowItWorks() {
-    return (
-        <section className="w-full py-24 bg-white relative overflow-hidden" data-border="true" data-framer-name="Section Structure">
-            {/* Grid borders */}
-            <div className="absolute inset-0 pointer-events-none">
-                {/* Left border */}
-                <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-900/20" />
-                {/* Right border */}
-                <div className="absolute right-0 top-0 bottom-0 w-px bg-gray-900/20" />
-                {/* Top border */}
-                <div className="absolute top-0 left-0 right-0 h-px bg-gray-900/20" />
-                {/* Bottom border */}
-                <div className="absolute bottom-0 left-0 right-0 h-px bg-gray-900/20" />
+  const [currentStep, setCurrentStep] = useState(0);
+
+  useEffect(() => {
+    // 7 seconds total loop -> ~2.33s per step
+    const timer = setInterval(() => {
+      setCurrentStep((prev) => (prev + 1) % 3);
+    }, 2333); 
+    return () => clearInterval(timer);
+  }, []);
+
+  const steps = [
+    {
+      id: 0,
+      title: "Sign Up",
+      description: "Create your free account in seconds.",
+      icon: <UserPlus className="w-6 h-6 text-orange-600" />,
+      visual: (
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center h-full w-full relative overflow-hidden">
+           {/* Abstract Profile Card */}
+           <motion.div 
+             initial={{ y: 20, opacity: 0 }}
+             animate={{ y: 0, opacity: 1 }}
+             className="w-56 bg-white border border-slate-100 rounded-xl shadow-xl shadow-slate-200/50 p-5 space-y-4 z-10"
+           >
+              <div className="flex gap-3 items-center border-b border-slate-50 pb-3">
+                 <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center border border-orange-100">
+                    <UserPlus className="w-5 h-5 text-orange-500" />
+                 </div>
+                 <div className="space-y-1.5">
+                    <div className="h-2 w-20 bg-slate-200 rounded-full"></div>
+                    <div className="h-1.5 w-12 bg-slate-100 rounded-full"></div>
+                 </div>
+              </div>
+              <div className="space-y-3">
+                 <div className="h-9 w-full bg-slate-50 rounded-lg flex items-center px-3 border border-slate-100">
+                    <div className="h-1.5 w-12 bg-slate-200 rounded-full"></div>
+                 </div>
+                 <motion.div 
+                   className="h-9 w-full bg-orange-500 rounded-lg flex items-center justify-center shadow-lg shadow-orange-500/20"
+                   animate={{ scale: [1, 1.02, 1] }}
+                   transition={{ repeat: Infinity, duration: 2 }}
+                 >
+                    <span className="text-xs font-semibold text-white">Create Account</span>
+                 </motion.div>
+              </div>
+           </motion.div>
+           
+           {/* Decorative Background */}
+           <div className="absolute inset-0 bg-slate-50/50 opacity-50" />
+           <motion.div 
+              animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+              className="absolute -top-12 -right-12 w-48 h-48 bg-orange-100/30 rounded-full blur-3xl pointer-events-none" 
+           />
+        </div>
+      ),
+    },
+    {
+      id: 1,
+      title: "Upload URL",
+      description: "Paste your website link to start analyzing.",
+      icon: <Globe className="w-6 h-6 text-blue-600" />,
+      visual: (
+        <div className="bg-slate-50/50 p-6 rounded-2xl shadow-none border border-slate-100 flex flex-col items-center justify-center h-full w-full relative overflow-hidden">
+           {/* The Card */}
+           <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="w-64 bg-white rounded-xl shadow-xl shadow-slate-200/50 border border-slate-100 p-6 space-y-5 relative z-10"
+           >
+              {/* Lines */}
+              <div className="space-y-2.5">
+                 <div className="h-2 w-1/3 bg-slate-100 rounded-full"></div>
+                 <div className="h-2 w-full bg-slate-50 rounded-full"></div>
+                 
+                 {/* Active Line */}
+                 <div className="h-2 w-3/4 bg-slate-50 rounded-full relative overflow-hidden">
+                    <motion.div 
+                       className="absolute inset-0 bg-orange-100"
+                       initial={{ width: "0%" }}
+                       animate={{ width: "100%" }}
+                       transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                 </div>
+                 
+                 <div className="h-2 w-5/6 bg-slate-50 rounded-full"></div>
+                 <div className="h-2 w-1/2 bg-slate-50 rounded-full"></div>
+              </div>
+
+              {/* Reviewing Badge */}
+              <div className="flex justify-end pt-2">
+                 <motion.div 
+                   initial={{ scale: 0.9 }}
+                   animate={{ scale: 1 }}
+                   transition={{ repeat: Infinity, repeatType: "reverse", duration: 1.5 }}
+                   className="flex items-center gap-2 bg-orange-50 px-3 py-1.5 rounded-full border border-orange-100"
+                 >
+                    <FileText className="w-3.5 h-3.5 text-orange-500" />
+                    <span className="text-xs font-semibold text-orange-600">Reviewing</span>
+                 </motion.div>
+              </div>
+           </motion.div>
+           
+           {/* Grid Background */}
+           <div className="absolute inset-0 bg-[linear-gradient(to_right,#f1f5f9_1px,transparent_1px),linear-gradient(to_bottom,#f1f5f9_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] opacity-70"></div>
+        </div>
+      ),
+    },
+    {
+      id: 2,
+      title: "Get Results",
+      description: "Receive actionable insights instantly.",
+      icon: <FileCheck className="w-6 h-6 text-green-600" />,
+      visual: (
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col h-full w-full relative overflow-hidden justify-center bg-[radial-gradient(#f1f5f9_1px,transparent_1px)] [background-size:16px_16px]">
+           {/* Header Mock */}
+           <div className="flex items-center justify-between mb-6 border-b border-slate-50 pb-3 relative z-10">
+              <div className="flex flex-col">
+                  <span className="text-sm font-bold text-slate-800 font-jakarta">example.com</span>
+                  <span className="text-[10px] text-slate-400 font-medium">SEO Checkup Score</span>
+              </div>
+              <div className="bg-slate-50 px-2.5 py-1 rounded-md text-[10px] font-semibold text-slate-500 border border-slate-100">
+                  Export
+              </div>
+           </div>
+
+           <div className="flex gap-5 items-center relative z-10">
+              {/* Left: Score Circle */}
+              <div className="relative w-24 h-24 flex-shrink-0">
+                 <svg className="w-full h-full transform -rotate-90">
+                    <circle cx="48" cy="48" r="40" stroke="#f1f5f9" strokeWidth="6" fill="none" />
+                    <motion.circle 
+                       initial={{ pathLength: 0 }}
+                       animate={{ pathLength: 0.83 }}
+                       transition={{ duration: 1.5, ease: "easeOut" }}
+                       cx="48" cy="48" r="40" 
+                       stroke="#22c55e" 
+                       strokeWidth="6" 
+                       fill="none" 
+                       strokeDasharray="251.2" 
+                       strokeLinecap="round"
+                    />
+                 </svg>
+                 <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="text-2xl font-bold text-slate-800 font-jakarta">83</span>
+                 </div>
+              </div>
+
+              {/* Right: Stats List */}
+              <div className="flex-1 space-y-2.5">
+                 {/* Failed */}
+                 <div className="space-y-1">
+                    <div className="flex justify-between text-[10px] font-semibold text-slate-500">
+                       <span>7 Failed</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                       <motion.div initial={{ width: 0 }} animate={{ width: "30%" }} transition={{ delay: 0.5, duration: 1 }} className="h-full bg-red-500 rounded-full" />
+                    </div>
+                 </div>
+                 {/* Warnings */}
+                 <div className="space-y-1">
+                    <div className="flex justify-between text-[10px] font-semibold text-slate-500">
+                       <span>4 Warnings</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                       <motion.div initial={{ width: 0 }} animate={{ width: "20%" }} transition={{ delay: 0.7, duration: 1 }} className="h-full bg-yellow-500 rounded-full" />
+                    </div>
+                 </div>
+                 {/* Passed */}
+                 <div className="space-y-1">
+                    <div className="flex justify-between text-[10px] font-semibold text-slate-500">
+                       <span>50 Passed</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                       <motion.div initial={{ width: 0 }} animate={{ width: "80%" }} transition={{ delay: 0.9, duration: 1 }} className="h-full bg-green-500 rounded-full" />
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+      ),
+    },
+  ];
+
+  return (
+    <section className="w-full py-6 md:py-10 relative overflow-hidden">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center">
+          
+          {/* Column 1: Text Content */}
+          <div className="flex flex-col gap-6 order-2 lg:order-1">
+            <div>
+                <h2 className="text-3xl md:text-4xl font-bold font-jakarta text-gray-900 leading-tight mb-4">
+                How <span className="text-orange-600">Auditly</span> Works
+                </h2>
+                <p className="text-base text-gray-600 font-poppins leading-relaxed max-w-lg">
+                We've simplified the complex world of website auditing into a streamlined process. Get detailed insights in seconds.
+                </p>
             </div>
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
+            
+            <div className="space-y-3">
+               {steps.map((step) => (
+                 <div 
+                   key={step.id}
+                   className={`group flex items-start gap-4 p-4 rounded-xl transition-all duration-300 border ${currentStep === step.id ? 'bg-orange-50/50 border-orange-100 shadow-sm' : 'border-transparent hover:bg-slate-50'}`}
+                   onClick={() => setCurrentStep(step.id)}
+                 >
+                    <div className={`p-2.5 rounded-lg transition-colors duration-300 ${currentStep === step.id ? 'bg-white shadow-sm' : 'bg-slate-100 group-hover:bg-white'}`}>
+                       {step.icon}
+                    </div>
+                    <div>
+                       <h3 className={`text-base font-bold font-jakarta mb-0.5 transition-colors ${currentStep === step.id ? 'text-gray-900' : 'text-gray-600'}`}>
+                          {step.title}
+                       </h3>
+                       <p className="text-sm text-gray-500 leading-relaxed font-poppins">
+                          {step.description}
+                       </p>
+                    </div>
+                 </div>
+               ))}
+            </div>
+          </div>
+
+          {/* Column 2: Animation Showcase */}
+          <div className="order-1 lg:order-2">
+            <div className="relative h-[350px] w-full bg-slate-50 rounded-[2rem] p-4 md:p-6 flex items-center justify-center overflow-hidden border border-slate-100 shadow-inner">
+                {/* Background Grid */}
+                <div className="absolute inset-0 bg-[linear-gradient(#d4d4d8_1px,transparent_1px),linear-gradient(to_right,#d4d4d8_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-[0.15]"></div>
                 
-                {/* Section Header */}
-                <div className="mb-20">
-                    {/* Main Title */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.05 }}
-                        className="text-left mb-4"
-                    >
-                        <span className="text-orange-500 font-semibold text-sm uppercase tracking-wider">How It Works</span>
-                    </motion.div>
-
-                    <motion.h2 
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.1 }}
-                        className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-jakarta text-left"
-                    >
-                        Detect Content Theft in 3 Steps
-                    </motion.h2>
-                    <motion.p 
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="text-lg text-gray-500 max-w-2xl text-left"
-                    >
-                        From URL input to legal-ready copyright evidence in under 60 seconds
-                    </motion.p>
-                </div>
-
-                {/* Steps Container */}
-                <div className="flex flex-col gap-32">
-
-                    {/* Step 1: Enter URL - Text Left, Visual Right */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        {/* Text Column */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
-                        >
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-50 text-orange-600 text-xs font-semibold mb-4">
-                                <Globe size={14} />
-                                <span>Step 1</span>
-                            </div>
-                            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-jakarta">
-                                Enter your original content URL
-                            </h3>
-                            <p className="text-lg text-gray-600 leading-relaxed">
-                                Simply paste your website or product link into our protection engine. We support e-commerce stores, SaaS landing pages, and creative portfolios.
-                            </p>
-                        </motion.div>
-
-                        {/* Visual Column */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                            className="bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-3xl p-8 lg:p-12 border border-gray-100 shadow-sm"
-                        >
-                            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-                                {/* Browser Chrome */}
-                                <div className="bg-gray-50 px-4 py-3 border-b border-gray-200 flex items-center gap-2">
-                                    <div className="flex gap-1.5">
-                                        <div className="w-3 h-3 rounded-full bg-red-400" />
-                                        <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                                        <div className="w-3 h-3 rounded-full bg-green-400" />
-                                    </div>
-                                </div>
-                                
-                                {/* Content - Sequential Animation */}
-                                <div className="p-8 min-h-[320px] flex flex-col justify-center">
-                                    {/* Phase 1: URL Input (0-25%) */}
-                                    <motion.div
-                                        className="space-y-4"
-                                        animate={{
-                                            opacity: [1, 1, 1, 0, 0, 0, 0, 0, 0],
-                                            display: ['block', 'block', 'block', 'none', 'none', 'none', 'none', 'none', 'none']
-                                        }}
-                                        transition={{
-                                            duration: 12,
-                                            times: [0, 0.2, 0.25, 0.26, 0.5, 0.75, 0.8, 0.95, 1],
-                                            repeat: Infinity
-                                        }}
-                                    >
-                                        <div className="text-center mb-6">
-                                            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-orange-50 text-orange-500 mb-4">
-                                                <Search size={32} strokeWidth={2} />
-                                            </div>
-                                            <h4 className="text-xl font-bold text-gray-900 mb-2">Enter Your URL</h4>
-                                            <p className="text-sm text-gray-500">Paste your website URL below</p>
-                                        </div>
-                                        
-                                        {/* Input with typewriter */}
-                                        <div className="w-full h-[46px] px-4 bg-gray-50 border border-gray-200 rounded-xl flex items-center overflow-hidden">
-                                            <motion.div
-                                                className="text-gray-700 font-mono text-sm whitespace-nowrap overflow-hidden border-r-2 border-orange-500"
-                                                animate={{ 
-                                                    width: ["0%", "100%", "100%"],
-                                                }}
-                                                transition={{
-                                                    duration: 12,
-                                                    times: [0, 0.15, 0.25],
-                                                    repeat: Infinity,
-                                                    ease: "linear"
-                                                }}
-                                            >
-                                                https://yourwebsite.com
-                                            </motion.div>
-                                        </div>
-                                        
-                                        <motion.button
-                                            animate={{
-                                                scale: [1, 1, 0.95, 1],
-                                                backgroundColor: ['rgb(255, 255, 255)', 'rgb(255, 255, 255)', 'rgb(239, 70, 0)', 'rgb(239, 70, 0)'],
-                                                color: ['rgb(239, 70, 0)', 'rgb(239, 70, 0)', 'rgb(255, 255, 255)', 'rgb(255, 255, 255)']
-                                            }}
-                                            transition={{
-                                                duration: 12,
-                                                times: [0, 0.2, 0.22, 0.25],
-                                                repeat: Infinity
-                                            }}
-                                            className="w-full border border-gray-200 font-semibold py-3 px-6 rounded-xl flex items-center justify-center gap-2"
-                                        >
-                                            <span>Scan Now</span>
-                                            <ArrowRight size={18} />
-                                        </motion.button>
-                                    </motion.div>
-
-                                    {/* Phase 2: Scanning (25-75%) */}
-                                    <motion.div
-                                        className="space-y-4"
-                                        animate={{
-                                            opacity: [0, 0, 0, 1, 1, 1, 0, 0, 0],
-                                            display: ['none', 'none', 'none', 'block', 'block', 'block', 'none', 'none', 'none']
-                                        }}
-                                        transition={{
-                                            duration: 12,
-                                            times: [0, 0.24, 0.26, 0.27, 0.5, 0.74, 0.76, 0.95, 1],
-                                            repeat: Infinity
-                                        }}
-                                    >
-                                        <div className="text-center mb-6">
-                                            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-50 text-blue-500 mb-4">
-                                                <motion.div
-                                                    animate={{ rotate: 360 }}
-                                                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                                                >
-                                                    <Search size={32} strokeWidth={2} />
-                                                </motion.div>
-                                            </div>
-                                            <h4 className="text-xl font-bold text-gray-900 mb-2">Analyzing...</h4>
-                                            <p className="text-sm text-gray-500">Scanning your website</p>
-                                        </div>
-
-                                        {/* Skeleton bars */}
-                                        <div className="space-y-3">
-                                            {[25, 75, 50, 33, 66, 100, 40].map((width, i) => (
-                                                <div key={i} className={`h-3 bg-gray-200 rounded-md relative overflow-hidden`} style={{ width: `${width}%` }}>
-                                                    <motion.div
-                                                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent"
-                                                        animate={{ x: ['-100%', '200%'] }}
-                                                        transition={{ duration: 1.5, repeat: Infinity, ease: "linear", delay: i * 0.1 }}
-                                                    />
-                                                </div>
-                                            ))}
-                                        </div>
-
-                                        {/* Progress bar */}
-                                        <div className="relative h-2 bg-gray-200 rounded-full overflow-hidden mt-6">
-                                            <motion.div
-                                                className="absolute inset-y-0 left-0 bg-gradient-to-r from-orange-500 to-orange-600"
-                                                animate={{ width: ['0%', '100%'] }}
-                                                transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-                                            />
-                                        </div>
-                                    </motion.div>
-
-                                    {/* Phase 3: Results (75-100%) */}
-                                    <motion.div
-                                        className="space-y-4"
-                                        animate={{
-                                            opacity: [0, 0, 0, 0, 0, 0, 1, 1, 1],
-                                            display: ['none', 'none', 'none', 'none', 'none', 'none', 'block', 'block', 'block']
-                                        }}
-                                        transition={{
-                                            duration: 12,
-                                            times: [0, 0.24, 0.5, 0.74, 0.75, 0.76, 0.77, 0.95, 1],
-                                            repeat: Infinity
-                                        }}
-                                    >
-                                        <div className="flex items-center justify-between mb-4">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                                                    <FileText size={20} className="text-green-600" />
-                                                </div>
-                                                <div>
-                                                    <h4 className="font-bold text-gray-900">Scan Complete!</h4>
-                                                    <p className="text-xs text-green-600 font-semibold">3 Matches Found</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Comparison */}
-                                        <div className="flex items-stretch gap-3">
-                                            {/* Original */}
-                                            <div className="flex-1 space-y-2">
-                                                <div className="aspect-video bg-gray-100 rounded-lg border border-gray-200 relative overflow-hidden">
-                                                    <div className="absolute inset-0 bg-blue-500/10" />
-                                                    <div className="absolute top-2 left-2 w-12 h-2 bg-blue-200 rounded-sm" />
-                                                    <div className="absolute top-6 left-2 w-3/4 h-2 bg-gray-200 rounded-sm" />
-                                                    <div className="absolute bottom-0 right-0 w-12 h-12 bg-blue-500/20 rounded-tl-full" />
-                                                </div>
-                                                <p className="text-xs font-semibold text-center text-gray-500">Your Site</p>
-                                            </div>
-
-                                            {/* Match Badge */}
-                                            <div className="flex items-center justify-center">
-                                                <div className="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full">98%</div>
-                                            </div>
-
-                                            {/* Match */}
-                                            <div className="flex-1 space-y-2">
-                                                <div className="aspect-video bg-orange-50 rounded-lg border-2 border-orange-500/30 relative overflow-hidden">
-                                                    <div className="absolute inset-0 bg-orange-500/5" />
-                                                    <div className="absolute top-2 left-2 w-12 h-2 bg-orange-200 rounded-sm" />
-                                                    <div className="absolute top-6 left-2 w-3/4 h-2 bg-gray-200 rounded-sm" />
-                                                    <div className="absolute bottom-0 right-0 w-12 h-12 bg-orange-500/20 rounded-tl-full" />
-                                                </div>
-                                                <p className="text-xs font-semibold text-center text-orange-600">Match</p>
-                                            </div>
-                                        </div>
-
-                                        <button className="w-full bg-orange-600 text-white text-sm font-semibold py-2.5 rounded-lg">
-                                            View Full Report
-                                        </button>
-                                    </motion.div>
-                                </div>
-                            </div>
-                        </motion.div>
+                {/* Animated content */}
+                <AnimatePresence mode="wait">
+                <motion.div
+                    key={currentStep}
+                    initial={{ opacity: 0, scale: 0.9, rotateX: 10 }}
+                    animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+                    exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
+                    transition={{ duration: 0.5, ease: "backOut" }}
+                    className="w-full max-w-[340px] aspect-[4/5] md:aspect-square relative z-10 perspective-1000"
+                >
+                    {/* Floating Card Effect */}
+                    <div className="w-full h-full transform transition-transform duration-500 hover:scale-[1.02]">
+                        {steps[currentStep].visual}
                     </div>
+                </motion.div>
+                </AnimatePresence>
 
-                    {/* Step 2: AI Analysis - Visual Left, Text Right */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        {/* Visual Column */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
-                            className="bg-gradient-to-br from-blue-50 to-indigo-50/50 rounded-3xl p-8 lg:p-12 border border-blue-100 shadow-sm order-2 lg:order-1"
-                        >
-                            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-12 min-h-[320px] flex flex-col items-center justify-center">
-                                <div className="relative w-24 h-24 mb-8">
-                                    {/* Static background ring */}
-                                    <div className="absolute inset-0 border-[6px] border-gray-100 rounded-full" />
-                                    
-                                    {/* Spinning indicator */}
-                                    <motion.div
-                                        className="absolute inset-0 border-[6px] border-orange-500 rounded-full border-t-transparent border-l-transparent"
-                                        animate={{ rotate: 360 }}
-                                        transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                                    />
-                                    
-                                    {/* Icon in center */}
-                                    <div className="absolute inset-0 flex items-center justify-center text-orange-500">
-                                        <Search size={32} strokeWidth={2.5} />
-                                    </div>
-                                </div>
-                                <h4 className="text-xl font-bold text-gray-900 mb-2">Analyzing fingerprints...</h4>
-                                <p className="text-gray-500 text-center">Comparing visual signatures against<br/>2.5M+ indexed suspicious sites</p>
-                            </div>
-                        </motion.div>
-
-                        {/* Text Column */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                            className="order-1 lg:order-2"
-                        >
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-semibold mb-4">
-                                <Zap size={14} />
-                                <span>Step 2</span>
-                            </div>
-                            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-jakarta">
-                                Visual AI scans for duplicates
-                            </h3>
-                            <p className="text-lg text-gray-600 leading-relaxed">
-                                Our advanced computer vision algorithms create a unique fingerprint of your design, content, and assets, comparing it against millions of sites to find unauthorized clones.
-                            </p>
-                        </motion.div>
-                    </div>
-
-                    {/* Step 3: Get Results - Text Left, Visual Right */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        {/* Text Column */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
-                        >
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-50 text-green-600 text-xs font-semibold mb-4">
-                                <BarChart3 size={14} />
-                                <span>Step 3</span>
-                            </div>
-                            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-jakarta">
-                                Instant Copy & Theft Reports
-                            </h3>
-                            <p className="text-lg text-gray-600 leading-relaxed">
-                                Get a clear breakdown of who is copying you. We flag exact matches, partial clones, and asset theft with side-by-side comparisons and similarity scores.
-                            </p>
-                        </motion.div>
-
-                        {/* Visual Column */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                            className="bg-gradient-to-br from-green-50 to-emerald-50/50 rounded-3xl p-8 lg:p-12 border border-green-100 shadow-sm"
-                        >
-                            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
-                                <div className="flex items-center justify-between mb-6">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
-                                            <FileText size={20} className="fill-current" />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold text-gray-900 line-clamp-1">3 Potential Matches</h4>
-                                            <p className="text-xs text-orange-500 font-semibold">High Priority</p>
-                                        </div>
-                                    </div>
-                                    <span className="text-sm text-gray-500">0.8s scan</span>
-                                </div>
-                                
-                                {/* Comparison Visual */}
-                                <div className="flex items-stretch gap-4 mb-6">
-                                    {/* Original */}
-                                    <div className="flex-1 space-y-2">
-                                        <div className="aspect-video bg-gray-100 rounded-lg border border-gray-200 relative overflow-hidden">
-                                            <div className="absolute inset-0 bg-blue-500/10" />
-                                            <div className="absolute top-2 left-2 w-12 h-2 bg-blue-200 rounded-sm" />
-                                            <div className="absolute top-6 left-2 w-3/4 h-2 bg-gray-200 rounded-sm" />
-                                            <div className="absolute top-10 left-2 w-1/2 h-2 bg-gray-200 rounded-sm" />
-                                            <div className="absolute bottom-0 right-0 w-12 h-12 bg-blue-500/20 rounded-tl-full" />
-                                        </div>
-                                        <p className="text-xs font-semibold text-center text-gray-500">Your Original</p>
-                                    </div>
-
-                                    {/* Match Badge */}
-                                    <div className="flex flex-col items-center justify-center z-10 -mx-6">
-                                        <div className="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg border-2 border-white">
-                                            98%
-                                        </div>
-                                    </div>
-
-                                    {/* Suspicious */}
-                                    <div className="flex-1 space-y-2 relative">
-                                        <div className="aspect-video bg-orange-50 rounded-lg border-2 border-orange-500/30 relative overflow-hidden">
-                                             {/* Identical Layout */}
-                                            <div className="absolute inset-0 bg-orange-500/5" />
-                                            <div className="absolute top-2 left-2 w-12 h-2 bg-orange-200 rounded-sm" />
-                                            <div className="absolute top-6 left-2 w-3/4 h-2 bg-gray-200 rounded-sm" />
-                                            <div className="absolute top-10 left-2 w-1/2 h-2 bg-gray-200 rounded-sm" />
-                                            <div className="absolute bottom-0 right-0 w-12 h-12 bg-orange-500/20 rounded-tl-full" />
-                                        </div>
-                                        <p className="text-xs font-semibold text-center text-orange-600">Match Found</p>
-
-                                        {/* Animation: Cursor Clicking Match */}
-                                        <motion.div
-                                            className="absolute md:top-[40%] top-[30%] left-[40%] z-50 pointer-events-none"
-                                            initial={{ opacity: 0, x: 50, y: 50 }}
-                                            whileInView={{ opacity: 1, x: 0, y: 0 }}
-                                            transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
-                                        >
-                                            <motion.div
-                                                animate={{ 
-                                                    scale: [1, 1, 0.85, 1, 1],
-                                                }}
-                                                transition={{ 
-                                                    duration: 2, 
-                                                    repeat: Infinity, 
-                                                    delay: 1.5,
-                                                    times: [0, 0.1, 0.2, 0.3, 1]
-                                                }}
-                                            >
-                                                <svg 
-                                                    width="42" 
-                                                    height="42" 
-                                                    viewBox="0 0 24 24" 
-                                                    fill="none" 
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    className="drop-shadow-2xl"
-                                                >
-                                                    <path 
-                                                        d="M3 3L10.07 19.97L12.58 12.58L19.97 10.07L3 3Z" 
-                                                        fill="#000000" 
-                                                        stroke="white" 
-                                                        strokeWidth="2" 
-                                                        strokeLinejoin="round"
-                                                    />
-                                                </svg>
-                                            </motion.div>
-                                        </motion.div>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-2">
-                                    <button className="w-full bg-orange-600 text-white text-sm font-semibold py-2.5 rounded-lg shadow-sm hover:bg-orange-700 transition-colors">
-                                        View Evidence Report
-                                    </button>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </div>
-
+                {/* Status Indicator Dots */}
+                <div className="absolute bottom-8 flex gap-3">
+                    {steps.map((_, idx) => (
+                        <div 
+                            key={idx} 
+                            className={`h-2 rounded-full transition-all duration-500 ease-out ${currentStep === idx ? 'w-8 bg-orange-500' : 'w-2 bg-slate-300'}`}
+                        />
+                    ))}
                 </div>
             </div>
-        </section>
-    );
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
 }

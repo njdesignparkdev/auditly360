@@ -75,7 +75,7 @@ export function HeroSection({
                 {/* Bottom Image / Mockup Container */}
                 <div className="relative w-full mx-auto mt-4">
                     <div className="relative z-10 rounded-xl border border-white/10 bg-white/5 p-2 shadow-2xl backdrop-blur-sm">
-                        <div className="relative aspect-video overflow-hidden rounded-lg bg-background/50">
+                        <div className="relative overflow-hidden rounded-lg bg-background/50">
                             <DashboardMockup />
                         </div>
                     </div>

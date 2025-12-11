@@ -1,0 +1,79 @@
+'use client';
+
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Plus, Minus } from 'lucide-react';
+
+const faqs = [
+  {
+    question: "How does the audit process work?",
+    answer: "Our AI-powered engine scans your website URL to identify performance bottlenecks, SEO issues, accessibility errors, and security vulnerabilities. It generates a comprehensive report with actionable fixes in seconds."
+  },
+  {
+    question: "Is there a free trial available?",
+    answer: "Yes! You can run a basic audit on your homepage for free. For advanced features like multi-page scanning, automated monitoring, and team collaboration, you can upgrade to our Pro plans."
+  },
+  {
+    question: "Can I cancel my subscription anytime?",
+    answer: "Absolutely. There are no long-term contracts or hidden fees. You can cancel or change your plan at any time directly from your dashboard."
+  },
+  {
+    question: "Do you offer support implementation?",
+    answer: "Our Enterprise plan includes dedicated support for implementation. For other plans, we provide detailed documentation and a community forum where you can get help from our team and other users."
+  }
+];
+
+export default function FaqSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  return (
+    <section className="w-full py-8 md:py-12 relative" id="faq">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold font-jakarta text-gray-900 mb-4">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-gray-600">
+            Everything you need to know about Auditly360
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          {faqs.map((faq, index) => (
+            <div 
+              key={index} 
+              className="border border-gray-200 rounded-2xl bg-white overflow-hidden transition-all duration-200 hover:border-orange-200"
+            >
+              <button
+                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                className="w-full flex items-center justify-between p-6 text-left"
+              >
+                <span className="font-semibold text-gray-900 font-jakarta pr-8">
+                  {faq.question}
+                </span>
+                <span className={`flex-shrink-0 transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`}>
+                   {openIndex === index ? <Minus size={20} className="text-orange-500" /> : <Plus size={20} className="text-gray-400" />}
+                </span>
+              </button>
+              
+              <AnimatePresence>
+                {openIndex === index && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  >
+                    <div className="px-6 pb-6 text-gray-600 leading-relaxed">
+                      {faq.answer}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
