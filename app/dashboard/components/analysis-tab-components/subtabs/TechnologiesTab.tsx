@@ -353,8 +353,6 @@ export default function TechnologiesTab({ project, htmlContent, headers, cookies
   const stats = getTechnologyStats(uniqueTechnologies)
   const categorizedTechnologies = categorizeTechnologies(uniqueTechnologies)
   const hasTechnologies = uniqueTechnologies.length > 0
-  // const hasProjectTechnologies = projectTechnologies.length > 0
-  const hasDetectedTechnologies = detectedTechnologies.length > 0
 
   // Debug: Log categories to see if any contain "unknown"
 
@@ -375,114 +373,41 @@ export default function TechnologiesTab({ project, htmlContent, headers, cookies
         </div>
       )} */}
 
-      {/* HTML Detection Status */}
-      {htmlContent && (
-        <div className="bg-[#ff4b01]/10 border border-[#ff4b01]/30 rounded-lg p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <div className="w-2 h-2 bg-[#ff4b01] rounded-full mr-3"></div>
-              <span className="text-sm font-medium text-[#ff4b01]">HTML Analysis</span>
-            </div>
-            {isDetecting ? (
-              <div className="flex items-center text-[#ff4b01]">
-                <svg className="w-4 h-4 animate-spin mr-2" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <span className="text-sm">Detecting...</span>
-              </div>
-            ) : hasDetectedTechnologies ? (
-              <span className="text-sm text-[#ff4b01] font-medium">
-                {detectedTechnologies.length} technologies detected
-              </span>
-            ) : detectionError ? (
-              <span className="text-sm text-red-600">Detection failed</span>
-            ) : (
-              <span className="text-sm text-gray-500">No technologies detected</span>
-            )}
-          </div>
-          {detectionError && (
-            <p className="text-sm text-red-600 mt-2">{detectionError}</p>
-          )}
-        </div>
-      )}
+   
 
-      {/* Show all technologies (project + detected) */}
+      {/* Show all technologies (project + detected) in a single list */}
       {hasTechnologies && (
-        <>
-          {/* Technology Statistics */}
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Detection Summary</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="text-center flex items-center justify-between border border-gray-200 rounded-lg p-1 gap-2 w-full">
-                <div className="text-lg text-gray-500 text-center w-full">Technologies</div>
-                <div className="text-2xl font-bold text-gray-900 bg-gray-100 rounded-lg p-2">{stats.totalTechnologies}</div>
-              </div>
-              <div className="text-center flex items-center justify-between border border-gray-200 rounded-lg p-1 gap-2 w-full">
-                <div className="text-lg text-gray-500 text-center w-full">Categories</div>
-                <div className="text-2xl font-bold text-gray-900 bg-gray-100 rounded-lg p-2">{stats.categoriesCount}</div>
-              </div>
-              <div className="text-center flex items-center justify-between border border-gray-200 rounded-lg p-1 gap-2 w-full">
-                <div className="text-lg text-gray-500 text-center w-full">High Confidence</div>
-                <div className="text-2xl font-bold text-gray-900 bg-gray-100 rounded-lg p-2">{stats.highConfidenceCount}</div>
-              </div>
-              <div className="text-center flex items-center justify-between border border-gray-200 rounded-lg p-1 gap-2 w-full">
-                <div className="text-lg text-gray-500 text-center w-full">Avg Confidence</div>
-                <div className="text-2xl font-bold text-gray-900 bg-gray-100 rounded-lg p-2">{Math.round(stats.averageConfidence * 100)}%</div>
-              </div>
-            </div>
-          </div>
+        <div className="bg-white border border-gray-200  p-4 space-y-3">
+         
 
-          {/* Technologies by Category */}
-          <div className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-gray-900">Technology Stack</h3>
-              <div className="text-sm text-gray-500">
-                {Object.keys(categorizedTechnologies).length} categories
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {Object.entries(categorizedTechnologies).map(([category, techs]) => (
-                <div key={category} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                  <div className="px-6 py-4 bg-gradient-to-r from-gray-50 to-white border-b border-gray-100">
-                    <h4 className="text-lg font-semibold text-gray-900 capitalize flex items-center">
-                      <div className="w-2 h-2 bg-[#ff4b01] rounded-full mr-3"></div>
-                      {category.replace(/_/g, ' ')}
-                      <span className="ml-2 text-sm font-normal text-gray-500">({techs.length})</span>
-                    </h4>
-                  </div>
-                  <div className="p-6">
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                      {techs.map((tech: DetectedTechnology, index: number) => (
-                        <div 
-                          key={index} 
-                          className="group bg-white border border-gray-200 rounded-lg p-4 hover:border-[#ff4b01] hover:shadow-md transition-all duration-200 flex flex-col items-center text-center cursor-pointer"
-                        >
-                          <TechnologyIcon tech={tech} className="w-12 h-12 flex-shrink-0 mb-3" />
-                          <div className="w-full min-w-0">
-                            <h5 className="font-medium text-gray-900 text-sm truncate w-full mb-1 group-hover:text-[#ff4b01] transition-colors">
-                              {tech.name}
-                            </h5>
-                            {tech.version && (
-                              <p className="text-xs text-gray-500 truncate">v{tech.version}</p>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+          <div className="flex flex-wrap gap-2">
+            {uniqueTechnologies.map((tech: DetectedTechnology, index: number) => (
+              <div
+                key={index}
+                className="flex items-center gap-2 px-3 py-2  border border-gray-200 bg-gray-50 hover:border-[#ff4b01] transition-colors"
+              >
+                <TechnologyIcon tech={tech} className="w-8 h-8 flex-shrink-0" />
+                <div className="min-w-0">
+                  <div className="text-sm font-medium text-gray-900 truncate">{tech.name}</div>
+                  <div className="text-xs text-gray-500 flex items-center gap-2">
+                    {tech.version && <span className="truncate">v{tech.version}</span>}
+                    {/* {typeof tech.confidence === 'number' && (
+                      <span className="px-2 py-0.5 rounded-full bg-[#ff4b01]/10 text-[#ff4b01]">
+                        {Math.round((tech.confidence || 0) * 100)}%
+                      </span>
+                    )} */}
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-        </>
+        </div>
       )}
 
       {/* Show message if no technologies found */}
       {!hasTechnologies && !isDetecting && !detectionError && (
         <div className="text-center py-12">
-          <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+          <div className="w-16 h-16 mx-auto mb-4 bg-gray-100  flex items-center justify-center">
             <span className="text-2xl text-gray-400">🔍</span>
           </div>
           <h3 className="text-lg font-medium text-gray-900 mb-2">No technologies found</h3>

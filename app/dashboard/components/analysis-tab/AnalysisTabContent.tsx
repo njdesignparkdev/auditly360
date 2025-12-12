@@ -14,7 +14,6 @@ import FeatureUnavailableCard from '../FeatureUnavailableCard'
 
 // Lazy load heavy components
 const PagesSection = lazy(() => import('../analysis-tab-components/PagesSection'))
-const TechnologiesSection = lazy(() => import('../analysis-tab-components/TechnologiesSection'))
 const CmsSection = lazy(() => import('../analysis-tab-components/CmsSection'))
 const PerformanceSection = lazy(() => import('../analysis-tab-components/PerformanceSection'))
 const ImagesSection = lazy(() => import('../analysis-tab-components/ImagesSection'))
@@ -35,7 +34,6 @@ export default function AnalysisTabContent({
     const featureMap: Record<string, string> = {
       'overview': 'single_page_crawl', // Basic overview is available to all
       'pages': 'pages_tab',
-      'technologies': 'technical_analysis',
       'cms': 'brand_consistency_check',
       'performance': 'performance_metrics',
       'seo': 'seo_structure',
@@ -58,10 +56,6 @@ export default function AnalysisTabContent({
       'pages': {
         title: 'Pages Tab',
         description: 'This feature is not available in your current plan. Upgrade to access pages tab functionality.'
-      },
-      'technologies': {
-        title: 'Technical Analysis',
-        description: 'This feature is not available in your current plan. Upgrade to access detailed technical analysis and recommendations.'
       },
       // 'cms': {
       //   title: 'CMS Detection',
@@ -156,7 +150,7 @@ export default function AnalysisTabContent({
   // }
 
   return (
-    <div className="space-y-2 lg:px-24">
+    <div className="">
       <FeedbackModal open={showFeedbackModal} onConfirm={(text) => confirmFeedback(text)} onLater={laterFeedback} />
       {/* ScrapingService component to handle data processing */}
       {state.project?.scraping_data && (
@@ -220,17 +214,6 @@ export default function AnalysisTabContent({
                 />
               </Suspense>
             )}
-            
-            {state.activeSection === 'technologies' && (
-              <Suspense fallback={<SectionSkeleton />}>
-                <TechnologiesSection 
-                  key={`technologies-${projectId}-${state.project?.detected_keys ? 'has-data' : 'no-data'}`}
-                  project={state.project} 
-                  scrapedPages={state.scrapedPages} 
-                />
-              </Suspense>
-            )}
-            
             {state.activeSection === 'cms' && (
               <Suspense fallback={<SectionSkeleton />}>
                 <CmsSection project={state.project} />

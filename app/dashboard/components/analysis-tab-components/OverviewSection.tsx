@@ -2,8 +2,10 @@
 
 import { AuditProject } from "@/types/audit";
 import SEOAnalysisSection from "./SEOAnalysisSection";
-import DynamicImage from "./DynamicImage";
 import FaviconDisplay from "../FaviconDisplay";
+import TechnologiesTab from "./subtabs/TechnologiesTab";
+import SocialPreviewTab from "./subtabs/SocialPreviewTab";
+import KeysTab from "./subtabs/KeysTab";
 
 interface OverviewSectionProps {
   project: AuditProject;
@@ -22,6 +24,25 @@ interface OverviewSectionProps {
 }
 
 export default function OverviewSection({ project, scrapedPages = [] }: OverviewSectionProps) {
+  const getHtmlContent = () => {
+    if (!scrapedPages || scrapedPages.length === 0) {
+      return null;
+    }
+
+    const homepage = scrapedPages.find((page) => {
+      try {
+        const url = new URL(page.url);
+        return url.pathname === "/" || url.pathname === "" || url.pathname === "/index.html";
+      } catch {
+        return false;
+      }
+    });
+
+    const targetPage = homepage || scrapedPages[0];
+    return targetPage.html_content || null;
+  };
+
+  const htmlContent = getHtmlContent();
   const getStatusColor = (status: string) => {
     switch (status) {
       case "completed":
@@ -65,27 +86,27 @@ export default function OverviewSection({ project, scrapedPages = [] }: Overview
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-3 ">
       {/* Main Stats */}
-      <div className="lg:col-span-2 space-y-6">
-        <div className="bg-white rounded-lg  border border-gray-200 p-6">
+      <div className="lg:col-span-2 space-y-6 border-r border-gray-200">
+        <div className="bg-white border-b border-gray-200 p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             Content Summary
           </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bord">
+            <div className="text-center border-r border-gray-200">
               <div className="text-2xl font-bold text-[#ff4b01]">
                 {project.total_pages || 0}
               </div>
               <div className="text-sm text-gray-600">Pages</div>
             </div>
-            <div className="text-center">
+            <div className="text-center border-r border-gray-200">
               <div className="text-2xl font-bold text-[#ff4b01]">
                 {project.total_links || 0}
               </div>
               <div className="text-sm text-gray-600">Links</div>
             </div>
-            <div className="text-center">
+            <div className="text-center border-r border-gray-200">
               <div className="text-2xl font-bold text-[#ff4b01]">
                 {project.total_images || 0}
               </div>
@@ -107,60 +128,35 @@ export default function OverviewSection({ project, scrapedPages = [] }: Overview
             dataVersion={Date.now()}
           />
         </div> */}
-        {/* Technologies Overview */}
+        {/* Technologies Overview (inline, no tabs) */}
         {project.technologies && project.technologies.length > 0 && (
-          <div className="bg-white rounded-lg  border border-gray-200 p-6">
+          <div className="bg-white border-b border-gray-200 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Technical Detected
+              Technologies Detected
             </h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {project.technologies
-                .slice(0, 6)
-                .map((tech: { name: string; version?: string; category?: string; confidence?: number; icon?: string }, index: number) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-                  >
-                    <div className="flex items-center">
-                      {tech.icon && (
-                        <DynamicImage
-                          src={tech.icon}
-                          alt={tech.name}
-                          width={20}
-                          height={20}
-                          className="w-5 h-5 mr-2 rounded"
-                        />
-                      )}
-                      <span className="font-medium text-gray-900">
-                        {tech.name}
-                      </span>
-                    </div>
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        (tech.confidence || 0) >= 0.8
-                          ? "bg-blue-100 text-blue-800"
-                          : (tech.confidence || 0) >= 0.5
-                          ? "bg-blue-200 text-blue-900"
-                          : "bg-blue-300 text-blue-900"
-                      }`}
-                    >
-                      {Math.round((tech.confidence || 0) * 100)}%
-                    </span>
-                  </div>
-                ))}
-            </div>
-            {project.technologies.length > 6 && (
-              <p className="text-sm text-gray-500 mt-3 text-center">
-                +{project.technologies.length - 6} more technologies
-              </p>
-            )}
+            <TechnologiesTab
+              project={project}
+              htmlContent={htmlContent || undefined}
+              headers={undefined}
+              cookies={undefined}
+            />
           </div>
         )}
+
+        {/* Social Preview */}
+        <div className=" p-6">
+          <SocialPreviewTab project={project} />
+        </div>
+
+        {/* Keys Analysis */}
+        <div className="bg-white rounded-lg  border border-gray-200 p-6">
+          <KeysTab project={project} pageHtml={htmlContent || undefined} />
+        </div>
       </div>
 
       {/* Sidebar Stats */}
       <div className="space-y-6">
-        <div className="bg-white rounded-lg  border border-gray-200 p-6">
+        <div className="border-b border-gray-200 p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             Project Info
           </h3>
@@ -203,7 +199,7 @@ export default function OverviewSection({ project, scrapedPages = [] }: Overview
 
         {/* CMS Info */}
         {project.cms_detected && (
-          <div className="bg-white rounded-lg  border border-gray-200 p-6">
+          <div className="border-b border-gray-200 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
               CMS Information
             </h3>
@@ -240,7 +236,7 @@ export default function OverviewSection({ project, scrapedPages = [] }: Overview
 
         {/* Pages List */}
         {scrapedPages && scrapedPages.length > 0 && (
-          <div className="bg-white rounded-lg  border border-gray-200 p-6">
+          <div className="  border-b border-gray-200 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
               Pages List
             </h3>

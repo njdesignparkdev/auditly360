@@ -40,8 +40,6 @@ export default function AnalysisHeader({
       // Main analysis page tabs
       overview: "single_page_crawl", // Basic overview is available to all
       pages: "pages_tab",
-      technologies: "technical_analysis", // Updated to use technical_analysis
-
       performance: "performance_metrics",
       seo: "seo_structure",
       images: "image_scan",
@@ -154,7 +152,7 @@ export default function AnalysisHeader({
   };
 
   return (
-    <div className=" lg:py-6">
+    <div className=" lg:pt-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
         <div className="flex flex-col space-y-3 min-w-0">
           {currentTab === "page-analysis" && (
@@ -176,7 +174,7 @@ export default function AnalysisHeader({
               />
             </div>
             <div className="flex flex-col items-start">
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 truncate">
+              <h1 className="text-xl sm:text-2xl font-semibold text-gray-900 truncate">
                 {pageTitle || getProjectName(project.site_url)}
               </h1>
               <p className="text-gray-600 break-all text-sm sm:text-base">
@@ -216,7 +214,7 @@ export default function AnalysisHeader({
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <nav className="-mb-px flex space-x-4 sm:space-x-8 min-w-max">
+            <nav className="-mb-px flex space-x-4 sm:space-x-8 min-w-max border-t border-gray-200">
               {(
                 customTabs || [
                   {
@@ -225,12 +223,6 @@ export default function AnalysisHeader({
                     icon: "fas fa-chart-bar",
                   },
                   { id: "pages", name: "Pages", icon: "fas fa-file-alt" },
-                  {
-                    id: "technologies",
-                    name: "Technical",
-                    icon: "fas fa-cogs",
-                  },
-                  // ...(project.cms_detected ? [{ id: 'cms', name: 'CMS', icon: 'fas fa-building' }] : []),
                   {
                     id: "performance",
                     name: "Performance",
@@ -251,7 +243,7 @@ export default function AnalysisHeader({
                     onClick={() => onSectionChange(tab.id)}
                     className={`py-2 px-1 border-b-2 font-medium text-sm flex items-center whitespace-nowrap flex-shrink-0 ${
                       activeSection === tab.id
-                        ? "border-[#ff4b01] text-[#ff4b01] bg-[#ff4b01]/10"
+                        ? " text-[#ff4b01] "
                         : "border-transparent text-gray-500 hover:text-[#ff4b01] hover:border-[#ff4b01]/30"
                     } ${isPremiumFeature ? "opacity-75" : ""}`}
                   >

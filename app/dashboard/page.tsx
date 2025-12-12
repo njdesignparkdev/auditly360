@@ -287,7 +287,7 @@ function DashboardContentWrapper() {
 
   // Redirect if not authenticated
   if (!user) {
-    return <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    return <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h1>
           <p className="text-gray-600 mb-6">You need to be logged in to access the dashboard.</p>
@@ -297,7 +297,7 @@ function DashboardContentWrapper() {
         </div>
       </div>;
   }
-  return <div className="min-h-screen bg-gray-50 overflow-x-hidden px-4">
+  return <div className="min-h-screen bg-white overflow-x-hidden px-4">
       {/* Sidebar */}
       <DashboardSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} activeTab={activeTab} onTabChange={handleTabChange} userProfile={userProfile} selectedProjectId={selectedProjectId} />
 
