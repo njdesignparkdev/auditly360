@@ -130,15 +130,15 @@ export default function ProjectsTab({
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed':
-        return 'bg-[#ff4b01]/10 text-[#ff4b01] border border-[#ff4b01]/30';
+        return 'bg-green-100 text-green-800 border border-green-200';
       case 'in_progress':
-        return 'bg-[#ff4b01]/10 text-[#ff4b01] border border-[#ff4b01]/30';
+        return 'bg-blue-100 text-blue-800 border border-blue-200';
       case 'pending':
-        return 'bg-gray-50 text-gray-700 border border-gray-200';
+        return 'bg-gray-100 text-gray-700 border border-gray-200';
       case 'failed':
-        return 'bg-gray-50 text-gray-700 border border-gray-200';
+        return 'bg-red-100 text-red-800 border border-red-200';
       default:
-        return 'bg-gray-50 text-gray-700 border border-gray-200';
+        return 'bg-gray-100 text-gray-700 border border-gray-200';
     }
   };
   const getStatusDisplayName = (status: string) => {
@@ -183,7 +183,7 @@ export default function ProjectsTab({
   }} transition={{
     duration: 0.4,
     ease: "easeOut"
-  }} className="space-y-8 lg:px-24">
+  }} className="space-y-8 lg:px-4">
       {/* Header */}
       <motion.div initial={{
       opacity: 0,
@@ -194,8 +194,8 @@ export default function ProjectsTab({
     }} transition={{
       duration: 0.3,
       ease: "easeOut"
-    }} className="flex flex-col sm:flex-row sm:items-center sm:justify-between  lg:pt-8">
-        <div>
+    }} className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <div className="p-4">
           <h1 className="text-2xl font-semibold text-black mb-2">Projects</h1>
           <p className="text-gray-600">Manage and monitor your web audit projects</p>
         </div>
@@ -212,7 +212,7 @@ export default function ProjectsTab({
     }} transition={{
       duration: 0.3,
       ease: "easeOut"
-    }} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+    }} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 mb-6 border-y border-gray-300">
         {projectsLoading ? Array.from({
         length: 4
       }).map((_, index) => <StatsCardSkeleton key={index} />) : <>
@@ -226,18 +226,9 @@ export default function ProjectsTab({
           duration: 0.3,
           delay: 0 * 0.1,
           ease: "easeOut"
-        }} className="bg-white border border-gray-200 rounded-lg p-6 lg">
-              <div className="flex items-center">
-                <div className="p-3 bg-[#ff4b01]/10 rounded-lg">
-                  <svg className="w-6 h-6 text-[#ff4b01]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                  </svg>
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600 mb-1">Total Projects</p>
-                  <p className="text-2xl font-bold text-black">{totalProjects}</p>
-                </div>
-              </div>
+        }} className="p-6 border-r text-center border-gray-300">
+              <div className="text-2xl font-bold text-gray-900">{totalProjects}</div>
+              <div className="text-sm text-gray-600">Total Projects</div>
             </motion.div>
 
             <motion.div initial={{
@@ -250,18 +241,9 @@ export default function ProjectsTab({
           duration: 0.3,
           delay: 1 * 0.1,
           ease: "easeOut"
-        }} className="bg-white border border-gray-200 rounded-lg p-6">
-              <div className="flex items-center">
-                <div className="p-3 bg-[#ff4b01]/10 rounded-lg">
-                  <svg className="w-6 h-6 text-[#ff4b01]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600 mb-1">Completed</p>
-                  <p className="text-2xl font-bold text-black">{completedProjects}</p>
-                </div>
-              </div>
+        }} className="p-6 border-r text-center border-gray-300">
+              <div className="text-2xl font-bold text-gray-900">{completedProjects}</div>
+              <div className="text-sm text-gray-600">Completed</div>
             </motion.div>
 
             <motion.div initial={{
@@ -274,18 +256,9 @@ export default function ProjectsTab({
           duration: 0.3,
           delay: 2 * 0.1,
           ease: "easeOut"
-        }} className="bg-white border border-gray-200 rounded-lg p-6">
-              <div className="flex items-center">
-                <div className="p-3 bg-[#ff4b01]/10 rounded-lg">
-                  <svg className="w-6 h-6 text-[#ff4b01]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600 mb-1">In Progress</p>
-                  <p className="text-2xl font-bold text-black">{inProgressProjects}</p>
-                </div>
-              </div>
+        }} className="p-6 border-r text-center border-gray-300">
+              <div className="text-2xl font-bold text-gray-900">{inProgressProjects}</div>
+              <div className="text-sm text-gray-600">In Progress</div>
             </motion.div>
 
             <motion.div initial={{
@@ -298,18 +271,9 @@ export default function ProjectsTab({
           duration: 0.3,
           delay: 3 * 0.1,
           ease: "easeOut"
-        }} className="bg-white border border-gray-200 rounded-lg p-6">
-              <div className="flex items-center">
-                <div className="p-3 bg-[#ff4b01]/10 rounded-lg">
-                  <svg className="w-6 h-6 text-[#ff4b01]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                  </svg>
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600 mb-1">Total Issues</p>
-                  <p className="text-2xl font-bold text-black">{totalIssues}</p>
-                </div>
-              </div>
+        }} className="p-6 text-center">
+              <div className="text-2xl font-bold text-gray-900">{totalIssues}</div>
+              <div className="text-sm text-gray-600">Total Issues</div>
             </motion.div>
           </>}
       </motion.div>
@@ -334,7 +298,7 @@ export default function ProjectsTab({
       }} transition={{
         duration: 0.3,
         ease: "easeOut"
-      }} className="flex items-center justify-between ">
+      }} className="flex items-center justify-between p-4 ">
           <h2 className="text-xl font-semibold text-black">All Projects</h2>
           <div className="text-sm text-gray-500">
             {projectsLoading ? 'Loading...' : `${projects.length} project${projects.length !== 1 ? 's' : ''}`}
@@ -350,7 +314,7 @@ export default function ProjectsTab({
       }} transition={{
         duration: 0.3,
         ease: "easeOut"
-      }} className="space-y-6">
+      }} className="space-y-6 px-4 ">
             {Array.from({
           length: 3
         }).map((_, index) => <ProjectCardSkeleton key={index} />)}
@@ -370,14 +334,14 @@ export default function ProjectsTab({
               </svg>
             </div>
             <p className="text-gray-700 font-medium text-lg mb-2">{projectsError}</p>
-            {projectsError?.includes('Supabase not configured') && <div className="mt-6 p-6 bg-gray-50 border border-gray-200 rounded-lg max-w-md mx-auto">
+            {projectsError?.includes('Supabase not configured') && <div className="mt-6 p-6 bg-gray-50 border border-gray-300 max-w-md mx-auto">
                 <p className="text-sm text-gray-600">
-                  Please create a <code className="bg-gray-100 px-2 py-1 rounded text-sm">.env.local</code> file with your Supabase credentials.
+                  Please create a <code className="bg-gray-100 px-2 py-1 text-sm">.env.local</code> file with your Supabase credentials.
                   <br />
-                  See <code className="bg-gray-100 px-2 py-1 rounded text-sm">env.example</code> for reference.
+                  See <code className="bg-gray-100 px-2 py-1 text-sm">env.example</code> for reference.
                 </p>
               </div>}
-            <button onClick={() => refreshProjects()} className="mt-6 text-[#ff4b01] text-sm font-medium px-6 py-3 bg-[#ff4b01]/10 border border-[#ff4b01]/30 rounded-lg cursor-pointer">
+            <button onClick={() => refreshProjects()} className="mt-6 text-gray-700 text-sm font-medium px-6 py-3 bg-gray-100 border border-gray-300 cursor-pointer">
               Try again
             </button>
           </motion.div> : projects.length === 0 ? <motion.div initial={{
@@ -406,7 +370,7 @@ export default function ProjectsTab({
       }} transition={{
         duration: 0.3,
         ease: "easeOut"
-      }} className="space-y-6">
+      }} className="space-y-6 px-4">
             {projects.map((project, index) => {
           const isExpanded = expandedCards.has(project.id);
           return <motion.div key={project.id} initial={{
@@ -419,9 +383,9 @@ export default function ProjectsTab({
             duration: 0.3,
             delay: index * 0.1,
             ease: "easeOut"
-          }} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+          }} className="bg-white border border-gray-300 overflow-hidden">
                 {/* Card Header - Always Visible */}
-                <div className="p-4 border-b border-gray-200 cursor-pointer" onClick={() => toggleCardExpansion(project.id)}>
+                <div className="p-4 border-b border-gray-300 cursor-pointer" onClick={() => toggleCardExpansion(project.id)}>
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
@@ -437,7 +401,7 @@ export default function ProjectsTab({
                         </div>
                         
                         <div className="flex items-center gap-2">
-                          <span className={`inline-flex px-3 py-1 text-xs font-medium rounded flex-shrink-0 ${getStatusColor(project.status)}`}>
+                          <span className={`inline-flex px-3 py-1 text-xs font-medium flex-shrink-0 ${getStatusColor(project.status)}`}>
                             {getStatusDisplayName(project.status)}
                           </span>
                         </div>
@@ -491,7 +455,7 @@ export default function ProjectsTab({
                      
                       
                       {/* Expand/Collapse Button */}
-                      <motion.button className="p-2 rounded  bg-white cursor-pointer">
+                      <motion.button className="p-2 bg-white cursor-pointer">
                         <motion.svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" animate={{
                       rotate: isExpanded ? 180 : 0
                     }} transition={{
@@ -519,7 +483,7 @@ export default function ProjectsTab({
                 duration: 0.3,
                 ease: 'easeInOut'
               }} className="overflow-hidden">
-                      <div className="p-4 bg-gray-50 border-t border-gray-200">
+                      <div className="p-4 bg-gray-50 border-t border-gray-300">
                         <h4 className="text-sm font-semibold text-black mb-3 flex items-center">
                           <FaviconDisplay 
                             projectId={project.id}
@@ -605,14 +569,14 @@ export default function ProjectsTab({
                                     </svg>
                                     CMS Detected
                                   </div>
-                                  <span className="font-semibold text-[#ff4b01]">Yes</span>
+                                  <span className="font-semibold text-gray-900">Yes</span>
                                 </div>}
                             </div>
                           </div>
                         </div>
 
                         {/* CMS Information - Only show if CMS is detected and has data */}
-                        {project.cms_detected && (project.cms_type || project.cms_version || project.cms_plugins && project.cms_plugins.length > 0 || project.cms_themes && project.cms_themes.length > 0 || project.cms_components && project.cms_components.length > 0) && <div className="mt-6 pt-4 border-t border-gray-200">
+                        {project.cms_detected && (project.cms_type || project.cms_version || project.cms_plugins && project.cms_plugins.length > 0 || project.cms_themes && project.cms_themes.length > 0 || project.cms_components && project.cms_components.length > 0) && <div className="mt-6 pt-4 border-t border-gray-300">
                             <h5 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center">
                               <FaviconDisplay 
                                 projectId={project.id}
@@ -696,11 +660,11 @@ export default function ProjectsTab({
                           version?: string;
                           active?: boolean;
                           confidence: number;
-                        }, index: number) => <div key={index} className="flex items-center justify-between text-xs bg-gray-100 rounded px-2 py-1">
+                        }, index: number) => <div key={index} className="flex items-center justify-between text-xs bg-gray-100 px-2 py-1">
                                       <div className="flex items-center">
                                         <span className="font-medium text-gray-900">{plugin.name}</span>
                                         {plugin.version && <span className="ml-2 text-gray-500">v{plugin.version}</span>}
-                                        {plugin.active && <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-[#ff4b01]/20 text-[#ff4b01]">
+                                        {plugin.active && <span className="ml-2 inline-flex items-center px-1.5 py-0.5 text-xs font-medium bg-green-100 text-green-800 border border-green-200">
                                             Active
                                           </span>}
                                       </div>
@@ -721,11 +685,11 @@ export default function ProjectsTab({
                           version?: string;
                           active?: boolean;
                           confidence: number;
-                        }, index: number) => <div key={index} className="flex items-center justify-between text-xs bg-gray-100 rounded px-2 py-1">
+                        }, index: number) => <div key={index} className="flex items-center justify-between text-xs bg-gray-100 px-2 py-1">
                                       <div className="flex items-center">
                                         <span className="font-medium text-gray-900">{theme.name}</span>
                                         {theme.version && <span className="ml-2 text-gray-500">v{theme.version}</span>}
-                                        {theme.active && <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-[#ff4b01]/20 text-[#ff4b01]">
+                                        {theme.active && <span className="ml-2 inline-flex items-center px-1.5 py-0.5 text-xs font-medium bg-green-100 text-green-800 border border-green-200">
                                             Active
                                           </span>}
                                       </div>
@@ -736,7 +700,7 @@ export default function ProjectsTab({
                           </div>}
 
                         {/* Technologies Information - Only show if there are technologies */}
-                        {project.technologies && project.technologies.length > 0 && <div className="mt-6 pt-4 border-t border-gray-200">
+                        {project.technologies && project.technologies.length > 0 && <div className="mt-6 pt-4 border-t border-gray-300">
                             <h5 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center">
                               <FaviconDisplay 
                                 projectId={project.id}
@@ -792,7 +756,7 @@ export default function ProjectsTab({
                                     </svg>
                                     High Confidence
                                   </div>
-                                  <span className="font-semibold text-[#ff4b01]">
+                                  <span className="font-semibold text-gray-900">
                                     {project.technologies_metadata?.high_confidence_technologies || 0}
                                   </span>
                                 </div>
@@ -803,7 +767,7 @@ export default function ProjectsTab({
                                     </svg>
                                     Medium Confidence
                                   </div>
-                                  <span className="font-semibold text-[#ff4b01]">
+                                  <span className="font-semibold text-gray-900">
                                     {project.technologies_metadata?.medium_confidence_technologies || 0}
                                   </span>
                                 </div>
@@ -830,7 +794,7 @@ export default function ProjectsTab({
                           confidence: number;
                           icon?: string;
                         }>;
-                        return <div key={category} className="bg-gray-50 rounded-lg p-4">
+                        return <div key={category} className="bg-gray-50 p-4">
                                     <h6 className="text-sm font-semibold text-gray-700 mb-3 capitalize flex items-center">
                                       <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -838,16 +802,16 @@ export default function ProjectsTab({
                                       {category} ({techsArray.length})
                                     </h6>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                      {techsArray.slice(0, 6).map((tech, index: number) => <div key={index} className="flex items-center justify-between text-xs bg-white rounded px-3 py-2 border">
+                                      {techsArray.slice(0, 6).map((tech, index: number) => <div key={index} className="flex items-center justify-between text-xs bg-white px-3 py-2 border border-gray-300">
                                           <div className="flex items-center">
-                                            {tech.icon && <Image src={tech.icon} alt={tech.name} width={16} height={16} className="w-4 h-4 mr-2 rounded" onError={e => {
+                                            {tech.icon && <Image src={tech.icon} alt={tech.name} width={16} height={16} className="w-4 h-4 mr-2" onError={e => {
                                   e.currentTarget.style.display = 'none';
                                 }} />}
                                             <span className="font-medium text-gray-900">{tech.name}</span>
                                             {tech.version && <span className="ml-2 text-gray-500">v{tech.version}</span>}
                                           </div>
                                           <div className="flex items-center space-x-2">
-                                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${tech.confidence >= 0.8 ? 'bg-[#ff4b01]/20 text-[#ff4b01]' : tech.confidence >= 0.5 ? 'bg-[#ff4b01]/10 text-[#ff4b01]' : 'bg-gray-100 text-gray-700'}`}>
+                                            <span className={`px-2 py-1 text-xs font-medium border ${tech.confidence >= 0.8 ? 'bg-green-100 text-green-800 border-green-200' : tech.confidence >= 0.5 ? 'bg-yellow-100 text-yellow-800 border-yellow-200' : 'bg-gray-100 text-gray-700 border-gray-200'}`}>
                                               {Math.round(tech.confidence * 100)}%
                                             </span>
                                           </div>
@@ -862,7 +826,7 @@ export default function ProjectsTab({
                           </div>}
 
                         {/* HTML Content Details - Only show if there's content data */}
-                        {(project.total_html_content > 0 || project.average_html_per_page > 0) && <div className="mt-6 pt-4 border-t border-gray-200">
+                        {(project.total_html_content > 0 || project.average_html_per_page > 0) && <div className="mt-6 pt-4 border-t border-gray-300">
                             <h5 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Content Analysis</h5>
                             <div className="grid grid-cols-2 gap-6">
                               {project.total_html_content > 0 && <div className="flex items-center justify-between">
@@ -890,22 +854,22 @@ export default function ProjectsTab({
                 </AnimatePresence>
 
                 {/* Card Footer */}
-                <div className="px-4 py-3 bg-gray-50 border-t border-gray-200">
+                <div className="px-4 py-3 bg-gray-50 border-t border-gray-300">
                   <div className="flex items-center justify-between">
                     <div className="text-xs text-gray-500">
                       Created {formatDate(project.created_at)}
                     </div>
                     <div className="flex space-x-2">
-                      {project.status === 'completed' && <button onClick={() => onProjectSelect?.(project.id)} className="text-[#ff4b01] text-xs font-medium px-3 py-2 bg-[#ff4b01]/10 border border-[#ff4b01]/30 rounded cursor-pointer">
+                      {project.status === 'completed' && <button onClick={() => onProjectSelect?.(project.id)} className="text-gray-700 text-xs font-medium px-3 py-2 bg-gray-100 border border-gray-300 cursor-pointer">
                           View Analysis
                         </button>}
-                      {project.status === 'pending' && <button onClick={() => onProjectSelect?.(project.id)} className="text-[#ff4b01] text-xs font-medium px-3 py-2 bg-[#ff4b01]/10 border border-[#ff4b01]/30 rounded cursor-pointer">
+                      {project.status === 'pending' && <button onClick={() => onProjectSelect?.(project.id)} className="text-gray-700 text-xs font-medium px-3 py-2 bg-gray-100 border border-gray-300 cursor-pointer">
                           View Details
                         </button>}
-                      <button onClick={() => handleEditProject(project)} className="text-gray-600 text-xs font-medium px-3 py-1 bg-white border border-gray-200 rounded cursor-pointer">
+                      <button onClick={() => handleEditProject(project)} className="text-gray-600 text-xs font-medium px-3 py-1 bg-white border border-gray-300 cursor-pointer">
                         Edit
                       </button>
-                      <button onClick={() => handleDeleteProject(project.id)} className="text-red-600 text-xs font-medium px-3 py-1 bg-red-50 border border-red-200 rounded cursor-pointer">
+                      <button onClick={() => handleDeleteProject(project.id)} className="text-red-600 text-xs font-medium px-3 py-1 bg-red-50 border border-red-200 cursor-pointer">
                         Delete
                       </button>
                     </div>
@@ -924,7 +888,7 @@ export default function ProjectsTab({
 
       {/* Delete Confirmation Modal */}
       {deleteConfirmOpen && <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-md w-full border border-gray-300 ">
+          <div className="bg-white max-w-md w-full border border-gray-300">
             <div className="p-6">
               <div className="flex items-center mb-4">
                 <div className="flex-shrink-0">
@@ -950,10 +914,10 @@ export default function ProjectsTab({
               </div>
               
               <div className="flex justify-end space-x-3">
-                <button onClick={cancelDeleteProject} className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
+                <button onClick={cancelDeleteProject} className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 transition-colors">
                   Cancel
                 </button>
-                <button onClick={confirmDeleteProject} className="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700 transition-colors">
+                <button onClick={confirmDeleteProject} className="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent hover:bg-red-700 transition-colors">
                   Delete Project
                 </button>
               </div>

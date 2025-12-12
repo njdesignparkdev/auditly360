@@ -40,19 +40,19 @@ export default function ProfileSubTabs({ userProfile }: ProfileSubTabsProps) {
 
   return (
     <motion.div 
-      className="space-y-6 px-24" 
+      className="space-y-6 lg:px-4" 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
       {/* Header */}
       <motion.div
-        className=" p-6"
+        className="p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
       >
-        <h1 className="text-2xl font-bold text-black mb-2">
+        <h1 className="text-2xl font-semibold text-gray-900 mb-2">
           Account Settings
         </h1>
         <p className="text-gray-600">
@@ -62,20 +62,22 @@ export default function ProfileSubTabs({ userProfile }: ProfileSubTabsProps) {
 
       {/* Tab Navigation */}
       <motion.div 
-        className="border-b border-gray-200"
+        className="border-y border-gray-300"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <nav className="-mb-px flex space-x-6">
+        <nav className="flex">
           {tabs.map((tab, index) => (
             <motion.button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`py-1.5 px-2 border-b-2 font-medium text-sm transition-colors duration-300 ${
+              className={`py-4 px-6 font-medium text-sm transition-colors duration-300 ${
+                index < tabs.length - 1 ? 'border-r border-gray-300' : ''
+              } ${
                 activeTab === tab.id
-                  ? 'border-[#ff4b01] text-[#ff4b01] bg-[#ff4b01]/10'
-                  : 'border-transparent text-gray-500 hover:text-[#ff4b01] hover:border-[#ff4b01]/30'
+                  ? 'border-b-2 border-b-gray-900 text-gray-900 bg-gray-50'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
               }`}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
