@@ -1,37 +1,27 @@
 'use client';
 import React from 'react';
-import Image from 'next/image';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { Link as LinkIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { useScroll } from '@/components/ui/use-scroll';
 import { createPortal } from 'react-dom';
 
-export default function Navbar() {
+export function Header() {
 	const [open, setOpen] = React.useState(false);
 	const scrolled = useScroll(10);
 
 	const links = [
 		{
-			label: 'Home',
-			href: '/',
-		},
-		{
 			label: 'Features',
-			href: '#features',
+			href: '#',
 		},
 		{
 			label: 'Pricing',
-			href: '#pricing',
+			href: '#',
 		},
 		{
-			label: 'How it Works',
-			href: '#how-it-works',
-		},
-		{
-			label: 'Testimonials',
-			href: '#testimonials',
+			label: 'About',
+			href: '#',
 		},
 	];
 
@@ -48,36 +38,23 @@ export default function Navbar() {
 
 	return (
 		<header
-			className={cn('sticky top-0 z-50 w-full border-b border-gray-200 dark:border-border', {
-				'bg-background/95 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg':
+			className={cn('sticky top-0 z-50 w-full border-b border-transparent', {
+				'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg':
 					scrolled,
 			})}
 		>
-			<nav className="relative mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-4 lg:px-0">
-				<div className="hover:bg-accent rounded-md -ml-14">
-					<Image 
-						src="/orange-black-auditly.png" 
-						alt="Auditly360" 
-						width={124} 
-						height={43} 
-						className="h-8 md:h-10 w-auto"
-						priority
-					/>
+			<nav className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-4">
+				<div className="hover:bg-accent rounded-md p-2">
+					<WordmarkIcon className="h-4" />
 				</div>
-
-				{/* Centered Links */}
-				<div className="hidden md:flex absolute left-[42%] top-1/2 transform -translate-x-1/2 -translate-y-1/2 items-center gap-6">
+				<div className="hidden items-center gap-2 md:flex">
 					{links.map((link) => (
-						<a key={link.label} className={buttonVariants({ variant: 'ghost', className: 'text-base font-medium' })} href={link.href}>
+						<a key={link.label} className={buttonVariants({ variant: 'ghost' })} href={link.href}>
 							{link.label}
 						</a>
 					))}
-				</div>
-
-				{/* Right Side Buttons */}
-				<div className="hidden items-center gap-4 md:flex -mr-8">
-					<Button variant="outline" className="hidden lg:flex rounded-xl font-bold px-6">Sign In</Button>
-					<Button className="bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold px-6">Get Started</Button>
+					<Button variant="outline">Sign In</Button>
+					<Button>Get Started</Button>
 				</div>
 				<Button
 					size="icon"
@@ -110,7 +87,7 @@ export default function Navbar() {
 					<Button variant="outline" className="w-full bg-transparent">
 						Sign In
 					</Button>
-					<Button className="w-full bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold">Get Started</Button>
+					<Button className="w-full">Get Started</Button>
 				</div>
 			</MobileMenu>
 		</header>

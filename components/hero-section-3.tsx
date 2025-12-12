@@ -35,7 +35,7 @@ export function HeroSection3() {
 
             <main className="overflow-hidden">
                 <section>
-                    <div className="relative mx-auto max-w-6xl px-6 pt-32 lg:pb-16 lg:pt-48">
+                    <div className="relative mx-auto max-w-6xl px-6 pt-20 lg:pb-16 lg:pt-32">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
                             <div className="relative z-10 text-left">
                                 <AnimatedGroup
@@ -72,8 +72,8 @@ export function HeroSection3() {
                                             <div>
                                                 <Button
                                                     aria-label="submit"
-                                                    className="h-8 px-6 rounded-[0.5rem] bg-orange-500 hover:bg-orange-600">
-                                                    <span className="hidden md:block">Get Started</span>
+                                                    className="h-10 px-8 rounded-xl bg-[#ff6a00] hover:bg-[#e66000] text-white font-bold shadow-md transition-all duration-200">
+                                                    <span className="hidden md:block">Search</span>
                                                     <SendHorizonal
                                                         className="relative mx-auto size-5 md:hidden"
                                                         strokeWidth={2}

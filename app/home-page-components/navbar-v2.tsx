@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 import AuditlyLogo from "@/components/blocks/auditly-logo";
-import NavbarDropdown from "@/components/navbar/navbar-dropdown";
 
 interface NavItem {
     name: string;
@@ -47,22 +46,13 @@ export default function NavbarV2() {
                 <div className="hidden md:flex items-center justify-center">
                     <div className="flex items-center gap-1">
                         {navItems.map((item) => (
-                            item.dropdown ? (
-                                <NavbarDropdown
-                                    key={item.name}
-                                    label={item.name}
-                                    href={item.href}
-                                    items={item.dropdown}
-                                />
-                            ) : (
-                                <Link
-                                    key={item.name}
-                                    href={item.href}
+                            <Link
+                                key={item.name}
+                                href={item.href}
                                     className="px-5 py-2 text-base font-medium text-[#29272A] hover:text-[#f0803c] transition-colors rounded-full hover:bg-white/5"
                                 >
                                     {item.name}
                                 </Link>
-                            )
                         ))}
                     </div>
                 </div>
