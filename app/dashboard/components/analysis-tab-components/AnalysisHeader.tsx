@@ -153,8 +153,8 @@ export default function AnalysisHeader({
 
   return (
     <div className=" lg:pt-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
-        <div className="flex flex-col space-y-3 min-w-0">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 px-4">
+        <div className="flex flex-col space-y-3 min-w-0 px-6">
           {currentTab === "page-analysis" && (
             <button
               onClick={() =>
@@ -165,7 +165,7 @@ export default function AnalysisHeader({
               Back
             </button>
           )}
-          <div className="min-w-0 flex items-center gap-4">
+          <div className="min-w-0 flex items-center gap-4 ">
             <div>
               <FaviconDisplay
                 projectId={project.id}
@@ -214,7 +214,7 @@ export default function AnalysisHeader({
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <nav className="-mb-px flex space-x-4 sm:space-x-8 min-w-max border-t border-gray-200">
+            <nav className="-mb-px flex space-x-4 sm:space-x-8 min-w-max border-t border-gray-200 px-6">
               {(
                 customTabs || [
                   {
@@ -222,6 +222,7 @@ export default function AnalysisHeader({
                     name: "Overview",
                     icon: "fas fa-chart-bar",
                   },
+                
                   { id: "pages", name: "Pages", icon: "fas fa-file-alt" },
                   {
                     id: "performance",
@@ -231,6 +232,7 @@ export default function AnalysisHeader({
                   { id: "seo", name: "SEO", icon: "fas fa-search" },
                   { id: "images", name: "Images", icon: "fas fa-image" },
                   { id: "links", name: "Links", icon: "fas fa-link" },
+                  { id: "keys", name: "Keys", icon: "fas fa-key" },
                 ]
               ).map((tab) => {
                 const hasAccess = hasAccessToTab(tab.id);

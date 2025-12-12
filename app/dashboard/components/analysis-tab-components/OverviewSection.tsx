@@ -5,7 +5,6 @@ import SEOAnalysisSection from "./SEOAnalysisSection";
 import FaviconDisplay from "../FaviconDisplay";
 import TechnologiesTab from "./subtabs/TechnologiesTab";
 import SocialPreviewTab from "./subtabs/SocialPreviewTab";
-import KeysTab from "./subtabs/KeysTab";
 
 interface OverviewSectionProps {
   project: AuditProject;
@@ -43,6 +42,19 @@ export default function OverviewSection({ project, scrapedPages = [] }: Overview
   };
 
   const htmlContent = getHtmlContent();
+  const seoAnalysis = project.seo_analysis;
+
+  const getScoreColor = (score: number) => {
+    if (score >= 80) return "text-green-600";
+    if (score >= 60) return "text-yellow-600";
+    return "text-red-600";
+  };
+
+  const getScoreBgColor = (score: number) => {
+    if (score >= 80) return "bg-green-100";
+    if (score >= 60) return "bg-yellow-100";
+    return "bg-red-100";
+  };
   const getStatusColor = (status: string) => {
     switch (status) {
       case "completed":
@@ -88,38 +100,77 @@ export default function OverviewSection({ project, scrapedPages = [] }: Overview
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 ">
       {/* Main Stats */}
-      <div className="lg:col-span-2 space-y-6 border-r border-gray-200">
-        <div className="bg-white border-b border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="lg:col-span-2 space-y-6 border-r border-gray-300">
+        <div className="bg-white border-b border-gray-300 ">
+          <h3 className="text-lg font-semibold text-gray-900  border-b border-gray-300 p-6">
             Content Summary
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bord">
-            <div className="text-center border-r border-gray-200">
-              <div className="text-2xl font-bold text-[#ff4b01]">
+            <div className="text-center py-2 border-r border-gray-300">
+              <div className="text-2xl font-bold text-[#ff4b01] ">
                 {project.total_pages || 0}
               </div>
               <div className="text-sm text-gray-600">Pages</div>
             </div>
-            <div className="text-center border-r border-gray-200">
-              <div className="text-2xl font-bold text-[#ff4b01]">
+            <div className="text-center py-2 border-r border-gray-300">
+              <div className="text-2xl font-bold text-[#ff4b01] ">
                 {project.total_links || 0}
               </div>
               <div className="text-sm text-gray-600">Links</div>
             </div>
-            <div className="text-center border-r border-gray-200">
-              <div className="text-2xl font-bold text-[#ff4b01]">
+            <div className="text-center py-2 border-r border-gray-300">
+              <div className="text-2xl font-bold text-[#ff4b01] ">
                 {project.total_images || 0}
               </div>
               <div className="text-sm text-gray-600">Images</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-[#ff4b01]">
+            <div className="text-center py-2">
+              <div className="text-2xl font-bold text-[#ff4b01] ">
                 {project.total_meta_tags || 0}
               </div>
               <div className="text-sm text-gray-600">Meta Tags</div>
             </div>
           </div>
         </div>
+        {seoAnalysis && (
+          <div className="bg-white border-b border-gray-300  pb-6 space-y-6">
+            <div>
+              <div className="flex items-center justify-between  ">
+                <span className="text-lg font-semibold text-gray-900 px-6">SEO Score</span>
+               
+              </div>
+             
+            </div>
+
+            <div className=" rounded-lg ">
+             
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border-y  border-gray-300">
+                <div className="text-center border-r border-gray-300 py-4 ">
+                  <div className="text-2xl font-bold text-gray-900">{seoAnalysis.score}</div>
+                  <div className="text-xs text-gray-600">SEO Score</div>
+                </div>
+                {seoAnalysis.highlights && seoAnalysis.highlights.length > 0 && (
+                  <div className="text-center border-r border-gray-300 py-4 ">
+                    <div className="text-2xl font-bold text-green-600">{seoAnalysis.summary?.totalHighlights || 0}</div>
+                    <div className="text-xs text-gray-600">Highlights</div>
+                  </div>
+                )}
+                {seoAnalysis.issues && seoAnalysis.issues.length > 0 && (
+                  <>
+                    <div className="text-center border-r border-gray-300 py-4 ">
+                      <div className="text-2xl font-bold text-red-600">{seoAnalysis.summary?.errors || 0}</div>
+                      <div className="text-xs text-gray-600">Errors</div>
+                    </div>
+                    <div className="text-center py-4 ">
+                      <div className="text-2xl font-bold text-yellow-600">{seoAnalysis.summary?.warnings || 0}</div>
+                      <div className="text-xs text-gray-600">Warnings</div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
         {/* SEO Analysis Section */}
         {/* <div className="lg:col-span-3">
           <SEOAnalysisSection 
@@ -130,7 +181,7 @@ export default function OverviewSection({ project, scrapedPages = [] }: Overview
         </div> */}
         {/* Technologies Overview (inline, no tabs) */}
         {project.technologies && project.technologies.length > 0 && (
-          <div className="bg-white border-b border-gray-200 p-6">
+          <div className="bg-white border-b border-gray-300 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
               Technologies Detected
             </h3>
@@ -148,15 +199,11 @@ export default function OverviewSection({ project, scrapedPages = [] }: Overview
           <SocialPreviewTab project={project} />
         </div>
 
-        {/* Keys Analysis */}
-        <div className="bg-white rounded-lg  border border-gray-200 p-6">
-          <KeysTab project={project} pageHtml={htmlContent || undefined} />
-        </div>
       </div>
 
       {/* Sidebar Stats */}
       <div className="space-y-6">
-        <div className="border-b border-gray-200 p-6">
+        <div className="border-b border-gray-300 p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             Project Info
           </h3>
@@ -199,7 +246,7 @@ export default function OverviewSection({ project, scrapedPages = [] }: Overview
 
         {/* CMS Info */}
         {project.cms_detected && (
-          <div className="border-b border-gray-200 p-6">
+          <div className="border-b border-gray-300 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
               CMS Information
             </h3>
@@ -236,13 +283,13 @@ export default function OverviewSection({ project, scrapedPages = [] }: Overview
 
         {/* Pages List */}
         {scrapedPages && scrapedPages.length > 0 && (
-          <div className="  border-b border-gray-200 p-6">
+          <div className="  border-b border-gray-300 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
               Pages List
             </h3>
-            <div className="space-y-3 max-h-96 overflow-y-auto">
+            <div className="space-y-3 max-h-[800px] overflow-y-auto">
               {scrapedPages.slice(0, 10).map((page, index) => (
-                <div key={index} className="border border-gray-200 rounded-lg p-3 hover:bg-gray-50 transition-colors">
+                <div key={index} className="border border-gray-300  p-3 hover:bg-gray-50 transition-colors">
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-medium text-gray-900 text-sm truncate flex-1 mr-2">
                       {page.title || 'Untitled'}

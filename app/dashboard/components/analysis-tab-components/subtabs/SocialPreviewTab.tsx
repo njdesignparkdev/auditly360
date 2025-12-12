@@ -148,10 +148,10 @@ export default function SocialPreviewTab({ project }: SocialPreviewTabProps) {
       {/* Social Preview Mockup */}
       <div className="bg-white   border border-gray-200 p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Social Preview</h3>
-        <div className="border border-gray-300 rounded-lg p-4 bg-gray-50">
+        <div className="border border-gray-300  p-4 ">
           <div className="grid grid-cols-[auto_1fr] gap-3 items-start">
             {/* Image placeholder */}
-            <div className="w-24 h-24 bg-gray-200 rounded flex-shrink-0 flex items-center justify-center relative">
+            <div className="w-24 h-24  flex-shrink-0 flex items-center justify-center relative">
               {socialImage ? (
                 <>
                   <Image 
@@ -159,7 +159,7 @@ export default function SocialPreviewTab({ project }: SocialPreviewTabProps) {
                     alt="Social preview" 
                     width={96}
                     height={96}
-                    className="w-full h-full object-cover rounded"
+                    className="w-full h-full object-cover "
                     onError={(e) => {
                       const target = e.currentTarget as HTMLImageElement
                       target.style.display = 'none'
@@ -201,7 +201,7 @@ export default function SocialPreviewTab({ project }: SocialPreviewTabProps) {
 
       {/* Image Preview */}
       {socialImage && (
-        <div className="bg-white rounded-lg  border border-gray-200 p-6">
+        <div className="   border border-gray-200 p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Social Media Image</h3>
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
@@ -211,7 +211,7 @@ export default function SocialPreviewTab({ project }: SocialPreviewTabProps) {
                   alt="Social media preview" 
                   width={128}
                   height={128}
-                  className="w-32 h-32 object-cover rounded-lg border border-gray-200"
+                  className="w-32 h-32 object-cover  border border-gray-200"
                   onError={(e) => {
                     const target = e.currentTarget as HTMLImageElement
                     target.style.display = 'none'
@@ -219,7 +219,7 @@ export default function SocialPreviewTab({ project }: SocialPreviewTabProps) {
                     if (fallback) fallback.classList.remove('hidden')
                   }}
                 />
-                <div className="hidden w-32 h-32 bg-gray-100 rounded-lg border border-gray-200 items-center justify-center">
+                <div className="hidden w-32 h-32 bg-gray-100  border border-gray-200 items-center justify-center">
                   <span className="text-gray-400 text-sm">Image not found</span>
                 </div>
               </div>
@@ -240,7 +240,7 @@ export default function SocialPreviewTab({ project }: SocialPreviewTabProps) {
       )}
 
       {/* Summary */}
-      <div className="bg-white rounded-lg  border border-gray-200 p-6">
+      <div className="bg-white  border border-gray-200 p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Summary</h3>
         <div className="space-y-2">
           <p className="text-sm text-gray-600">
@@ -249,99 +249,16 @@ export default function SocialPreviewTab({ project }: SocialPreviewTabProps) {
           <p className="text-sm text-gray-600">
             Twitter meta tags present: {twitterPresent > 0 ? Object.keys(twitter).filter((key: string) => twitter[key as keyof SocialMetaData]).join(', ') : 'none'}
           </p>
+          <p className="text-sm text-gray-500">
+            Highlight: Open Graph tags control how your link previews look on platforms like Facebook and LinkedIn. Add them to avoid generic or broken previews.
+          </p>
+          <p className="text-sm text-gray-500">
+            Highlight: Twitter Card tags do the same for X/Twitter shares. Without them, tweets may lack images or show incomplete titles.
+          </p>
         </div>
       </div>
 
-      {/* Twitter and Open Graph Details */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        {/* Twitter Section */}
-        <div className="bg-white rounded-lg  border border-gray-200 p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">Twitter</h3>
-            {twitterPresent > 0 && (
-              <span className="bg-[#ff4b01]/20 text-[#ff4b01] text-xs font-medium px-2 py-1 rounded-full">
-                Present
-              </span>
-            )}
-          </div>
-          
-          <div className="space-y-3">
-            <div>
-              <h4 className="text-sm font-medium text-gray-700 mb-2">Tags:</h4>
-              <div className="space-y-1">
-                {Object.entries(twitter).map(([key, value]) => (
-                  <div key={key} className="text-sm">
-                    <span className="font-medium text-gray-600">{key}:</span>
-                    <div className="mt-1 text-gray-900 break-all">{String(value)}</div>
-                  </div>
-                ))}
-                {Object.keys(twitter).length === 0 && (
-                  <p className="text-sm text-gray-500">No Twitter tags found</p>
-                )}
-              </div>
-            </div>
-
-            {twitterMissing > 0 && (
-              <div>
-                <h4 className="text-sm font-medium text-red-700 mb-2">Missing Tags:</h4>
-                <div className="space-y-1">
-                  {missingTags
-                    .filter((tag: string) => tag.startsWith('twitter:'))
-                    .map((tag: string) => (
-                      <div key={tag} className="text-sm text-red-600">
-                        {tag}
-                      </div>
-                    ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Open Graph Section */}
-        <div className="bg-white rounded-lg  border border-gray-200 p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">Open Graph</h3>
-            {openGraphPresent > 0 && (
-              <span className="bg-[#ff4b01]/20 text-[#ff4b01] text-xs font-medium px-2 py-1 rounded-full">
-                Present
-              </span>
-            )}
-          </div>
-          
-          <div className="space-y-3">
-            <div>
-              <h4 className="text-sm font-medium text-gray-700 mb-2">Tags:</h4>
-              <div className="space-y-1">
-                {Object.entries(openGraph).map(([key, value]) => (
-                  <div key={key} className="text-sm">
-                    <span className="font-medium text-gray-600">{key}:</span>
-                    <div className="mt-1 text-gray-900 break-all">{String(value)}</div>
-                  </div>
-                ))}
-                {Object.keys(openGraph).length === 0 && (
-                  <p className="text-sm text-gray-500">No Open Graph tags found</p>
-                )}
-              </div>
-            </div>
-
-            {openGraphMissing > 0 && (
-              <div>
-                <h4 className="text-sm font-medium text-red-700 mb-2">Missing Tags:</h4>
-                <div className="space-y-1">
-                  {missingTags
-                    .filter((tag: string) => tag.startsWith('og:'))
-                    .map((tag: string) => (
-                      <div key={tag} className="text-sm text-red-600">
-                        {tag}
-                      </div>
-                    ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+   
     </div>
   )
 }

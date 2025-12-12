@@ -103,7 +103,7 @@ export default function PerformanceSection({ project, onDataUpdate }: Performanc
   // Loading state
   if (isLoading) {
     return (
-      <div className="space-y-6">
+      <div className="">
         <div className="bg-white rounded-lg border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold text-gray-900">Performance Analysis section </h2>
@@ -338,7 +338,7 @@ export default function PerformanceSection({ project, onDataUpdate }: Performanc
   }
 
   return (
-    <div className="space-y-6">
+    <div className="">
       {/* Header */}
       {/* <div className="bg-white rounded-lg border border-gray-200 p-6">
         <div className="flex items-center justify-between mb-6">
@@ -350,8 +350,8 @@ export default function PerformanceSection({ project, onDataUpdate }: Performanc
           </div>h
         </div>
       </div> */}
- <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-6">Overall Scores</h3>
+ <div className=" border-b border-gray-200 p-6">
+          <h3 className="text-lg font-semibold text-gray-900 ">Overall Scores</h3>
           <div className="flex flex-wrap flex-row justify-around gap-6">
             <ScoreChart 
               score={categories.performance.score} 
@@ -387,10 +387,10 @@ export default function PerformanceSection({ project, onDataUpdate }: Performanc
           640: 1
         }}
         className="masonry-grid"
-        columnClassName="masonry-grid_column"
+        columnClassName="masonry-grid_column border-r border-gray-200"
       >
         {/* Performance Metrics */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 break-inside-avoid">
+        <div className=" border-b border-gray-200 p-6 break-inside-avoid">
           <h3 className="text-lg font-semibold text-gray-900 mb-6">Performance Metrics</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <MetricCard
@@ -425,7 +425,7 @@ export default function PerformanceSection({ project, onDataUpdate }: Performanc
         </div>
 
         {/* Core Web Vitals */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 break-inside-avoid">
+        <div className="border-b border-gray-200 p-6 break-inside-avoid">
           <h3 className="text-lg font-semibold text-gray-900 mb-6">Core Web Vitals</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <MetricCard
@@ -453,7 +453,7 @@ export default function PerformanceSection({ project, onDataUpdate }: Performanc
         </div>
 
         {/* Additional Metrics */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 break-inside-avoid">
+        <div className="border-b border-gray-200 p-6 break-inside-avoid">
           <h3 className="text-lg font-semibold text-gray-900 mb-6">Additional Metrics</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <MetricCard
@@ -482,7 +482,7 @@ export default function PerformanceSection({ project, onDataUpdate }: Performanc
 
         {/* Real User Experience */}
         {loadingExperience && loadingExperience.metrics && (
-          <div className="bg-white rounded-lg border border-gray-200 p-6 break-inside-avoid">
+          <div className="border-b border-gray-200 p-6 break-inside-avoid">
             <h3 className="text-lg font-semibold text-gray-900 mb-6">Real User Experience</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {Object.entries(loadingExperience.metrics).map(([key, metric]) => {
@@ -504,7 +504,7 @@ export default function PerformanceSection({ project, onDataUpdate }: Performanc
         )}
 
         {/* Technical Details */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 break-inside-avoid">
+        <div className="border-b border-gray-200 p-6 break-inside-avoid">
           <h3 className="text-lg font-semibold text-gray-900 mb-6">Technical Details</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3">

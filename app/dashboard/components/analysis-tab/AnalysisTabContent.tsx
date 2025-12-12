@@ -6,6 +6,7 @@ import { useScrapingAnalysis } from './hooks/useScrapingAnalysis'
 import ScrapingService from '../ScrapingService'
 import { AnalysisTabProps } from './types'
 import { AnalysisHeader, OverviewSection, ModernLoader } from '../analysis-tab-components'
+import KeysTab from '../analysis-tab-components/subtabs/KeysTab'
 import FeedbackModal from '../modals/FeedbackModal'
 import ErrorState from './components/ErrorState'
 import SectionSkeleton from './components/SectionSkeleton'
@@ -143,6 +144,24 @@ export default function AnalysisTabContent({
     return null
   }
 
+  const getHomepageHtml = () => {
+    if (!state.scrapedPages || state.scrapedPages.length === 0) return null
+
+    const homepage = state.scrapedPages.find((page) => {
+      try {
+        const url = new URL(page.url)
+        return url.pathname === '/' || url.pathname === '' || url.pathname === '/index.html'
+      } catch {
+        return false
+      }
+    })
+
+    const targetPage = homepage || state.scrapedPages[0]
+    return targetPage.html_content || null
+  }
+
+  const homepageHtml = getHomepageHtml()
+
   // Guard: if CMS not detected and active section is 'cms', switch to 'overview'
   // if (state.activeSection === 'cms' && state.project && !state.project.cms_detected) {
   //   handleSectionChange('overview')
@@ -253,6 +272,12 @@ export default function AnalysisTabContent({
                   originalScrapingData={state.project.scraping_data} 
                 />
               </Suspense>
+            )}
+
+            {state.activeSection === 'keys' && (
+              <div className="">
+                <KeysTab project={state.project} pageHtml={homepageHtml || undefined} />
+              </div>
             )}
             
             {state.activeSection === 'seo' && (

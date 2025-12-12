@@ -671,9 +671,9 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
   }
 
   return (
-    <div className="bg-white rounded-lg  border border-gray-200 p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-gray-900">Images Analysis</h3>
+    <div className="">
+      <div className="flex items-center justify-between pr-6">
+        <h3 className="text-lg font-semibold text-gray-900 p-6 ">Images Analysis</h3>
         <div className="text-sm text-gray-500">
           {isLoading || isProcessing ? (
             <span className="flex items-center gap-2">
@@ -694,20 +694,20 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
 
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-gray-50 rounded-lg p-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 mb-6 border-y border-gray-300">
+        <div className=" p-4 border-r text-center border-gray-300">
           <div className="text-2xl font-bold text-gray-900">{stats.total}</div>
           <div className="text-sm text-gray-600">Total Images</div>
         </div>
-        <div className="bg-gray-50 rounded-lg p-4">
+        <div className=" p-4 border-r text-center border-gray-300">
           <div className="text-2xl font-bold text-gray-900">{stats.withAlt}</div>
           <div className="text-sm text-gray-600">With Alt Text</div>
         </div>
-        <div className="bg-gray-50 rounded-lg p-4">
+        <div className=" p-4 border-r text-center border-gray-300">
           <div className="text-2xl font-bold text-gray-900">{stats.withoutAlt}</div>
           <div className="text-sm text-gray-600">Without Alt Text</div>
         </div>
-        <div className={`rounded-lg p-4 ${(planInfo?.image_scan_credits ?? 0) < 5 ? 'bg-yellow-50 border border-yellow-200' : 'bg-gray-50'}`}>
+        <div className={` p-4 text-center ${(planInfo?.image_scan_credits ?? 0) < 5 ? 'bg-yellow-50 border border-yellow-200' : 'bg-gray-50'}`}>
           <div className={`text-2xl font-bold ${(planInfo?.image_scan_credits ?? 0) < 5 ? 'text-yellow-700' : 'text-gray-900'}`}>
             {planInfo?.image_scan_credits ?? 0}
           </div>
@@ -724,7 +724,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
       </div>
 
       {/* Filter Controls */}
-      <div className="bg-gray-50 rounded-lg p-4 mb-6">
+      <div className="border-y border-gray-300 p-4 mb-6">
         <div className="flex flex-col lg:flex-row gap-4">
           {/* Search Input */}
           <div className="flex-1">
@@ -792,7 +792,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
         <>
           {/* Desktop Table View */}
           <div className="hidden lg:block overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-gray-300">
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -841,7 +841,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white divide-y divide-gray-300">
                 {paginatedImages.map((img, index) => {
                   // Create a truly unique key combining multiple identifiers
                   // Priority: database ID > URL + page_url + global index > fallback
@@ -870,8 +870,8 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                         <Image
                           src={img.url || img.src || ''}
                           alt={img.alt || 'No alt text'}
-                          width={64}
-                          height={64}
+                          width={60}
+                          height={60}
                           className="w-full h-full object-cover"
                           onError={(e) => {
                             const target = e.currentTarget
@@ -896,7 +896,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                         </a>
                       </div>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-2">
                       <div className="max-w-xs">
                         {img.alt && img.alt.trim() !== '' ? (
                           <span className="text-sm text-gray-900">{img.alt}</span>

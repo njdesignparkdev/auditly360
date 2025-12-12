@@ -565,9 +565,9 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
 
 
   return (
-    <div className="bg-white rounded-lg  border border-gray-200 p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-gray-900">Links Analysis</h3>
+    <div className="">
+      <div className="flex items-center justify-between ">
+        <h3 className="text-lg font-semibold text-gray-900 p-6 ">Links Analysis</h3>
         <div className="flex items-center gap-4">
           <div className="text-sm text-gray-500">
             {isProcessing ? (
@@ -585,7 +585,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
           
           {/* Export Button */}
           {filteredLinks.length > 0 && (
-            <div className="relative group">
+            <div className="relative group pr-6">
               <button
                 disabled={isExporting}
                 className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -646,31 +646,31 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
-        <div className="bg-gray-50 rounded-lg p-4">
+      <div className="grid grid-cols-1 md:grid-cols-5 mb-6 border-y border-gray-300">
+        <div className="p-4 border-r text-center border-gray-300">
           <div className="text-2xl font-bold text-gray-900">{stats.total}</div>
           <div className="text-sm text-gray-600">Total Links</div>
         </div>
-        <div className="bg-gray-50 rounded-lg p-4">
+        <div className="p-4 border-r text-center border-gray-300">
           <div className="text-2xl font-bold text-gray-900">{stats.internal}</div>
           <div className="text-sm text-gray-600">Internal</div>
         </div>
-        <div className="bg-gray-50 rounded-lg p-4">
+        <div className="p-4 border-r text-center border-gray-300">
           <div className="text-2xl font-bold text-gray-900">{stats.external}</div>
           <div className="text-sm text-gray-600">External</div>
         </div>
-        <div className="bg-gray-50 rounded-lg p-4">
+        <div className="p-4 border-r text-center border-gray-300">
           <div className="text-2xl font-bold text-gray-900">{stats.broken}</div>
           <div className="text-sm text-gray-600">Broken Links</div>
         </div>
-        <div className="bg-gray-50 rounded-lg p-4">
+        <div className="p-4 text-center">
           <div className="text-2xl font-bold text-gray-900">{stats.working}</div>
           <div className="text-sm text-gray-600">Working Links</div>
         </div>
       </div>
 
       {/* Filter Controls */}
-      <div className="bg-gray-50 rounded-lg p-4 mb-6">
+      <div className="border-y border-gray-300 p-4 mb-6">
         <div className="flex flex-col lg:flex-row gap-4">
           {/* Search Input */}
           <div className="flex-1">

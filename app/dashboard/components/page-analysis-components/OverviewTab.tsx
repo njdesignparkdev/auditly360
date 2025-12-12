@@ -65,20 +65,20 @@ export default function OverviewTab({ page, project }: OverviewTabProps) {
       </div> */}
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-lg border border-gray-200 p-4 text-center">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border-y border-gray-300">
+        <div className=" border-gray-300 border-r p-4 text-center">
           <div className="text-2xl font-bold text-blue-600">{page.links_count || 0}</div>
           <div className="text-sm text-gray-600">Links</div>
         </div>
-        <div className="bg-white rounded-lg border border-gray-200 p-4 text-center">
+        <div className=" border-gray-300 border-r p-4 text-center">
           <div className="text-2xl font-bold text-blue-600">{page.images_count || 0}</div>
           <div className="text-sm text-gray-600">Images</div>
         </div>
-        <div className="bg-white rounded-lg border border-gray-200 p-4 text-center">
+        <div className=" border-gray-300 border-r p-4 text-center">
           <div className="text-2xl font-bold text-blue-600">{page.meta_tags_count || 0}</div>
           <div className="text-sm text-gray-600">Meta Tags</div>
         </div>
-        <div className="bg-white rounded-lg border border-gray-200 p-4 text-center">
+        <div className=" border-gray-300 p-4 text-center">
           <div className="text-2xl font-bold text-blue-600">{page.technologies_count || 0}</div>
           <div className="text-sm text-gray-600">Technologies</div>
         </div>
@@ -149,11 +149,7 @@ export default function OverviewTab({ page, project }: OverviewTabProps) {
         </div>
       </div>
 
-      {/* SEO Analysis Section */}
-      <SEOAnalysisSection 
-        page={page}
-        isPageAnalysis={true}
-      />
+    
     </div>
   )
 }
