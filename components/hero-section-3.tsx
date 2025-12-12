@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { Link as LinkIcon, SendHorizonal } from 'lucide-react'
+import { Link as LinkIcon, SendHorizonal, Zap, Search, Image, Link2Off, SpellCheck, Palette, ShieldCheck } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { AnimatedGroup } from '@/components/ui/animated-group'
 import Link from 'next/link'
@@ -35,8 +35,8 @@ export function HeroSection3() {
 
             <main className="overflow-hidden">
                 <section>
-                    <div className="relative mx-auto max-w-6xl px-6 pt-20 lg:pb-16 lg:pt-32">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+                    <div className="relative mx-auto max-w-6xl px-6 pt-12 lg:pb-16 lg:pt-20">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                             <div className="relative z-10 text-left">
                                 <AnimatedGroup
                                     variants={{
@@ -51,7 +51,7 @@ export function HeroSection3() {
                                         ...transitionVariants,
                                     }}
                                 >
-                                    <h1 className="text-balance text-4xl font-medium sm:text-5xl md:text-6xl font-jakarta">
+                                    <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl font-jakarta leading-[1.1]">
                                         Transform Your Website Performance
                                     </h1>
 
@@ -59,20 +59,20 @@ export function HeroSection3() {
                                         AI-powered audits that identify issues, optimize performance, and boost your SEO rankings in seconds.
                                     </p>
 
-                                    <form action="" className="mt-8 max-w-md">
-                                        <div className="bg-background has-[input:focus]:ring-muted relative grid grid-cols-[1fr_auto] p-2 items-center rounded-[1rem] border shadow shadow-zinc-950/5 has-[input:focus]:ring-2">
+                                    <form action="" className="mt-8 max-w-lg">
+                                        <div className="bg-background has-[input:focus]:ring-muted relative grid grid-cols-[1fr_auto] p-1.5 items-center rounded-[1rem] border shadow shadow-zinc-950/5 has-[input:focus]:ring-2">
                                             <LinkIcon className="pointer-events-none absolute inset-y-0 left-4 my-auto size-4" />
 
                                             <input
                                                 placeholder="Upload your website url"
-                                                className="h-12 w-full bg-transparent pl-12 focus:outline-none"
+                                                className="h-11 w-full bg-transparent pl-12 focus:outline-none"
                                                 type="url"
                                             />
 
                                             <div>
                                                 <Button
                                                     aria-label="submit"
-                                                    className="h-10 px-8 rounded-xl bg-[#ff6a00] hover:bg-[#e66000] text-white font-bold shadow-md transition-all duration-200">
+                                                    className="h-9 px-8 rounded-xl bg-[#ff6a00] hover:bg-[#e66000] text-white font-bold shadow-md transition-all duration-200">
                                                     <span className="hidden md:block">Search</span>
                                                     <SendHorizonal
                                                         className="relative mx-auto size-5 md:hidden"
@@ -141,100 +141,41 @@ const AppComponent = () => {
                             <span className="text-muted-foreground text-xs">Performance</span>
                         </div>
                         <div className="text-foreground bg-muted flex h-5 w-2/3 items-center rounded px-2 text-xs dark:bg-white/20">Before Audit</div>
-                    </div>
+                    </div>  
                 </div>
             </div>
         </div>
     )
 }
 
-
 const LogoCloud = () => {
+    const features = [
+        { name: 'Performance', icon: Zap },
+        { name: 'Manual SEO', icon: Search },
+        { name: 'Image Scan', icon: Image },
+        { name: 'Broken Links', icon: Link2Off },
+        { name: 'Grammar Check', icon: SpellCheck },
+        { name: 'UI/UX Quality', icon: Palette },
+        { name: 'Security', icon: ShieldCheck },
+    ]
+
     return (
         <section className="bg-background pb-16 md:pb-32">
             <div className="group relative m-auto max-w-6xl px-6">
                 <div className="flex flex-col items-center md:flex-row">
-                    <div className="inline md:max-w-44 md:border-r md:pr-6">
-                        <p className="text-end text-sm">Trusted by teams worldwide</p>
+                    <div className="inline md:max-w-64 md:border-r md:pr-8">
+                        <p className="text-left text-lg font-semibold leading-tight text-foreground/80">Explore our comprehensive analysis tools</p>
                     </div>
-                    <div className="relative py-6 md:w-[calc(100%-11rem)]">
+                    <div className="relative py-6 md:w-[calc(100%-18rem)]">
                         <InfiniteSlider
                             duration={20}
                             gap={112}>
-                            <div className="flex">
-                                <img
-                                    className="mx-auto h-5 w-fit dark:invert"
-                                    src="https://html.tailus.io/blocks/customers/nvidia.svg"
-                                    alt="Nvidia Logo"
-                                    height="20"
-                                    width="auto"
-                                />
-                            </div>
-
-                            <div className="flex">
-                                <img
-                                    className="mx-auto h-4 w-fit dark:invert"
-                                    src="https://html.tailus.io/blocks/customers/column.svg"
-                                    alt="Column Logo"
-                                    height="16"
-                                    width="auto"
-                                />
-                            </div>
-                            <div className="flex">
-                                <img
-                                    className="mx-auto h-4 w-fit dark:invert"
-                                    src="https://html.tailus.io/blocks/customers/github.svg"
-                                    alt="GitHub Logo"
-                                    height="16"
-                                    width="auto"
-                                />
-                            </div>
-                            <div className="flex">
-                                <img
-                                    className="mx-auto h-5 w-fit dark:invert"
-                                    src="https://html.tailus.io/blocks/customers/nike.svg"
-                                    alt="Nike Logo"
-                                    height="20"
-                                    width="auto"
-                                />
-                            </div>
-                            <div className="flex">
-                                <img
-                                    className="mx-auto h-5 w-fit dark:invert"
-                                    src="https://html.tailus.io/blocks/customers/lemonsqueezy.svg"
-                                    alt="Lemon Squeezy Logo"
-                                    height="20"
-                                    width="auto"
-                                />
-                            </div>
-                            <div className="flex">
-                                <img
-                                    className="mx-auto h-4 w-fit dark:invert"
-                                    src="https://html.tailus.io/blocks/customers/laravel.svg"
-                                    alt="Laravel Logo"
-                                    height="16"
-                                    width="auto"
-                                />
-                            </div>
-                            <div className="flex">
-                                <img
-                                    className="mx-auto h-7 w-fit dark:invert"
-                                    src="https://html.tailus.io/blocks/customers/lilly.svg"
-                                    alt="Lilly Logo"
-                                    height="28"
-                                    width="auto"
-                                />
-                            </div>
-
-                            <div className="flex">
-                                <img
-                                    className="mx-auto h-6 w-fit dark:invert"
-                                    src="https://html.tailus.io/blocks/customers/openai.svg"
-                                    alt="OpenAI Logo"
-                                    height="24"
-                                    width="auto"
-                                />
-                            </div>
+                            {features.map((feature) => (
+                                <div key={feature.name} className="flex items-center gap-3">
+                                    <feature.icon className="h-8 w-8 text-foreground/70" />
+                                    <span className="text-lg font-medium text-foreground/70">{feature.name}</span>
+                                </div>
+                            ))}
                         </InfiniteSlider>
 
                         <div className="bg-linear-to-r from-background absolute inset-y-0 left-0 w-20"></div>
