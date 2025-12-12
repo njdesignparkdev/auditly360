@@ -183,7 +183,7 @@ export default function ProjectsTab({
   }} transition={{
     duration: 0.4,
     ease: "easeOut"
-  }} className="space-y-8 lg:px-8">
+  }} className="space-y-8 lg:px-24">
       {/* Header */}
       <motion.div initial={{
       opacity: 0,

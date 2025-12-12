@@ -457,7 +457,12 @@ You are an expert UI/UX designer and content analyst specializing in ${viewType 
    - Overall style consistency
    - Brand identity alignment
 
-**Response Format (JSON only, no markdown - BE EXTREMELY DETAILED):**
+**Response Format (JSON only). Keep every text field concise and scannable:**
+ - Prefer short phrases over long sentences.
+ - Hard limits: headings max 50 chars, descriptions max 140 chars, suggestions max 120 chars, titles max 60 chars.
+ - UI/UX issue cards must order fields: heading → problem → solution → location → impact, with heading as a short, human-friendly title (not the type label).
+ - Summaries must be brief (2-3 sentences total).
+ - Avoid repetition and filler words.
 {
   "ui_ux_score": number,
   "content_score": number,
@@ -476,19 +481,22 @@ You are an expert UI/UX designer and content analyst specializing in ${viewType 
       {
         "type": "layout|color|typography|spacing|hierarchy|accessibility|mobile|navigation|cta",
         "severity": "high|medium|low",
-        "description": "VERY detailed description with specific examples",
-        "suggestion": "specific, actionable improvement recommendation",
-        "location": "where on the page",
-        "impact": "explanation of impact on user experience"
+        "heading": "short title (<=50 chars, not same as type)",
+        "problem": "concise issue (<=140 chars)",
+        "solution": "actionable fix (<=120 chars)",
+        "location": "short location note",
+        "impact": "brief impact note",
+        "description": "concise issue (<=140 chars, fallback)",
+        "suggestion": "actionable fix (<=120 chars, fallback)"
       }
     ],
-    "strengths": ["detailed list of UI/UX strengths with specific examples"],
+    "strengths": ["short bullet strengths"],
     "detailed_metrics": {
       "color_contrast_ratio": "estimated contrast ratios",
       "font_sizes_used": ["list of font sizes observed"],
-      "spacing_consistency": "assessment of spacing consistency",
-      "element_alignment": "alignment quality assessment",
-      "visual_balance": "balance and symmetry assessment"
+      "spacing_consistency": "brief spacing note",
+      "element_alignment": "short alignment note",
+      "visual_balance": "short balance note"
     }
   },
   "content_analysis": {
@@ -502,22 +510,22 @@ You are an expert UI/UX designer and content analyst specializing in ${viewType 
       {
         "type": "readability|clarity|structure|formatting|seo|length|headings",
         "severity": "high|medium|low",
-        "description": "detailed description",
-        "suggestion": "specific improvement",
-        "location": "where on page"
+        "description": "concise issue (<=140 chars)",
+        "suggestion": "actionable fix (<=120 chars)",
+        "location": "short location note"
       }
     ],
-    "strengths": ["detailed list of content strengths"],
+    "strengths": ["short bullet strengths"],
     "detailed_metrics": {
       "word_count_estimate": number,
       "heading_count": number,
       "paragraph_count": number,
-      "list_usage": "assessment of list usage",
-      "content_density": "content density assessment"
+      "list_usage": "brief list usage note",
+      "content_density": "brief density note"
     }
   },
   "design_patterns": {
-    "identified_patterns": ["list of design patterns used"],
+    "identified_patterns": ["design patterns used"],
     "modern_design_elements": ["modern elements present"],
     "outdated_elements": ["outdated elements found"],
     "best_practices_followed": ["best practices observed"],
@@ -525,9 +533,9 @@ You are an expert UI/UX designer and content analyst specializing in ${viewType 
   },
   "brand_consistency": {
     "score": number,
-    "color_consistency": "detailed assessment",
-    "typography_consistency": "detailed assessment",
-    "style_consistency": "detailed assessment",
+    "color_consistency": "brief assessment",
+    "typography_consistency": "brief assessment",
+    "style_consistency": "brief assessment",
     "issues": [
       {
         "description": "consistency issue",
@@ -556,7 +564,7 @@ You are an expert UI/UX designer and content analyst specializing in ${viewType 
   "analysis_timestamp": "ISO timestamp"
 }
 
-Provide only the JSON response, no additional text or explanations. Be EXTREMELY detailed and comprehensive.
+Provide only the JSON response, no additional text or explanations. Follow the brevity limits above; prefer concise bullets over long prose. Ensure UI/UX issue headings are descriptive mini-titles (not just the type string).
 `;
 
     const imagePart = {

@@ -1,11 +1,13 @@
 'use client'
 
 import { useState, useEffect, useMemo, useCallback } from 'react'
+import Masonry from 'react-masonry-css'
 import { PageSpeedInsightsData } from '@/types/audit'
 import { useAuth } from '@/hooks/useAuth'
 import { useUserPlan } from '@/hooks/useUserPlan'
 import SkeletonLoader from '@/app/dashboard/components/SkeletonLoader'
 import { featureCache, createCacheKey } from '@/lib/feature-cache'
+import { formatPageSpeedScore, getScoreBgColor, getScoreColor } from '@/lib/pagespeed'
 
 interface ImageData {
   size?: number
@@ -124,26 +126,6 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
   }, [hasFeatureAccess, accessDenied, isAnalyzing, hasAttemptedAnalysis]);
 
 
-  const content = page.html_content || ''
-  const images = page.images || []
-  
-  // Performance Analysis
-  const responseTime = page.response_time || 0
-  const contentLength = page.html_content_length || 0
-  const imageCount = images.length
-  const largeImages = images.filter((img: ImageData) => img.size && img.size > 100000) // > 100KB
-  const totalImageSize = images.reduce((total: number, img: ImageData) => total + (img.size || 0), 0)
-  
-  // Check for performance optimizations
-  const hasLazyLoading = images.some((img: ImageData) => img.loading === 'lazy')
-  const hasModernFormats = images.some((img: ImageData) => img.format && ['webp', 'avif'].includes(img.format.toLowerCase()))
-  const hasCompressedImages = images.some((img: ImageData) => img.size && img.size < 50000) // < 50KB
-  const hasAsyncScripts = content.includes('async') || content.includes('defer')
-  const hasMinifiedCSS = content.includes('min.css') || content.includes('.min.')
-  const hasMinifiedJS = content.includes('min.js') || content.includes('.min.')
-  const hasCDN = content.includes('cdn') || content.includes('cloudflare') || content.includes('jsdelivr')
-  const hasGzip = page.content_encoding && page.content_encoding.includes('gzip')
-  
   // Calculate performance score
   // const performanceScore = Math.round((
   //   (responseTime < 1000 ? 1 : responseTime < 2000 ? 0.5 : 0) +
@@ -310,7 +292,7 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
             </svg>
           </div>
           <div className="flex-1">
-            <h3 className="text-lg font-semibold text-gray-900 mb-1">Performance Analysis</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">Performance Analysis tab</h3>
             <p className="text-sm text-gray-600 mb-3">
               This feature is not available in your current plan. Upgrade to access detailed performance metrics and PageSpeed Insights data.
             </p>
@@ -458,452 +440,309 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
   }
 
   // Extract PageSpeed data
-  const { lighthouseResult } = performanceData!
+  const { lighthouseResult, loadingExperience } = performanceData as any
   const { categories, audits } = lighthouseResult
+
+  // Chart component for scores (kept in-file to avoid cross-imports)
+  const ScoreChart = ({ score, title, color, size = "w-24 h-24" }: { 
+    score: number, 
+    title: string, 
+    color: string, 
+    size?: string 
+  }) => {
+    const percentage = Math.round(score * 100)
+    const circumference = 2 * Math.PI * 45 // radius = 45
+    const strokeDasharray = `${(percentage / 100) * circumference} ${circumference}`
+    const isHexColor = color.startsWith('#')
+    const strokeClassName = isHexColor ? '' : color
+    
+    return (
+      <div className="flex flex-col items-center">
+        <div className={`relative ${size}`}>
+          <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+            <circle
+              cx="50"
+              cy="50"
+              r="45"
+              stroke="currentColor"
+              strokeWidth="8"
+              fill="none"
+              className="text-gray-200"
+            />
+            <circle
+              cx="50"
+              cy="50"
+              r="45"
+              stroke={isHexColor ? color : "currentColor"}
+              strokeWidth="8"
+              fill="none"
+              strokeDasharray={strokeDasharray}
+              strokeLinecap="round"
+              className={strokeClassName}
+            />
+          </svg>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-lg font-bold text-gray-900">{percentage}</span>
+          </div>
+        </div>
+        <h3 className="text-sm font-medium text-gray-900 mt-2 text-center">{title}</h3>
+        <span className={`text-xs px-2 py-1 rounded-full mt-1 ${getScoreBgColor(score)} ${getScoreColor(score)}`}>
+          {formatPageSpeedScore(score)}
+        </span>
+      </div>
+    )
+  }
+
+  // Metric card component (compact option for dense layout)
+  const MetricCard = ({ 
+    title, 
+    value, 
+    score, 
+    description,
+    compact = false
+  }: { 
+    title: string, 
+    value: string, 
+    score: number, 
+    description?: string,
+    compact?: boolean
+  }) => {
+    const hasValue = value && value !== 'N/A'
+    const cardPadding = compact ? 'p-3 md:p-4' : 'p-4'
+    const valueSize = compact ? 'text-xl' : 'text-2xl'
+    const titleSize = compact ? 'text-xs md:text-sm' : 'text-sm'
+    
+    return (
+      <div className={`bg-gray-50 rounded-lg ${cardPadding}`}>
+        <div className="flex items-center mb-1.5 md:mb-2">
+          <h4 className={`${titleSize} font-medium text-gray-900`}>{title}</h4>
+          <span className={`text-xs px-2 py-1 rounded-full ${getScoreBgColor(score)} ${getScoreColor(score)}`}>
+            {formatPageSpeedScore(score)}
+          </span>
+        </div>
+        {hasValue && (
+          <p className={`${valueSize} font-bold text-gray-900 mb-1`}>{value}</p>
+        )}
+        {description && (
+          <p className="text-xs text-gray-500 leading-snug">{description}</p>
+        )}
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-6">
-      {/* Overall Scores Dashboard */}
+      {/* Overall Scores */}
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-6">Overall Scores</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div className="flex flex-col items-center">
-            <div className="relative w-20 h-20">
-              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  stroke="currentColor"
-                  strokeWidth="8"
-                  fill="none"
-                  className="text-gray-200"
-                />
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  stroke="currentColor"
-                  strokeWidth="8"
-                  fill="none"
-                  strokeDasharray={`${Math.round(categories.performance.score * 100) * 2.83} 283`}
-                  strokeLinecap="round"
-                  className={categories.performance.score > 0.9 ? 'text-green-500' : categories.performance.score > 0.5 ? 'text-yellow-500' : 'text-red-500'}
-                />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-lg font-bold text-gray-900">{Math.round(categories.performance.score * 100)}</span>
-              </div>
-            </div>
-            <h3 className="text-sm font-medium text-gray-900 mt-2 text-center">Performance</h3>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="relative w-20 h-20">
-              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  stroke="currentColor"
-                  strokeWidth="8"
-                  fill="none"
-                  className="text-gray-200"
-                />
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  stroke="currentColor"
-                  strokeWidth="8"
-                  fill="none"
-                  strokeDasharray={`${Math.round(categories.accessibility.score * 100) * 2.83} 283`}
-                  strokeLinecap="round"
-                  className={categories.accessibility.score > 0.9 ? 'text-green-500' : categories.accessibility.score > 0.5 ? 'text-yellow-500' : 'text-red-500'}
-                />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-lg font-bold text-gray-900">{Math.round(categories.accessibility.score * 100)}</span>
-              </div>
-            </div>
-            <h3 className="text-sm font-medium text-gray-900 mt-2 text-center">Accessibility</h3>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="relative w-20 h-20">
-              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  stroke="currentColor"
-                  strokeWidth="8"
-                  fill="none"
-                  className="text-gray-200"
-                />
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  stroke="currentColor"
-                  strokeWidth="8"
-                  fill="none"
-                  strokeDasharray={`${Math.round(categories['best-practices'].score * 100) * 2.83} 283`}
-                  strokeLinecap="round"
-                  className={categories['best-practices'].score > 0.9 ? 'text-green-500' : categories['best-practices'].score > 0.5 ? 'text-yellow-500' : 'text-red-500'}
-                />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-lg font-bold text-gray-900">{Math.round(categories['best-practices'].score * 100)}</span>
-              </div>
-            </div>
-            <h3 className="text-sm font-medium text-gray-900 mt-2 text-center">Best Practices</h3>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="relative w-20 h-20">
-              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  stroke="currentColor"
-                  strokeWidth="8"
-                  fill="none"
-                  className="text-gray-200"
-                />
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  stroke="currentColor"
-                  strokeWidth="8"
-                  fill="none"
-                  strokeDasharray={`${Math.round(categories.seo.score * 100) * 2.83} 283`}
-                  strokeLinecap="round"
-                  className={categories.seo.score > 0.9 ? 'text-green-500' : categories.seo.score > 0.5 ? 'text-yellow-500' : 'text-red-500'}
-                />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-lg font-bold text-gray-900">{Math.round(categories.seo.score * 100)}</span>
-              </div>
-            </div>
-            <h3 className="text-sm font-medium text-gray-900 mt-2 text-center">SEO</h3>
-          </div>
+        <div className="flex flex-wrap flex-row justify-around gap-6">
+          <ScoreChart 
+            score={categories.performance?.score || 0} 
+            title="Performance" 
+            color="#FF4A00"
+            size="w-20 h-20"
+          />
+          <ScoreChart 
+            score={categories.accessibility?.score || 0} 
+            title="Accessibility" 
+            color="#FF4A00"
+            size="w-20 h-20"
+          />
+          <ScoreChart 
+            score={categories['best-practices']?.score || 0} 
+            title="Best Practices" 
+            color="#FF4A00"
+            size="w-20 h-20"
+          />
+          <ScoreChart 
+            score={categories.seo?.score || 0} 
+            title="SEO" 
+            color="#FF4A00"
+            size="w-20 h-20"
+          />
         </div>
       </div>
 
-      {/* Core Web Vitals */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-6">Core Web Vitals</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-gray-50 rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
-              <h4 className="text-sm font-medium text-gray-900">First Contentful Paint</h4>
-              <span className={`text-xs px-2 py-1 rounded-full ${
-                audits['first-contentful-paint']?.score > 0.9 ? 'bg-green-100 text-green-800' : 
-                audits['first-contentful-paint']?.score > 0.5 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'
-              }`}>
-                {audits['first-contentful-paint']?.score > 0.9 ? 'Good' : audits['first-contentful-paint']?.score > 0.5 ? 'Needs Improvement' : 'Poor'}
-              </span>
-            </div>
-            <p className="text-2xl font-bold text-gray-900 mb-1">{audits['first-contentful-paint']?.displayValue || 'N/A'}</p>
-            <p className="text-xs text-gray-500">Time to first content render</p>
-          </div>
-          <div className="bg-gray-50 rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
-              <h4 className="text-sm font-medium text-gray-900">Largest Contentful Paint</h4>
-              <span className={`text-xs px-2 py-1 rounded-full ${
-                audits['largest-contentful-paint']?.score > 0.9 ? 'bg-green-100 text-green-800' : 
-                audits['largest-contentful-paint']?.score > 0.5 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'
-              }`}>
-                {audits['largest-contentful-paint']?.score > 0.9 ? 'Good' : audits['largest-contentful-paint']?.score > 0.5 ? 'Needs Improvement' : 'Poor'}
-              </span>
-            </div>
-            <p className="text-2xl font-bold text-gray-900 mb-1">{audits['largest-contentful-paint']?.displayValue || 'N/A'}</p>
-            <p className="text-xs text-gray-500">Time to largest content render</p>
-          </div>
-          <div className="bg-gray-50 rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
-              <h4 className="text-sm font-medium text-gray-900">Cumulative Layout Shift</h4>
-              <span className={`text-xs px-2 py-1 rounded-full ${
-                audits['cumulative-layout-shift']?.score > 0.9 ? 'bg-green-100 text-green-800' : 
-                audits['cumulative-layout-shift']?.score > 0.5 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'
-              }`}>
-                {audits['cumulative-layout-shift']?.score > 0.9 ? 'Good' : audits['cumulative-layout-shift']?.score > 0.5 ? 'Needs Improvement' : 'Poor'}
-              </span>
-            </div>
-            <p className="text-2xl font-bold text-gray-900 mb-1">{audits['cumulative-layout-shift']?.displayValue || 'N/A'}</p>
-            <p className="text-xs text-gray-500">Visual stability measure</p>
+      {/* Masonry Grid Layout for Sections */}
+      <Masonry
+        breakpointCols={{
+          default: 2,
+          1024: 2,
+          640: 1
+        }}
+        className="masonry-grid"
+        columnClassName="masonry-grid_column"
+      >
+        {/* Performance Metrics (top priority) */}
+        <div className="bg-white rounded-lg border border-gray-200 p-6 break-inside-avoid">
+          <h3 className="text-lg font-semibold text-gray-900 mb-6">Performance Metrics</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <MetricCard
+              title="Speed Index"
+              value={audits['speed-index']?.displayValue || 'N/A'}
+              score={audits['speed-index']?.score || 0}
+              description="Visual loading speed"
+              compact
+            />
+            <MetricCard
+              title="Total Blocking Time"
+              value={audits['total-blocking-time']?.displayValue || 'N/A'}
+              score={audits['total-blocking-time']?.score || 0}
+              description="Time blocked by long tasks"
+              compact
+            />
+            <MetricCard
+              title="Time to Interactive"
+              value={audits['interactive']?.displayValue || 'N/A'}
+              score={audits['interactive']?.score || 0}
+              description="Time until page is interactive"
+              compact
+            />
+            <MetricCard
+              title="First Input Delay"
+              value={audits['max-potential-fid']?.displayValue || 'N/A'}
+              score={audits['max-potential-fid']?.score || 0}
+              description="Input responsiveness"
+              compact
+            />
           </div>
         </div>
-      </div>
 
-      {/* Performance Metrics */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-6">Performance Metrics</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-gray-50 rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
-              <h4 className="text-sm font-medium text-gray-900">Speed Index</h4>
-              <span className={`text-xs px-2 py-1 rounded-full ${
-                audits['speed-index']?.score > 0.9 ? 'bg-green-100 text-green-800' : 
-                audits['speed-index']?.score > 0.5 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'
-              }`}>
-                {audits['speed-index']?.score > 0.9 ? 'Good' : audits['speed-index']?.score > 0.5 ? 'Needs Improvement' : 'Poor'}
-              </span>
-            </div>
-            <p className="text-2xl font-bold text-gray-900 mb-1">{audits['speed-index']?.displayValue || 'N/A'}</p>
-            <p className="text-xs text-gray-500">Visual loading speed</p>
-          </div>
-          <div className="bg-gray-50 rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
-              <h4 className="text-sm font-medium text-gray-900">Total Blocking Time</h4>
-              <span className={`text-xs px-2 py-1 rounded-full ${
-                audits['total-blocking-time']?.score > 0.9 ? 'bg-green-100 text-green-800' : 
-                audits['total-blocking-time']?.score > 0.5 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'
-              }`}>
-                {audits['total-blocking-time']?.score > 0.9 ? 'Good' : audits['total-blocking-time']?.score > 0.5 ? 'Needs Improvement' : 'Poor'}
-              </span>
-            </div>
-            <p className="text-2xl font-bold text-gray-900 mb-1">{audits['total-blocking-time']?.displayValue || 'N/A'}</p>
-            <p className="text-xs text-gray-500">Time blocked by long tasks</p>
-          </div>
-          <div className="bg-gray-50 rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
-              <h4 className="text-sm font-medium text-gray-900">Time to Interactive</h4>
-              <span className={`text-xs px-2 py-1 rounded-full ${
-                audits['interactive']?.score > 0.9 ? 'bg-green-100 text-green-800' : 
-                audits['interactive']?.score > 0.5 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'
-              }`}>
-                {audits['interactive']?.score > 0.9 ? 'Good' : audits['interactive']?.score > 0.5 ? 'Needs Improvement' : 'Poor'}
-              </span>
-            </div>
-            <p className="text-2xl font-bold text-gray-900 mb-1">{audits['interactive']?.displayValue || 'N/A'}</p>
-            <p className="text-xs text-gray-500">Time until page is interactive</p>
-          </div>
-          <div className="bg-gray-50 rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
-              <h4 className="text-sm font-medium text-gray-900">First Input Delay</h4>
-              <span className={`text-xs px-2 py-1 rounded-full ${
-                (audits['max-potential-fid']?.score ?? 0) > 0.9 ? 'bg-green-100 text-green-800' : 
-                (audits['max-potential-fid']?.score ?? 0) > 0.5 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'
-              }`}>
-                {(audits['max-potential-fid']?.score ?? 0) > 0.9 ? 'Good' : (audits['max-potential-fid']?.score ?? 0) > 0.5 ? 'Needs Improvement' : 'Poor'}
-              </span>
-            </div>
-            <p className="text-2xl font-bold text-gray-900 mb-1">{audits['max-potential-fid']?.displayValue || 'N/A'}</p>
-            <p className="text-xs text-gray-500">Input responsiveness</p>
+        {/* Core Web Vitals */}
+        <div className="bg-white rounded-lg border border-gray-200 p-6 break-inside-avoid">
+          <h3 className="text-lg font-semibold text-gray-900 mb-6">Core Web Vitals</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <MetricCard
+              title="First Contentful Paint"
+              value={audits['first-contentful-paint']?.displayValue || 'N/A'}
+              score={audits['first-contentful-paint']?.score || 0}
+              description="Time to first content render"
+              compact
+            />
+            <MetricCard
+              title="Largest Contentful Paint"
+              value={audits['largest-contentful-paint']?.displayValue || 'N/A'}
+              score={audits['largest-contentful-paint']?.score || 0}
+              description="Time to largest content render"
+              compact
+            />
+            <MetricCard
+              title="Cumulative Layout Shift"
+              value={audits['cumulative-layout-shift']?.displayValue || 'N/A'}
+              score={audits['cumulative-layout-shift']?.score || 0}
+              description="Visual stability measure"
+              compact
+            />
           </div>
         </div>
-      </div>
 
-      {/* Basic Performance Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white rounded-lg border border-gray-200 p-4 text-center">
-          <div className="text-2xl font-bold text-blue-600">{responseTime}ms</div>
-          <div className="text-sm text-gray-600">Response Time</div>
-          <div className={`text-xs mt-1 ${
-            responseTime < 1000 ? 'text-green-600' : responseTime < 2000 ? 'text-yellow-600' : 'text-red-600'
-          }`}>
-            {responseTime < 1000 ? 'Excellent' : responseTime < 2000 ? 'Good' : 'Needs Improvement'}
+        {/* Additional Metrics */}
+        <div className="bg-white rounded-lg border border-gray-200 p-6 break-inside-avoid">
+          <h3 className="text-lg font-semibold text-gray-900 mb-6">Additional Metrics</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <MetricCard
+              title="Server Response Time"
+              value={audits['server-response-time']?.displayValue || 'N/A'}
+              score={audits['server-response-time']?.score || 0}
+              description="Time for server to respond"
+              compact
+            />
+            <MetricCard
+              title="Total Resource Size"
+              value={audits['total-byte-weight']?.displayValue || 'N/A'}
+              score={audits['total-byte-weight']?.score || 0}
+              description="Total bytes downloaded"
+              compact
+            />
+            <MetricCard
+              title="DOM Size"
+              value={audits['dom-size']?.displayValue || 'N/A'}
+              score={audits['dom-size']?.score || 0}
+              description="Number of DOM elements"
+              compact
+            />
           </div>
         </div>
-        <div className="bg-white rounded-lg border border-gray-200 p-4 text-center">
-          <div className="text-2xl font-bold text-blue-600">{(contentLength / 1024).toFixed(1)}KB</div>
-          <div className="text-sm text-gray-600">Page Size</div>
-          <div className={`text-xs mt-1 ${
-            contentLength < 100000 ? 'text-green-600' : contentLength < 500000 ? 'text-yellow-600' : 'text-red-600'
-          }`}>
-            {contentLength < 100000 ? 'Excellent' : contentLength < 500000 ? 'Good' : 'Large'}
-          </div>
-        </div>
-        <div className="bg-white rounded-lg border border-gray-200 p-4 text-center">
-          <div className="text-2xl font-bold text-blue-600">{imageCount}</div>
-          <div className="text-sm text-gray-600">Images</div>
-          <div className={`text-xs mt-1 ${
-            imageCount < 10 ? 'text-green-600' : imageCount < 20 ? 'text-yellow-600' : 'text-red-600'
-          }`}>
-            {imageCount < 10 ? 'Good' : imageCount < 20 ? 'Moderate' : 'Many'}
-          </div>
-        </div>
-      </div>
 
-      {/* Image Performance */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Image Performance</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="font-medium text-gray-900 mb-3">Image Analysis</h4>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Total Images</span>
-                <span className="text-sm font-medium text-blue-600">{imageCount}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Large Images (&gt;100KB)</span>
-                <span className={`text-sm font-medium ${
-                  largeImages.length === 0 ? 'text-green-600' : largeImages.length < imageCount * 0.3 ? 'text-yellow-600' : 'text-red-600'
-                }`}>
-                  {largeImages.length}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Total Image Size</span>
-                <span className="text-sm font-medium text-blue-600">
-                  {(totalImageSize / 1024 / 1024).toFixed(2)} MB
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Average Image Size</span>
-                <span className="text-sm font-medium text-blue-600">
-                  {imageCount > 0 ? (totalImageSize / imageCount / 1024).toFixed(1) : 0} KB
-                </span>
-              </div>
+        {/* Real User Experience */}
+        {loadingExperience?.metrics && (
+          <div className="bg-white rounded-lg border border-gray-200 p-6 break-inside-avoid">
+            <h3 className="text-lg font-semibold text-gray-900 mb-6">Real User Experience</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {Object.entries(loadingExperience.metrics).map(([key, metric]) => {
+                const metricData = metric as { percentile?: number; category?: string }
+                const hasValue = metricData.percentile !== undefined && metricData.percentile !== null
+                return (
+                  <MetricCard
+                    key={key}
+                    title={key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                    value={hasValue ? `${metricData.percentile}ms` : 'N/A'}
+                    score={metricData.category === 'FAST' ? 0.9 : metricData.category === 'AVERAGE' ? 0.7 : 0.4}
+                    description={`Real user data - ${metricData.category}`}
+                    compact
+                  />
+                )
+              })}
             </div>
           </div>
-          
-          <div>
-            <h4 className="font-medium text-gray-900 mb-3">Optimization Status</h4>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Lazy Loading</span>
-                <span className={`px-2 py-1 rounded text-xs ${
-                  hasLazyLoading ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                }`}>
-                  {hasLazyLoading ? 'Enabled' : 'Not Enabled'}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Modern Formats</span>
-                <span className={`px-2 py-1 rounded text-xs ${
-                  hasModernFormats ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                }`}>
-                  {hasModernFormats ? 'Present' : 'Not Found'}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Compressed Images</span>
-                <span className={`px-2 py-1 rounded text-xs ${
-                  hasCompressedImages ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                }`}>
-                  {hasCompressedImages ? 'Present' : 'Not Found'}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        )}
 
-      {/* Resource Optimization */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Resource Optimization</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="font-medium text-gray-900 mb-3">Scripts & Styles</h4>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Async Scripts</span>
-                <span className={`px-2 py-1 rounded text-xs ${
-                  hasAsyncScripts ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                }`}>
-                  {hasAsyncScripts ? 'Present' : 'Not Found'}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Minified CSS</span>
-                <span className={`px-2 py-1 rounded text-xs ${
-                  hasMinifiedCSS ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                }`}>
-                  {hasMinifiedCSS ? 'Present' : 'Not Found'}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Minified JS</span>
-                <span className={`px-2 py-1 rounded text-xs ${
-                  hasMinifiedJS ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                }`}>
-                  {hasMinifiedJS ? 'Present' : 'Not Found'}
-                </span>
-              </div>
+        {/* Technical Details */}
+        <div className="bg-white rounded-lg border border-gray-200 p-6 break-inside-avoid">
+          <h3 className="text-lg font-semibold text-gray-900 mb-6">Technical Details</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <h4 className="text-sm font-semibold text-gray-700 mb-4">Test Configuration</h4>
+              {lighthouseResult.configSettings.formFactor && (
+                <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                  <span className="text-sm text-gray-600">Form Factor:</span>
+                  <span className="text-sm font-medium text-gray-900 capitalize">{lighthouseResult.configSettings.formFactor}</span>
+                </div>
+              )}
+              {lighthouseResult.configSettings.locale && (
+                <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                  <span className="text-sm text-gray-600">Locale:</span>
+                  <span className="text-sm font-medium text-gray-900">{lighthouseResult.configSettings.locale}</span>
+                </div>
+              )}
+              {lighthouseResult.userAgent && (
+                <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                  <span className="text-sm text-gray-600">User Agent:</span>
+                  <span className="text-xs font-medium text-gray-900 truncate max-w-48" title={lighthouseResult.userAgent}>
+                    {lighthouseResult.userAgent}
+                  </span>
+                </div>
+              )}
             </div>
-          </div>
-          
-          <div>
-            <h4 className="font-medium text-gray-900 mb-3">Delivery & Compression</h4>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">CDN Usage</span>
-                <span className={`px-2 py-1 rounded text-xs ${
-                  hasCDN ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                }`}>
-                  {hasCDN ? 'Detected' : 'Not Detected'}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Gzip Compression</span>
-                <span className={`px-2 py-1 rounded text-xs ${
-                  hasGzip ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                }`}>
-                  {hasGzip ? 'Enabled' : 'Not Enabled'}
-                </span>
-              </div>
+            
+            <div className="space-y-3">
+              <h4 className="text-sm font-semibold text-gray-700 mb-4">Analysis Information</h4>
+              {lighthouseResult.finalUrl && (
+                <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                  <span className="text-sm text-gray-600">Final URL:</span>
+                  <span className="text-xs font-medium text-gray-900 truncate max-w-48" title={lighthouseResult.finalUrl}>
+                    {lighthouseResult.finalUrl}
+                  </span>
+                </div>
+              )}
+              {performanceData?.version && performanceData.version.major !== undefined && performanceData.version.minor !== undefined && (
+                <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                  <span className="text-sm text-gray-600">Version:</span>
+                  <span className="text-sm font-medium text-gray-900">{performanceData.version.major}.{performanceData.version.minor}</span>
+                </div>
+              )}
+              {lighthouseResult.runWarnings && (
+                <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                  <span className="text-sm text-gray-600">Warnings:</span>
+                  <span className={`text-sm font-medium ${lighthouseResult.runWarnings.length > 0 ? 'text-yellow-600' : 'text-green-600'}`}>
+                    {lighthouseResult.runWarnings.length}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Performance Recommendations */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Performance Recommendations</h3>
-        <div className="space-y-3">
-          {responseTime > 2000 && (
-            <div className="bg-red-50 rounded-lg p-4">
-              <h4 className="font-medium text-red-900 mb-2">Improve Response Time</h4>
-              <p className="text-sm text-red-800">
-                Your response time is {responseTime}ms. Consider optimizing server performance, using a CDN, or reducing server-side processing.
-              </p>
-            </div>
-          )}
-          {largeImages.length > 0 && (
-            <div className="bg-yellow-50 rounded-lg p-4">
-              <h4 className="font-medium text-yellow-900 mb-2">Optimize Large Images</h4>
-              <p className="text-sm text-yellow-800">
-                {largeImages.length} images are larger than 100KB. Consider compressing them or using modern formats like WebP.
-              </p>
-            </div>
-          )}
-          {!hasLazyLoading && imageCount > 0 && (
-            <div className="bg-yellow-50 rounded-lg p-4">
-              <h4 className="font-medium text-yellow-900 mb-2">Enable Lazy Loading</h4>
-              <p className="text-sm text-yellow-800">
-                Enable lazy loading for images to improve initial page load time.
-              </p>
-            </div>
-          )}
-          {!hasModernFormats && imageCount > 0 && (
-            <div className="bg-blue-50 rounded-lg p-4">
-              <h4 className="font-medium text-blue-900 mb-2">Use Modern Image Formats</h4>
-              <p className="text-sm text-blue-800">
-                Consider using WebP or AVIF formats for better compression and faster loading.
-              </p>
-            </div>
-          )}
-          {!hasAsyncScripts && (
-            <div className="bg-yellow-50 rounded-lg p-4">
-              <h4 className="font-medium text-yellow-900 mb-2">Use Async Scripts</h4>
-              <p className="text-sm text-yellow-800">
-                Load JavaScript asynchronously to prevent blocking page rendering.
-              </p>
-            </div>
-          )}
-          {!hasGzip && (
-            <div className="bg-yellow-50 rounded-lg p-4">
-              <h4 className="font-medium text-yellow-900 mb-2">Enable Gzip Compression</h4>
-              <p className="text-sm text-yellow-800">
-                Enable gzip compression to reduce file sizes and improve loading speed.
-              </p>
-            </div>
-          )}
-        </div>
-      </div>
+      </Masonry>
     </div>
   )
 }

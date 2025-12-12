@@ -253,7 +253,7 @@ export default function DashboardOverview({
 
 
   return (
-    <div className="m lg:px-8 py-8 space-y-8">
+    <div className=" lg:px-24 py-8 space-y-8">
       {/* Welcome Section */}
       <div className="mb-4">
         <h1 className="text-2xl sm:text-3xl font-bold text-black mb-2">

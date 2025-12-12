@@ -57,12 +57,6 @@ const keyPatterns = {
     severity: 'critical' as const,
     description: 'AWS access key ID'
   },
-  awsSecretKey: {
-    pattern: /[A-Za-z0-9/+=]{40}/gi,
-    type: 'AWS Secret Key',
-    severity: 'critical' as const,
-    description: 'AWS secret access key'
-  },
   // Database credentials
   databaseUrl: {
     pattern: /(?:postgresql|mysql|mongodb):\/\/[^:]+:[^@]+@[^\/]+\/[^\s'"]+/gi,
@@ -145,8 +139,9 @@ function determineKeyStatus(key: string, context: string): 'exposed' | 'secure' 
 }
 
 // Function to check if a key is a false positive
-function isFalsePositive(key: string): boolean {
+function isFalsePositive(key: string, context?: string): boolean {
   const lowerKey = key.toLowerCase();
+  const lowerContext = (context || '').toLowerCase();
 
   // Skip file paths and URLs
   if (lowerKey.includes('/') || lowerKey.includes('http') || lowerKey.includes('www.') || lowerKey.includes('.com') || lowerKey.includes('.css') || lowerKey.includes('.js') || lowerKey.includes('.png') || lowerKey.includes('.jpg') || lowerKey.includes('.svg') || lowerKey.includes('assets/') || lowerKey.includes('themes/') || lowerKey.includes('plugins/') || lowerKey.includes('wp-content/') || lowerKey.includes('node_modules/') || lowerKey.includes('vendor/')) {
@@ -158,6 +153,14 @@ function isFalsePositive(key: string): boolean {
   if (commonWords.some(word => lowerKey.includes(word))) {
     return true;
   }
+
+  // Skip generic base64-like strings that are likely not AWS secret keys
+  // AWS secret keys are base64-encoded 40-character strings, but without context
+  // indicating AWS, they're likely false positives
+  if (key.length === 40 && /^[A-Za-z0-9/+=]+$/.test(key) && !lowerContext.includes('aws') && !lowerContext.includes('amazon') && !lowerContext.includes('secret') && !lowerContext.includes('access_key')) {
+    return true;
+  }
+
   return false;
 }
 
@@ -196,6 +199,9 @@ export async function detectKeysInHtml(htmlContent: string): Promise<KeyDetectio
   }
   // Process each pattern
   for (const [patternName, patternConfig] of Object.entries(keyPatterns)) {
+    // Skip AWS Secret Key type - too many false positives
+    if (patternConfig.type === 'AWS Secret Key') continue;
+    
     const regex = new RegExp(patternConfig.pattern.source, patternConfig.pattern.flags);
     let match;
     while ((match = regex.exec(htmlContent)) !== null) {
@@ -203,7 +209,7 @@ export async function detectKeysInHtml(htmlContent: string): Promise<KeyDetectio
       const context = extractContext(htmlContent, match);
 
       // Skip if it's a false positive
-      if (isFalsePositive(key)) continue;
+      if (isFalsePositive(key, context)) continue;
       const status = determineKeyStatus(key, context);
       const confidence = calculateConfidence(key, patternConfig.type);
 

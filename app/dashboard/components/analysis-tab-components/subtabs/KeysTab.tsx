@@ -369,59 +369,45 @@ export default function KeysTab({
                 </div>
               </div>
 
-              <div className="space-y-3">
-                {keysData.keys.map((key, index) => <div key={key.id || index} className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
-                          <h5 className="text-sm font-medium text-gray-900 truncate">{key.type}</h5>
-                          <div className="flex flex-wrap gap-2">
-                            <span className={`px-2 py-1 text-xs font-medium rounded-full border ${getSeverityColor(key.severity)}`}>
-                              {key.severity}
-                            </span>
-                            <span className={`px-2 py-1 text-xs font-medium rounded-full ${key.status === 'exposed' ? 'bg-[#ff4b01]/40 text-[#ff4b01]' : key.status === 'secure' ? 'bg-[#ff4b01]/20 text-[#ff4b01]' : 'bg-[#ff4b01]/30 text-[#ff4b01]'}`}>
-                              {key.status}
-                            </span>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {keysData.keys.map((key, index) => (
+                    <div key={key.id || index} className="bg-white border border-gray-200 rounded-lg p-4 hover:border-[#ff4b01] hover:shadow-md transition-all duration-200 flex flex-col">
+                      <div className="flex items-start justify-between mb-3">
+                        <h5 className="text-sm font-semibold text-gray-900 truncate flex-1">{key.type}</h5>
+                        <div className="flex flex-wrap gap-2 ml-2">
+                          <span className={`px-2 py-1 text-xs font-medium rounded-full border ${getSeverityColor(key.severity)}`}>
+                            {key.severity}
+                          </span>
+                          <span className={`px-2 py-1 text-xs font-medium rounded-full ${key.status === 'exposed' ? 'bg-[#ff4b01]/40 text-[#ff4b01]' : key.status === 'secure' ? 'bg-[#ff4b01]/20 text-[#ff4b01]' : 'bg-[#ff4b01]/30 text-[#ff4b01]'}`}>
+                            {key.status}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="space-y-3 flex-1">
+                        <div className="text-sm text-gray-600">
+                          <span className="font-medium text-gray-700">Key:</span>
+                          <div className="mt-1 font-mono text-xs break-all bg-gray-50 p-2 rounded border border-gray-200">
+                            {key.key}
                           </div>
                         </div>
-                        <div className="space-y-2">
+                        <div className="text-sm text-gray-600">
+                          <span className="font-medium text-gray-700">Location:</span>
+                          <div className="mt-1 font-mono text-xs break-all text-gray-500">
+                            {key.location}
+                          </div>
+                        </div>
+                        {key.description && (
                           <div className="text-sm text-gray-600">
-                            <span className="font-medium">Key:</span>
-                            <div className="mt-1 font-mono text-xs break-all">
-                              {key.key}
-                            </div>
+                            <span className="font-medium text-gray-700">Description:</span>
+                            <p className="mt-1 text-xs">{key.description}</p>
                           </div>
-                          <div className="text-sm text-gray-600">
-                            <span className="font-medium">Location:</span>
-                            <div className="mt-1 font-mono text-xs break-all">
-                              {key.location}
-                            </div>
-                          </div>
-                          <div className="text-sm text-gray-600">
-                            <span className="font-medium">Description:</span>
-                            <span className="ml-1">{key.description}</span>
-                          </div>
-                          {key.context && <div className="text-sm text-gray-600">
-                              <span className="font-medium">Context:</span>
-                              <div className="mt-1 text-xs break-all">
-                                {key.context}
-                              </div>
-                            </div>}
-                          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs text-gray-500">
-                            <div className="flex-1 min-w-0">
-                              <span className="font-medium">Pattern:</span>
-                              <div className="mt-1 font-mono text-xs break-all">
-                                {key.pattern}
-                              </div>
-                            </div>
-                            <div className="flex-shrink-0">
-                              <span className="font-medium">Confidence: {key.confidence}%</span>
-                            </div>
-                          </div>
+                        )}
+                        <div className="flex items-center justify-between text-xs text-gray-500 pt-2 border-t border-gray-100">
+                          <span className="font-medium">Confidence: <span className="text-[#ff4b01]">{key.confidence}%</span></span>
                         </div>
                       </div>
                     </div>
-                  </div>)}
+                  ))}
               </div>
 
               {/* Pagination */}

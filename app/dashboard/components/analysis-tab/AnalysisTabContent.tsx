@@ -156,7 +156,7 @@ export default function AnalysisTabContent({
   // }
 
   return (
-    <div className="space-y-6 lg:px-6">
+    <div className="space-y-2 lg:px-24">
       <FeedbackModal open={showFeedbackModal} onConfirm={(text) => confirmFeedback(text)} onLater={laterFeedback} />
       {/* ScrapingService component to handle data processing */}
       {state.project?.scraping_data && (

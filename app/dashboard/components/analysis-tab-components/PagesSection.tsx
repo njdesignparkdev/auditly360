@@ -138,6 +138,36 @@ export default function PagesSection({
     }
   }
 
+  // Helper function to convert text to title case
+  const toTitleCase = (str: string): string => {
+    return str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase())
+  }
+
+  // Helper function to extract page name from title (e.g., "Home" from "Home - NJ DesignPark")
+  const getPageName = (title: string | null | undefined): string => {
+    if (!title) return 'Untitled'
+    
+    // Common separators used in page titles
+    const separators = [' - ', ' | ', ' – ', ' — ', ' :: ', ' :: ']
+    
+    let pageName = title
+    
+    for (const separator of separators) {
+      if (title.includes(separator)) {
+        pageName = title.split(separator)[0].trim()
+        break
+      }
+    }
+    
+    // If no separator found, use the full title
+    if (pageName === title) {
+      pageName = title.trim()
+    }
+    
+    // Convert to title case
+    return toTitleCase(pageName)
+  }
+
   // Find the primary (most common) root domain from all pages
   const primaryRootDomain = useMemo((): string | null => {
     if (pages.length === 0) return null
@@ -340,14 +370,7 @@ export default function PagesSection({
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-3">
           <h3 className="text-lg font-semibold text-gray-900">Scraped Pages</h3>
-          {hasLoadedPages && pages.length > 0 && (
-            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-              <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-              Data Loaded
-            </span>
-          )}
+         
         </div>
         <div className="flex items-center space-x-2">
           <button
@@ -406,7 +429,7 @@ export default function PagesSection({
           </select>
         </div>
 
-        <div className="flex items-center space-x-2">
+        {/* <div className="flex items-center space-x-2">
           <label className="text-sm font-medium text-gray-700">Sort by:</label>
           <select
             value={sortBy}
@@ -417,9 +440,9 @@ export default function PagesSection({
             <option value="title">Title</option>
             <option value="status_code">Status Code</option>
           </select>
-        </div>
+        </div> */}
 
-        <div className="flex items-center space-x-2">
+        {/* <div className="flex items-center space-x-2">
           <label className="text-sm font-medium text-gray-700">Order:</label>
           <select
             value={sortOrder}
@@ -429,7 +452,7 @@ export default function PagesSection({
             <option value="desc">Descending</option>
             <option value="asc">Ascending</option>
           </select>
-        </div>
+        </div> */}
 
         <div className="flex items-center space-x-2">
           <label className="text-sm font-medium text-gray-700">Per page:</label>
@@ -449,12 +472,16 @@ export default function PagesSection({
 
       {/* Error State */}
       {error && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-          <div className="flex items-center">
-            <svg className="w-5 h-5 text-red-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <div className="flex items-start">
+            <svg className="w-5 h-5 text-red-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <p className="text-red-700 text-sm">{error}</p>
+            <div className="flex-1">
+              <p className="text-red-800 font-medium text-sm mb-1">Error Crawling Website</p>
+              <p className="text-red-700 text-sm">{error}</p>
+              <p className="text-red-600 text-xs mt-2">There was an issue while crawling the website. This could be due to network issues, server errors, or access restrictions. Please try again later or check if the website is accessible.</p>
+            </div>
           </div>
         </div>
       )}
@@ -472,69 +499,103 @@ export default function PagesSection({
         </div>
       )}
 
-      {/* Pages List */}
+      {/* Pages Grid */}
       {!isLoading && filteredAndSortedPages.length > 0 ? (
-        <div className="space-y-4">
-          <div className="text-sm text-gray-600 mb-2">
+        <div>
+          <div className="text-sm text-gray-600 mb-4">
             Showing {startIndex + 1}-{Math.min(endIndex, filteredAndSortedPages.length)} of {filteredAndSortedPages.length} pages
             {filteredAndSortedPages.length !== pages.length && ` (${pages.length} total)`}
           </div>
-          {paginatedPages.map((page, index) => (
-            <div key={page.id || index} className="border border-gray-200 rounded-lg p-4 transition-colors duration-200">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                <h4 className="font-medium text-gray-900 truncate min-w-0 flex-1">{page.title || 'Untitled'}</h4>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
-                  page.status_code && page.status_code >= 200 && page.status_code < 300 ? 'bg-green-100 text-green-800' :
-                  page.status_code && page.status_code >= 300 && page.status_code < 400 ? 'bg-yellow-100 text-yellow-800' :
-                  'bg-red-100 text-red-800'
-                }`}>
-                  {page.status_code || 'N/A'}
-                </span>
-              </div>
-              <p className="text-sm text-gray-600 mb-2 break-all">{page.url}</p>
-              {page.description && (
-                <p className="text-sm text-gray-700 mb-3 line-clamp-2">{page.description}</p>
-              )}
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
-                <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-sm text-gray-500">
-                  <span className="hidden sm:inline">{page.links_count} links</span>
-                  <span className="hidden sm:inline">{page.images_count} images</span>
-                  <span className="hidden md:inline">{page.meta_tags_count} meta tags</span>
-                  <span className="hidden md:inline">{page.technologies_count} technologies</span>
-                  {/* Show only essential info on mobile */}
-                  <span className="sm:hidden">{page.links_count} links, {page.images_count} images</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {paginatedPages.map((page, index) => (
+              <div key={page.id || index} className="border border-gray-200 rounded-lg p-4 transition-colors duration-200 hover:shadow-md flex flex-col">
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <h4 
+                    onClick={() => {
+                      if (page.id && onPageSelect) {
+                        onPageSelect(page.id)
+                      } else if (page.id) {
+                        // Fallback to URL navigation if no callback provided
+                        window.location.href = `/dashboard/page-analysis/${page.id}`
+                      } else {
+                        console.warn('No page ID available for analysis')
+                      }
+                    }}
+                    className="font-medium text-[#ff4b01] hover:text-[#e64401] truncate flex-1 min-w-0 cursor-pointer transition-colors duration-200"
+                  >
+                    {getPageName(page.title)}
+                  </h4>
+                  <button
+                    onClick={() => {
+                      if (page.id && onPageSelect) {
+                        onPageSelect(page.id)
+                      } else if (page.id) {
+                        // Fallback to URL navigation if no callback provided
+                        window.location.href = `/dashboard/page-analysis/${page.id}`
+                      } else {
+                        console.warn('No page ID available for analysis')
+                      }
+                    }}
+                    className="text-[#ff4b01] text-xs font-medium hover:text-[#e64401] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff4b01] focus:ring-offset-2 flex-shrink-0"
+                  >
+                    Analyze
+                  </button>
                 </div>
-                <button
-                  onClick={() => {
-                    if (page.id && onPageSelect) {
-                      onPageSelect(page.id)
-                    } else if (page.id) {
-                      // Fallback to URL navigation if no callback provided
-                      window.location.href = `/dashboard/page-analysis/${page.id}`
-                    } else {
-                      console.warn('No page ID available for analysis')
-                    }
-                  }}
-                  className="px-3 py-1.5 bg-[#ff4b01] text-white text-sm font-medium rounded-md hover:bg-[#e64401] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff4b01] focus:ring-offset-2 w-full sm:w-auto flex-shrink-0"
-                >
-                  Analyze
-                </button>
+                {page.description && (
+                  <p className="text-sm text-gray-700 mb-3 line-clamp-2 flex-1">{page.description}</p>
+                )}
+                <div className="flex flex-col gap-3 mt-auto">
+                  <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500">
+                    <span>
+                      <span className="font-bold text-gray-700 text-sm">{page.links_count || 0}</span> links
+                    </span>
+                    <span>•</span>
+                    <span>
+                      <span className="font-bold text-gray-700 text-sm">{page.images_count || 0}</span> images
+                    </span>
+                    {page.meta_tags_count && page.meta_tags_count > 0 && (
+                      <>
+                        <span>•</span>
+                        <span className="hidden sm:inline">
+                          <span className="font-bold text-gray-700 text-sm">{page.meta_tags_count}</span> meta tags
+                        </span>
+                      </>
+                    )}
+                    {page.technologies_count && page.technologies_count > 0 && (
+                      <>
+                        <span>•</span>
+                        <span className="hidden md:inline">
+                          <span className="font-bold text-gray-700 text-sm">{page.technologies_count}</span> tech
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    Status: <span className={`font-bold text-sm ${
+                      page.status_code && page.status_code >= 200 && page.status_code < 300 ? 'text-green-600' :
+                      page.status_code && page.status_code >= 300 && page.status_code < 400 ? 'text-yellow-600' :
+                      'text-red-600'
+                    }`}>
+                      {page.status_code || 'N/A'}
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
 
           {/* Pagination Controls */}
           {totalPages > 1 && (
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-6 pt-4 border-t border-gray-200">
               <div className="flex items-center justify-center sm:justify-start space-x-2">
-                <button
+                {/* <button
                   onClick={() => setCurrentPage(1)}
                   disabled={currentPage === 1}
                   className="px-2 py-1 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
                 >
                   <span className="hidden sm:inline">First</span>
                   <span className="sm:hidden">«</span>
-                </button>
+                </button> */}
                 <button
                   onClick={() => setCurrentPage(currentPage - 1)}
                   disabled={currentPage === 1}
@@ -554,17 +615,17 @@ export default function PagesSection({
                   <span className="hidden sm:inline">Next</span>
                   <span className="sm:hidden">›</span>
                 </button>
-                <button
+                {/* <button
                   onClick={() => setCurrentPage(totalPages)}
                   disabled={currentPage === totalPages}
                   className="px-2 py-1 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
                 >
                   <span className="hidden sm:inline">Last</span>
                   <span className="sm:hidden">»</span>
-                </button>
+                </button> */}
               </div>
 
-              <div className="flex items-center justify-center sm:justify-end space-x-2">
+              {/* <div className="flex items-center justify-center sm:justify-end space-x-2">
                 <span className="text-sm text-gray-700">Go to page:</span>
                 <select
                   value={currentPage}
@@ -577,7 +638,7 @@ export default function PagesSection({
                     </option>
                   ))}
                 </select>
-              </div>
+              </div> */}
             </div>
           )}
         </div>
@@ -588,9 +649,10 @@ export default function PagesSection({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
-          <p className="text-gray-600">No scraped pages data available</p>
+          <p className="text-gray-700 font-medium mb-1">No Pages Found</p>
+          <p className="text-gray-600 text-sm">There was an error crawling the website, or no pages were successfully scraped.</p>
           {hasLoadedPages && (
-            <p className="text-sm text-gray-500 mt-1">Data will persist when switching tabs</p>
+            <p className="text-sm text-gray-500 mt-2">Data will persist when switching tabs</p>
           )}
          
           {projectId && (

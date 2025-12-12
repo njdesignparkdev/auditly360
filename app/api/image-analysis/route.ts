@@ -199,3 +199,47 @@ export async function GET(request: NextRequest) {
   }
 }
 
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const pageId = searchParams.get('pageId');
+
+    if (!pageId) {
+      return NextResponse.json({
+        error: 'Missing pageId parameter'
+      }, {
+        status: 400
+      });
+    }
+
+    const { error } = await supabaseAdmin
+      .from('scraped_pages')
+      .update({
+        Image_gemini_analysis: null,
+        page_image: null
+      })
+      .eq('id', pageId);
+
+    if (error) {
+      console.error('[API] Error clearing image analysis:', error);
+      return NextResponse.json({
+        error: 'Failed to clear analysis'
+      }, {
+        status: 500
+      });
+    }
+
+    return NextResponse.json({
+      success: true,
+      cleared: true
+    });
+  } catch (error) {
+    console.error('[API] Error in image analysis DELETE API:', error);
+    return NextResponse.json({
+      error: 'Internal server error'
+    }, {
+      status: 500
+    });
+  }
+}
+

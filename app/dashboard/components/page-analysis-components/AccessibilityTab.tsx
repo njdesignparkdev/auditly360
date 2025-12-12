@@ -68,10 +68,10 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
   ) / 10 * 100)
 
   return (
-    <div className="space-y-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Accessibility Score */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Accessibility Score</h3>
+      <div className="bg-white rounded-lg border border-gray-200 p-5">
+        <h3 className="text-lg font-semibold text-gray-900 mb-3">Accessibility Score</h3>
         <div className="flex items-center space-x-4">
           <div className="text-4xl font-bold text-blue-600">{accessibilityScore}</div>
           <div>
@@ -82,11 +82,11 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
       </div>
 
       {/* Basic Accessibility Elements */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Basic Accessibility Elements</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="bg-white rounded-lg border border-gray-200 p-5">
+        <h3 className="text-lg font-semibold text-gray-900 mb-3">Basic Accessibility Elements</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <h4 className="font-medium text-gray-900 mb-3">Page Structure</h4>
+            <h4 className="font-medium text-gray-900 mb-2">Page Structure</h4>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-600">Page Title</span>
@@ -124,7 +124,7 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
           </div>
           
           <div>
-            <h4 className="font-medium text-gray-900 mb-3">Content Structure</h4>
+            <h4 className="font-medium text-gray-900 mb-2">Content Structure</h4>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-600">H1 Tag</span>
@@ -161,34 +161,34 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
       </div>
 
       {/* Interactive Elements */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Interactive Elements</h3>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-gray-50 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-blue-600">{linkCount}</div>
+      <div className="bg-white rounded-lg border border-gray-200 p-5">
+        <h3 className="text-lg font-semibold text-gray-900 mb-3">Interactive Elements</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="bg-gray-50 rounded-lg p-3 text-center">
+            <div className="text-xl font-bold text-blue-600">{linkCount}</div>
             <div className="text-sm text-gray-600">Links</div>
           </div>
-          <div className="bg-gray-50 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-blue-600">{buttonCount}</div>
+          <div className="bg-gray-50 rounded-lg p-3 text-center">
+            <div className="text-xl font-bold text-blue-600">{buttonCount}</div>
             <div className="text-sm text-gray-600">Buttons</div>
           </div>
-          <div className="bg-gray-50 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-blue-600">{formCount}</div>
+          <div className="bg-gray-50 rounded-lg p-3 text-center">
+            <div className="text-xl font-bold text-blue-600">{formCount}</div>
             <div className="text-sm text-gray-600">Forms</div>
           </div>
-          <div className="bg-gray-50 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-blue-600">{inputCount}</div>
+          <div className="bg-gray-50 rounded-lg p-3 text-center">
+            <div className="text-xl font-bold text-blue-600">{inputCount}</div>
             <div className="text-sm text-gray-600">Inputs</div>
           </div>
         </div>
       </div>
 
       {/* Image Accessibility */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Image Accessibility</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="bg-white rounded-lg border border-gray-200 p-5">
+        <h3 className="text-lg font-semibold text-gray-900 mb-3">Image Accessibility</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <h4 className="font-medium text-gray-900 mb-3">Alt Text Analysis</h4>
+            <h4 className="font-medium text-gray-900 mb-2">Alt Text Analysis</h4>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-600">Total Images</span>
@@ -214,7 +214,7 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
           </div>
           
           <div>
-            <h4 className="font-medium text-gray-900 mb-3">Accessibility Status</h4>
+            <h4 className="font-medium text-gray-900 mb-2">Accessibility Status</h4>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-600">Alt Text Coverage</span>
@@ -240,11 +240,11 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
 
       {/* Form Accessibility */}
       {hasFormElements && (
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Form Accessibility</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white rounded-lg border border-gray-200 p-5">
+          <h3 className="text-lg font-semibold text-gray-900 mb-3">Form Accessibility</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <h4 className="font-medium text-gray-900 mb-3">Form Elements</h4>
+              <h4 className="font-medium text-gray-900 mb-2">Form Elements</h4>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-600">Forms</span>
@@ -262,7 +262,7 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
             </div>
             
             <div>
-              <h4 className="font-medium text-gray-900 mb-3">Accessibility Status</h4>
+              <h4 className="font-medium text-gray-900 mb-2">Accessibility Status</h4>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-600">Label Coverage</span>
@@ -288,11 +288,11 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
       )}
 
       {/* ARIA and Advanced Accessibility */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Advanced Accessibility Features</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="bg-white rounded-lg border border-gray-200 p-5">
+        <h3 className="text-lg font-semibold text-gray-900 mb-3">Advanced Accessibility Features</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <h4 className="font-medium text-gray-900 mb-3">ARIA Attributes</h4>
+            <h4 className="font-medium text-gray-900 mb-2">ARIA Attributes</h4>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-600">ARIA Labels</span>
@@ -330,7 +330,7 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
           </div>
           
           <div>
-            <h4 className="font-medium text-gray-900 mb-3">Navigation & Focus</h4>
+            <h4 className="font-medium text-gray-900 mb-2">Navigation & Focus</h4>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-600">Role Attributes</span>
@@ -370,9 +370,9 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
       </div>
 
       {/* Accessibility Recommendations */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Accessibility Recommendations</h3>
-        <div className="space-y-3">
+      <div className="bg-white rounded-lg border border-gray-200 p-5 lg:col-span-2">
+        <h3 className="text-lg font-semibold text-gray-900 mb-3">Accessibility Recommendations</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {!hasTitle && (
             <div className="bg-red-50 rounded-lg p-4">
               <h4 className="font-medium text-red-900 mb-2">Add Page Title</h4>

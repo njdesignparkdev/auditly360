@@ -299,7 +299,7 @@ export default function SEOAnalysisSection({
       </div>;
   }
   return <div className="bg-white rounded-lg  border border-gray-200 p-6">
-      <div className="flex items-center justify-between mb-6">
+      {/* <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-gray-900">SEO Analysis</h3>
         <button
           onClick={analyzePage}
@@ -312,12 +312,19 @@ export default function SEOAnalysisSection({
         >
           {loading ? 'Analyzing...' : seoAnalysis ? 'Re-analyze' : 'Start Analysis'}
         </button>
-      </div>
-
-      {/* SEO Score */}
-      <div className="mb-6">
+      </div> */}
+      {/* Two Column Grid Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        {/* Left Column: Positive Highlights and Recommendations */}
+    {/* Summary Overview - Clean Row Format */}
+  
+        <div className="space-y-6">
+          {/* Positive Highlights */}
+          <div className="mb-6" >
+       {/* SEO Score */}
+       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-gray-700">SEO Score</span>
+          <span className="text-xl font-bold text-gray-700">SEO Score</span>
           <span className={`text-2xl font-bold ${getScoreColor(seoAnalysis.score)}`}>
             {seoAnalysis.score}
           </span>
@@ -329,8 +336,7 @@ export default function SEOAnalysisSection({
         </div>
       </div>
 
-      {/* Summary Overview - Clean Row Format */}
-      <div className="mb-6">
+    <div className="">
         <div className="bg-gray-50 rounded-lg p-4">
           <h4 className="text-sm font-semibold text-gray-700 mb-3">Analysis Overview</h4>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -355,76 +361,81 @@ export default function SEOAnalysisSection({
           </div>
         </div>
       </div>
+      </div>
 
-      {/* Positive Highlights - Clean Row Format */}
-      {seoAnalysis.highlights && seoAnalysis.highlights.length > 0 && <div className="mb-6">
-          <h4 className="text-sm font-semibold text-gray-700 mb-3">✨ What&apos;s Working Well</h4>
-          <div className="space-y-2">
-            {seoAnalysis.highlights.map((highlight: SEOHighlight, index: number) => <div key={index} className="flex items-center justify-between bg-white border border-gray-200 rounded-lg p-3 ">
-                <div className="flex items-center space-x-3">
-                  <span className="text-lg">
-                    <i className={highlight.type === 'achievement' ? 'fas fa-trophy text-yellow-600' : highlight.type === 'good-practice' ? 'fas fa-check-circle text-green-600' : 'fas fa-bolt text-blue-500'}></i>
-                  </span>
-                  <div>
-                    <div className="font-medium text-gray-900">{highlight.title}</div>
-                    <div className="text-xs text-gray-500">{highlight.description}</div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
-                    {highlight.category}
-                  </span>
-                  <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
-                    {highlight.impact}
-                  </span>
-                </div>
-              </div>)}
-          </div>
-        </div>}
 
-      {/* Issues and Fixes - Clean Row Format */}
-      {seoAnalysis.issues && seoAnalysis.issues.length > 0 && <div className="mb-6">
-          <h4 className="text-sm font-semibold text-gray-700 mb-3">Issues & Fixes</h4>
-          <div className="space-y-2">
-            {seoAnalysis.issues.map((issue, index) => <div key={index} className="bg-white border border-gray-200 rounded-lg p-3 ">
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex items-center space-x-3">
-                    <span className="text-lg"><i className={getIssueIcon(issue.type)}></i></span>
-                    <div>
-                      <div className="font-medium text-gray-900">{issue.title}</div>
-                      <div className="text-xs text-gray-500">{issue.description}</div>
+
+
+          {seoAnalysis.highlights && seoAnalysis.highlights.length > 0 && <div>
+              <h4 className="text-sm font-semibold text-gray-700 mb-3">What&apos;s Working Well</h4>
+              <div className="space-y-2">
+                {seoAnalysis.highlights.map((highlight: SEOHighlight, index: number) => <div key={index} className="flex items-center justify-between bg-white border border-gray-200 rounded-lg p-3 ">
+                    <div className="flex items-center space-x-3">
+                      <span className="text-lg">
+                        <i className={highlight.type === 'achievement' ? 'fas fa-trophy text-yellow-600' : highlight.type === 'good-practice' ? 'fas fa-check-circle text-green-600' : 'fas fa-bolt text-blue-500'}></i>
+                      </span>
+                      <div>
+                        <div className="font-medium text-gray-900">{highlight.title}</div>
+                        <div className="text-xs text-gray-500">{highlight.description}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                        {highlight.category}
+                      </span>
+                      <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
+                        {highlight.impact}
+                      </span>
+                    </div>
+                  </div>)}
+              </div>
+            </div>}
+
+          {/* Recommendations */}
+          {seoAnalysis.recommendations && seoAnalysis.recommendations.length > 0 && <div>
+              <h4 className="text-sm font-semibold text-gray-700 mb-3">Recommendations</h4>
+              <div className="space-y-2">
+                {seoAnalysis.recommendations.map((recommendation, index) => <div key={index} className="flex items-start bg-white border border-gray-200 rounded-lg p-3">
+                    <span className="mr-3 mt-0.5">
+                      <i className="fas fa-lightbulb text-blue-500"></i>
+                    </span>
+                    <p className="text-sm text-gray-700">{recommendation}</p>
+                  </div>)}
+              </div>
+            </div>}
+        </div>
+
+        {/* Right Column: Issues and Fixes */}
+        {seoAnalysis.issues && seoAnalysis.issues.length > 0 && <div>
+            <h4 className="text-sm font-semibold text-gray-700 mb-3">Issues & Fixes</h4>
+            <div className="space-y-2">
+              {seoAnalysis.issues.map((issue, index) => <div key={index} className="bg-white border border-gray-200 rounded-lg p-3 ">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-center space-x-3">
+                      <span className="text-lg"><i className={getIssueIcon(issue.type)}></i></span>
+                      <div>
+                        <div className="font-medium text-gray-900">{issue.title}</div>
+                        <div className="text-xs text-gray-500">{issue.description}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                        {issue.category}
+                      </span>
+                      <span className={`text-xs px-2 py-1 rounded ${issue.impact === 'high' ? 'bg-red-100 text-red-700' : issue.impact === 'medium' ? 'bg-yellow-100 text-yellow-700' : 'bg-blue-100 text-blue-700'}`}>
+                        {issue.impact}
+                      </span>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
-                      {issue.category}
-                    </span>
-                    <span className={`text-xs px-2 py-1 rounded ${issue.impact === 'high' ? 'bg-red-100 text-red-700' : issue.impact === 'medium' ? 'bg-yellow-100 text-yellow-700' : 'bg-blue-100 text-blue-700'}`}>
-                      {issue.impact}
-                    </span>
+                  <div className="ml-8 mt-2">
+                    <div className="text-xs text-gray-600 bg-gray-50 p-2 rounded">
+                      <span className="font-medium">Fix:</span> {issue.fix}
+                    </div>
                   </div>
-                </div>
-                <div className="ml-8 mt-2">
-                  <div className="text-xs text-gray-600 bg-gray-50 p-2 rounded">
-                    <span className="font-medium">Fix:</span> {issue.fix}
-                  </div>
-                </div>
-              </div>)}
-          </div>
-        </div>}
-
-      {/* Recommendations - Clean Row Format */}
-      {seoAnalysis.recommendations && seoAnalysis.recommendations.length > 0 && <div className="mb-6">
-          <h4 className="text-sm font-semibold text-gray-700 mb-3">Recommendations</h4>
-          <div className="space-y-2">
-            {seoAnalysis.recommendations.map((recommendation, index) => <div key={index} className="flex items-start bg-white border border-gray-200 rounded-lg p-3">
-                <span className="mr-3 mt-0.5">
-                  <i className="fas fa-lightbulb text-blue-500"></i>
-                </span>
-                <p className="text-sm text-gray-700">{recommendation}</p>
-              </div>)}
-          </div>
-        </div>}
+                </div>)}
+            </div>
+          </div>}
+      </div>
 
       {(!seoAnalysis.issues || seoAnalysis.issues.length === 0) && <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
           <div className="text-4xl mb-2">

@@ -100,13 +100,13 @@ export default function OverviewSection({ project, scrapedPages = [] }: Overview
           </div>
         </div>
         {/* SEO Analysis Section */}
-        <div className="lg:col-span-3">
+        {/* <div className="lg:col-span-3">
           <SEOAnalysisSection 
             project={project} 
             scrapedPages={scrapedPages}
             dataVersion={Date.now()}
           />
-        </div>
+        </div> */}
         {/* Technologies Overview */}
         {project.technologies && project.technologies.length > 0 && (
           <div className="bg-white rounded-lg  border border-gray-200 p-6">

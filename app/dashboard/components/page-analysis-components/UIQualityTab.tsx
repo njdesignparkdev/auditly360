@@ -77,8 +77,11 @@ interface ImageAnalysis {
     issues: Array<{
       type: string
       severity: 'high' | 'medium' | 'low'
-      description: string
-      suggestion: string
+      heading?: string
+      problem?: string
+      solution?: string
+      description?: string
+      suggestion?: string
       location?: string
       impact?: string
     }>
@@ -389,7 +392,40 @@ export default function UIQualityTab({ page }: UIQualityTabProps) {
     }
   }
 
-  const handleRetakeScreenshot = () => {
+  const handleRetakeScreenshot = async () => {
+    if (!page.id || !page.url) {
+      setProcessingError('No page ID or URL available')
+      return
+    }
+
+    try {
+      setProcessingError(null)
+      setProcessing(true)
+      setCurrentStep('capturing')
+
+      // Clear local state so we don't show stale data
+      setImageAnalysis(null)
+      setScreenshotUrl(null)
+      setDesktopScreenshotUrl(null)
+      setMobileScreenshotUrl(null)
+      setProcessingState(page.id, false)
+
+      const response = await fetch(`/api/image-analysis?pageId=${page.id}`, {
+        method: 'DELETE'
+      })
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}))
+        throw new Error(data.error || 'Failed to clear previous analysis')
+      }
+    } catch (error) {
+      console.error('Error resetting analysis data:', error)
+      setProcessing(false)
+      setProcessingError(error instanceof Error ? error.message : 'Failed to reset analysis data')
+      return
+    }
+
+    // Proceed with fresh capture and analysis
     processPageAnalysis(true)
   }
 
@@ -905,7 +941,7 @@ export default function UIQualityTab({ page }: UIQualityTabProps) {
       )}
 
       {/* Overall Quality Score */}
-      <div className="bg-gradient-to-r from-[#ff4b01]/10 to-[#ff4b01]/20 rounded-xl border border-[#ff4b01]/30 p-4">
+      <div className="">
         <div className="flex items-center justify-between mb-2">
           <div>
             <p className="text-gray-600">Comprehensive assessment of your page&apos;s user interface and structure</p>
@@ -1096,44 +1132,68 @@ export default function UIQualityTab({ page }: UIQualityTabProps) {
               {primaryAnalysis.ui_ux_analysis?.issues && primaryAnalysis.ui_ux_analysis.issues.length > 0 && (
                 <div>
                   <h5 className="text-base font-semibold text-gray-900 mb-5">Issues & Recommendations</h5>
-                  <div className="space-y-4">
-                    {primaryAnalysis.ui_ux_analysis.issues.map((issue: { type: string; severity: 'high' | 'medium' | 'low'; description: string; suggestion: string; location?: string; impact?: string }, idx: number) => (
-                      <div key={idx} className={`p-4 rounded-lg border-l-4 shadow-sm ${
-                        issue.severity === 'high' ? 'border-red-400 bg-red-50/50' :
-                        issue.severity === 'medium' ? 'border-yellow-400 bg-yellow-50/50' :
-                        'border-[#ff4b01]/50 bg-[#ff4b01]/10'
-                      }`}>
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex-1 space-y-2">
-                            <div className="text-sm font-semibold text-gray-900 leading-snug">{issue.description}</div>
-                            <div className="text-xs text-gray-600 leading-relaxed">{issue.suggestion}</div>
+                  <div className="grid gap-4 md:grid-cols-3">
+                    {primaryAnalysis.ui_ux_analysis.issues.map((issue: ImageAnalysis['ui_ux_analysis']['issues'][number], idx: number) => {
+                      const heading = issue.heading || issue.type || 'Issue'
+                      const problem = issue.problem || issue.description || 'No description provided'
+                      const solution = issue.solution || issue.suggestion || 'No solution provided'
+                      return (
+                        <div
+                          key={idx}
+                          className={`p-5 rounded-xl border shadow-sm space-y-3 ${
+                            issue.severity === 'high'
+                              ? 'border-red-200 bg-red-50'
+                              : issue.severity === 'medium'
+                              ? 'border-yellow-200 bg-yellow-50'
+                              : 'border-gray-200 bg-gray-50'
+                          }`}
+                        >
+                          <div className="flex items-start justify-between">
+                            <div className="space-y-1">
+                              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{issue.type}</div>
+                              <div className="text-2xl capitalize font-semibold text-gray-900 leading-snug">{heading}</div>
+                            </div>
+                            <span
+                              className={`px-2.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wide ${
+                                issue.severity === 'high'
+                                  ? 'bg-red-100 text-red-700'
+                                  : issue.severity === 'medium'
+                                  ? 'bg-yellow-100 text-yellow-700'
+                                  : 'bg-green-100 text-green-700'
+                              }`}
+                            >
+                              {issue.severity}
+                            </span>
+                          </div>
+                          <div className="space-y-2 text-sm text-gray-700">
+                            <div>
+                              <div className="text-[11px] font-semibold text-gray-500">Problem</div>
+                              <div className="text-sm text-gray-800">{problem}</div>
+                            </div>
+                            <div>
+                              <div className="text-[11px] font-semibold text-gray-500">Solution</div>
+                              <div className="text-sm text-gray-800">{solution}</div>
+                            </div>
                             {(issue.location || issue.impact) && (
-                              <div className="flex flex-wrap gap-3 text-xs text-gray-500 pt-1">
+                              <div className="flex flex-wrap gap-4 text-xs text-gray-600 border-t border-gray-200 pt-4 mt-4">
                                 {issue.location && (
-                                  <span className="flex items-center">
-                                    <span className="mr-1">📍</span>
+                                  <span className="flex items-center gap-1">
+                                    <span role="img" aria-label="location">📍</span>
                                     {issue.location}
                                   </span>
                                 )}
                                 {issue.impact && (
-                                  <span className="flex items-center">
-                                    <span className="mr-1">⚡</span>
+                                  <span className="flex items-center gap-1">
+                                    <span role="img" aria-label="impact">⚡</span>
                                     {issue.impact}
                                   </span>
                                 )}
                               </div>
                             )}
                           </div>
-                          <span className={`px-3 py-1.5 rounded-md text-xs font-semibold uppercase tracking-wide flex-shrink-0 ${
-                            issue.severity === 'high' ? 'bg-red-100 text-red-800' :
-                            issue.severity === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-                            'bg-[#ff4b01]/20 text-[#ff4b01]'
-                          }`}>
-                            {issue.severity}
-                          </span>
                         </div>
-                      </div>
-                    ))}
+                      )
+                    })}
                   </div>
                 </div>
               )}
@@ -1373,7 +1433,7 @@ export default function UIQualityTab({ page }: UIQualityTabProps) {
 
             {/* Detailed Summary */}
             {primaryAnalysis.detailed_summary && (
-              <div className="bg-gradient-to-br from-[#ff4b01]/10 to-[#ff4b01]/20 rounded-xl border border-[#ff4b01]/30 shadow-sm p-8">
+              <div className="p-8 rounded-xl border">
                 <h3 className="text-2xl font-bold text-gray-900 mb-8">Detailed Assessment</h3>
                 {primaryAnalysis.detailed_summary.overall_assessment && (
                   <div className="mb-4">

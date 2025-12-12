@@ -13,8 +13,7 @@ import {
   BrandConsistencyTab,
   UIQualityTab,
   TechnicalTab,
-  PerformanceTab,
-  AccessibilityTab
+  PerformanceTab
 } from '../page-analysis-components'
 import SEOAnalysisSection from '../analysis-tab-components/SEOAnalysisSection'
 import ImagesSection from '../analysis-tab-components/ImagesSection'
@@ -456,8 +455,6 @@ export default function PageAnalysisTab({ pageId }: PageAnalysisTabProps) {
         return <TechnicalTab page={page!} />
       case 'performance':
         return page ? <PerformanceTab page={{...page, html_content: page.html_content || undefined, images: Array.isArray(page.images) ? page.images.map(() => ({ size: 0, loading: 'lazy', format: 'unknown' })) : undefined, response_time: page.response_time || undefined, html_content_length: page.html_content_length || undefined, performance_analysis: undefined}} cachedAnalysis={undefined} /> : null
-      case 'accessibility':
-        return page ? <AccessibilityTab page={page} /> : null
       default:
         return <OverviewTab page={page} project={auditProject} />
     }
@@ -474,12 +471,11 @@ export default function PageAnalysisTab({ pageId }: PageAnalysisTabProps) {
     { id: 'seo-structure', name: 'SEO & Structure', icon: '🔍' },
     { id: 'ui-quality', name: 'UI Quality', icon: '🎨' },
     { id: 'technical', name: 'Technical', icon: '⚙️' },
-    { id: 'performance', name: 'Performance', icon: '⚡' },
-    { id: 'accessibility', name: 'Accessibility', icon: '♿' }
+    { id: 'performance', name: 'Performance', icon: '⚡' }
   ]
 
   return (
-    <div className="space-y-6 lg:px-6">
+    <div className="space-y-6 lg:px-24">
       {/* Use AnalysisHeader for consistent design */}
       <AnalysisHeader
         project={mockProject}

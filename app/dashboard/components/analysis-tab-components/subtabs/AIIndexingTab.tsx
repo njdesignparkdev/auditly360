@@ -180,7 +180,7 @@ export default function AIIndexingTab({ project }: AIIndexingTabProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 lg:w-1/2">
       <div>
         <div className="mb-6">
           <h3 className="text-xl font-bold text-black mb-2">AI Keyword Ranking Analysis</h3>
