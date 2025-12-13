@@ -378,7 +378,7 @@ export default function SEOAnalysisSection({
             {/* SEO Score */}
             <div className="">
               <div className="flex items-center justify-between mb-2 ">
-                <span className="text-lg font-semibold text-gray-900 mb-4 border-b border-gry-300">
+                <span className="text-lg font-semibold text-gray-900 mb-4 ">
                   SEO Score
                 </span>
                 <span

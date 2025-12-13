@@ -585,7 +585,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
           
           {/* Export Button */}
           {filteredLinks.length > 0 && (
-            <div className="relative group pr-6">
+            <div className="relative group px-6">
               <button
                 disabled={isExporting}
                 className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -673,7 +673,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
       <div className="border-y border-gray-300 p-4 mb-6">
         <div className="flex flex-col lg:flex-row gap-4">
           {/* Search Input */}
-          <div className="flex-1">
+          <div className="flex-1 p-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">Search Links</label>
             <div className="flex gap-2">
               <input
@@ -693,7 +693,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
           </div>
 
           {/* Link Type Filter */}
-          <div className="lg:w-48">
+          <div className="lg:w-48 p-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">Link Type</label>
             <select
               value={selectedLinkType}
@@ -708,7 +708,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
           </div>
 
           {/* Check Broken Links Button */}
-          <div className="lg:w-48">
+          <div className="lg:w-48 p-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">Link Status</label>
             {hasBrokenLinksFeature ? (
               <button
@@ -755,7 +755,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
 
       {/* Links Table */}
       {filteredLinks.length > 0 ? (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto px-6">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>

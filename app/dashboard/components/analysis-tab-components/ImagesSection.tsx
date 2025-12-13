@@ -672,7 +672,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
 
   return (
     <div className="">
-      <div className="flex items-center justify-between pr-6">
+      <div className="flex items-center justify-between px-6">
         <h3 className="text-lg font-semibold text-gray-900 p-6 ">Images Analysis</h3>
         <div className="text-sm text-gray-500">
           {isLoading || isProcessing ? (
@@ -727,7 +727,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
       <div className="border-y border-gray-300 p-4 mb-6">
         <div className="flex flex-col lg:flex-row gap-4">
           {/* Search Input */}
-          <div className="flex-1">
+          <div className="flex-1 p-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">Search Images</label>
             <div className="flex flex-col sm:flex-row gap-2">
               <input
@@ -747,7 +747,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
           </div>
 
           {/* Image Type Filter */}
-          <div className="lg:w-48">
+          <div className="lg:w-48 p-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">Image Type</label>
             <select
               value={selectedImageType}
@@ -791,7 +791,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
       {filteredImages.length > 0 ? (
         <>
           {/* Desktop Table View */}
-          <div className="hidden lg:block overflow-x-auto">
+          <div className="hidden lg:block overflow-x-auto px-6">
             <table className="min-w-full divide-y divide-gray-300">
               <thead className="bg-gray-50">
                 <tr>

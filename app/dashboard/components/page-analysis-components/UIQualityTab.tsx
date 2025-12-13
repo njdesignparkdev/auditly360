@@ -885,9 +885,9 @@ export default function UIQualityTab({ page }: UIQualityTabProps) {
   // Only hide AI-powered screenshot analysis
 
   return (
-    <div className="space-y-8">
+    <div className=" px-4">
       {/* Header with Reanalyze Button */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between px-6">
         <h2 className="text-2xl font-bold text-gray-900">UI Quality Analysis</h2>
         {(imageAnalysis || screenshotUrl || desktopScreenshotUrl) && hasScreenshotAccess && (
           <button

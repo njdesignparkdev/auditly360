@@ -250,7 +250,7 @@ export default function KeysTab({
   return <div className="s">
       
         <div className="flex items-start p-6">
-          <div>
+          <div className="px-6">
             <h4 className="text-lg font-semibold text-gray-900 ">Security Keys Analysis</h4>
            
           </div>
@@ -305,10 +305,10 @@ export default function KeysTab({
           </div>
 
           {/* Filters */}
-          <div className="border-y border-gray-300 p-4 mb-6">
+          <div className="border-y border-gray-300 p-4 mb-6 ">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 px-6">
                   <label className="text-sm font-medium text-gray-700 whitespace-nowrap">Status:</label>
                   <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="text-sm border border-gray-300 px-3 py-1 min-w-0 flex-1 sm:flex-none">
                     <option value="all">All Status</option>
@@ -342,7 +342,7 @@ export default function KeysTab({
           </div>
 
           {/* Keys List */}
-          {keysData.keys.length > 0 ? <div className="space-y-4">
+          {keysData.keys.length > 0 ? <div className="space-y-4 px-6">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <h4 className="text-md font-medium text-gray-700 px-6">
                   Detected Keys ({keysData.total} total, showing {keysData.keys.length})

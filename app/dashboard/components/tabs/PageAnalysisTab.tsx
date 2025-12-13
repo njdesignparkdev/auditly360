@@ -475,7 +475,7 @@ export default function PageAnalysisTab({ pageId }: PageAnalysisTabProps) {
   ]
 
   return (
-    <div className="space-y-6 ">
+    <div className="">
       {/* Use AnalysisHeader for consistent design */}
       <AnalysisHeader
         project={mockProject}

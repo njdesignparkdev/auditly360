@@ -152,8 +152,8 @@ export default function AnalysisHeader({
   };
 
   return (
-    <div className=" lg:pt-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 px-4">
+    <div className="border border-gray-200 rounded-lg bg-white">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 px-4 pt-4">
         <div className="flex flex-col space-y-3 min-w-0 px-6">
           {currentTab === "page-analysis" && (
             <button
@@ -197,9 +197,9 @@ export default function AnalysisHeader({
       </div>
 
       {/* Navigation Tabs */}
-      <div className="border-b border-gray-200">
+      <div className="border-y border-gray-300">
         {isLoadingPlan ? (
-          <div className="py-4">
+          <div className="py-4 px-6">
             <div className="flex space-x-4 sm:space-x-8 overflow-x-auto">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div
@@ -214,7 +214,7 @@ export default function AnalysisHeader({
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <nav className="-mb-px flex space-x-4 sm:space-x-8 min-w-max border-t border-gray-200 px-6">
+            <nav className="flex min-w-max">
               {(
                 customTabs || [
                   {
@@ -234,7 +234,7 @@ export default function AnalysisHeader({
                   { id: "links", name: "Links", icon: "fas fa-link" },
                   { id: "keys", name: "Keys", icon: "fas fa-key" },
                 ]
-              ).map((tab) => {
+              ).map((tab, index, tabsArray) => {
                 const hasAccess = hasAccessToTab(tab.id);
                 const featureId = getFeatureIdForTab(tab.id);
                 const isPremiumFeature = featureId && !hasAccess;
@@ -243,10 +243,12 @@ export default function AnalysisHeader({
                   <button
                     key={tab.id}
                     onClick={() => onSectionChange(tab.id)}
-                    className={`py-2 px-1 border-b-2 font-medium text-sm flex items-center whitespace-nowrap flex-shrink-0 ${
+                    className={`py-4 px-6 font-medium text-sm transition-colors duration-300 whitespace-nowrap flex-shrink-0 ${
+                      index < tabsArray.length - 1 ? 'border-r border-gray-300' : ''
+                    } ${
                       activeSection === tab.id
-                        ? " text-[#ff4b01] "
-                        : "border-transparent text-gray-500 hover:text-[#ff4b01] hover:border-[#ff4b01]/30"
+                        ? 'border-b-2 border-b-gray-900 text-gray-900 bg-gray-50'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                     } ${isPremiumFeature ? "opacity-75" : ""}`}
                   >
                     {tab.name}
@@ -263,7 +265,7 @@ export default function AnalysisHeader({
 
       {/* Show unavailable content if user doesn't have access to current tab */}
       {showUnavailableContent && !hasAccessToTab(activeSection) && (
-        <div className="mt-6">
+        <div className="mt-6 px-6 pb-6">
           <FeatureUnavailableCard
             title={getTabInfo(activeSection).title}
             description={getTabInfo(activeSection).description}

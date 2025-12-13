@@ -1,8 +1,8 @@
 'use client'
 
 import { AuditProject } from '@/types/audit'
-import SEOAnalysisSection from '../analysis-tab-components/SEOAnalysisSection'
 import FaviconDisplay from '../FaviconDisplay'
+import PageSEOScore from './PageSEOScore'
 
 interface OverviewTabProps {
   page: {
@@ -18,6 +18,8 @@ interface OverviewTabProps {
     technologies_count: number
     response_time: number | null
     created_at: string
+    html_content?: string | null
+    audit_project_id?: string
   } | null
   project: AuditProject | null
 }
@@ -35,7 +37,7 @@ export default function OverviewTab({ page, project }: OverviewTabProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className=" mt-6">
       {/* Page Header */}
       {/* <div className="bg-white rounded-lg border border-gray-200 p-6">
         <div className="flex items-center justify-between mb-4">
@@ -84,71 +86,86 @@ export default function OverviewTab({ page, project }: OverviewTabProps) {
         </div>
       </div>
 
-      {/* Content Summary */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Page Summary</h3>
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-gray-600">Site Favicon:</span>
-              <div className="flex items-center">
-                {project ? (
-                  <>
-                    <FaviconDisplay 
-                      data={project as unknown as Record<string, any>} 
-                      size="sm"
-                      className="mr-2"
-                    />
-                    <span className="text-sm text-gray-500">From {project.site_url}</span>
-                  </>
-                ) : (
-                  <span className="text-sm text-gray-500">No project data</span>
-                )}
-              </div>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Content Length:</span>
-              <span className="font-medium">{page.html_content_length || 0} characters</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Response Time:</span>
-              <span className="font-medium">{page.response_time || 'N/A'}ms</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Created:</span>
-              <span className="font-medium">
-                {new Date(page.created_at).toLocaleDateString()}
-              </span>
-            </div>
-          </div>
+      {/* Two Column Grid: SEO Score (Left) and Page Summary/Quick Stats (Right) */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 ">
+        {/* Left Column: SEO Score and Related Content */}
+        <div>
+          <PageSEOScore
+            page={page ? {
+              id: page.id,
+              url: page.url,
+              html_content: page.html_content || null,
+              audit_project_id: page.audit_project_id || project?.id,
+            } : null}
+            project={project}
+          />
         </div>
 
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h3>
-          <div className="space-y-3">
-            <div className="flex justify-between">
-              <span className="text-gray-600">Status:</span>
-              <span className={`font-medium ${
-                page.status_code && page.status_code >= 200 && page.status_code < 300 ? 'text-green-600' :
-                page.status_code && page.status_code >= 300 && page.status_code < 400 ? 'text-yellow-600' :
-                'text-red-600'
-              }`}>
-                {page.status_code && page.status_code >= 200 && page.status_code < 300 ? 'Healthy' :
-                 page.status_code && page.status_code >= 300 && page.status_code < 400 ? 'Redirect' : 'Error'}
-              </span>
+        {/* Right Column: Page Summary and Quick Stats */}
+        <div className="space-y-6">
+          <div className="bg-white  border-b border-gray-200 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Page Summary</h3>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-gray-600">Site Favicon:</span>
+                <div className="flex items-center">
+                  {project ? (
+                    <>
+                      <FaviconDisplay 
+                        data={project as unknown as Record<string, any>} 
+                        size="sm"
+                        className="mr-2"
+                      />
+                      <span className="text-sm text-gray-500">From {project.site_url}</span>
+                    </>
+                  ) : (
+                    <span className="text-sm text-gray-500">No project data</span>
+                  )}
+                </div>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Content Length:</span>
+                <span className="font-medium">{page.html_content_length || 0} characters</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Response Time:</span>
+                <span className="font-medium">{page.response_time || 'N/A'}ms</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Created:</span>
+                <span className="font-medium">
+                  {new Date(page.created_at).toLocaleDateString()}
+                </span>
+              </div>
             </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Technologies:</span>
-              <span className="font-medium">{page.technologies_count || 0} detected</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Meta Tags:</span>
-              <span className="font-medium">{page.meta_tags_count || 0} found</span>
+          </div>
+
+          <div className="bg-white rounded-lg border-r border-gray-200 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h3>
+            <div className="space-y-3">
+              <div className="flex justify-between">
+                <span className="text-gray-600">Status:</span>
+                <span className={`font-medium ${
+                  page.status_code && page.status_code >= 200 && page.status_code < 300 ? 'text-green-600' :
+                  page.status_code && page.status_code >= 300 && page.status_code < 400 ? 'text-yellow-600' :
+                  'text-red-600'
+                }`}>
+                  {page.status_code && page.status_code >= 200 && page.status_code < 300 ? 'Healthy' :
+                   page.status_code && page.status_code >= 300 && page.status_code < 400 ? 'Redirect' : 'Error'}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Technologies:</span>
+                <span className="font-medium">{page.technologies_count || 0} detected</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Meta Tags:</span>
+                <span className="font-medium">{page.meta_tags_count || 0} found</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
     
     </div>
   )
