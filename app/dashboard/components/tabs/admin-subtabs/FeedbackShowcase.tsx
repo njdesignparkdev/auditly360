@@ -198,7 +198,7 @@ export default function FeedbackShowcase() {
           >
             <div className={`flex flex-row gap-4`}>
               {pageItems.map(item => (
-                <div key={item.id} className="rounded-xl border border-gray-200 bg-white p-5">
+                <div key={item.id} className="border-b border-gray-300  bg-white p-5">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-700 font-semibold">
                       {getDisplayName(item).split(' ').map(n => n[0]).join('').toUpperCase()}
