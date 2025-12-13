@@ -1,5 +1,5 @@
-import { Metadata } from 'next'
 import Link from 'next/link'
+import { Metadata } from 'next'
 
 interface BlogAuthor {
   id: string
@@ -28,7 +28,9 @@ interface BlogResponse {
 
 interface PageProps {
   params: Promise<{
+  params: Promise<{
     id: string
+  }>
   }>
 }
 
@@ -117,7 +119,9 @@ export default async function BlogDetailPage({ params }: PageProps) {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <p className="text-sm text-gray-500 mb-3">
             <Link href="/blogs" className="hover:text-[#ff4b01]">
+            <Link href="/blogs" className="hover:text-[#ff4b01]">
               Blog
+            </Link>{' '}
             </Link>{' '}
             / <span className="text-gray-700">Post</span>
           </p>

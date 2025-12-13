@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import Footer from "../home-page-components/Footer";
+import { Footer } from "@/components/footer-section/Footer";
 
 export default function PrivacyPage() {
   return (
@@ -157,7 +157,7 @@ export default function PrivacyPage() {
 
             <section>
               <h2 className="text-xl md:text-2xl font-semibold text-[#FF4D04] mb-4">
-                8. Children's Privacy
+                8. Children&apos;s Privacy
               </h2>
               <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                 Our service is available to users of all ages. We do not knowingly collect personal information from children under 13 without parental consent. If you are a parent or guardian and believe your child has provided us with personal information, please contact us to have that information removed.
@@ -178,7 +178,7 @@ export default function PrivacyPage() {
                 10. Changes to This Privacy Policy
               </h2>
               <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                We may update our Privacy Policy from time to time to reflect changes in our practices or for legal, operational, or regulatory reasons. We will notify you of any material changes by posting the new Privacy Policy on this page and updating the "Last Updated" date. Your continued use of our service after such changes constitutes acceptance of the updated Privacy Policy.
+                We may update our Privacy Policy from time to time to reflect changes in our practices or for legal, operational, or regulatory reasons. We will notify you of any material changes by posting the new Privacy Policy on this page and updating the &quot;Last Updated&quot; date. Your continued use of our service after such changes constitutes acceptance of the updated Privacy Policy.
               </p>
             </section>
 

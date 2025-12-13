@@ -34,6 +34,7 @@ export default function PagesSection({
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [isRequestInProgress, setIsRequestInProgress] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [viewMode, setViewMode] = useState<'table' | 'grid'>('table')
 
   // Check if user has access to pages tab feature
   const hasPagesTabAccess = hasFeature('pages_tab')
@@ -429,30 +430,7 @@ export default function PagesSection({
           </select>
         </div>
 
-        {/* <div className="flex items-center space-x-2">
-          <label className="text-sm font-medium text-gray-700">Sort by:</label>
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as 'created_at' | 'title' | 'status_code')}
-            className="px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4b01]"
-          >
-            <option value="created_at">Date</option>
-            <option value="title">Title</option>
-            <option value="status_code">Status Code</option>
-          </select>
-        </div> */}
-
-        {/* <div className="flex items-center space-x-2">
-          <label className="text-sm font-medium text-gray-700">Order:</label>
-          <select
-            value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}
-            className="px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4b01]"
-          >
-            <option value="desc">Descending</option>
-            <option value="asc">Ascending</option>
-          </select>
-        </div> */}
+      
 
         <div className="flex items-center space-x-2">
           <label className="text-sm font-medium text-gray-700">Per page:</label>
@@ -467,6 +445,33 @@ export default function PagesSection({
             <option value={50}>50</option>
             <option value={100}>100</option>
           </select>
+        </div>
+
+        {/* View Toggle */}
+        <div className="flex items-center space-x-2 border-l border-gray-300 pl-4">
+          <label className="text-sm font-medium text-gray-700">View:</label>
+          <div className="flex items-center border border-gray-300 rounded">
+            <button
+              onClick={() => setViewMode('table')}
+              className={`px-3 py-1 text-sm font-medium transition-colors ${
+                viewMode === 'table'
+                  ? 'bg-[#ff4b01] text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              Table
+            </button>
+            <button
+              onClick={() => setViewMode('grid')}
+              className={`px-3 py-1 text-sm font-medium transition-colors border-l border-gray-300 ${
+                viewMode === 'grid'
+                  ? 'bg-[#ff4b01] text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              Grid
+            </button>
+          </div>
         </div>
       </div>
 
@@ -499,90 +504,164 @@ export default function PagesSection({
         </div>
       )}
 
-      {/* Pages Grid */}
+      {/* Pages Display */}
       {!isLoading && filteredAndSortedPages.length > 0 ? (
         <div>
           <div className="text-sm text-gray-600 mb-4">
             Showing {startIndex + 1}-{Math.min(endIndex, filteredAndSortedPages.length)} of {filteredAndSortedPages.length} pages
             {filteredAndSortedPages.length !== pages.length && ` (${pages.length} total)`}
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {paginatedPages.map((page, index) => (
-              <div key={page.id || index} className="border border-gray-200 rounded-lg p-4 transition-colors duration-200 hover:shadow-md flex flex-col">
-                <div className="flex items-start justify-between gap-2 mb-2">
-                  <h4 
-                    onClick={() => {
-                      if (page.id && onPageSelect) {
-                        onPageSelect(page.id)
-                      } else if (page.id) {
-                        // Fallback to URL navigation if no callback provided
-                        window.location.href = `/dashboard/page-analysis/${page.id}`
-                      } else {
-                        console.warn('No page ID available for analysis')
-                      }
-                    }}
-                    className="font-medium text-[#ff4b01] hover:text-[#e64401] truncate flex-1 min-w-0 cursor-pointer transition-colors duration-200"
-                  >
-                    {getPageName(page.title)}
-                  </h4>
-                  <button
-                    onClick={() => {
-                      if (page.id && onPageSelect) {
-                        onPageSelect(page.id)
-                      } else if (page.id) {
-                        // Fallback to URL navigation if no callback provided
-                        window.location.href = `/dashboard/page-analysis/${page.id}`
-                      } else {
-                        console.warn('No page ID available for analysis')
-                      }
-                    }}
-                    className="text-[#ff4b01] text-xs font-medium hover:text-[#e64401] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff4b01] focus:ring-offset-2 flex-shrink-0"
-                  >
-                    Analyze
-                  </button>
-                </div>
-                {page.description && (
-                  <p className="text-sm text-gray-700 mb-3 line-clamp-2 flex-1">{page.description}</p>
-                )}
-                <div className="flex flex-col gap-3 mt-auto">
-                  <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500">
-                    <span>
-                      <span className="font-bold text-gray-700 text-sm">{page.links_count || 0}</span> links
-                    </span>
-                    <span>•</span>
-                    <span>
-                      <span className="font-bold text-gray-700 text-sm">{page.images_count || 0}</span> images
-                    </span>
-                    {page.meta_tags_count && page.meta_tags_count > 0 && (
-                      <>
-                        <span>•</span>
-                        <span className="hidden sm:inline">
-                          <span className="font-bold text-gray-700 text-sm">{page.meta_tags_count}</span> meta tags
+
+          {/* Table View */}
+          {viewMode === 'table' && (
+            <div className="overflow-x-auto border border-gray-200 rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Page Title</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">URL</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Links</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Images</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {paginatedPages.map((page, index) => (
+                    <tr key={page.id || index} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-medium text-gray-900 truncate max-w-xs" title={getPageName(page.title)}>
+                          {getPageName(page.title)}
+                        </div>
+                        {page.description && (
+                          <div className="text-xs text-gray-500 truncate max-w-xs mt-1" title={page.description}>
+                            {page.description}
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-sm text-gray-600 truncate max-w-md" title={page.url || ''}>
+                          {page.url || 'N/A'}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="text-sm text-gray-900">{page.links_count || 0}</span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="text-sm text-gray-900">{page.images_count || 0}</span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`text-sm font-medium ${
+                          page.status_code && page.status_code >= 200 && page.status_code < 300 ? 'text-green-600' :
+                          page.status_code && page.status_code >= 300 && page.status_code < 400 ? 'text-yellow-600' :
+                          'text-red-600'
+                        }`}>
+                          {page.status_code || 'N/A'}
                         </span>
-                      </>
-                    )}
-                    {page.technologies_count && page.technologies_count > 0 && (
-                      <>
-                        <span>•</span>
-                        <span className="hidden md:inline">
-                          <span className="font-bold text-gray-700 text-sm">{page.technologies_count}</span> tech
-                        </span>
-                      </>
-                    )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        <button
+                          onClick={() => {
+                            if (page.id && onPageSelect) {
+                              onPageSelect(page.id)
+                            } else if (page.id) {
+                              window.location.href = `/dashboard/page-analysis/${page.id}`
+                            } else {
+                              console.warn('No page ID available for analysis')
+                            }
+                          }}
+                          className="text-[#ff4b01] hover:text-[#e64401] font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff4b01] focus:ring-offset-2 rounded px-2 py-1"
+                        >
+                          Analyze
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* Grid View */}
+          {viewMode === 'grid' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {paginatedPages.map((page, index) => (
+                <div key={page.id || index} className="border border-gray-200 rounded-lg p-4 transition-colors duration-200 hover:shadow-md flex flex-col">
+                  <div className="flex items-start justify-between gap-2 mb-2">
+                    <h4 
+                      onClick={() => {
+                        if (page.id && onPageSelect) {
+                          onPageSelect(page.id)
+                        } else if (page.id) {
+                          // Fallback to URL navigation if no callback provided
+                          window.location.href = `/dashboard/page-analysis/${page.id}`
+                        } else {
+                          console.warn('No page ID available for analysis')
+                        }
+                      }}
+                      className="font-medium text-[#ff4b01] hover:text-[#e64401] truncate flex-1 min-w-0 cursor-pointer transition-colors duration-200"
+                    >
+                      {getPageName(page.title)}
+                    </h4>
+                    <button
+                      onClick={() => {
+                        if (page.id && onPageSelect) {
+                          onPageSelect(page.id)
+                        } else if (page.id) {
+                          // Fallback to URL navigation if no callback provided
+                          window.location.href = `/dashboard/page-analysis/${page.id}`
+                        } else {
+                          console.warn('No page ID available for analysis')
+                        }
+                      }}
+                      className="text-[#ff4b01] text-xs font-medium hover:text-[#e64401] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff4b01] focus:ring-offset-2 flex-shrink-0"
+                    >
+                      Analyze
+                    </button>
                   </div>
-                  <div className="text-xs text-gray-500">
-                    Status: <span className={`font-bold text-sm ${
-                      page.status_code && page.status_code >= 200 && page.status_code < 300 ? 'text-green-600' :
-                      page.status_code && page.status_code >= 300 && page.status_code < 400 ? 'text-yellow-600' :
-                      'text-red-600'
-                    }`}>
-                      {page.status_code || 'N/A'}
-                    </span>
+                  {page.description && (
+                    <p className="text-sm text-gray-700 mb-3 line-clamp-2 flex-1">{page.description}</p>
+                  )}
+                  <div className="flex flex-col gap-3 mt-auto">
+                    <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500">
+                      <span>
+                        <span className="font-bold text-gray-700 text-sm">{page.links_count || 0}</span> links
+                      </span>
+                      <span>•</span>
+                      <span>
+                        <span className="font-bold text-gray-700 text-sm">{page.images_count || 0}</span> images
+                      </span>
+                      {page.meta_tags_count && page.meta_tags_count > 0 && (
+                        <>
+                          <span>•</span>
+                          <span className="hidden sm:inline">
+                            <span className="font-bold text-gray-700 text-sm">{page.meta_tags_count}</span> meta tags
+                          </span>
+                        </>
+                      )}
+                      {page.technologies_count && page.technologies_count > 0 && (
+                        <>
+                          <span>•</span>
+                          <span className="hidden md:inline">
+                            <span className="font-bold text-gray-700 text-sm">{page.technologies_count}</span> tech
+                          </span>
+                        </>
+                      )}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      Status: <span className={`font-bold text-sm ${
+                        page.status_code && page.status_code >= 200 && page.status_code < 300 ? 'text-green-600' :
+                        page.status_code && page.status_code >= 300 && page.status_code < 400 ? 'text-yellow-600' :
+                        'text-red-600'
+                      }`}>
+                        {page.status_code || 'N/A'}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
           {/* Pagination Controls */}
           {totalPages > 1 && (

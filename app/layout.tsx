@@ -1,7 +1,22 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Plus_Jakarta_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import { SupabaseProvider } from "@/contexts/SupabaseContext";
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
+  variable: "--font-jakarta",
+  display: "swap",
+});
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-poppins",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Auditly360 - Complete Website Audit & Analysis Platform | SEO, Performance & Security",
@@ -115,7 +130,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${jakarta.variable} ${poppins.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -135,7 +150,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body className="font-sans antialiased overflow-x-hidden w-[100vw]" suppressHydrationWarning>
+      <body className="font-poppins antialiased overflow-x-hidden w-[100vw]" suppressHydrationWarning>
         <SupabaseProvider>
           {children}
         </SupabaseProvider>

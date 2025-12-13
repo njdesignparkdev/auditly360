@@ -1,31 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 
-interface CreditPackage {
-  id: string;
-  credits: number;
-  price: number;
-  label: string;
-  is_active: boolean;
-  sort_order: number;
-  created_at: string;
-  updated_at: string;
-}
+
 
 // GET - Fetch all credit packages (for admin management, show all including inactive)
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const activeOnly = searchParams.get('active_only') === 'true';
-    
+
     let query = supabaseAdmin
       .from('credit_packages')
       .select('*');
-    
+
     if (activeOnly) {
       query = query.eq('is_active', true);
     }
-    
+
     const { data, error } = await query.order('sort_order', { ascending: true });
 
     if (error) {

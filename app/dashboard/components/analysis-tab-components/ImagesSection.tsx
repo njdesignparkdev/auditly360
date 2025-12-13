@@ -862,7 +862,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                   return (
                   <React.Fragment key={uniqueKey}>
                     <tr className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-2 whitespace-nowrap">
                       <div 
                         className="w-16 h-16 bg-gray-100 rounded border overflow-hidden flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors"
                         onClick={() => handleImageClick(img)}
@@ -890,7 +890,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                           href={img.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[#ff4b01] hover:text-[#e64401] text-sm"
+                          className="text-blue-600 hover:text-blue-80 text-sm"
                         >
                           {img.url}
                         </a>
@@ -919,7 +919,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                           href={img.page_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[#ff4b01] hover:text-[#e64401] text-sm"
+                          className="text-blue-600 hover:text-blue-80 text-sm"
                         >
                           {img.page_url}
                         </a>

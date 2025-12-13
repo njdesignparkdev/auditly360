@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Footer from "../home-page-components/Footer";
+import { Footer } from "@/components/footer-section/Footer";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -34,7 +34,7 @@ export default function ContactPage() {
     try {
       // Simulate API call - replace with actual API endpoint
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      
+
       setSubmitStatus({
         type: "success",
         message: "Thank you for contacting us! We'll get back to you soon.",
@@ -65,7 +65,7 @@ export default function ContactPage() {
             Contact Us
           </h1>
           <p className="text-base md:text-lg text-gray-700 mb-8 md:mb-10">
-            Have a question or need help? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+            Have a question or need help? We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
@@ -154,11 +154,10 @@ export default function ContactPage() {
 
             {submitStatus.type && (
               <div
-                className={`p-4 rounded-lg ${
-                  submitStatus.type === "success"
+                className={`p-4 rounded-lg ${submitStatus.type === "success"
                     ? "bg-[#FF4D04]/5 text-[#FF4D04] border border-[#FF4D04]/20"
                     : "bg-red-50 text-red-800 border border-red-200"
-                }`}
+                  }`}
               >
                 {submitStatus.message}
               </div>

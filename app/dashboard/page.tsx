@@ -11,6 +11,7 @@ import PageAnalysisTab from './components/tabs/PageAnalysisTab';
 import ConnectionStatus from './components/ConnectionStatus';
 import { ScrapedPage } from './components/analysis-tab/types';
 import { useProjectsStore } from '@/lib/stores/projectsStore';
+import { Footer } from '@/components/footer-section/Footer';
 function DashboardContentWrapper() {
   const {
     user,
@@ -30,10 +31,10 @@ function DashboardContentWrapper() {
   const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
 
   // Use Zustand store for projects
-  const { 
-    projects, 
-    loading: projectsLoading, 
-    error: projectsError, 
+  const {
+    projects,
+    loading: projectsLoading,
+    error: projectsError,
     setProjects,
     setLoading,
     setError,
@@ -93,7 +94,7 @@ function DashboardContentWrapper() {
 
   // Debug AnalysisTab rendering
   useEffect(() => {
-    if (activeTab === 'analysis' && selectedProjectId) {}
+    if (activeTab === 'analysis' && selectedProjectId) { }
   }, [activeTab, selectedProjectId]);
 
   // Use store's refreshProjects function
@@ -269,7 +270,7 @@ function DashboardContentWrapper() {
         }
         return data || [];
       });
-      
+
       // Load projects
       storeRefreshProjects();
     }
@@ -278,11 +279,11 @@ function DashboardContentWrapper() {
   // Show loading state
   if (loading) {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff4b01] mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading dashboard...</p>
-        </div>
-      </div>;
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff4b01] mx-auto"></div>
+        <p className="mt-4 text-gray-600">Loading dashboard...</p>
+      </div>
+    </div>;
   }
 
   // Redirect if not authenticated
@@ -301,30 +302,34 @@ function DashboardContentWrapper() {
       {/* Sidebar */}
       <DashboardSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} activeTab={activeTab} onTabChange={handleTabChange} userProfile={userProfile} selectedProjectId={selectedProjectId} />
 
-      {/* Main Content */}
-      <div className="lg:pl-60">
-        {/* Header */}
-        <DashboardHeader onMenuClick={() => setSidebarOpen(true)} userProfile={userProfile} />
+    {/* Main Content */}
+    <div className="lg:pl-60 pb-8">
+      {/* Header */}
+      <DashboardHeader onMenuClick={() => setSidebarOpen(true)} userProfile={userProfile} />
 
-         {/* Content */}
-         {activeTab === 'analysis' && selectedProjectId ? <div className="">
-             <AnalysisTab key={selectedProjectId} // Prevent unnecessary re-mounting
-         projectId={selectedProjectId} cachedData={getCachedAnalysisData(selectedProjectId)} onDataUpdate={(project, scrapedPages) => setCachedAnalysisData(selectedProjectId, project, scrapedPages)} onPageSelect={handlePageSelect} />
-           </div> : activeTab === 'page-analysis' && selectedPageId ? <div className="">
-             <PageAnalysisTab key={selectedPageId} // Prevent unnecessary re-mounting
-         pageId={selectedPageId} />
-           </div> : <DashboardContent activeTab={activeTab} userProfile={userProfile as any} onProjectSelect={handleProjectSelect} onUpdateProject={handleUpdateProject} onDeleteProject={handleDeleteProject} onRecrawlProject={handleRecrawlProject} />}
+      {/* Content */}
+      <div className="mb-8">
+        {activeTab === 'analysis' && selectedProjectId ? <div className="">
+          <AnalysisTab key={selectedProjectId} // Prevent unnecessary re-mounting
+            projectId={selectedProjectId} cachedData={getCachedAnalysisData(selectedProjectId)} onDataUpdate={(project, scrapedPages) => setCachedAnalysisData(selectedProjectId, project, scrapedPages)} onPageSelect={handlePageSelect} />
+        </div> : activeTab === 'page-analysis' && selectedPageId ? <div className="">
+          <PageAnalysisTab key={selectedPageId} // Prevent unnecessary re-mounting
+            pageId={selectedPageId} />
+        </div> : <DashboardContent activeTab={activeTab} userProfile={userProfile as any} onProjectSelect={handleProjectSelect} onUpdateProject={handleUpdateProject} onDeleteProject={handleDeleteProject} onRecrawlProject={handleRecrawlProject} />}
       </div>
-      <ConnectionStatus />
-    </div>;
+
+
+    </div>
+    <ConnectionStatus />
+  </div>;
 }
 export default function DashboardPage() {
   return <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff4b01] mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading dashboard...</p>
-        </div>
-      </div>}>
-      <DashboardContentWrapper />
-    </Suspense>;
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff4b01] mx-auto mb-4"></div>
+      <p className="text-gray-600">Loading dashboard...</p>
+    </div>
+  </div>}>
+    <DashboardContentWrapper />
+  </Suspense>;
 }

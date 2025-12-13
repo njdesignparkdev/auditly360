@@ -11,7 +11,6 @@ export async function POST(request: NextRequest) {
     const {
       razorpay_payment_id,
       razorpay_order_id,
-      packageId,
       credits,
       amount,
       currency = 'INR'
@@ -29,11 +28,11 @@ export async function POST(request: NextRequest) {
     }
 
     const token = authHeader.replace('Bearer ', '');
-    
+
     // Verify user
     const supabaseAnon = createClient(supabaseUrl, supabaseAnonKey);
     const { data: { user }, error: authError } = await supabaseAnon.auth.getUser(token);
-    
+
     if (authError || !user) {
       return NextResponse.json({
         error: 'Invalid authentication token',
@@ -77,7 +76,7 @@ export async function POST(request: NextRequest) {
     const newCredits = currentCredits + credits;
 
     // Update user credits
-    const { data: updatedUser, error: updateError } = await supabaseAdmin
+    const { error: updateError } = await supabaseAdmin
       .from('users')
       .update({
         image_scan_credits: newCredits,

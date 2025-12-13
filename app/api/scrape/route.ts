@@ -1,4 +1,3 @@
-'use server';
 
 import { createClient } from '@supabase/supabase-js';
 
@@ -45,7 +44,7 @@ export async function POST(request: Request) {
       });
     }
     const token = authHeader.replace('Bearer ', '');
-    
+
     // Verify user and get user info using anon key client
     const {
       data: {
@@ -154,10 +153,7 @@ export async function POST(request: Request) {
       // Parse and return successful response
       const data = await upstreamResponse.json();
 
-      // Console log summary data if available
-      if (data?.summary) {
 
-      }
 
       return new Response(JSON.stringify(data), {
         status: 200,

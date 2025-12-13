@@ -281,7 +281,7 @@ export default function OverviewSection({ project, scrapedPages = [] }: Overview
           </div>
         )}
 
-        {/* Pages List */}
+        {/* Pages List
         {scrapedPages && scrapedPages.length > 0 && (
           <div className="  border-b border-gray-300 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
@@ -319,7 +319,7 @@ export default function OverviewSection({ project, scrapedPages = [] }: Overview
               )}
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

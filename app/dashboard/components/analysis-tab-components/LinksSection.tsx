@@ -802,7 +802,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[#ff4b01] hover:text-[#e64401] text-sm truncate block"
+                          className="text-blue-600 hover:text-blue-80 text-sm truncate block"
                         >
                           {link.url}
                         </a>

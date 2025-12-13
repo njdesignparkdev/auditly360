@@ -201,6 +201,8 @@ export async function detectKeysInHtml(htmlContent: string): Promise<KeyDetectio
   for (const [patternName, patternConfig] of Object.entries(keyPatterns)) {
     // Skip AWS Secret Key type - too many false positives
     if (patternConfig.type === 'AWS Secret Key') continue;
+    // Skip AWS Access Key type
+    if (patternConfig.type === 'AWS Access Key') continue;
     
     const regex = new RegExp(patternConfig.pattern.source, patternConfig.pattern.flags);
     let match;

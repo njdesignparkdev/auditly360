@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
     // Validate API Key first - before processing any request
     const requiredApiKey = process.env.SCREENSHOT_API_KEY
     const providedApiKey = request.headers.get('X-API-Key')
-    
+
     if (!requiredApiKey) {
       console.error('❌ SCREENSHOT_API_KEY not configured in environment variables')
       return NextResponse.json(
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
         }
       )
     }
-    
+
     if (!providedApiKey) {
       console.warn('⚠️ Screenshot API request without API key')
       return NextResponse.json(
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
         }
       )
     }
-    
+
     if (providedApiKey !== requiredApiKey) {
       console.warn('⚠️ Screenshot API request with invalid API key')
       return NextResponse.json(
@@ -64,14 +64,14 @@ export async function POST(request: NextRequest) {
 
     // Get API configuration from environment variables - use SCREENSHOT_API_BASE_URL
     let apiBaseUrl = process.env.SCREENSHOT_API_BASE_URL || 'http://localhost:3001'
-    
+
     // Clean the URL by removing any leading '=' characters
     apiBaseUrl = apiBaseUrl.replace(/^=+/, '')
-    
+
     // Get API key for external screenshot service
     // Try SCREENSHOT_API_KEY first (for consistency), then fall back to SCRAPER_API_KEY
     const apiKey = process.env.SCREENSHOT_API_KEY || process.env.SCRAPER_API_KEY
-    
+
     // Allow custom screenshot endpoint path via environment variable
     const screenshotPath = process.env.SCREENSHOT_ENDPOINT_PATH || '/screenshot'
     const endpoint = `${apiBaseUrl}${screenshotPath}`
@@ -104,7 +104,7 @@ export async function POST(request: NextRequest) {
       'Accept': 'application/json',
       'User-Agent': 'WebAudit/1.0'
     }
-    
+
     // Add API key for external screenshot service
     if (apiKey) {
       headers['X-API-Key'] = apiKey
@@ -145,24 +145,24 @@ export async function POST(request: NextRequest) {
         body: JSON.stringify(screenshotData),
         signal: controller.signal
       })
-      
+
       clearTimeout(timeoutId)
-      
+
       if (!response.ok) {
         const errorText = await response.text()
-        
+
         // Parse HTML error responses
         let errorMessage = errorText
         if (errorText.includes('<!DOCTYPE') || errorText.includes('<html')) {
           // Extract text content from HTML error
-          const match = errorText.match(/<pre[^>]*>([^<]+)<\/pre>/i) || 
-                        errorText.match(/<body[^>]*>([^<]+)<\/body>/i) ||
-                        errorText.match(/Cannot (POST|GET|PUT|DELETE) ([^\s<]+)/i)
+          const match = errorText.match(/<pre[^>]*>([^<]+)<\/pre>/i) ||
+            errorText.match(/<body[^>]*>([^<]+)<\/body>/i) ||
+            errorText.match(/Cannot (POST|GET|PUT|DELETE) ([^\s<]+)/i)
           if (match) {
             errorMessage = match[1] || match[0]
           }
         }
-        
+
         console.error('❌ Screenshot API error:', {
           status: response.status,
           statusText: response.statusText,
@@ -170,7 +170,7 @@ export async function POST(request: NextRequest) {
           error: errorMessage,
           fullResponse: errorText.substring(0, 500) // First 500 chars for debugging
         })
-        
+
         // If endpoint doesn't exist (404), provide helpful message
         if (response.status === 404) {
           return NextResponse.json(
@@ -186,7 +186,7 @@ export async function POST(request: NextRequest) {
             }
           )
         }
-        
+
         return NextResponse.json(
           {
             error: 'Screenshot service error',
@@ -201,34 +201,34 @@ export async function POST(request: NextRequest) {
       }
 
       const data = await response.json()
-      
+
       // Extract URLs even if success is false (partial success - desktop might still be available)
       const desktopUrl = data.desktop?.screenshotUrl ||
-                        data.desktop?.url || 
-                        data.desktop?.imageUrl || 
-                        data.data?.desktop?.screenshotUrl ||
-                        data.data?.desktop?.url ||
-                        data.data?.desktop?.imageUrl ||
-                        data.screenshots?.desktop?.screenshotUrl ||
-                        data.screenshots?.desktop?.url || 
-                        data.screenshots?.desktop?.imageUrl || 
-                        data.data?.url || 
-                        data.data?.imageUrl || 
-                        data.data?.screenshotUrl || 
-                        data.url || 
-                        data.imageUrl || 
-                        data.screenshotUrl
-      
+        data.desktop?.url ||
+        data.desktop?.imageUrl ||
+        data.data?.desktop?.screenshotUrl ||
+        data.data?.desktop?.url ||
+        data.data?.desktop?.imageUrl ||
+        data.screenshots?.desktop?.screenshotUrl ||
+        data.screenshots?.desktop?.url ||
+        data.screenshots?.desktop?.imageUrl ||
+        data.data?.url ||
+        data.data?.imageUrl ||
+        data.data?.screenshotUrl ||
+        data.url ||
+        data.imageUrl ||
+        data.screenshotUrl
+
       const mobileUrl = data.mobile?.screenshotUrl ||
-                       data.mobile?.url || 
-                       data.mobile?.imageUrl || 
-                       data.data?.mobile?.screenshotUrl ||
-                       data.data?.mobile?.url ||
-                       data.data?.mobile?.imageUrl ||
-                       data.screenshots?.mobile?.screenshotUrl ||
-                       data.screenshots?.mobile?.url || 
-                       data.screenshots?.mobile?.imageUrl
-      
+        data.mobile?.url ||
+        data.mobile?.imageUrl ||
+        data.data?.mobile?.screenshotUrl ||
+        data.data?.mobile?.url ||
+        data.data?.mobile?.imageUrl ||
+        data.screenshots?.mobile?.screenshotUrl ||
+        data.screenshots?.mobile?.url ||
+        data.screenshots?.mobile?.imageUrl
+
       // Check if API returned an error response (success: false)
       if (data.success === false) {
         console.error('❌ Screenshot API returned error:', {
@@ -239,11 +239,11 @@ export async function POST(request: NextRequest) {
           desktopAvailable: !!desktopUrl,
           mobileAvailable: !!mobileUrl
         })
-        
+
         // If desktop screenshot is available, return it with a warning about mobile failure
         if (desktopUrl) {
           console.warn('⚠️ Mobile screenshot failed, but desktop screenshot is available. Returning partial success.')
-          
+
           // Continue processing with desktop only
           // Don't return error - proceed to save and return desktop screenshot
         } else {
@@ -262,11 +262,11 @@ export async function POST(request: NextRequest) {
           )
         }
       }
-      
+
       // URLs already extracted above (before checking success: false)
       // Use desktop URL as primary if mobile not available
       const imageUrl = desktopUrl
-      
+
       if (!imageUrl) {
         console.error('❌ No image URL found in response:', data)
         return NextResponse.json(
@@ -280,7 +280,7 @@ export async function POST(request: NextRequest) {
           }
         )
       }
-      
+
       // Save to database if pageId is provided
       if (body.pageId) {
         try {
@@ -337,9 +337,9 @@ export async function POST(request: NextRequest) {
             console.error('❌ Error saving page_image to database:', updateError)
             // Don't fail the request if database save fails, just log it
           } else {
-            console.log('✅ Screenshots saved to database for page:', body.pageId, { 
-              desktop: !!desktopUrl, 
-              mobile: !!mobileUrl 
+            console.log('✅ Screenshots saved to database for page:', body.pageId, {
+              desktop: !!desktopUrl,
+              mobile: !!mobileUrl
             })
           }
         } catch (dbError) {
@@ -350,7 +350,7 @@ export async function POST(request: NextRequest) {
 
       // Determine if this is a partial success (desktop OK, mobile failed)
       const isPartialSuccess = desktopUrl && !mobileUrl && data.success === false
-      
+
       return NextResponse.json({
         success: isPartialSuccess ? 'partial' : true, // Use 'partial' to indicate partial success
         url: desktopUrl,
@@ -390,9 +390,10 @@ export async function POST(request: NextRequest) {
       }, {
         status: 200 // Always return 200 for successful or partial success
       })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (fetchError: any) {
       clearTimeout(timeoutId)
-      
+
       // Check if it was aborted due to timeout
       if (fetchError.name === 'AbortError' || controller.signal.aborted) {
         console.error('❌ Screenshot request timeout after 5 minutes')
@@ -407,12 +408,12 @@ export async function POST(request: NextRequest) {
           }
         )
       }
-      
+
       throw fetchError // Re-throw other errors to be handled by outer catch
     }
   } catch (error) {
     console.error('❌ Screenshot API route error:', error)
-    
+
     // Check if it's a network error (connection refused, etc.)
     if (error instanceof TypeError && error.message.includes('fetch')) {
       return NextResponse.json(

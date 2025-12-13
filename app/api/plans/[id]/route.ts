@@ -48,7 +48,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    
+
     // Validate plan_type if provided
     if (body.plan_type && !['Starter', 'Growth', 'Scale'].includes(body.plan_type)) {
       return NextResponse.json(
@@ -62,7 +62,7 @@ export async function PUT(
       ...body,
       updated_at: new Date().toISOString()
     };
-    
+
     // Remove razorpay_plan_id if it's empty to avoid unique constraint issues
     if (updateData.razorpay_plan_id === '' || updateData.razorpay_plan_id === null) {
       delete updateData.razorpay_plan_id;
@@ -77,13 +77,13 @@ export async function PUT(
     // If error is due to missing image_scan_credits column, retry without it
     if (error && error.message?.includes('image_scan_credits') && error.message?.includes('column')) {
       console.warn('⚠️ image_scan_credits column not found. Retrying without it. Please run: database/add_image_scan_credits_to_plans.sql');
-      const { image_scan_credits, ...updateDataWithoutCredits } = updateData;
+      const { image_scan_credits: _image_scan_credits, ...updateDataWithoutCredits } = updateData;
       const retryResult = await supabase
         .from('plans')
         .update(updateDataWithoutCredits)
         .eq('id', id)
         .select();
-      
+
       if (retryResult.error) {
         error = retryResult.error;
       } else {
@@ -114,7 +114,7 @@ export async function PUT(
         details: supabaseError.details,
         hint: supabaseError.hint
       });
-      
+
       // Handle specific error cases
       if (supabaseError.code === '23505') {
         return NextResponse.json(
@@ -122,7 +122,7 @@ export async function PUT(
           { status: 400 }
         );
       }
-      
+
       return NextResponse.json(
         { error: `Failed to update plan: ${supabaseError.message || 'Unknown error'}` },
         { status: 500 }
@@ -152,7 +152,7 @@ export async function DELETE(
     const { id } = await params;
     const { data, error } = await supabase
       .from('plans')
-      .update({ 
+      .update({
         is_active: false,
         updated_at: new Date().toISOString()
       })

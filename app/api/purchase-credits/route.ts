@@ -46,7 +46,7 @@ async function getCreditPackages() {
       ];
     }
 
-    return data.map((pkg: any) => ({
+    return data.map((pkg: { id: string; credits: number; price: number; label: string }) => ({
       id: pkg.id,
       credits: pkg.credits,
       price: Number(pkg.price),
@@ -83,11 +83,11 @@ export async function POST(request: NextRequest) {
     }
 
     const token = authHeader.replace('Bearer ', '');
-    
+
     // Verify user
     const supabaseAnon = createClient(supabaseUrl, supabaseAnonKey);
     const { data: { user }, error: authError } = await supabaseAnon.auth.getUser(token);
-    
+
     if (authError || !user) {
       return NextResponse.json({
         error: 'Invalid authentication token',
@@ -100,13 +100,14 @@ export async function POST(request: NextRequest) {
 
     // Fetch credit packages from database
     const CREDIT_PACKAGES = await getCreditPackages();
-    
+
     // Determine credit package
     let creditPackage;
     if (packageId !== undefined) {
       // Use package ID if provided (can be UUID or index)
       if (packageId.includes('-')) {
         // UUID format
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         creditPackage = CREDIT_PACKAGES.find((pkg: any) => pkg.id === packageId);
       } else {
         // Index format (for backward compatibility)
@@ -114,7 +115,7 @@ export async function POST(request: NextRequest) {
       }
     } else if (credits) {
       // Find package by credits amount
-      creditPackage = CREDIT_PACKAGES.find((pkg: any) => pkg.credits === credits);
+      creditPackage = CREDIT_PACKAGES.find((pkg: { credits: number }) => pkg.credits === credits);
     }
 
     if (!creditPackage) {
@@ -161,7 +162,7 @@ export async function POST(request: NextRequest) {
 
     try {
       const order = await razorpay.orders.create(options);
-      
+
       return NextResponse.json({
         success: true,
         orderId: order.id,
@@ -172,6 +173,7 @@ export async function POST(request: NextRequest) {
         price: creditPackage.price,
         packageId: ('id' in creditPackage ? creditPackage.id : undefined) || packageId
       });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (razorpayError: any) {
       console.error('Error creating Razorpay order:', razorpayError);
       return NextResponse.json({
@@ -198,7 +200,7 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   try {
     const CREDIT_PACKAGES = await getCreditPackages();
-    
+
     return NextResponse.json({
       success: true,
       packages: CREDIT_PACKAGES.map((pkg: any) => ({
