@@ -7,7 +7,7 @@ import AuditlyLogo from '@/components/blocks/auditly-logo';
 
 export function DashboardFooter() {
     return (
-        <footer className="w-full bg-white text-gray-600 py-12 px-6 mt-12 rounded-t-3xl border-t border-gray-100">
+        <footer className="w-full bg-white text-gray-600 py-6 px-6 mt-8 rounded-t-3xl border-t border-gray-100">
 
             {/* Top Divider with Icons */}
             <div className="flex items-center justify-center gap-8 mb-12 text-gray-300">

@@ -35,7 +35,23 @@ const TestimonialSlider: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
-  const itemsPerPage = 3;
+  const [itemsPerPage, setItemsPerPage] = useState(3);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setItemsPerPage(1);
+      } else if (window.innerWidth < 1024) {
+        setItemsPerPage(2);
+      } else {
+        setItemsPerPage(3);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   // Create extended array by duplicating testimonials for seamless loop
   const extendedTestimonials = [...testimonials, ...testimonials, ...testimonials];
@@ -94,7 +110,7 @@ const TestimonialSlider: React.FC = () => {
   const visibleDotIndex = ((currentIndex % testimonials.length) + testimonials.length) % testimonials.length;
 
   return (
-    <div className="w-full py-12 px-4 sm:px-6 lg:px-8 relative text-gray-900" data-border="true" data-framer-name="Section Structure">
+    <div className="w-full py-8 px-4 sm:px-6 lg:px-8 relative text-gray-900" data-border="true" data-framer-name="Section Structure">
         {/* Header */}
         <div className="mb-12">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 font-jakarta mb-2">
@@ -138,7 +154,8 @@ const TestimonialSlider: React.FC = () => {
               {extendedTestimonials.map((testimonial, index) => (
                 <motion.div
                   key={`${testimonial.id}-${index}`}
-                  className="w-1/3 flex-shrink-0 px-3"
+                  className="flex-shrink-0 px-3"
+                  style={{ width: `${100 / itemsPerPage}%` }}
                   initial="rest"
                   whileHover="hover"
                   animate="rest"

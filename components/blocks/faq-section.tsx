@@ -14,8 +14,8 @@ const faqs = [
     answer: "Yes! You can run a basic audit on your homepage for free. For advanced features like multi-page scanning, automated monitoring, and team collaboration, you can upgrade to our Pro plans."
   },
   {
-    question: "Can I cancel my subscription anytime?",
-    answer: "Absolutely. There are no long-term contracts or hidden fees. You can cancel or change your plan at any time directly from your dashboard."
+    question: "Can I audit client websites?",
+    answer: "Yes! Our tool is perfect for agencies and freelancers. You can generate professional reports to share with clients, helping you demonstrate value and prioritize their website improvements."
   },
   {
     question: "Do you offer support implementation?",
@@ -30,7 +30,7 @@ export default function FaqSection() {
     <section className="w-full py-8 md:py-12 relative" id="faq">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold font-jakarta text-gray-900 mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-jakarta text-gray-900 mb-4">
             Frequently Asked Questions
           </h2>
           <p className="text-gray-600">

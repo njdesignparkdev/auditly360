@@ -197,7 +197,7 @@ export default function HowItWorks() {
           {/* Column 1: Text Content */}
           <div className="flex flex-col gap-6 order-2 lg:order-1">
             <div>
-                <h2 className="text-3xl md:text-4xl font-bold font-jakarta text-gray-900 leading-tight mb-4">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-jakarta text-gray-900 leading-tight mb-4">
                 How <span className="text-orange-600">Auditly</span> Works
                 </h2>
                 <p className="text-base text-gray-600 font-poppins leading-relaxed max-w-lg">

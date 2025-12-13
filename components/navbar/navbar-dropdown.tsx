@@ -2,9 +2,9 @@
 import React from 'react';
 import Image from 'next/image';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { Link as LinkIcon } from 'lucide-react';
+import { Link as LinkIcon, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
+
 import { useScroll } from '@/components/ui/use-scroll';
 import { createPortal } from 'react-dom';
 
@@ -53,8 +53,8 @@ export default function Navbar() {
 					scrolled,
 			})}
 		>
-			<nav className="relative mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-4 lg:px-0">
-				<div className="hover:bg-accent rounded-md -ml-14">
+			<nav className="relative mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-6 lg:px-0">
+				<div className="hover:bg-accent rounded-md lg:-ml-14">
 					<Image 
 						src="/orange-black-auditly.png" 
 						alt="Auditly360" 
@@ -88,7 +88,7 @@ export default function Navbar() {
 					aria-controls="mobile-menu"
 					aria-label="Toggle menu"
 				>
-					<MenuToggleIcon open={open} className="size-5" duration={300} />
+					{open ? <X className="size-6" /> : <Menu className="size-6" />}
 				</Button>
 			</nav>
 			<MobileMenu open={open} className="flex flex-col justify-between gap-2">
@@ -106,11 +106,11 @@ export default function Navbar() {
 						</a>
 					))}
 				</div>
-				<div className="flex flex-col gap-2">
-					<Button variant="outline" className="w-full bg-transparent">
+				<div className="flex flex-col gap-3 mt-auto pt-6">
+					<Button variant="outline" className="w-full bg-transparent h-12 text-base rounded-xl border-gray-300">
 						Sign In
 					</Button>
-					<Button className="w-full bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold">Get Started</Button>
+					<Button className="w-full bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold h-12 text-base">Get Started</Button>
 				</div>
 			</MobileMenu>
 		</header>
@@ -128,15 +128,14 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
 		<div
 			id="mobile-menu"
 			className={cn(
-				'bg-background/95 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg',
-				'fixed top-14 right-0 bottom-0 left-0 z-40 flex flex-col overflow-hidden border-y md:hidden',
+				'bg-background fixed top-20 right-0 bottom-0 left-0 z-40 flex flex-col overflow-y-auto border-t md:hidden',
 			)}
 		>
 			<div
 				data-slot={open ? 'open' : 'closed'}
 				className={cn(
 					'data-[slot=open]:animate-in data-[slot=open]:zoom-in-97 ease-out',
-					'size-full p-4',
+					'flex flex-col min-h-full p-6 pb-8',
 					className,
 				)}
 				{...props}

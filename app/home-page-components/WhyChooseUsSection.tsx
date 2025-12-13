@@ -33,9 +33,9 @@ const AnimationDisplay = ({ type, icon, color }: { type: string, icon: React.Rea
                className="relative"
              >
                <img 
-                 src="/feature-img/Gemini_Generated_Image_bj2rk1bj2rk1bj2r.png" 
+                 src="/feature-img/seo_vector.png" 
                  alt="SEO Optimization"
-                 className="w-64 h-64 object-contain"
+                 className="w-80 h-80 object-contain"
                />
                
                {/* Glow Effect */}
@@ -79,9 +79,9 @@ const AnimationDisplay = ({ type, icon, color }: { type: string, icon: React.Rea
                className="relative"
              >
                <img 
-                 src="/feature-img/Gemini_Generated_Image_i3o603i3o603i3o6.png" 
+                 src="/feature-img/security_vector.png" 
                  alt="Protect Your Site 24/7"
-                 className="w-64 h-64 object-contain"
+                 className="w-80 h-80 object-contain"
                />
                
                {/* Glow Effect */}
@@ -125,9 +125,9 @@ const AnimationDisplay = ({ type, icon, color }: { type: string, icon: React.Rea
                className="relative"
              >
                <img 
-                 src="/feature-img/Gemini_Generated_Image_mjj0bamjj0bamjj0 copy.png" 
+                 src="/feature-img/content_vector.png" 
                  alt="Grammar & Consistency Check"
-                 className="w-64 h-64 object-contain"
+                 className="w-80 h-80 object-contain"
                />
                
                {/* Glow Effect */}
@@ -171,9 +171,9 @@ const AnimationDisplay = ({ type, icon, color }: { type: string, icon: React.Rea
                className="relative"
              >
                <img 
-                 src="/feature-img/Gemini_Generated_Image_gj03w4gj03w4gj03.png" 
+                 src="/feature-img/speed_vector.png" 
                  alt="Deliver Better UX & Speed"
-                 className="w-64 h-64 object-contain"
+                 className="w-80 h-80 object-contain"
                />
                
                {/* Glow Effect */}
@@ -266,7 +266,7 @@ export default function WhyChooseUsSection() {
         
         {/* Section Header */}
         <div className="text-left max-w-3xl mb-8 md:mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 font-jakarta mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 font-jakarta mb-4">
             Why Choose Us
           </h2>
           <p className="text-base text-gray-600 font-poppins">
@@ -312,8 +312,8 @@ export default function WhyChooseUsSection() {
           </div>
 
           {/* Right Column: Animation Display */}
-          <div className="relative h-[350px] w-full bg-slate-50 rounded-[2rem] border border-slate-100 p-4 md:p-6 overflow-hidden shadow-inner order-first lg:order-last">
-             <div className="absolute inset-0 bg-[linear-gradient(#e2e8f0_1px,transparent_1px),linear-gradient(to_right,#e2e8f0_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-[0.4]"></div>
+          <div className="relative h-[400px] w-full max-w-[500px] mx-auto bg-white rounded-[2rem] border border-slate-200 p-4 md:p-6 overflow-hidden shadow-2xl order-first lg:order-last">
+
              
              <AnimatePresence mode="wait">
                <motion.div

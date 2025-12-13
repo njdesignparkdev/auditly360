@@ -56,37 +56,53 @@ const plans = [
     }
 ];
 
-export default function Pricing() {
+interface PricingProps {
+    currentPlanType?: string;
+    currentPlanId?: string;
+    currentBillingCycle?: string;
+    planExpiresAt?: string;
+    showBillingToggle?: boolean;
+    showCurrentPlanHighlight?: boolean;
+    className?: string;
+}
+
+export default function Pricing(props: PricingProps = {}) {
+    const {
+        showBillingToggle = true,
+        className
+    } = props;
     const [isYearly, setIsYearly] = useState(false);
 
     return (
-        <section className="w-full mt-8 pt-8 pb-10 px-4 sm:px-6 lg:px-8 relative text-gray-900" data-border="true" data-framer-name="Section Structure">
+        <section className={`w-full pt-3 pb-6 px-4 sm:px-6 lg:px-8 relative text-gray-900 ${className || ''}`} data-border="true" data-framer-name="Section Structure">
                 
                 {/* Header & Toggle */}
                 <div className="text-center mb-16 space-y-4">
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 font-jakarta">
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-jakarta text-gray-900 leading-tight mb-4">
                         Simple, transparent pricing
                     </h2>
                     
-                    <div className="flex flex-col items-center justify-center gap-3 mt-8">
-                        <div className="bg-gray-100 p-1 rounded-full flex items-center relative">
-                            <button 
-                                onClick={() => setIsYearly(false)}
-                                className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 cursor-pointer ${!isYearly ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500'}`}
-                            >
-                                Monthly
-                            </button>
-                            <button 
-                                onClick={() => setIsYearly(true)}
-                                className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 cursor-pointer ${isYearly ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500'}`}
-                            >
-                                Yearly
-                            </button>
+                    {showBillingToggle && (
+                        <div className="flex flex-col items-center justify-center gap-3 mt-8">
+                            <div className="bg-gray-100 p-1 rounded-full flex items-center relative">
+                                <button 
+                                    onClick={() => setIsYearly(false)}
+                                    className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 cursor-pointer ${!isYearly ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500'}`}
+                                >
+                                    Monthly
+                                </button>
+                                <button 
+                                    onClick={() => setIsYearly(true)}
+                                    className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 cursor-pointer ${isYearly ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500'}`}
+                                >
+                                    Yearly
+                                </button>
+                            </div>
+                            <span className="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold">
+                                Yearly 17% Save
+                            </span>
                         </div>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold">
-                            Yearly 17% Save
-                        </span>
-                    </div>
+                    )}
                 </div>
 
                 {/* Pricing Grid */}

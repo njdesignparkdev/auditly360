@@ -7,11 +7,11 @@ import { Button } from '@/components/ui/button';
 
 export default function CtaSection() {
   return (
-    <section className="w-full py-12 relative overflow-hidden bg-transparent">
+    <section className="w-full py-6 relative overflow-hidden bg-transparent">
       {/* Background removed as per request - now transparent */}
       
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-jakarta text-gray-900 dark:text-white mb-6 tracking-tight">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-jakarta text-gray-900 dark:text-white mb-6 tracking-tight">
           Ready to optimize your website?
         </h2>
         <p className="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto">

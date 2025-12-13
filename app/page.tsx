@@ -1,5 +1,5 @@
 import { HeroSection3 } from "@/components/hero-section-3";
-import NavbarV2 from "./home-page-components/navbar-v2";
+
 import BgContainer from "./home-page-components/bg-container";
 import GridOverlay from "@/components/ui/grid-layer";
 import { Footer } from "@/components/footer-section/Footer";
@@ -29,7 +29,7 @@ export default function Page() {
           data-framer-name="Section Structure"
         >
           <div className="w-full h-px bg-gray-900/10 dark:bg-white/10 mb-6" />
-          <div className="pb-8 relative z-10 px-4 sm:px-6 lg:px-8">
+          <div className="pb-0 relative z-10 px-4 sm:px-6 lg:px-8">
             <div className="sm:mx-auto lg:mr-auto text-left mb-8">
               <div className="space-y-3">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 font-jakarta">
@@ -44,36 +44,36 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="w-full h-px bg-gray-900/10 dark:bg-white/10 my-12" />
+        <div className="w-full h-px bg-gray-900/10 dark:bg-white/10 mt-4" />
 
         {/* 4. How It Works (Optional -> Included) */}
         <div id="how-it-works" className="scroll-mt-32">
           <HowItWorks />
         </div>
 
-        <div className="w-full h-px bg-gray-900/10 dark:bg-white/10 my-12" />
+        <div className="w-full h-px bg-gray-900/10 dark:bg-white/10 mt-4" />
         {/* 5. Why Choose Us */}
         <WhyChooseUsSection />
 
-        <div className="w-full h-px bg-gray-900/10 dark:bg-white/10 my-12" />
+        <div className="w-full h-px bg-gray-900/10 dark:bg-white/10 mt-4" />
 
         {/* 7. Testimonials */}
         <div id="testimonials" className="scroll-mt-32">
           <TestimonialSlider />
         </div>
 
-        <div className="w-full h-px bg-gray-900/10 dark:bg-white/10 my-12" />
+        <div className="w-full h-px bg-gray-900/10 dark:bg-white/10 mt-4" />
 
         {/* 8. Pricing */}
         <div id="pricing" className="scroll-mt-24">
           <Pricing />
         </div>
 
-        <div className="w-full h-px bg-gray-900/10 dark:bg-white/10 my-12" />
+        <div className="w-full h-px bg-gray-900/10 dark:bg-white/10 mt-4" />
 
         {/* 9. FAQ */}
         <FaqSection />
-        <div className="w-full h-px bg-gray-900/10 dark:bg-white/10 my-12" />
+        <div className="w-full h-px bg-gray-900/10 dark:bg-white/10 mt-4" />
         {/* 10. Final CTA */}
         <CtaSection />
 

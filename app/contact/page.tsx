@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Footer from "../home-page-components/Footer";
+import { Footer } from "@/components/footer-section/Footer";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
