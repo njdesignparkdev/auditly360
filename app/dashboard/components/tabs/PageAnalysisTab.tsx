@@ -470,7 +470,7 @@ export default function PageAnalysisTab({ pageId }: PageAnalysisTabProps) {
     ...(project?.brand_consistency === true ? [{ id: 'brand-consistency', name: 'Brand Consistency', icon: '🎯' }] : []),
     { id: 'seo-structure', name: 'SEO & Structure', icon: '🔍' },
     { id: 'ui-quality', name: 'UI Quality', icon: '🎨' },
-    { id: 'technical', name: 'Technical', icon: '⚙️' },
+    // { id: 'technical', name: 'Technical', icon: '⚙️' },
     { id: 'performance', name: 'Performance', icon: '⚡' }
   ]
 

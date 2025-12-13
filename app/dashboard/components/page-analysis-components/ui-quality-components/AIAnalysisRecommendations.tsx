@@ -8,9 +8,9 @@ export default function AIAnalysisRecommendations({ recommendations }: AIAnalysi
   if (!recommendations || recommendations.length === 0) return null
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 break-inside-avoid mb-8">
-      <h3 className="text-2xl font-bold text-gray-900 mb-8">Actionable Recommendations</h3>
-      <div className="space-y-4">
+    <div className="bg-white border-b  border-gray-300   break-inside-avoid mb-8">
+      <h3 className="text-2xl font-bold text-gray-900 mb-8 px-8">Actionable Recommendations</h3>
+      <div className="space-y-4 px-8 pb-8">
         {recommendations.map((rec, idx: number) => {
           // Handle both old format (string) and new format (object)
           if (typeof rec === 'string') {
@@ -23,13 +23,7 @@ export default function AIAnalysisRecommendations({ recommendations }: AIAnalysi
           return (
             <div
               key={idx}
-              className={`p-4 rounded-lg border-l-4 ${
-                rec.priority === 'high'
-                  ? 'border-red-400 bg-red-50'
-                  : rec.priority === 'medium'
-                  ? 'border-yellow-400 bg-yellow-50'
-                  : 'border-[#ff4b01]/50 bg-[#ff4b01]/10'
-              }`}
+              className={`p-4  border border-gray-300`}
             >
               <div className="flex items-start justify-between mb-2">
                 <div className="flex-1">

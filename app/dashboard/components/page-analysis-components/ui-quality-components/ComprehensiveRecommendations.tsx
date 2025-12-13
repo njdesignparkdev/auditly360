@@ -21,26 +21,20 @@ export default function ComprehensiveRecommendations({
   recommendations
 }: ComprehensiveRecommendationsProps) {
   return (
-    <div className="bg-white border-b border-gray-300  p-6 break-inside-avoid mb-8">
-      <h3 className="text-xl font-semibold text-gray-900 mb-6">Improvement Recommendations</h3>
+    <div className="bg-white border-b border-gray-300   break-inside-avoid ">
+      <h3 className="text-xl font-semibold text-gray-900 px-8 mb-8">Improvement Recommendations</h3>
       {recommendations.length === 0 ? (
         <div className="bg-[#ff4b01]/10 rounded-lg p-6 text-center">
-          <div className="text-[#ff4b01] text-4xl mb-2">🎉</div>
+          
           <h4 className="font-semibold text-[#ff4b01] mb-1">Excellent Work!</h4>
           <p className="text-[#ff4b01]">Your page follows modern web standards and best practices.</p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4 px-8 pb-8">
           {recommendations.map((rec) => (
             <div
               key={rec.id}
-              className={`rounded-lg border-l-4 p-4 ${
-                rec.priority === 'high'
-                  ? 'border-gray-400 bg-gray-50'
-                  : rec.priority === 'medium'
-                  ? 'border-gray-300 bg-gray-25'
-                  : 'border-[#ff4b01]/30 bg-[#ff4b01]/10'
-              }`}
+              className={`border border-gray-300 p-4 `}
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">

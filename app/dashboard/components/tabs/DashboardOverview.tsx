@@ -39,7 +39,7 @@ export default function DashboardOverview({
 }: DashboardOverviewProps) {
   // Use Zustand store for projects data
   const { projects, loading: projectsLoading, error: _projectsError, refreshProjects } = useProjectsStore();
-  const { createAuditProject } = useSupabase()
+  const { createAuditProject, user } = useSupabase()
   const { planInfo } = useUserPlan()
   
   // Form submission states
@@ -252,12 +252,35 @@ export default function DashboardOverview({
   }
 
 
+  // Get display name similar to DashboardSidebar logic
+  const getDisplayName = () => {
+    // Priority 1: Check userProfile first_name and last_name
+    if (userProfile?.first_name && userProfile?.last_name) {
+      return `${userProfile.first_name} ${userProfile.last_name}`;
+    } else if (userProfile?.first_name) {
+      return userProfile.first_name;
+    } else if (userProfile?.last_name) {
+      return userProfile.last_name;
+    }
+    // Priority 2: Check Google user metadata (full_name or name)
+    else if (user?.user_metadata?.full_name) {
+      return user.user_metadata.full_name;
+    } else if (user?.user_metadata?.name) {
+      return user.user_metadata.name;
+    }
+    // Priority 3: Fall back to email trimming
+    else if (userProfile?.email) {
+      return userProfile.email.split('@')[0];
+    }
+    return 'User';
+  };
+
   return (
-    <div className=" lg:px-24 py-8 space-y-8">
+    <div className="lg:px-4 py-8 ">
       {/* Welcome Section */}
-      <div className="mb-4">
+      <div className="mb-4 px-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-black mb-2">
-          Welcome back, {userProfile?.first_name || 'User'}!
+          Welcome back, {getDisplayName()}!
         </h1>
         <p className="text-gray-600 text-sm sm:text-base">
           Here&apos;s what&apos;s happening with your web audits today.
@@ -265,7 +288,7 @@ export default function DashboardOverview({
       </div>
 
       {/* Main Content Row - Site Crawl and Stats Cards */}
-      <div className="flex flex-col lg:flex-row gap-6 lg:items-stretch">
+      <div className="flex flex-col border-y border-gray-300 lg:flex-row  lg:items-stretch">
         {/* Site Crawl Form - Takes full width on mobile, 2/3 width on lg+ */}
         <div className="w-full lg:w-[70%]">
           <SiteCrawlForm 
@@ -275,7 +298,7 @@ export default function DashboardOverview({
           />
         </div>
         {/* Stats Cards - Takes full width on mobile, 1/3 width on lg+ */}
-        <div className="w-full lg:w-[30%]">
+        <div className="w-full lg:w-[30%] ">
           <StatsCards 
             projects={projects}
             projectsLoading={projectsLoading}
@@ -284,7 +307,7 @@ export default function DashboardOverview({
       </div>
 
       {/* Recent Projects */}
-      <div className="mt-8">
+      <div className="">
         <RecentProjects 
           onProjectSelect={onProjectSelect}
         />

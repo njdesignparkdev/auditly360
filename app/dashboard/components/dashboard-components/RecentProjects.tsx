@@ -34,7 +34,7 @@ export default function RecentProjects({
     }
   };
   return <motion.div 
-      className="bg-white border border-gray-200 rounded-lg overflow-hidden"
+      className="bg-white  overflow-hidden"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
@@ -49,7 +49,7 @@ export default function RecentProjects({
             <svg className={`w-5 h-5 ${projectsLoading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
             </svg>
-            {projectsLoading && <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#ff4b01] rounded-full animate-pulse"></div>}
+            {projectsLoading && <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#ff4b01] -full animate-pulse"></div>}
           </button>
         </div>
       </div>
@@ -66,14 +66,14 @@ export default function RecentProjects({
               </svg>
             </div>
             <p className="text-red-600 font-medium">{projectsError}</p>
-            {projectsError.includes('Supabase not configured') && <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            {projectsError.includes('Supabase not configured') && <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 -lg">
                 <p className="text-sm text-yellow-800">
-                  Please create a <code className="bg-yellow-100 px-1 rounded">.env.local</code> file with your Supabase credentials.
+                  Please create a <code className="bg-yellow-100 px-1 ">.env.local</code> file with your Supabase credentials.
                   <br />
-                  See <code className="bg-yellow-100 px-1 rounded">env.example</code> for reference.
+                  See <code className="bg-yellow-100 px-1 ">env.example</code> for reference.
                 </p>
               </div>}
-            <button onClick={() => refreshProjects()} className="mt-2 text-[#ff4b01] text-sm font-medium px-4 py-2 bg-[#ff4b01]/10 rounded-lg hover:bg-[#ff4b01]/20 transition-colors">
+            <button onClick={() => refreshProjects()} className="mt-2 text-[#ff4b01] text-sm font-medium px-4 py-2 bg-[#ff4b01]/10 -lg hover:bg-[#ff4b01]/20 transition-colors">
               Try again
             </button>
           </div> : projects.length === 0 ? <div className="text-center py-8">
@@ -87,7 +87,7 @@ export default function RecentProjects({
           </div> : <div className="space-y-4">
             {projects.slice(0, 3).map((project, index) => <motion.div 
               key={project.id} 
-              className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors"
+              className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 border border-gray-200 -lg hover:border-gray-300 transition-colors"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1, ease: "easeOut" }}

@@ -49,7 +49,7 @@ export default function AnalysisHeader({
       "grammar-content": "grammar_content_analysis",
       "seo-structure": "seo_structure",
       "ui-quality": "ui_ux_quality_check",
-      technical: "technical_analysis",
+      // technical: "technical_analysis",
       accessibility: "accessibility_audit",
     };
     return featureMap[tabId] || null;
@@ -120,11 +120,11 @@ export default function AnalysisHeader({
         description:
           "This feature is not available in your current plan. Upgrade to access UI/UX quality analysis and recommendations.",
       },
-      technical: {
-        title: "Technical Analysis",
-        description:
-          "This feature is not available in your current plan. Upgrade to access comprehensive technical audit and recommendations.",
-      },
+      // technical: {
+      //   title: "Technical Analysis",
+      //   description:
+      //     "This feature is not available in your current plan. Upgrade to access comprehensive technical audit and recommendations.",
+      // },
       accessibility: {
         title: "Accessibility Audit",
         description:

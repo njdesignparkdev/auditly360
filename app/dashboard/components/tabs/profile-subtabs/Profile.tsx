@@ -248,7 +248,7 @@ export default function Profile({
   }} transition={{
     duration: 0.5
   }}>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 border-b border-gray-300">
         {/* Profile Information */}
         <motion.div className="lg:col-span-2" initial={{
         opacity: 0,
@@ -260,7 +260,7 @@ export default function Profile({
         duration: 0.5,
         delay: 0.1
       }}>
-          <motion.div className="bg-white rounded-lg border border-gray-200" initial={{
+          <motion.div className="bg-white border border-gray-300" initial={{
           opacity: 0,
           y: 20
         }} animate={{
@@ -270,7 +270,7 @@ export default function Profile({
           duration: 0.5,
           delay: 0.2
         }}>
-            <div className="p-6 border-b border-gray-200">
+            <div className="p-6 border-b border-gray-300">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-black">Personal Information</h2>
                 {!isEditing && <button onClick={() => setIsEditing(true)} className="bg-[#ff4b01] whitespace-nowrap text-white px-4 py-2 rounded text-sm font-medium hover:bg-[#e64401] transition-colors">
@@ -422,7 +422,7 @@ export default function Profile({
         duration: 0.5,
         delay: 0.2
       }}>
-          <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+          <motion.div className=" border-gray-200 p-6" initial={{
           opacity: 0,
           y: 20
         }} animate={{

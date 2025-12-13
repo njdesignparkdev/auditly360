@@ -909,14 +909,14 @@ export default function UIQualityTab({ page }: UIQualityTabProps) {
           <button
             onClick={handleRetakeScreenshot}
             disabled={processing}
-            className="flex items-center gap-2 px-4 py-2 bg-[#ff4b01] hover:bg-[#e64401] disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors duration-200 shadow-sm hover:shadow-md disabled:cursor-not-allowed"
+            className="flex items-center gap-2 px-4 py-2 bg-[#ff4b01] hover:bg-[#e64401] disabled:bg-gray-400 text-white  font-medium transition-colors duration-200 shadow-sm hover:shadow-md disabled:cursor-not-allowed"
           >
             <ArrowPathIcon className={`w-5 h-5 ${processing ? 'animate-spin' : ''}`} />
             <span>{processing ? 'Reanalyzing...' : 'Reanalyze'}</span>
           </button>
         )}
         {!hasScreenshotAccess && (imageAnalysis || screenshotUrl || desktopScreenshotUrl) && (
-          <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm">
+          <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-600  text-sm">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
@@ -946,7 +946,7 @@ export default function UIQualityTab({ page }: UIQualityTabProps) {
                 </div>
                 <button 
                   onClick={() => window.location.href = '/dashboard?tab=profile&subtab=plans'}
-                  className="px-4 py-2 bg-[#ff4b01] text-white rounded-lg hover:bg-[#e64401] transition-colors text-sm font-medium"
+                  className="px-4 py-2 bg-[#ff4b01] text-white  hover:bg-[#e64401] transition-colors text-sm font-medium"
                 >
                   Upgrade Plan
                 </button>
@@ -971,7 +971,7 @@ export default function UIQualityTab({ page }: UIQualityTabProps) {
         
         {/* Processing Steps - Simple Loader - Only show if user has access */}
         {processing && hasScreenshotAccess && (
-          <div className="mt-6 bg-[#ff4b01]/10 rounded-lg border border-[#ff4b01]/30 p-6">
+          <div className="mt-6 bg-[#ff4b01]/10  border border-[#ff4b01]/30 p-6">
             <div className="flex flex-col items-center space-y-4">
               {/* Simple spinner */}
               <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#ff4b01]/30 border-t-[#ff4b01]"></div>

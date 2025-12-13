@@ -8,9 +8,9 @@ export default function DesignPatternsSection({ designPatterns }: DesignPatterns
   if (!designPatterns) return null
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 break-inside-avoid mb-8">
-      <h3 className="text-2xl font-bold text-gray-900 mb-8">Design Patterns & Best Practices</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="bg-white border-b  border-gray-300 break-inside-avoid mb-8">
+      <h3 className="text-2xl font-bold text-gray-900 mb-8 px-8">Design Patterns & Best Practices</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-8 pb-8">
         {designPatterns.identified_patterns && designPatterns.identified_patterns.length > 0 && (
           <div>
             <div className="text-sm font-medium text-gray-700 mb-2">Identified Patterns:</div>

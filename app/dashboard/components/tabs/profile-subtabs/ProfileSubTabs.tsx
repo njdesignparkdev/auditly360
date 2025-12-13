@@ -40,7 +40,7 @@ export default function ProfileSubTabs({ userProfile }: ProfileSubTabsProps) {
 
   return (
     <motion.div 
-      className="space-y-6 lg:px-4" 
+      className=" lg:px-4" 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -91,7 +91,7 @@ export default function ProfileSubTabs({ userProfile }: ProfileSubTabsProps) {
 
       {/* Tab Content */}
       <motion.div 
-        className="mt-6"
+          className=""
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4, delay: 0.4 }}
