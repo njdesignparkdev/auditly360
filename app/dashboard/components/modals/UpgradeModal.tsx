@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useUserPlan } from '@/hooks/useUserPlan'
+import UpgradePlanButton from '../UpgradePlanButton'
 
 interface UpgradeModalProps {
   isOpen: boolean
@@ -26,6 +27,7 @@ export default function UpgradeModal({
   currentPlan 
 }: UpgradeModalProps) {
   useUserPlan() // Get plan info if needed in the future
+  const upgradeUrl = '/dashboard?tab=profile&subtab=billing'
 
   if (!isOpen) return null
 
@@ -173,12 +175,7 @@ export default function UpgradeModal({
             >
               Maybe Later
             </button>
-            <button
-              onClick={handleUpgrade}
-              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Upgrade Now
-            </button>
+            <UpgradePlanButton href={upgradeUrl} className="" />
           </div>
         </div>
       </motion.div>

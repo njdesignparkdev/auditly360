@@ -20,6 +20,7 @@ import {
   ModernStandardsCard,
   ComprehensiveRecommendations
 } from './ui-quality-components'
+import UpgradePlanButton from '../UpgradePlanButton'
 
 interface UIQualityTabProps {
   page: {
@@ -939,14 +940,8 @@ export default function UIQualityTab({ page }: UIQualityTabProps) {
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                
-                <button
-                  onClick={() => window.location.href = '/dashboard?tab=profile&subtab=plans'}
-                  className="inline-flex items-center justify-center rounded-lg bg-[#ff4b01] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#e64401]"
-                >
-                  Upgrade Plan
-                </button>
-              </div>
+                  <UpgradePlanButton href="/dashboard?tab=profile&subtab=billing" className="" />
+                </div>
               </div>
               <div className="flex flex-wrap items-center gap-3 text-xs text-gray-600">
                 <div className="flex items-center gap-2 rounded-full bg-white px-3 py-1 ring-1 ring-gray-200">

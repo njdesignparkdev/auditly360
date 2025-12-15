@@ -32,7 +32,7 @@ export default function ErrorState({
         {scrapingError && onRetryScraping && (
           <button 
             onClick={onRetryScraping}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors"
           >
             Retry Scraping
           </button>
@@ -40,7 +40,7 @@ export default function ErrorState({
         {!scrapingError && onRetryLoading && (
           <button 
             onClick={onRetryLoading}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors"
           >
             Retry Loading
           </button>
@@ -48,7 +48,7 @@ export default function ErrorState({
         {onViewProjects && (
           <button 
             onClick={onViewProjects}
-            className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+            className="bg-gray-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
           >
             View All Projects
           </button>

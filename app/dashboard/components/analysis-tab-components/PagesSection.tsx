@@ -377,7 +377,7 @@ export default function PagesSection({
           <button
             onClick={fetchPages}
             disabled={isLoading}
-            className="px-3 py-1.5 bg-[#ff4b01] text-white text-sm font-medium rounded-md hover:bg-[#e64401] disabled:bg-[#ff4b01]/50 disabled:cursor-not-allowed transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff4b01] focus:ring-offset-2"
+            className="px-3 py-1.5 cursor-pointer bg-[#ff4b01] text-white text-sm font-medium rounded-md hover:bg-[#e64401] disabled:bg-[#ff4b01]/50 disabled:cursor-not-allowed transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff4b01] focus:ring-offset-2"
           >
             {isLoading ? 'Refreshing...' : 'Refresh'}
           </button>

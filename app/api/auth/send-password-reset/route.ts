@@ -37,9 +37,7 @@ export async function POST(request: NextRequest) {
     });
 
     const actionLink =
-      data?.action_link ||
-      // Some Supabase responses may nest action_link differently; guard for safety
-      (data as any)?.properties?.action_link;
+      (data as any)?.properties?.action_link as string | undefined;
 
     if (linkError || !actionLink) {
       console.error('Generate link error:', linkError, 'response:', data);

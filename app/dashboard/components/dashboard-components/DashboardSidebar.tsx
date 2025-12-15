@@ -8,6 +8,7 @@ import { useSupabase } from '@/contexts/SupabaseContext';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { roleVerifier } from '@/lib/role-utils';
 import { useUserPlan } from '@/hooks/useUserPlan';
+import UpgradePlanButton from '../UpgradePlanButton';
 interface DashboardSidebarProps {
   isOpen: boolean;
   onClose: () => void;
@@ -255,7 +256,7 @@ export default function DashboardSidebar({
             {navigationItems.map(item => <button key={item.id} onClick={() => {
               onTabChange(item.id);
               onClose();
-            }} className={`w-full flex items-center space-x-3 px-3 py-3 rounded text-sm font-medium ${activeTab === item.id ? 'bg-[#FF4B01]/10 text-[#FF4B01]' : 'text-gray-700'}`}>
+            }} className={`w-full cursor-pointer flex items-center space-x-3 px-3 py-3 rounded text-sm font-medium ${activeTab === item.id ? ' text-[#FF4B01]' : 'text-gray-700'}`}>
                 <span className={activeTab === item.id ? 'text-[#FF4B01]' : 'text-gray-500'}>
                   {item.icon}
                 </span>
@@ -286,9 +287,14 @@ export default function DashboardSidebar({
                     {planInfo.max_projects === -1 ? 'Unlimited' : planInfo.max_projects || 0} projects
                   </span>
                 </div>
-                {planInfo.plan_type === 'Starter' && <button onClick={() => onTabChange('profile')} className="w-full mt-2 text-xs bg-[#FF4B01] text-white py-1 px-2 rounded hover:bg-[#FF4B01]/90 transition-colors">
-                    Upgrade Plan
-                  </button>}
+                {planInfo.plan_type === 'Starter' && (
+                  <div className="w-full mt-2">
+                    <UpgradePlanButton
+                      href="/dashboard?tab=profile&subtab=billing"
+                      className="w-full text-xs px-3 py-2 font-semibold"
+                    />
+                  </div>
+                )}
               </div> : <div className="bg-gray-50 rounded-lg p-3">
                 <div className="text-sm text-gray-600 text-center">
                   No plan information available
@@ -367,7 +373,7 @@ export default function DashboardSidebar({
 
           {/* Navigation */}
           <nav className="flex-1 px-4 py-6 space-y-1">
-            {navigationItems.map(item => <button key={item.id} onClick={() => onTabChange(item.id)} className={`w-full flex items-center space-x-3 px-3 py-3 rounded text-sm font-medium ${activeTab === item.id ? 'bg-[#FF4B01]/10 text-[#FF4B01]' : 'text-gray-700'}`}>
+            {navigationItems.map(item => <button key={item.id} onClick={() => onTabChange(item.id)} className={` cursor-pointer w-full flex items-center space-x-3 px-3 py-3 rounded text-sm font-medium ${activeTab === item.id ? ' text-[#FF4B01]' : 'text-gray-700'}`}>
                 <span className={activeTab === item.id ? 'text-[#FF4B01]' : 'text-gray-500'}>
                   {item.icon}
                 </span>
@@ -398,9 +404,15 @@ export default function DashboardSidebar({
                     {planInfo.max_projects === -1 ? 'Unlimited' : planInfo.max_projects || 0} projects
                   </span>
                 </div>
-                {planInfo.plan_type === 'Starter' && <button onClick={() => onTabChange('profile')} className="w-full mt-2 text-xs bg-[#FF4B01] text-white py-1 px-2 rounded hover:bg-[#FF4B01]/90 transition-colors">
-                    Upgrade Plan
-                  </button>}
+                {planInfo.plan_type === 'Starter' && (
+                  <div className="w-full mt-2">
+
+                  <UpgradePlanButton
+                    href="/dashboard?tab=profile&subtab=billing"
+                    className="w-full"
+                    />
+                    </div>
+                )}
               </div> : <div className="bg-gray-50 rounded-lg p-3">
                 <div className="text-sm text-gray-600 text-center">
                   No plan information available
@@ -413,7 +425,7 @@ export default function DashboardSidebar({
 
           {/* Sign Out Button */}
           <div className="p-4 border-t border-gray-300">
-            <button onClick={handleSignOut} className="w-full flex items-center space-x-3 px-3 py-3 rounded text-sm font-medium text-gray-700">
+            <button onClick={handleSignOut} className="cursor-pointer w-full flex items-center space-x-3 px-3 py-3 rounded text-sm font-medium text-gray-700">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>

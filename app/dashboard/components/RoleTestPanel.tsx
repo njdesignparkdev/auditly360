@@ -111,10 +111,10 @@ export default function RoleTestPanel({
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-gray-900">Role Testing Panel</h3>
         <div className="flex space-x-2">
-          <button onClick={runRoleTests} disabled={isRunning} className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          <button onClick={runRoleTests} disabled={isRunning} className="  bg-orange-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
             {isRunning ? 'Running Tests...' : 'Run Role Tests'}
           </button>
-          <button onClick={clearCache} className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+          <button onClick={clearCache} className="bg-gray-600 cursor-pointer  text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
             Clear Cache
           </button>
         </div>

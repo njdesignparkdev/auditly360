@@ -131,10 +131,10 @@ export default function RecentProjects({
                       </span>}
                   </div>
                 </div>
-                <div className="flex flex-col items-start sm:items-end space-y-2 w-full sm:w-auto">
-                  {project.status === 'completed' ? <button onClick={() => onProjectSelect?.(project.id)} className="text-[#ff4b01] text-sm font-medium hover:text-[#ff4b01]/80 transition-colors">
+                <div className="flex flex-col cursor-pointer items-start sm:items-end space-y-2 w-full sm:w-auto">
+                  {project.status === 'completed' ? <button onClick={() => onProjectSelect?.(project.id)} className=" cursor-pointer text-[#ff4b01] text-sm font-medium hover:text-[#ff4b01]/80 transition-colors">
                       View Analysis →
-                    </button> : project.status === 'pending' ? <button onClick={() => onProjectSelect?.(project.id)} className="text-[#ff4b01] text-sm font-medium hover:text-[#ff4b01]/80 transition-colors">
+                    </button> : project.status === 'pending' ? <button onClick={() => onProjectSelect?.(project.id)} className=" cursor-pointer  text-[#ff4b01] text-sm font-medium hover:text-[#ff4b01]/80 transition-colors">
                       View Details →
                     </button> : <button className="text-gray-500 text-sm font-medium">
                       {project.status === 'in_progress' ? 'Processing...' : 'Pending'}
@@ -150,7 +150,7 @@ export default function RecentProjects({
               url.searchParams.set('tab', 'projects');
               router.push(url.toString());
             }}
-            className="w-full text-center text-[#ff4b01] font-medium hover:text-[#ff4b01]/80 transition-colors"
+            className="w-full  text-center cursor-pointer text-[#ff4b01] font-medium hover:text-[#ff4b01]/80 transition-colors"
           >
             View All Projects
           </button>

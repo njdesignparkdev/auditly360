@@ -211,7 +211,7 @@ export default function SiteCrawlForm({
             </div>
 
             {/* Brand Consistency Skeleton */}
-            <div className="bg-[#ff4b01]/5 -lg p-4 sm:p-6 space-y-4 border border-[#ff4b01]/20">
+            <div className=" -lg p-4 sm:p-6 space-y-4 border border-[#ff4b01]/20">
               <div className="h-4 bg-gray-200  w-48 mb-2 animate-pulse"></div>
               <div className="grid grid-cols-1 gap-4">
                 <div>
@@ -388,7 +388,7 @@ export default function SiteCrawlForm({
          
 
           {/* Brand Consistency Fields */}
-          {brandConsistency && <div className="bg-[#ff4b01]/5 -lg p-4 sm:p-6 space-y-4 border border-[#ff4b01]/20">
+          {brandConsistency && <div className="p-4 sm:p-6 space-y-4 border border-[#ff4b01]/20">
               <h3 className="text-sm font-semibold text-black mb-2">
                 Brand Consistency Information
               </h3>
@@ -482,7 +482,7 @@ export default function SiteCrawlForm({
           {/* Submit Button */}
           <div className="pt-2">
             <button type="submit" disabled={isSubmitting || !canCreateNewProject} className={`w-full py-3 px-4  focus:outline-none font-medium transition-all ${!canCreateNewProject ? 'border-2 border-gray-300 text-gray-400 cursor-not-allowed' : submitStatus === 'success' ? 'border-2 border-green-600 text-green-600 bg-green-50' : submitStatus === 'error' ? 'border-2 border-red-600 text-red-600 bg-red-50' : isSubmitting ? 'border-2 border-gray-300 text-gray-400 cursor-not-allowed' : 'border-2 border-[#ff4b01] text-[#ff4b01] bg-transparent hover:bg-[#ff4b01]/10 hover:border-[#ff4b01]'}`}>
-              <span className="flex items-center justify-center">
+              <span className="flex items-center justify-center cursor-pointer">
                 {submitStatus === 'success' ? <>
                     <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />

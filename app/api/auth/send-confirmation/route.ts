@@ -20,14 +20,14 @@ export async function POST(request: NextRequest) {
     const redirectTo = `${getSiteUrl(request)}/auth/callback`;
 
     const { data, error: linkError } = await supabaseAdmin.auth.admin.generateLink({
-      type: 'signup',
+      // Use magic link so password is not required in params
+      type: 'magiclink',
       email,
       options: { redirectTo },
     });
 
     const actionLink =
-      data?.action_link ||
-      (data as any)?.properties?.action_link;
+      (data as any)?.properties?.action_link as string | undefined;
 
     if (linkError || !actionLink) {
       console.error('Generate confirmation link error:', linkError, 'response:', data);

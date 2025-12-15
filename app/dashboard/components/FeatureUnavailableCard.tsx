@@ -1,5 +1,7 @@
 'use client'
 
+import UpgradePlanButton from './UpgradePlanButton'
+
 interface FeatureUnavailableCardProps {
   title: string
   description: string
@@ -11,7 +13,7 @@ export default function FeatureUnavailableCard({
   title, 
   description, 
   icon: _icon = "🔒",
-  upgradeUrl = '/dashboard?tab=profile&subtab=plans'
+  upgradeUrl = '/dashboard?tab=profile&subtab=billing'
 }: FeatureUnavailableCardProps) {
   return (
     <div className="bg-white rounded-lg border border-gray-300 p-6">
@@ -30,12 +32,7 @@ export default function FeatureUnavailableCard({
             <div className="text-xs text-gray-500">
               Current plan: <span className="font-medium">Check your plan settings</span>
             </div>
-            <button 
-              onClick={() => window.location.href = upgradeUrl}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
-            >
-              Upgrade Plan
-            </button>
+            <UpgradePlanButton href={upgradeUrl} className="" />
           </div>
         </div>
       </div>

@@ -142,14 +142,14 @@ export default function UserAlerts({
                   <p className="text-gray-600 text-sm mb-2">
                     {alert.message}
                   </p>
-                  {alert.action_url && alert.action_text && <button onClick={() => handleAlertClick(alert)} className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors">
+                  {alert.action_url && alert.action_text && <button onClick={() => handleAlertClick(alert)} className="inline-flex items-center cursor-alias px-3 py-1 text-xs font-medium rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors">
                       {alert.action_text}
                       <i className="fas fa-external-link-alt ml-1 text-xs"></i>
                     </button>}
                 </div>
               </div>
 
-              {alert.dismissible && <button onClick={() => handleDismissAlert(alert.id)} className="ml-3 text-gray-400 hover:text-gray-600 transition-colors" title="Dismiss alert">
+              {alert.dismissible && <button onClick={() => handleDismissAlert(alert.id)} className=" cursor-pointer ml-3 text-gray-400 hover:text-gray-600 cursor-pointer transition-colors" title="Dismiss alert">
                   <i className="fas fa-times"></i>
                 </button>}
             </div>

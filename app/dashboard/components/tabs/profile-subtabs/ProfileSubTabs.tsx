@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Profile from './Profile'
 import Billing from './Billing'
@@ -21,7 +22,25 @@ const tabs = [
 ]
 
 export default function ProfileSubTabs({ userProfile }: ProfileSubTabsProps) {
+  const searchParams = useSearchParams()
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState<TabType>('profile')
+
+  // Sync active tab with URL ?subtab=
+  useEffect(() => {
+    const subtabParam = (searchParams.get('subtab') as TabType | null) || 'profile'
+    if (tabs.some(t => t.id === subtabParam)) {
+      setActiveTab(subtabParam)
+    }
+  }, [searchParams])
+
+  const handleTabChange = (tab: TabType) => {
+    setActiveTab(tab)
+    const url = new URL(window.location.href)
+    url.searchParams.set('tab', 'profile')
+    url.searchParams.set('subtab', tab)
+    router.push(url.toString())
+  }
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -71,7 +90,7 @@ export default function ProfileSubTabs({ userProfile }: ProfileSubTabsProps) {
           {tabs.map((tab, index) => (
             <motion.button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => handleTabChange(tab.id)}
               className={`py-4 px-6 font-medium text-sm transition-colors duration-300 ${
                 index < tabs.length - 1 ? 'border-r border-gray-300' : ''
               } ${

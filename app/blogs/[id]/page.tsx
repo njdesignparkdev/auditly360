@@ -26,17 +26,9 @@ interface BlogResponse {
   blog: Blog
 }
 
-interface PageProps {
-  params: Promise<{
-  params: Promise<{
-    id: string
-  }>
-  }>
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: any): Promise<Metadata> {
   try {
-    const { id } = await params
+    const { id } = params
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
     const res = await fetch(`${baseUrl}/api/blogs/${id}`, {
       next: { revalidate: 60 },
@@ -82,8 +74,8 @@ const getAuthorName = (author: BlogAuthor | null) => {
   return 'Team auditly360'
 }
 
-export default async function BlogDetailPage({ params }: PageProps) {
-  const { id } = await params
+export default async function BlogDetailPage({ params }: any) {
+  const { id } = params
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
   const res = await fetch(`${baseUrl}/api/blogs/${id}`, {

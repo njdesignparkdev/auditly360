@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useUserPlan } from "@/hooks/useUserPlan";
 import SkeletonLoader from "@/app/dashboard/components/SkeletonLoader";
 import { featureCache, createCacheKey } from "@/lib/feature-cache";
+import UpgradePlanButton from "@/app/dashboard/components/UpgradePlanButton";
 
 // Define proper interfaces for the page data
 interface ScrapedPageData {
@@ -114,12 +115,7 @@ export default function GrammarContentTab({
               <div className="text-xs text-gray-500">
                 Current plan: <span className="font-medium">Check your plan settings</span>
               </div>
-              <button 
-                onClick={() => window.location.href = '/dashboard?tab=profile&subtab=plans'}
-                className="px-4 py-2 bg-[#ff4b01] text-white rounded-lg hover:bg-[#e64401] transition-colors text-sm font-medium"
-              >
-                Upgrade Plan
-              </button>
+              <UpgradePlanButton />
             </div>
           </div>
         </div>
