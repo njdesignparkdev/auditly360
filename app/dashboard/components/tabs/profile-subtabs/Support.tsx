@@ -208,7 +208,7 @@ export default function Support({
       duration: 0.5,
       delay: 0.1
     }}>
-        <nav className="-mb-px flex space-x-8">
+        <nav className="-mb-px flex space-x-8 py-2">
           <button onClick={() => setActiveTab('tickets')} className={`py-2 px-1 border-b-2 font-medium text-sm transition-colors duration-300 ${activeTab === 'tickets' ? 'border-[#ff4b01] text-gray-900' : 'border-transparent text-gray-600 hover:text-gray-800 hover:border-gray-300'}`}>
             <i className="fas fa-ticket-alt mr-2"></i>My Tickets ({tickets.length})
           </button>

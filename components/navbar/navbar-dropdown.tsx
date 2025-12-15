@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Link as LinkIcon, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -76,8 +77,12 @@ export default function Navbar() {
 
 				{/* Right Side Buttons */}
 				<div className="hidden items-center gap-4 md:flex -mr-8">
-					<Button variant="outline" className="hidden lg:flex rounded-xl font-bold px-6">Sign In</Button>
-					<Button className="bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold px-6">Get Started</Button>
+					<Link href="/login">
+						<Button variant="outline" className="hidden lg:flex rounded-xl font-bold px-6">Sign In</Button>
+					</Link>
+					<Link href="/signup">
+						<Button className="bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold px-6">Get Started</Button>
+					</Link>
 				</div>
 				<Button
 					size="icon"
@@ -107,10 +112,14 @@ export default function Navbar() {
 					))}
 				</div>
 				<div className="flex flex-col gap-3 mt-auto pt-6">
-					<Button variant="outline" className="w-full bg-transparent h-12 text-base rounded-xl border-gray-300">
-						Sign In
-					</Button>
-					<Button className="w-full bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold h-12 text-base">Get Started</Button>
+					<Link href="/login" className="w-full">
+						<Button variant="outline" className="w-full bg-transparent h-12 text-base rounded-xl border-gray-300">
+							Sign In
+						</Button>
+					</Link>
+					<Link href="/signup" className="w-full">
+						<Button className="w-full bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold h-12 text-base">Get Started</Button>
+					</Link>
 				</div>
 			</MobileMenu>
 		</header>
