@@ -86,7 +86,7 @@ export default function EditProjectModal({
         ease: "easeOut"
       }} className="bg-white rounded-lg  max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
             {/* Header */}
-            <div className="px-6 py-4 border-b border-gray-200">
+            <div className="px-6 py-4 border-b border-gray-300">
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-xl font-semibold text-black">Edit Project</h2>
@@ -143,7 +143,7 @@ export default function EditProjectModal({
                       Are you sure you want to delete this project? All associated data will be permanently removed.
                     </p>
                     <div className="flex justify-end space-x-3">
-                      <button onClick={() => setShowDeleteConfirm(false)} className="px-4 py-2 text-gray-600 bg-white border border-gray-200 rounded cursor-pointer">
+                      <button onClick={() => setShowDeleteConfirm(false)} className="px-4 py-2 text-gray-600 bg-white border border-gray-300 rounded cursor-pointer">
                         Cancel
                       </button>
                       <button onClick={handleDelete} className="px-4 py-2 bg-red-600 text-white rounded cursor-pointer">

@@ -251,7 +251,7 @@ function LoginPageContent() {
 
             {/* Error/Success Messages */}
             {error && (
-              <div className={`mb-6 p-4 rounded-lg ${isRateLimited ? 'bg-gray-50 border border-gray-200' : 'bg-red-50 border border-red-200'}`}>
+              <div className={`mb-6 p-4 rounded-lg ${isRateLimited ? 'bg-gray-50 border border-gray-300' : 'bg-red-50 border border-red-200'}`}>
                 <p className={`text-sm ${isRateLimited ? 'text-gray-800' : 'text-red-800'}`}>{error}</p>
                 {showResendButton && !showForgotPassword && (
                   <div className="mt-3">

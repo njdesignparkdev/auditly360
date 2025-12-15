@@ -47,7 +47,7 @@ export function ResetPasswordForm({ onSuccess, onCancel }: ResetPasswordFormProp
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
+    <div className="bg-white border border-gray-300 rounded-lg p-6">
       <h3 className="text-lg font-semibold text-black mb-2">Set a new password</h3>
       <p className="text-sm text-gray-600 mb-4">
         This requires an active recovery session (opened from the reset link).

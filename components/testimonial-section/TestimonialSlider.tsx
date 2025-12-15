@@ -194,7 +194,7 @@ const TestimonialSlider: React.FC = () => {
                     <motion.div 
                       className="border-t pt-4 relative z-10 mt-auto"
                       variants={{
-                        rest: { borderColor: "#e5e7eb" }, // border-gray-200
+                        rest: { borderColor: "#e5e7eb" }, // border-gray-300
                         hover: { borderColor: "rgba(255, 255, 255, 0.3)" } // border-white/30
                       }}
                       transition={{ duration: 0.3 }}

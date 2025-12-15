@@ -129,7 +129,7 @@ export default function SocialPreviewTab({ project }: SocialPreviewTabProps) {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div className="bg-white   border border-gray-200 p-6">
+        <div className="bg-white   border border-gray-300 p-6">
           <div className="animate-pulse">
             <div className="h-6 bg-gray-200 rounded w-1/4 mb-4"></div>
             <div className="space-y-3">
@@ -146,7 +146,7 @@ export default function SocialPreviewTab({ project }: SocialPreviewTabProps) {
   return (
     <div className="space-y-6">
       {/* Social Preview Mockup */}
-      <div className="bg-white   border border-gray-200 p-6">
+      <div className="bg-white   border border-gray-300 p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Social Preview</h3>
         <div className="border border-gray-300  p-4 ">
           <div className="grid grid-cols-[auto_1fr] gap-3 items-start">
@@ -201,7 +201,7 @@ export default function SocialPreviewTab({ project }: SocialPreviewTabProps) {
 
       {/* Image Preview */}
       {socialImage && (
-        <div className="   border border-gray-200 p-6">
+        <div className="   border border-gray-300 p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Social Media Image</h3>
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
@@ -211,7 +211,7 @@ export default function SocialPreviewTab({ project }: SocialPreviewTabProps) {
                   alt="Social media preview" 
                   width={128}
                   height={128}
-                  className="w-32 h-32 object-cover  border border-gray-200"
+                  className="w-32 h-32 object-cover  border border-gray-300"
                   onError={(e) => {
                     const target = e.currentTarget as HTMLImageElement
                     target.style.display = 'none'
@@ -219,7 +219,7 @@ export default function SocialPreviewTab({ project }: SocialPreviewTabProps) {
                     if (fallback) fallback.classList.remove('hidden')
                   }}
                 />
-                <div className="hidden w-32 h-32 bg-gray-100  border border-gray-200 items-center justify-center">
+                <div className="hidden w-32 h-32 bg-gray-100  border border-gray-300 items-center justify-center">
                   <span className="text-gray-400 text-sm">Image not found</span>
                 </div>
               </div>
@@ -240,7 +240,7 @@ export default function SocialPreviewTab({ project }: SocialPreviewTabProps) {
       )}
 
       {/* Summary */}
-      <div className="bg-white  border border-gray-200 p-6">
+      <div className="bg-white  border border-gray-300 p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Summary</h3>
         <div className="space-y-2">
           <p className="text-sm text-gray-600">

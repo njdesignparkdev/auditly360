@@ -39,7 +39,7 @@ export default function StatsCards({ projects, projectsLoading }: StatsCardsProp
       </motion.div>
 
       <motion.div 
-        className="bg-white border border-gray-200  p-4 sm:p-6"
+        className="bg-white border border-gray-300  p-4 sm:p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.2, ease: "easeOut" }}
@@ -60,7 +60,7 @@ export default function StatsCards({ projects, projectsLoading }: StatsCardsProp
       </motion.div>
 
       <motion.div 
-        className="bg-white border border-gray-200  p-4 sm:p-6"
+        className="bg-white border border-gray-300  p-4 sm:p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.3, ease: "easeOut" }}
@@ -81,7 +81,7 @@ export default function StatsCards({ projects, projectsLoading }: StatsCardsProp
       </motion.div>
 
       <motion.div 
-        className="bg-white border border-gray-200 p-4 sm:p-6"
+        className="bg-white border border-gray-300 p-4 sm:p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.4, ease: "easeOut" }}

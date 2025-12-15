@@ -286,7 +286,7 @@ export default function AdminAlerts({ }: AdminAlertsProps) {
     >
       {/* Header */}
       <motion.div
-        className="bg-white rounded-lg border border-gray-200 p-6"
+        className="bg-white rounded-lg border border-gray-300 p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
@@ -315,7 +315,7 @@ export default function AdminAlerts({ }: AdminAlertsProps) {
 
       {/* Filters */}
       <motion.div
-        className="bg-white rounded-lg border border-gray-200 p-4"
+        className="bg-white rounded-lg border border-gray-300 p-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -372,7 +372,7 @@ export default function AdminAlerts({ }: AdminAlertsProps) {
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
-              className="bg-white rounded-lg border border-gray-200 p-6"
+              className="bg-white rounded-lg border border-gray-300 p-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
@@ -391,7 +391,7 @@ export default function AdminAlerts({ }: AdminAlertsProps) {
 
       {/* Alerts List */}
       <motion.div
-        className="bg-white rounded-lg border border-gray-200 p-6"
+        className="bg-white rounded-lg border border-gray-300 p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
@@ -406,7 +406,7 @@ export default function AdminAlerts({ }: AdminAlertsProps) {
             alerts.map((alertItem, index) => (
             <motion.div
               key={alertItem.id}
-              className="p-4 rounded-lg border border-gray-200 hover:border-[#ff4b01] transition-colors"
+              className="p-4 rounded-lg border border-gray-300 hover:border-[#ff4b01] transition-colors"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }}
@@ -474,7 +474,7 @@ export default function AdminAlerts({ }: AdminAlertsProps) {
       {/* Alert Types Distribution */}
       {alertStats && alertStats.alertsByType.length > 0 && (
         <motion.div
-          className="bg-white rounded-lg border border-gray-200 p-6"
+          className="bg-white rounded-lg border border-gray-300 p-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
@@ -484,7 +484,7 @@ export default function AdminAlerts({ }: AdminAlertsProps) {
             {alertStats.alertsByType.map((type, index) => (
               <motion.div
                 key={type.type}
-                className="p-4 rounded-lg border border-gray-200 text-center"
+                className="p-4 rounded-lg border border-gray-300 text-center"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}

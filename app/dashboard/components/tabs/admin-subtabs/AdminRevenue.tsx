@@ -98,7 +98,7 @@ export default function AdminRevenue({ }: AdminRevenueProps) {
     >
       {/* Header */}
       <motion.div
-        className="bg-white rounded-lg border border-gray-200 p-6"
+        className="bg-white rounded-lg border border-gray-300 p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
@@ -117,7 +117,7 @@ export default function AdminRevenue({ }: AdminRevenueProps) {
         ].map((metric, index) => (
           <motion.div
             key={metric.label}
-            className="bg-white rounded-lg border border-gray-200 p-6"
+            className="bg-white rounded-lg border border-gray-300 p-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
@@ -135,7 +135,7 @@ export default function AdminRevenue({ }: AdminRevenueProps) {
 
       {/* Revenue Chart Placeholder */}
       <motion.div
-        className="bg-white rounded-lg border border-gray-200 p-6"
+        className="bg-white rounded-lg border border-gray-300 p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
@@ -145,7 +145,7 @@ export default function AdminRevenue({ }: AdminRevenueProps) {
           {monthlyData.map((data, index) => (
             <motion.div
               key={data.month}
-              className="flex items-center justify-between p-3 rounded-lg border border-gray-200"
+              className="flex items-center justify-between p-3 rounded-lg border border-gray-300"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }}
@@ -172,7 +172,7 @@ export default function AdminRevenue({ }: AdminRevenueProps) {
 
       {/* Revenue Sources */}
       <motion.div
-        className="bg-white rounded-lg border border-gray-200 p-6"
+        className="bg-white rounded-lg border border-gray-300 p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
@@ -182,7 +182,7 @@ export default function AdminRevenue({ }: AdminRevenueProps) {
           {topRevenueSources.map((source, index) => (
             <motion.div
               key={source.source}
-              className="flex items-center justify-between p-4 rounded-lg border border-gray-200"
+              className="flex items-center justify-between p-4 rounded-lg border border-gray-300"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
@@ -209,7 +209,7 @@ export default function AdminRevenue({ }: AdminRevenueProps) {
 
       {/* Recent Transactions */}
       <motion.div
-        className="bg-white rounded-lg border border-gray-200 p-6"
+        className="bg-white rounded-lg border border-gray-300 p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
@@ -282,7 +282,7 @@ export default function AdminRevenue({ }: AdminRevenueProps) {
       {/* Financial Summary */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <motion.div
-          className="bg-white rounded-lg border border-gray-200 p-6"
+          className="bg-white rounded-lg border border-gray-300 p-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.7 }}
@@ -297,7 +297,7 @@ export default function AdminRevenue({ }: AdminRevenueProps) {
               <span className="text-gray-700">Refunds</span>
               <span className="font-semibold text-red-600">-${revenueStats.refunds.toLocaleString()}</span>
             </div>
-            <div className="flex justify-between border-t border-gray-200 pt-4">
+            <div className="flex justify-between border-t border-gray-300 pt-4">
               <span className="text-gray-700 font-medium">Net Revenue</span>
               <span className="font-bold text-black text-lg">${revenueStats.netRevenue.toLocaleString()}</span>
             </div>
@@ -313,23 +313,23 @@ export default function AdminRevenue({ }: AdminRevenueProps) {
         </motion.div>
 
         <motion.div
-          className="bg-white rounded-lg border border-gray-200 p-6"
+          className="bg-white rounded-lg border border-gray-300 p-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.8 }}
         >
           <h3 className="text-lg font-semibold text-black mb-4">Quick Actions</h3>
           <div className="space-y-3">
-            <button className="w-full text-left p-3 rounded-lg border border-gray-200 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
+            <button className="w-full text-left p-3 rounded-lg border border-gray-300 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
               <span className="font-medium text-black">Generate Revenue Report</span>
             </button>
-            <button className="w-full text-left p-3 rounded-lg border border-gray-200 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
+            <button className="w-full text-left p-3 rounded-lg border border-gray-300 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
               <span className="font-medium text-black">Export Financial Data</span>
             </button>
-            <button className="w-full text-left p-3 rounded-lg border border-gray-200 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
+            <button className="w-full text-left p-3 rounded-lg border border-gray-300 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
               <span className="font-medium text-black">View Tax Reports</span>
             </button>
-            <button className="w-full text-left p-3 rounded-lg border border-gray-200 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
+            <button className="w-full text-left p-3 rounded-lg border border-gray-300 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
               <span className="font-medium text-black">Process Refunds</span>
             </button>
           </div>

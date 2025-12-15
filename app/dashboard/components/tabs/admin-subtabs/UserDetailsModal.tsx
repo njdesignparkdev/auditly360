@@ -132,7 +132,7 @@ export default function UserDetailsModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="border-b border-gray-200 px-4 sm:px-6 py-4 flex-shrink-0">
+        <div className="border-b border-gray-300 px-4 sm:px-6 py-4 flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="min-w-0 flex-1 pr-4">
               <h2 className="text-xl sm:text-2xl font-semibold text-black truncate">
@@ -357,7 +357,7 @@ export default function UserDetailsModal({
         </div>
 
         {/* Action Buttons */}
-        <div className="border-t border-gray-200 px-4 sm:px-6 py-4 bg-gray-50 flex-shrink-0">
+        <div className="border-t border-gray-300 px-4 sm:px-6 py-4 bg-gray-50 flex-shrink-0">
           <div className="flex flex-col sm:flex-row gap-3 sm:justify-end">
             <button
               onClick={onClose}

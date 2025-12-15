@@ -237,7 +237,7 @@ const TechnologyIcon = ({ tech, className = "w-8 h-8" }: TechnologyIconProps) =>
 
   if (iconUrl) {
     return (
-      <div className={`${className}  flex items-center justify-center bg-white border border-gray-200 `}>
+      <div className={`${className}  flex items-center justify-center bg-white border border-gray-300 `}>
         <Image
           src={iconUrl}
           alt={tech.name || 'Technology'}
@@ -262,7 +262,7 @@ const TechnologyIcon = ({ tech, className = "w-8 h-8" }: TechnologyIconProps) =>
   }
 
   return (
-    <div className={`${className}  flex items-center justify-center bg-white border border-gray-200 `}>
+    <div className={`${className}  flex items-center justify-center bg-white border border-gray-300 `}>
       <div className={`w-6 h-6 rounded flex items-center justify-center ${getCategoryColor(tech.category || 'Technologies')}`}>
         <span className="text-xs font-semibold">{getInitials(tech.name || 'Technologies detected')}</span>
       </div>
@@ -384,7 +384,7 @@ export default function TechnologiesTab({ project, htmlContent, headers, cookies
             {uniqueTechnologies.map((tech: DetectedTechnology, index: number) => (
               <div
                 key={index}
-                className="flex items-center gap-2 px-3 py-2  border border-gray-200 bg-gray-50 hover:border-[#ff4b01] transition-colors"
+                className="flex items-center gap-2 px-3 py-2  border border-gray-300 bg-gray-50 hover:border-[#ff4b01] transition-colors"
               >
                 <TechnologyIcon tech={tech} className="w-8 h-8 flex-shrink-0" />
                 <div className="min-w-0">

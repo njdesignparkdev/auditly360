@@ -18,7 +18,7 @@ export default function PageStructureOverview({
   labelCount
 }: PageStructureOverviewProps) {
   return (
-    <div className="bg-white border-b border-gray-300  p-6 break-inside-avoid ">
+    <div className="bg-white border-b border-gray-300  px-8 pb-4 break-inside-avoid ">
       <h3 className="text-xl font-semibold text-gray-900 ">Page Structure Overview</h3>
       
     </div>

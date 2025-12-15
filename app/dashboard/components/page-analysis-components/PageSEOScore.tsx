@@ -90,7 +90,7 @@ export default function PageSEOScore({ page, project }: PageSEOScoreProps) {
   return (
     <div className=" border-r border-gray-300">
       {/* SEO Score */}
-      <div className="border-b border-gray-200 p-6">
+      <div className="border-b border-gray-300 p-6">
         <div className="flex items-center justify-between mb-2">
           <span className="text-lg font-semibold text-gray-900">
             SEO Score
@@ -115,7 +115,7 @@ export default function PageSEOScore({ page, project }: PageSEOScoreProps) {
 
       {/* What's Working Well */}
       {seoAnalysis.highlights && seoAnalysis.highlights.length > 0 && (
-        <div className="p-6 border-b border-gray-200">
+        <div className="p-6 border-b border-gray-300">
           <h4 className="text-sm font-semibold text-gray-700 mb-3">
             What&apos;s Working Well
           </h4>
@@ -124,7 +124,7 @@ export default function PageSEOScore({ page, project }: PageSEOScoreProps) {
               (highlight: SEOHighlight, index: number) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between bg-white border border-gray-200 p-3"
+                  className="flex items-center justify-between bg-white border border-gray-300 p-3"
                 >
                   <div className="flex items-center space-x-3">
                     <span className="text-lg">
@@ -173,7 +173,7 @@ export default function PageSEOScore({ page, project }: PageSEOScoreProps) {
               {seoAnalysis.recommendations.map((recommendation, index) => (
                 <div
                   key={index}
-                  className="flex items-start bg-white border border-gray-200 p-3 flex-shrink-0"
+                  className="flex items-start bg-white border border-gray-300 p-3 flex-shrink-0"
                   style={{ maxWidth: 'calc(50% - 0.375rem)' }}
                 >
                   <span className="mr-2 mt-0.5 flex-shrink-0">

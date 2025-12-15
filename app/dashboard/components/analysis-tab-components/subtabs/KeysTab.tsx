@@ -224,9 +224,9 @@ export default function KeysTab({
       case 'medium':
         return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'low':
-        return 'bg-gray-100 text-gray-800 border-gray-200';
+        return 'bg-gray-100 text-gray-800 border-gray-300';
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
+        return 'bg-gray-100 text-gray-800 border-gray-300';
     }
   };
   const LoadingSkeleton = () => <div className="">
@@ -375,7 +375,7 @@ export default function KeysTab({
                       <div className="space-y-3 flex-1">
                         <div className="text-sm text-gray-600">
                           <span className="font-medium text-gray-700">Key:</span>
-                          <div className="mt-1 font-mono text-xs break-all bg-gray-50 p-2 border border-gray-200">
+                          <div className="mt-1 font-mono text-xs break-all bg-gray-50 p-2 border border-gray-300">
                             {key.key}
                           </div>
                         </div>
@@ -391,7 +391,7 @@ export default function KeysTab({
                             <p className="mt-1 text-xs">{key.description}</p>
                           </div>
                         )}
-                        <div className="flex items-center justify-between text-xs text-gray-500 pt-2 border-t border-gray-200">
+                        <div className="flex items-center justify-between text-xs text-gray-500 pt-2 border-t border-gray-300">
                           <span className="font-medium">Confidence: <span className="text-gray-900">{key.confidence}%</span></span>
                         </div>
                       </div>

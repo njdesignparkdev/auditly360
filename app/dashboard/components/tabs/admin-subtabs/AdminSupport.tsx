@@ -281,7 +281,7 @@ export default function AdminSupport({}: AdminSupportProps) {
     duration: 0.5
   }}>
       {/* Header */}
-      <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+      <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -333,7 +333,7 @@ export default function AdminSupport({}: AdminSupportProps) {
         label: 'High Priority',
         value: supportStats.highPriorityTickets,
         color: 'orange'
-      }].map((stat, index) => <motion.div key={stat.label} className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+      }].map((stat, index) => <motion.div key={stat.label} className="bg-white rounded-lg border border-gray-300 p-6" initial={{
         opacity: 0,
         y: 20
       }} animate={{
@@ -354,7 +354,7 @@ export default function AdminSupport({}: AdminSupportProps) {
       </div>
 
       {/* Ticket Analytics */}
-      {/* <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+      {/* <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -394,7 +394,7 @@ export default function AdminSupport({}: AdminSupportProps) {
       </motion.div> */}
 
       {/* Filters */}
-      <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+      <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -438,7 +438,7 @@ export default function AdminSupport({}: AdminSupportProps) {
       </motion.div>
 
       {/* Tickets List */}
-      {ticketsLoading ? <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+      {ticketsLoading ? <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -452,7 +452,7 @@ export default function AdminSupport({}: AdminSupportProps) {
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#ff4b01]"></div>
             <span className="ml-3 text-gray-600">Loading tickets...</span>
           </div>
-        </motion.div> : ticketsError ? <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+        </motion.div> : ticketsError ? <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -473,7 +473,7 @@ export default function AdminSupport({}: AdminSupportProps) {
               Try again
             </button>
           </div>
-        </motion.div> : filteredTickets.length === 0 ? <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+        </motion.div> : filteredTickets.length === 0 ? <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -492,7 +492,7 @@ export default function AdminSupport({}: AdminSupportProps) {
           </div>
         </motion.div> : <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Tickets List */}
-          <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+          <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
         opacity: 0,
         y: 20
       }} animate={{
@@ -504,7 +504,7 @@ export default function AdminSupport({}: AdminSupportProps) {
       }}>
             <h3 className="text-lg font-semibold text-black mb-4">Tickets ({filteredTickets.length})</h3>
             <div className="space-y-3 max-h-96 overflow-y-auto">
-              {filteredTickets.map((ticket, index) => <motion.div key={ticket.id} className={`p-4 rounded-lg border cursor-pointer transition-colors ${selectedTicket?.id === ticket.id ? 'border-[#ff4b01] bg-[#ff4b01]/10' : 'border-gray-200 hover:border-[#ff4b01]/30 hover:bg-gray-50'}`} initial={{
+              {filteredTickets.map((ticket, index) => <motion.div key={ticket.id} className={`p-4 rounded-lg border cursor-pointer transition-colors ${selectedTicket?.id === ticket.id ? 'border-[#ff4b01] bg-[#ff4b01]/10' : 'border-gray-300 hover:border-[#ff4b01]/30 hover:bg-gray-50'}`} initial={{
             opacity: 0,
             y: 20
           }} animate={{
@@ -535,7 +535,7 @@ export default function AdminSupport({}: AdminSupportProps) {
           </motion.div>
 
           {/* Selected Ticket Details */}
-          {selectedTicket && <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+          {selectedTicket && <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
         opacity: 0,
         y: 20
       }} animate={{
@@ -587,7 +587,7 @@ export default function AdminSupport({}: AdminSupportProps) {
                 </div>
 
                 {/* Messages */}
-                <div className="border-t border-gray-200 pt-4">
+                <div className="border-t border-gray-300 pt-4">
                   <h5 className="font-medium text-black mb-3">Conversation</h5>
                   <div className="space-y-3 max-h-48 overflow-y-auto">
                     {ticketMessages.map((message, index) => <motion.div key={message.id} className={`p-3 rounded-lg ${message.is_from_support ? 'bg-[#ff4b01]/10 border-l-4 border-[#ff4b01]' : 'bg-gray-50 border-l-4 border-gray-300'}`} initial={{

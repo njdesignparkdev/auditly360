@@ -42,7 +42,7 @@ export function DashboardFooter() {
                     <div className="flex flex-col gap-8 lg:w-1/4">
                         <a
                             href="mailto:hello@auditly360.com"
-                            className="inline-flex items-center gap-3 px-6 py-3 bg-white border border-gray-200 rounded-full text-gray-700 hover:border-[#ff4b01] hover:text-[#ff4b01] transition-colors shadow-sm w-fit"
+                            className="inline-flex items-center gap-3 px-6 py-3 bg-white border border-gray-300 rounded-full text-gray-700 hover:border-[#ff4b01] hover:text-[#ff4b01] transition-colors shadow-sm w-fit"
                         >
                             <Mail size={18} />
                             <span className="font-medium">hello@auditly360.com</span>

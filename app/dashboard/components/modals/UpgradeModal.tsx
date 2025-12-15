@@ -51,7 +51,7 @@ export default function UpgradeModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-200">
+        <div className="px-6 py-4 border-b border-gray-300">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
@@ -77,7 +77,7 @@ export default function UpgradeModal({
 
         {/* Current Plan Info */}
         {currentPlan && (
-          <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
+          <div className="px-6 py-4 bg-gray-50 border-b border-gray-300">
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-sm font-medium text-gray-900">
@@ -165,7 +165,7 @@ export default function UpgradeModal({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 rounded-b-lg">
+        <div className="px-6 py-4 border-t border-gray-300 bg-gray-50 rounded-b-lg">
           <div className="flex space-x-3">
             <button
               onClick={onClose}

@@ -225,18 +225,7 @@ export default function OverviewSection({ project, scrapedPages = [] }: Overview
                 {getStatusDisplayName(project.status)}
               </span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Created</span>
-              <span className="text-gray-900">
-                {formatDate(project.created_at)}
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Last Updated</span>
-              <span className="text-gray-900">
-                {formatDate(project.updated_at)} 
-              </span>
-            </div>
+            
             <div className="flex justify-between">
               <span className="text-gray-600">Progress</span>
               <span className="text-gray-900">{project.progress}%</span>

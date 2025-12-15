@@ -279,13 +279,13 @@ export default function SEOAnalysisSection({
   //     case 'low':
   //       return 'text-blue-600 bg-blue-50 border-blue-200'
   //     default:
-  //       return 'text-gray-600 bg-gray-50 border-gray-200'
+  //       return 'text-gray-600 bg-gray-50 border-gray-300'
   //   }
   // }
 
   if (loading) {
     return (
-      <div className="bg-white   border border-gray-200 p-6">
+      <div className="bg-white   border border-gray-300 p-6">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-semibold text-gray-900">SEO Analysis</h3>
           <button
@@ -309,7 +309,7 @@ export default function SEOAnalysisSection({
   }
   if (error) {
     return (
-      <div className="bg-white   border border-gray-200 p-6">
+      <div className="bg-white   border border-gray-300 p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-gray-900">SEO Analysis</h3>
           <button
@@ -331,7 +331,7 @@ export default function SEOAnalysisSection({
   }
   if (!seoAnalysis) {
     return (
-      <div className="bg-white   border border-gray-200 p-6">
+      <div className="bg-white   border border-gray-300 p-6">
         <div className="flex items-center justify-between mb-4 p-6">
           <h3 className="text-lg font-semibold text-gray-900">SEO Analysis</h3>
           <button
@@ -352,7 +352,7 @@ export default function SEOAnalysisSection({
     );
   }
   return (
-    <div className=" border-b border-gray-200 ">
+    <div className=" border-b border-gray-300 ">
       {/* <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-gray-900">SEO Analysis</h3>
         <button
@@ -372,9 +372,9 @@ export default function SEOAnalysisSection({
         {/* Left Column: Positive Highlights and Recommendations */}
         {/* Summary Overview - Clean Row Format */}
 
-        <div className="border-r border-gray-200 ">
+        <div className="border-r border-gray-300 ">
           {/* Positive Highlights */}
-          <div className="border-b pb-4 border-gray-200 p-6">
+          <div className="border-b pb-4 border-gray-300 p-6">
             {/* SEO Score */}
             <div className="">
               <div className="flex items-center justify-between mb-2 ">
@@ -407,7 +407,7 @@ export default function SEOAnalysisSection({
                   Analysis Overview
                 </h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="text-center border-r border-gray-200">
+                  <div className="text-center border-r border-gray-300">
                     <div className="text-2xl font-bold text-[#ff4b01]">
                       {seoAnalysis.score}
                     </div>
@@ -415,7 +415,7 @@ export default function SEOAnalysisSection({
                   </div>
                   {seoAnalysis.highlights &&
                     seoAnalysis.highlights.length > 0 && (
-                      <div className="text-center border-r border-gray-200">
+                      <div className="text-center border-r border-gray-300">
                         <div className="text-2xl font-bold text-[#ff4b01]">
                           {seoAnalysis.summary?.totalHighlights || 0}
                         </div>
@@ -424,7 +424,7 @@ export default function SEOAnalysisSection({
                     )}
                   {seoAnalysis.issues && seoAnalysis.issues.length > 0 && (
                     <>
-                      <div className="text-center border-r border-gray-200">
+                      <div className="text-center border-r border-gray-300">
                         <div className="text-2xl font-bold text-[#ff4b01]">
                           {seoAnalysis.summary?.errors || 0}
                         </div>
@@ -444,7 +444,7 @@ export default function SEOAnalysisSection({
           </div>
 
           {seoAnalysis.highlights && seoAnalysis.highlights.length > 0 && (
-            <div className="p-6 border-b border-gray-200">
+            <div className="p-6 border-b border-gray-300">
               <h4 className="text-sm font-semibold text-gray-700 mb-3">
                 What&apos;s Working Well
               </h4>
@@ -453,7 +453,7 @@ export default function SEOAnalysisSection({
                   (highlight: SEOHighlight, index: number) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between bg-white border border-gray-200  p-3 "
+                      className="flex items-center justify-between bg-white border border-gray-300  p-3 "
                     >
                       <div className="flex items-center space-x-3">
                         <span className="text-lg">
@@ -494,7 +494,7 @@ export default function SEOAnalysisSection({
           {/* Recommendations */}
           {seoAnalysis.recommendations &&
             seoAnalysis.recommendations.length > 0 && (
-              <div className="p-6 border-b border-gray-200">
+              <div className="p-6 border-b border-gray-300">
                 <h4 className="text-sm font-semibold text-gray-700 mb-3">
                   Recommendations
                 </h4>
@@ -502,7 +502,7 @@ export default function SEOAnalysisSection({
                   {seoAnalysis.recommendations.map((recommendation, index) => (
                     <div
                       key={index}
-                      className="flex items-start bg-white border border-gray-200  p-3"
+                      className="flex items-start bg-white border border-gray-300  p-3"
                     >
                       <span className="mr-3 mt-0.5">
                         <i className="fas fa-lightbulb text-blue-500"></i>
@@ -517,7 +517,7 @@ export default function SEOAnalysisSection({
 
         {/* Right Column: Issues and Fixes */}
         {seoAnalysis.issues && seoAnalysis.issues.length > 0 && (
-          <div className="p-6 border-b border-gray-200">
+          <div className="p-6 border-b border-gray-300">
             <h4 className="text-sm font-semibold text-gray-700 mb-3">
               Issues & Fixes
             </h4>
@@ -525,7 +525,7 @@ export default function SEOAnalysisSection({
               {seoAnalysis.issues.map((issue, index) => (
                 <div
                   key={index}
-                  className="bg-white border border-gray-200  p-3 "
+                  className="bg-white border border-gray-300  p-3 "
                 >
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex items-center space-x-3">

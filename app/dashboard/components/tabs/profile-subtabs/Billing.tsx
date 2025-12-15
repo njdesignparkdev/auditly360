@@ -388,7 +388,7 @@ export default function Billing({
         </motion.div>}
 
       {/* Current Plan Usage */}
-      {/* <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+      {/* <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -494,7 +494,7 @@ export default function Billing({
       
       {/* Image Scan Credits Section - Only show if user has Image_scane feature */}
       {hasImageScanFeature && (
-        <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+        <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
           opacity: 0,
           y: 20
         }} animate={{
@@ -529,7 +529,7 @@ export default function Billing({
               {creditPackages.map((pkg, index) => (
                 <motion.div
                   key={pkg.id || index}
-                  className="border border-gray-200 rounded-lg p-4 hover:border-[#ff4b01]/30 hover:shadow-md transition-all"
+                  className="border border-gray-300 rounded-lg p-4 hover:border-[#ff4b01]/30 hover:shadow-md transition-all"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: 0.2 + index * 0.05 }}
@@ -563,7 +563,7 @@ export default function Billing({
       </motion.div>
 
       {/* Billing History */}
-      <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+      <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -621,7 +621,7 @@ export default function Billing({
               {planInfo?.plan_type === 'Starter' ? "You're currently on the free plan." : "No payment records found for your account."}
             </p>
           </motion.div> : <div className="space-y-4">
-            {paymentHistory.map((payment, index) => <motion.div key={payment.id} className="border border-gray-200 rounded-lg p-4 hover:border-gray-300 transition-colors" initial={{
+            {paymentHistory.map((payment, index) => <motion.div key={payment.id} className="border border-gray-300 rounded-lg p-4 hover:border-gray-300 transition-colors" initial={{
           opacity: 0,
           y: 20
         }} animate={{

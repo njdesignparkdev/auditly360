@@ -94,7 +94,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
   if (!res.ok) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="bg-white rounded-lg border border-gray-200 p-8 max-w-lg text-center">
+        <div className="bg-white rounded-lg border border-gray-300 p-8 max-w-lg text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Blog not found</h1>
           <p className="text-gray-600 mb-4">
             The blog post you are looking for does not exist or may have been removed.
@@ -115,7 +115,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-white border-b border-gray-300">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <p className="text-sm text-gray-500 mb-3">
             <Link href="/blogs" className="hover:text-[#ff4b01]">
@@ -161,7 +161,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
           <img
             src={blog.featured_image_url}
             alt={blog.title}
-            className="w-full max-h-96 object-cover rounded-lg border border-gray-200 mb-8"
+            className="w-full max-h-96 object-cover rounded-lg border border-gray-300 mb-8"
           />
         )}
 

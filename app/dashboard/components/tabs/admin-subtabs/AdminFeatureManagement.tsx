@@ -183,7 +183,7 @@ export default function AdminFeatureManagement({
     duration: 0.5
   }}>
       {/* Header */}
-      <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+      <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -220,7 +220,7 @@ export default function AdminFeatureManagement({
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Plans List */}
-        <motion.div className="bg-white rounded-lg border border-gray-200 overflow-hidden" initial={{
+        <motion.div className="bg-white rounded-lg border border-gray-300 overflow-hidden" initial={{
         opacity: 0,
         y: 20
       }} animate={{
@@ -230,7 +230,7 @@ export default function AdminFeatureManagement({
         duration: 0.5,
         delay: 0.2
       }}>
-          <div className="px-6 py-4 border-b border-gray-200">
+          <div className="px-6 py-4 border-b border-gray-300">
             <h3 className="text-lg font-semibold text-black">Select Plan to Manage</h3>
           </div>
           
@@ -256,7 +256,7 @@ export default function AdminFeatureManagement({
           }} transition={{
             duration: 0.3,
             delay: 0.3 + index * 0.1
-          }} className={`p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors ${selectedPlan?.id === plan.id ? 'bg-[#ff4b01]/10 border-[#ff4b01]/30' : ''}`} onClick={() => handlePlanSelect(plan)}>
+          }} className={`p-4 border-b border-gray-300 cursor-pointer hover:bg-gray-50 transition-colors ${selectedPlan?.id === plan.id ? 'bg-[#ff4b01]/10 border-[#ff4b01]/30' : ''}`} onClick={() => handlePlanSelect(plan)}>
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
                       <div className="flex items-center space-x-3">
@@ -287,7 +287,7 @@ export default function AdminFeatureManagement({
         </motion.div>
 
         {/* Feature Management */}
-        <motion.div className="bg-white rounded-lg border border-gray-200 overflow-hidden" initial={{
+        <motion.div className="bg-white rounded-lg border border-gray-300 overflow-hidden" initial={{
         opacity: 0,
         y: 20
       }} animate={{
@@ -297,7 +297,7 @@ export default function AdminFeatureManagement({
         duration: 0.5,
         delay: 0.3
       }}>
-          <div className="px-6 py-4 border-b border-gray-200">
+          <div className="px-6 py-4 border-b border-gray-300">
             <h3 className="text-lg font-semibold text-black">
               {selectedPlan ? `Manage Features for ${selectedPlan.name}` : 'Select a Plan First'}
             </h3>
@@ -323,7 +323,7 @@ export default function AdminFeatureManagement({
             return <div key={categoryKey} className="mb-6">
                     <h4 className="font-medium text-black mb-3">{categoryName}</h4>
                     <div className="space-y-2">
-                      {categoryFeatures.map(feature => <label key={feature.id} className="flex items-start space-x-3 p-3 rounded-lg border border-gray-200 hover:border-[#ff4b01]/30 hover:bg-[#ff4b01]/10 transition-colors cursor-pointer">
+                      {categoryFeatures.map(feature => <label key={feature.id} className="flex items-start space-x-3 p-3 rounded-lg border border-gray-300 hover:border-[#ff4b01]/30 hover:bg-[#ff4b01]/10 transition-colors cursor-pointer">
                           <input type="checkbox" checked={selectedFeatures.includes(feature.id)} onChange={() => handleFeatureToggle(feature.id)} className="mt-1 h-4 w-4 text-[#ff4b01] focus:ring-[#ff4b01] border-gray-300 rounded" />
                           <div className="flex-1">
                             <div className="flex items-center space-x-2">
@@ -341,7 +341,7 @@ export default function AdminFeatureManagement({
           })}
 
               {/* Save Button */}
-              <div className="mt-6 pt-6 border-t border-gray-200">
+              <div className="mt-6 pt-6 border-t border-gray-300">
                 <button onClick={handleSaveFeatures} disabled={actionLoading === 'save'} className="w-full bg-[#ff4b01] text-white py-2 rounded-lg hover:bg-[#e64401] disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
                   {actionLoading === 'save' ? 'Saving...' : 'Save Features'}
                 </button>
@@ -356,7 +356,7 @@ export default function AdminFeatureManagement({
       </div>
 
       {/* Feature Summary */}
-      {selectedPlan && <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+      {selectedPlan && <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
       opacity: 0,
       y: 20
     }} animate={{

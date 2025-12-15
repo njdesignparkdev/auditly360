@@ -375,7 +375,7 @@ export default function AdminUsers({
     duration: 0.5
   }}>
       {/* Header */}
-      <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+      <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -479,7 +479,7 @@ export default function AdminUsers({
       {/* Feedback Showcase */}
       <FeedbackShowcase />
 
-      <motion.div className="bg-white rounded-lg border border-gray-200 overflow-hidden" initial={{
+      <motion.div className="bg-white rounded-lg border border-gray-300 overflow-hidden" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -610,7 +610,7 @@ export default function AdminUsers({
 
       {/* User Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+        <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
         opacity: 0,
         y: 20
       }} animate={{
@@ -641,7 +641,7 @@ export default function AdminUsers({
           </div>
         </motion.div>
 
-        <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+        <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
         opacity: 0,
         y: 20
       }} animate={{
@@ -664,7 +664,7 @@ export default function AdminUsers({
           </div>
         </motion.div>
 
-        <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+        <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
         opacity: 0,
         y: 20
       }} animate={{

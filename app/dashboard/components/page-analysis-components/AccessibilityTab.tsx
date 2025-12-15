@@ -70,7 +70,7 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Accessibility Score */}
-      <div className="bg-white rounded-lg border border-gray-200 p-5">
+      <div className="bg-white rounded-lg border border-gray-300 p-5">
         <h3 className="text-lg font-semibold text-gray-900 mb-3">Accessibility Score</h3>
         <div className="flex items-center space-x-4">
           <div className="text-4xl font-bold text-blue-600">{accessibilityScore}</div>
@@ -82,7 +82,7 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
       </div>
 
       {/* Basic Accessibility Elements */}
-      <div className="bg-white rounded-lg border border-gray-200 p-5">
+      <div className="bg-white rounded-lg border border-gray-300 p-5">
         <h3 className="text-lg font-semibold text-gray-900 mb-3">Basic Accessibility Elements</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
@@ -161,7 +161,7 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
       </div>
 
       {/* Interactive Elements */}
-      <div className="bg-white rounded-lg border border-gray-200 p-5">
+      <div className="bg-white rounded-lg border border-gray-300 p-5">
         <h3 className="text-lg font-semibold text-gray-900 mb-3">Interactive Elements</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="bg-gray-50 rounded-lg p-3 text-center">
@@ -184,7 +184,7 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
       </div>
 
       {/* Image Accessibility */}
-      <div className="bg-white rounded-lg border border-gray-200 p-5">
+      <div className="bg-white rounded-lg border border-gray-300 p-5">
         <h3 className="text-lg font-semibold text-gray-900 mb-3">Image Accessibility</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -240,7 +240,7 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
 
       {/* Form Accessibility */}
       {hasFormElements && (
-        <div className="bg-white rounded-lg border border-gray-200 p-5">
+        <div className="bg-white rounded-lg border border-gray-300 p-5">
           <h3 className="text-lg font-semibold text-gray-900 mb-3">Form Accessibility</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -288,7 +288,7 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
       )}
 
       {/* ARIA and Advanced Accessibility */}
-      <div className="bg-white rounded-lg border border-gray-200 p-5">
+      <div className="bg-white rounded-lg border border-gray-300 p-5">
         <h3 className="text-lg font-semibold text-gray-900 mb-3">Advanced Accessibility Features</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -370,7 +370,7 @@ export default function AccessibilityTab({ page }: AccessibilityTabProps) {
       </div>
 
       {/* Accessibility Recommendations */}
-      <div className="bg-white rounded-lg border border-gray-200 p-5 lg:col-span-2">
+      <div className="bg-white rounded-lg border border-gray-300 p-5 lg:col-span-2">
         <h3 className="text-lg font-semibold text-gray-900 mb-3">Accessibility Recommendations</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {!hasTitle && (

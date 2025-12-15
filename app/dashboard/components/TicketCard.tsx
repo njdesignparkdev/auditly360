@@ -183,7 +183,7 @@ export default function TicketCard({
     y: 0
   }} transition={{
     duration: 0.3
-  }} className="bg-white rounded-lg  border border-gray-200 overflow-hidden">
+  }} className="bg-white rounded-lg  border border-gray-300 overflow-hidden">
       {/* Ticket Header */}
       <div className="p-6 cursor-pointer hover:bg-gray-50 transition-colors" onClick={() => setIsExpanded(!isExpanded)}>
         <div className="flex items-start justify-between">
@@ -229,7 +229,7 @@ export default function TicketCard({
         opacity: 0
       }} transition={{
         duration: 0.3
-      }} className="border-t border-gray-200">
+      }} className="border-t border-gray-300">
             <div className="p-6">
               {/* Messages */}
               <div className="mb-6">
@@ -263,7 +263,7 @@ export default function TicketCard({
                 duration: 0.2,
                 delay: index * 0.1
               }} className={`flex ${message.is_from_support ? 'justify-start' : 'justify-end'}`}>
-                        <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${message.is_from_support ? 'bg-gray-50 text-gray-900 border border-gray-200' : 'bg-blue-600 text-white'}`}>
+                        <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${message.is_from_support ? 'bg-gray-50 text-gray-900 border border-gray-300' : 'bg-blue-600 text-white'}`}>
                           <div className="flex items-start">
                             <i className={`fas ${message.is_from_support ? 'fa-user-tie' : 'fa-user'} text-xs mr-2 mt-1 ${message.is_from_support ? 'text-gray-600' : 'text-blue-100'}`}></i>
                             <div className="flex-1">

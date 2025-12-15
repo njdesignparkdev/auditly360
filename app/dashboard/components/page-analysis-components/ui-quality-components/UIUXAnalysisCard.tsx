@@ -69,7 +69,7 @@ export default function UIUXAnalysisCard({ primaryAnalysis, hasMobile }: UIUXAna
           )}
 
           {primaryAnalysis.ui_ux_analysis.strengths && primaryAnalysis.ui_ux_analysis.strengths.length > 0 && (
-            <div className="mb-8 pb-8 border-b border-gray-200">
+            <div className="mb-8 pb-8 border-b border-gray-300">
               <h5 className="text-base font-semibold text-gray-900 mb-4 px-8">Strengths</h5>
               <ul className="space-y-3">
                 {primaryAnalysis.ui_ux_analysis.strengths.map((strength: string, idx: number) => (
@@ -128,7 +128,7 @@ export default function UIUXAnalysisCard({ primaryAnalysis, hasMobile }: UIUXAna
                           <div className="text-sm text-gray-800">{solution}</div>
                         </div>
                         {(issue.location || issue.impact) && (
-                          <div className="flex flex-wrap gap-4 text-xs text-gray-600 border-t border-gray-200 pt-4 mt-4">
+                          <div className="flex flex-wrap gap-4 text-xs text-gray-600 border-t border-gray-300 pt-4 mt-4">
                             {issue.location && (
                               <span className="flex items-center gap-1">
                                 <span role="img" aria-label="location">📍</span>

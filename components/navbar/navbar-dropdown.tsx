@@ -49,7 +49,7 @@ export default function Navbar() {
 
 	return (
 		<header
-			className={cn('sticky top-0 z-50 w-full border-b border-gray-200 dark:border-border', {
+			className={cn('sticky top-0 z-50 w-full border-b border-gray-300 dark:border-border', {
 				'bg-background/95 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg':
 					scrolled,
 			})}

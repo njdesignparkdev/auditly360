@@ -47,7 +47,7 @@ export default function ModernLoader({
       <div className="absolute inset-0 animate-pulse">
         <div className="space-y-6 p-6">
           {/* Header Skeleton */}
-          <div className="bg-white rounded-lg  border border-gray-200 p-6">
+          <div className="bg-white rounded-lg  border border-gray-300 p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="h-8 bg-gray-200 rounded w-64"></div>
               <div className="h-6 bg-gray-200 rounded w-24"></div>
@@ -58,7 +58,7 @@ export default function ModernLoader({
           {/* Stats Cards Skeleton */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-lg  border border-gray-200 p-4">
+              <div key={i} className="bg-white rounded-lg  border border-gray-300 p-4">
                 <div className="h-8 bg-gray-200 rounded w-16 mb-2"></div>
                 <div className="h-4 bg-gray-200 rounded w-24"></div>
               </div>
@@ -66,7 +66,7 @@ export default function ModernLoader({
           </div>
 
           {/* Filters Skeleton */}
-          <div className="bg-white rounded-lg  border border-gray-200 p-6">
+          <div className="bg-white rounded-lg  border border-gray-300 p-6">
             <div className="flex flex-col sm:flex-row gap-3 justify-end">
               <div className="h-10 bg-gray-200 rounded w-64"></div>
               <div className="h-10 bg-gray-200 rounded w-48"></div>
@@ -75,7 +75,7 @@ export default function ModernLoader({
           </div>
 
           {/* Table Skeleton */}
-          <div className="bg-white rounded-lg  border border-gray-200 p-6">
+          <div className="bg-white rounded-lg  border border-gray-300 p-6">
             <div className="space-y-4">
               {[1, 2, 3, 4, 5].map((i) => (
                 <div key={i} className="flex items-center space-x-4">

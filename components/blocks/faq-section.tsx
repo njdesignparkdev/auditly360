@@ -42,7 +42,7 @@ export default function FaqSection() {
           {faqs.map((faq, index) => (
             <div 
               key={index} 
-              className="border border-gray-200 rounded-2xl bg-white overflow-hidden transition-all duration-200 hover:border-orange-200"
+              className="border border-gray-300 rounded-2xl bg-white overflow-hidden transition-all duration-200 hover:border-orange-200"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}

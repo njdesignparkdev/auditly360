@@ -524,7 +524,7 @@ export default function AdminPlans({
     duration: 0.5
   }}>
       {/* Header */}
-      <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+      <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -574,7 +574,7 @@ export default function AdminPlans({
       </motion.div>
 
       {/* Plans Table */}
-      <motion.div className="bg-white rounded-lg border border-gray-200 overflow-hidden" initial={{
+      <motion.div className="bg-white rounded-lg border border-gray-300 overflow-hidden" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -727,7 +727,7 @@ export default function AdminPlans({
 
       {/* Plan Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+        <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
         opacity: 0,
         y: 20
       }} animate={{
@@ -758,7 +758,7 @@ export default function AdminPlans({
           </div>
         </motion.div>
 
-        {/* <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+        {/* <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
         opacity: 0,
         y: 20
       }} animate={{
@@ -770,19 +770,19 @@ export default function AdminPlans({
       }}>
           <h3 className="text-lg font-semibold text-black mb-4">Quick Actions</h3>
           <div className="space-y-2">
-            <button onClick={loadPlans} className="w-full text-left p-3 rounded-lg border border-gray-200 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
+            <button onClick={loadPlans} className="w-full text-left p-3 rounded-lg border border-gray-300 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
               <span className="font-medium text-black">Refresh Plans</span>
             </button>
-            <button onClick={() => setShowPlanForm(true)} className="w-full text-left p-3 rounded-lg border border-gray-200 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
+            <button onClick={() => setShowPlanForm(true)} className="w-full text-left p-3 rounded-lg border border-gray-300 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
               <span className="font-medium text-black">Add New Plan</span>
             </button>
-            <button className="w-full text-left p-3 rounded-lg border border-gray-200 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
+            <button className="w-full text-left p-3 rounded-lg border border-gray-300 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
               <span className="font-medium text-black">Export Plans</span>
             </button>
           </div>
         </motion.div> */}
 
-        <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+        <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
         opacity: 0,
         y: 20
       }} animate={{

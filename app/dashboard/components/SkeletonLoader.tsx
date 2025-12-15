@@ -7,7 +7,7 @@ interface SkeletonLoaderProps {
 
 // Individual skeleton components
 export const ProjectCardSkeleton = () => (
-  <div className="bg-white rounded-lg border border-gray-200 p-6 animate-pulse">
+  <div className="bg-white rounded-lg border border-gray-300 p-6 animate-pulse">
     <div className="flex items-center justify-between mb-4">
       <div className="h-6 bg-gray-200 rounded w-32"></div>
       <div className="h-4 bg-gray-200 rounded w-16"></div>
@@ -25,7 +25,7 @@ export const ProjectCardSkeleton = () => (
 )
 
 export const StatsCardSkeleton = () => (
-  <div className="bg-white rounded-lg border border-gray-200 p-6 animate-pulse">
+  <div className="bg-white rounded-lg border border-gray-300 p-6 animate-pulse">
     <div className="flex items-center justify-between mb-4">
       <div className="h-6 bg-gray-200 rounded w-24"></div>
       <div className="h-4 bg-gray-200 rounded w-12"></div>
@@ -38,7 +38,7 @@ export const StatsCardSkeleton = () => (
 )
 
 export const RecentProjectSkeleton = () => (
-  <div className="bg-white rounded-lg border border-gray-200 p-4 animate-pulse">
+  <div className="bg-white rounded-lg border border-gray-300 p-4 animate-pulse">
     <div className="flex items-center space-x-3">
       <div className="w-10 h-10 bg-gray-200 rounded"></div>
       <div className="flex-1">
@@ -56,7 +56,7 @@ export default function SkeletonLoader({ type = 'default', className = '' }: Ske
       case 'grammar':
         return (
           <div className="space-y-6">
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="bg-white rounded-lg border border-gray-300 p-6">
               <div className="animate-pulse">
                 <div className="flex items-center justify-between mb-6">
                   <div>
@@ -67,7 +67,7 @@ export default function SkeletonLoader({ type = 'default', className = '' }: Ske
                 </div>
                 
                 {/* Tab navigation skeleton */}
-                <div className="border-b border-gray-200 mb-6">
+                <div className="border-b border-gray-300 mb-6">
                   <div className="flex space-x-8">
                     {[1, 2, 3, 4, 5, 6, 7].map((i) => (
                       <div key={i} className="h-8 bg-gray-200 rounded w-20"></div>
@@ -89,7 +89,7 @@ export default function SkeletonLoader({ type = 'default', className = '' }: Ske
       case 'performance':
         return (
           <div className="space-y-6">
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="bg-white rounded-lg border border-gray-300 p-6">
               <div className="animate-pulse">
                 <div className="flex items-center justify-between mb-6">
                   <div>
@@ -127,7 +127,7 @@ export default function SkeletonLoader({ type = 'default', className = '' }: Ske
       case 'ui-quality':
         return (
           <div className="space-y-6">
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="bg-white rounded-lg border border-gray-300 p-6">
               <div className="animate-pulse">
                 <div className="flex items-center justify-between mb-6">
                   <div>
@@ -156,7 +156,7 @@ export default function SkeletonLoader({ type = 'default', className = '' }: Ske
       default:
         return (
           <div className="space-y-6">
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="bg-white rounded-lg border border-gray-300 p-6">
               <div className="animate-pulse">
                 <div className="flex items-center justify-between mb-6">
                   <div>

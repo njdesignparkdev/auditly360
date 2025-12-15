@@ -268,7 +268,7 @@ export default function GrammarContentTab({
           {issues.map((issue, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg border border-gray-200 p-4"
+              className="bg-white rounded-lg border border-gray-300 p-4"
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
@@ -313,9 +313,9 @@ export default function GrammarContentTab({
     );
   };
   return (
-    <div className="border border-gray-200 rounded-lg bg-white">
+    <div className="border border-gray-300 rounded-lg bg-white">
       {/* Header with Cached Status */}
-      <div className="border-b border-gray-200 p-6">
+      <div className="border-b border-gray-300 p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h3 className="text-lg font-semibold text-gray-900">Grammar & Content Quality</h3>
@@ -440,7 +440,7 @@ export default function GrammarContentTab({
             </div>
 
             {/* Overall Summary */}
-            <div className="border-t border-gray-200 bg-gray-50 p-6">
+            <div className="border-t border-gray-300 bg-gray-50 p-6">
               <h4 className="font-medium text-gray-900 mb-2">Overall Summary</h4>
               <p className="text-gray-700 text-sm">{geminiAnalysis.summary}</p>
             </div>

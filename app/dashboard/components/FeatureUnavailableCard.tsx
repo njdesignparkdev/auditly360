@@ -14,7 +14,7 @@ export default function FeatureUnavailableCard({
   upgradeUrl = '/dashboard?tab=profile&subtab=plans'
 }: FeatureUnavailableCardProps) {
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6">
+    <div className="bg-white rounded-lg border border-gray-300 p-6">
       <div className="flex items-center space-x-4">
         <div className="text-blue-500">
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">

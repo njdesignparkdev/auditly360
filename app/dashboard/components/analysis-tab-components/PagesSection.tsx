@@ -340,7 +340,7 @@ export default function PagesSection({
   // Show loading state while checking plan
   if (isLoadingPlan) {
     return (
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-300 p-6">
         <div className="text-center py-8">
           <div className="inline-flex items-center">
             <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-[#ff4b01]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -357,7 +357,7 @@ export default function PagesSection({
   // Show feature unavailable card if user doesn't have access
   if (!hasPagesTabAccess) {
     return (
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-300 p-6">
         <FeatureUnavailableCard
           title="Pages Tab"
           description="This feature is not available in your current plan. Upgrade to access pages tab functionality."
@@ -514,7 +514,7 @@ export default function PagesSection({
 
           {/* Table View */}
           {viewMode === 'table' && (
-            <div className="overflow-x-auto border border-gray-200 rounded-lg">
+            <div className="overflow-x-auto border border-gray-300 rounded-lg">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
@@ -586,7 +586,7 @@ export default function PagesSection({
           {viewMode === 'grid' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {paginatedPages.map((page, index) => (
-                <div key={page.id || index} className="border border-gray-200 rounded-lg p-4 transition-colors duration-200 hover:shadow-md flex flex-col">
+                <div key={page.id || index} className="border border-gray-300 rounded-lg p-4 transition-colors duration-200 hover:shadow-md flex flex-col">
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <h4 
                       onClick={() => {
@@ -665,7 +665,7 @@ export default function PagesSection({
 
           {/* Pagination Controls */}
           {totalPages > 1 && (
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-6 pt-4 border-t border-gray-200">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-6 pt-4 border-t border-gray-300">
               <div className="flex items-center justify-center sm:justify-start space-x-2">
                 {/* <button
                   onClick={() => setCurrentPage(1)}

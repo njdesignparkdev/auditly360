@@ -428,8 +428,8 @@ export default function TechnicalTab({ page }: TechnicalTabProps) {
   }
 
   return (
-    <div className="bg-white rounded-lg  border border-gray-200">
-      <div className="border-b border-gray-200">
+    <div className="bg-white rounded-lg  border border-gray-300">
+      <div className="border-b border-gray-300">
         <div className="overflow-x-auto">
           <div className="flex min-w-max">
             {tabs.map((tab) => (

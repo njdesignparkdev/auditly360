@@ -80,7 +80,7 @@ export default function AdminOverview({ userProfile: _userProfile }: AdminOvervi
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="bg-white rounded-lg border border-gray-300 p-6">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded w-1/3 mb-2"></div>
             <div className="h-4 bg-gray-200 rounded w-1/2"></div>
@@ -88,7 +88,7 @@ export default function AdminOverview({ userProfile: _userProfile }: AdminOvervi
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-            <div key={i} className="bg-white rounded-lg border border-gray-200 p-6">
+            <div key={i} className="bg-white rounded-lg border border-gray-300 p-6">
               <div className="animate-pulse">
                 <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
                 <div className="h-8 bg-gray-200 rounded w-1/2"></div>
@@ -108,7 +108,7 @@ export default function AdminOverview({ userProfile: _userProfile }: AdminOvervi
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="bg-white rounded-lg border border-gray-300 p-6">
           <div className="text-center">
             <div className="text-red-600 text-lg font-semibold mb-2">Error Loading Data</div>
             <p className="text-gray-600">{error}</p>
@@ -147,7 +147,7 @@ export default function AdminOverview({ userProfile: _userProfile }: AdminOvervi
         ].map((stat, index) => (
           <motion.div
             key={stat.label}
-            className="bg-white rounded-lg border border-gray-200 p-6"
+            className="bg-white rounded-lg border border-gray-300 p-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
@@ -167,7 +167,7 @@ export default function AdminOverview({ userProfile: _userProfile }: AdminOvervi
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Activity */}
         <motion.div
-          className="bg-white rounded-lg border border-gray-200 p-6"
+          className="bg-white rounded-lg border border-gray-300 p-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -204,7 +204,7 @@ export default function AdminOverview({ userProfile: _userProfile }: AdminOvervi
 
         {/* Latest Tickets */}
         <motion.div
-          className="bg-white rounded-lg border border-gray-200 p-6"
+          className="bg-white rounded-lg border border-gray-300 p-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
@@ -268,22 +268,22 @@ export default function AdminOverview({ userProfile: _userProfile }: AdminOvervi
 
       {/* Quick Actions */}
       {/* <motion.div
-        className="bg-white rounded-lg border border-gray-200 p-6"
+        className="bg-white rounded-lg border border-gray-300 p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.7 }}
       >
         <h3 className="text-lg font-semibold text-black mb-4">Quick Actions</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <button className="p-4 rounded-lg border border-gray-200 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors text-left">
+          <button className="p-4 rounded-lg border border-gray-300 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors text-left">
             <h4 className="font-medium text-black mb-1">Export Data</h4>
             <p className="text-sm text-gray-600">Download system reports</p>
           </button>
-          <button className="p-4 rounded-lg border border-gray-200 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors text-left">
+          <button className="p-4 rounded-lg border border-gray-300 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors text-left">
             <h4 className="font-medium text-black mb-1">Clear Cache</h4>
             <p className="text-sm text-gray-600">Optimize system performance</p>
           </button>
-          <button className="p-4 rounded-lg border border-gray-200 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors text-left">
+          <button className="p-4 rounded-lg border border-gray-300 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors text-left">
             <h4 className="font-medium text-black mb-1">System Logs</h4>
             <p className="text-sm text-gray-600">View detailed logs</p>
           </button>

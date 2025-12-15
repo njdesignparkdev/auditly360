@@ -576,7 +576,7 @@ export default function AdminEmailManagement({}: AdminEmailManagementProps) {
       transition={{ duration: 0.5 }}
     >
       {/* Header */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-300 p-6">
         <h1 className="text-2xl font-bold text-black mb-2">Email Management</h1>
         <p className="text-gray-600">Manage email templates and send bulk emails to users</p>
 
@@ -633,7 +633,7 @@ export default function AdminEmailManagement({}: AdminEmailManagementProps) {
       </div>
 
       {/* Tabs */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-300 p-6">
         <div className="flex space-x-1 mb-6">
           {tabs.map((tab) => (
             <button
@@ -665,7 +665,7 @@ export default function AdminEmailManagement({}: AdminEmailManagementProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {templates.map((template) => (
-                <div key={template.id} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <div key={template.id} className="bg-gray-50 rounded-lg p-4 border border-gray-300">
                   <div className="flex justify-between items-start mb-2">
                     <h4 className="font-medium text-black">{template.name}</h4>
                     <div className="flex space-x-2">
@@ -717,8 +717,8 @@ export default function AdminEmailManagement({}: AdminEmailManagementProps) {
                 {allTemplateTypes.map((type) => (
                   <div key={type.value} className={`rounded-lg p-4 border min-w-80 max-w-80 ${
                     type.is_system
-                      ? 'bg-white border-gray-200'
-                      : 'bg-white border-gray-200'
+                      ? 'bg-white border-gray-300'
+                      : 'bg-white border-gray-300'
                   }`}>
                     <div className="flex justify-between items-start mb-2">
                       <div className="flex-1">
@@ -756,7 +756,7 @@ export default function AdminEmailManagement({}: AdminEmailManagementProps) {
               </div>
 
               {getCustomTemplateTypes().length === 0 && (
-                <div className="text-center py-4 bg-white rounded-lg border border-gray-200 mt-4">
+                <div className="text-center py-4 bg-white rounded-lg border border-gray-300 mt-4">
                   <p className="text-[#ff4b01] text-sm">No custom template types yet. Click &quot;Add Custom Type&quot; to create your first one.</p>
                 </div>
               )}

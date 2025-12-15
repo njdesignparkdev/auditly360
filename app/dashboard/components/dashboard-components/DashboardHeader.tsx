@@ -57,7 +57,7 @@ export default function DashboardHeader({ onMenuClick, userProfile }: DashboardH
             </div>
             
             {/* User avatar */}
-            <div className="w-8 h-8 bg-gray-100 border border-gray-200 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-gray-100 border border-gray-300 rounded-full flex items-center justify-center">
               <span className="text-gray-600 font-medium text-sm">
                 {userProfile?.first_name?.[0] || userProfile?.email?.[0] || 'U'}
               </span>

@@ -802,7 +802,7 @@ export default function AdminBlogEditor({}: AdminBlogEditorProps) {
       transition={{ duration: 0.5 }}
     >
       {/* Header */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-300 p-6">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-black mb-1">Blog Editor</h1>
@@ -820,7 +820,7 @@ export default function AdminBlogEditor({}: AdminBlogEditorProps) {
       </div>
 
       {/* Blog List */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-300 p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-black">Existing Posts</h3>
           {loading && (
@@ -845,7 +845,7 @@ export default function AdminBlogEditor({}: AdminBlogEditorProps) {
             {blogs.map((blog) => (
               <div
                 key={blog.id}
-                className="p-4 rounded-lg border border-gray-200 hover:border-[#ff4b01]/40 hover:bg-[#ff4b01]/5 transition-colors cursor-pointer flex items-center justify-between"
+                className="p-4 rounded-lg border border-gray-300 hover:border-[#ff4b01]/40 hover:bg-[#ff4b01]/5 transition-colors cursor-pointer flex items-center justify-between"
                 onClick={() => handleEditBlog(blog)}
               >
                 <div>
@@ -1125,7 +1125,7 @@ export default function AdminBlogEditor({}: AdminBlogEditorProps) {
                       <img
                         src={imagePreview || form.featuredImageUrl.trim()}
                         alt="Featured preview"
-                        className="w-full max-h-40 object-cover rounded border border-gray-200"
+                        className="w-full max-h-40 object-cover rounded border border-gray-300"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement
                           target.style.display = 'none'

@@ -407,7 +407,7 @@ export default function BrandConsistencyTab({
   // Show upgrade card if user doesn't have access to brand consistency analysis
   if (hasFeatureAccess === false) {
     return (
-      <div className="bg-white rounded-lg border border-gray-200 p-4">
+      <div className="bg-white rounded-lg border border-gray-300 p-4">
         <div className="flex items-center space-x-4">
           <div className="text-blue-500">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -506,7 +506,7 @@ export default function BrandConsistencyTab({
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-300 p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h3 className="text-lg font-semibold text-gray-900">Brand Consistency Analysis</h3>
@@ -602,7 +602,7 @@ export default function BrandConsistencyTab({
                 if (issues.length === 0) return null;
 
                 return (
-                  <div key={type.key} className="border border-gray-200 rounded-lg p-4">
+                  <div key={type.key} className="border border-gray-300 rounded-lg p-4">
                     <div className="flex items-center gap-2 mb-4">
                       <h4 className="font-medium text-gray-900">{type.label}</h4>
                       <span className="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs font-medium">
@@ -614,7 +614,7 @@ export default function BrandConsistencyTab({
                       {issues.map((issue, index) => (
                         <div
                           key={index}
-                          className="p-4 rounded-lg border border-gray-200 bg-gray-50"
+                          className="p-4 rounded-lg border border-gray-300 bg-gray-50"
                         >
                           <div className="flex items-start justify-between">
                             <div className="flex-1">

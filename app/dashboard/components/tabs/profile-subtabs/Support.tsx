@@ -198,7 +198,7 @@ export default function Support({
     duration: 0.5
   }}>
       {/* Support Tabs */}
-      <motion.div className="border-b border-gray-200" initial={{
+      <motion.div className="border-b border-gray-300" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -296,7 +296,7 @@ export default function Support({
         </motion.div>}
 
       {/* Create New Ticket */}
-      {activeTab === 'new' && <motion.div className="bg-white rounded-lg border border-gray-200 p-6" initial={{
+      {activeTab === 'new' && <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
       opacity: 0,
       y: 20
     }} animate={{

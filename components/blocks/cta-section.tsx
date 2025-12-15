@@ -33,7 +33,7 @@ export default function CtaSection() {
             asChild 
             variant="outline" 
             size="lg" 
-            className="rounded-full border-gray-200 text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white px-8 h-14 text-lg bg-transparent"
+            className="rounded-full border-gray-300 text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white px-8 h-14 text-lg bg-transparent"
           >
             <Link href="/demo">
               View Live Demo

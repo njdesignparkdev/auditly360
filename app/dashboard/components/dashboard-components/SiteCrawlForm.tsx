@@ -204,10 +204,10 @@ export default function SiteCrawlForm({
             <div>
               <div className="h-4 bg-gray-200  w-20 mb-2 animate-pulse"></div>
               <div className="grid grid-cols-2 gap-2 mb-2">
-                <div className="h-14 bg-gray-200 -lg border border-gray-200 animate-pulse"></div>
-                <div className="h-14 bg-gray-200 -lg border border-gray-200 animate-pulse"></div>
+                <div className="h-14 bg-gray-200 -lg border border-gray-300 animate-pulse"></div>
+                <div className="h-14 bg-gray-200 -lg border border-gray-300 animate-pulse"></div>
               </div>
-              <div className="h-14 bg-gray-200 -lg border border-gray-200 animate-pulse"></div>
+              <div className="h-14 bg-gray-200 -lg border border-gray-300 animate-pulse"></div>
             </div>
 
             {/* Brand Consistency Skeleton */}
@@ -241,7 +241,7 @@ export default function SiteCrawlForm({
 
             {/* Submit Button Skeleton */}
             <div className="pt-2">
-              <div className="h-12 bg-gray-200 -lg border-2 border-gray-200 animate-pulse"></div>
+              <div className="h-12 bg-gray-200 -lg border-2 border-gray-300 animate-pulse"></div>
             </div>
           </div>
         </div>
@@ -297,7 +297,7 @@ export default function SiteCrawlForm({
           <div className="flex-1 space-y-6">
           {/* URL Input */}
           <div>
-            <input type="url" id="siteUrl" value={siteUrl} onChange={e => setSiteUrl(e.target.value)} placeholder="https://example.com" className="w-full px-4 py-4 border border-gray-200 -lg text-black focus:outline-none focus:border-[#ff4b01] transition-colors" required />
+            <input type="url" id="siteUrl" value={siteUrl} onChange={e => setSiteUrl(e.target.value)} placeholder="https://example.com" className="w-full px-4 py-4 border border-gray-300 -lg text-black focus:outline-none focus:border-[#ff4b01] transition-colors" required />
           </div>
 
           {/* Page Type Selection */}
@@ -306,7 +306,7 @@ export default function SiteCrawlForm({
               Crawl Type
             </label>
             <div className="grid grid-cols-2 gap-2 mb-2">
-              <label className={`flex items-center p-3 border -lg cursor-pointer transition-colors ${pageType === 'single' ? 'border-[#ff4b01] bg-[#ff4b01]/5' : 'border-gray-200 hover:border-gray-300'}`}>
+              <label className={`flex items-center p-3 border -lg cursor-pointer transition-colors ${pageType === 'single' ? 'border-[#ff4b01] bg-[#ff4b01]/5' : 'border-gray-300 hover:border-gray-300'}`}>
                 <input type="radio" name="pageType" value="single" checked={pageType === 'single'} onChange={e => setPageType(e.target.value as CrawlType)} className="sr-only" />
                 <div className="flex items-center">
                   <div className={`w-4 h-4 -full border-2 mr-3 ${pageType === 'single' ? 'border-[#ff4b01] bg-[#ff4b01]' : 'border-gray-300'}`}>
@@ -320,7 +320,7 @@ export default function SiteCrawlForm({
                   </div>
                 </div>
               </label>
-              <label className={`flex items-center p-3 border -lg cursor-pointer transition-colors ${pageType === 'multiple' ? 'border-[#ff4b01] bg-[#ff4b01]/5' : hasFeature('full_site_crawl') ? 'border-gray-200 hover:border-gray-300' : 'border-gray-200 bg-gray-50'} ${!hasFeature('full_site_crawl') ? 'opacity-60' : ''}`} onClick={handleUpgradeClick}>
+              <label className={`flex items-center p-3 border -lg cursor-pointer transition-colors ${pageType === 'multiple' ? 'border-[#ff4b01] bg-[#ff4b01]/5' : hasFeature('full_site_crawl') ? 'border-gray-300 hover:border-gray-300' : 'border-gray-300 bg-gray-50'} ${!hasFeature('full_site_crawl') ? 'opacity-60' : ''}`} onClick={handleUpgradeClick}>
                 <input type="radio" name="pageType" value="multiple" checked={pageType === 'multiple'} onChange={e => hasFeature('full_site_crawl') && setPageType(e.target.value as CrawlType)} disabled={!hasFeature('full_site_crawl')} className="sr-only" />
                 <div className="flex items-center">
                   <div className={`w-4 h-4 -full border-2 mr-3 ${pageType === 'multiple' ? 'border-[#ff4b01] bg-[#ff4b01]' : 'border-gray-300'}`}>
@@ -345,7 +345,7 @@ export default function SiteCrawlForm({
             </div>
             
             {/* Brand Consistency Checkbox */}
-            <label className="flex items-center p-3 border border-gray-200 -lg cursor-pointer hover:border-gray-300 transition-colors">
+            <label className="flex items-center p-3 border border-gray-300 -lg cursor-pointer hover:border-gray-300 transition-colors">
               <input
                 type="checkbox"
                 checked={brandConsistency}
@@ -367,7 +367,7 @@ export default function SiteCrawlForm({
                 { key: 'hiddenUrls', label: 'Hidden URLs' },
                 { key: 'keysCheck', label: 'Keys Check' }
               ].map((feature) => (
-                <label key={feature.key} className="flex items-center p-3 border border-gray-200  cursor-pointer">
+                <label key={feature.key} className="flex items-center p-3 border border-gray-300  cursor-pointer">
                   <input
                     type="checkbox"
                     checked={feature.key === 'brandConsistency' ? brandConsistency : feature.key === 'hiddenUrls' ? hiddenUrls : keysCheck}
@@ -397,39 +397,39 @@ export default function SiteCrawlForm({
                   <label htmlFor="companyName" className="block text-sm font-medium text-black mb-1">
                     Company Name
                   </label>
-                  <input type="text" id="companyName" value={brandData.companyName} onChange={e => handleBrandDataChange('companyName', e.target.value)} className="w-full px-3 py-2 border border-gray-200 -lg text-black focus:outline-none focus:border-[#ff4b01] transition-colors" />
+                  <input type="text" id="companyName" value={brandData.companyName} onChange={e => handleBrandDataChange('companyName', e.target.value)} className="w-full px-3 py-2 border border-gray-300 -lg text-black focus:outline-none focus:border-[#ff4b01] transition-colors" />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="phoneNumber" className="block text-sm font-medium text-black mb-1">
                       Phone Number
                     </label>
-                    <input type="tel" id="phoneNumber" value={brandData.phoneNumber} onChange={e => handleBrandDataChange('phoneNumber', e.target.value)} className="w-full px-3 py-2 border border-gray-200 -lg text-black focus:outline-none focus:border-[#ff4b01] transition-colors" />
+                    <input type="tel" id="phoneNumber" value={brandData.phoneNumber} onChange={e => handleBrandDataChange('phoneNumber', e.target.value)} className="w-full px-3 py-2 border border-gray-300 -lg text-black focus:outline-none focus:border-[#ff4b01] transition-colors" />
                   </div>
                   <div>
                     <label htmlFor="emailAddress" className="block text-sm font-medium text-black mb-1">
                       Email Address
                     </label>
-                    <input type="email" id="emailAddress" value={brandData.emailAddress} onChange={e => handleBrandDataChange('emailAddress', e.target.value)} className="w-full px-3 py-2 border border-gray-200 -lg text-black focus:outline-none focus:border-[#ff4b01] transition-colors" />
+                    <input type="email" id="emailAddress" value={brandData.emailAddress} onChange={e => handleBrandDataChange('emailAddress', e.target.value)} className="w-full px-3 py-2 border border-gray-300 -lg text-black focus:outline-none focus:border-[#ff4b01] transition-colors" />
                   </div>
                 </div>
                 <div>
                   <label htmlFor="address" className="block text-sm font-medium text-black mb-1">
                     Address
                   </label>
-                  <input type="text" id="address" value={brandData.address} onChange={e => handleBrandDataChange('address', e.target.value)} className="w-full px-3 py-2 border border-gray-200 -lg text-black focus:outline-none focus:border-[#ff4b01] transition-colors" />
+                  <input type="text" id="address" value={brandData.address} onChange={e => handleBrandDataChange('address', e.target.value)} className="w-full px-3 py-2 border border-gray-300 -lg text-black focus:outline-none focus:border-[#ff4b01] transition-colors" />
                 </div>
                 <div>
                   <label htmlFor="additionalInformation" className="block text-sm font-medium text-black mb-1">
                     Additional Information
                   </label>
-                  <textarea id="additionalInformation" value={brandData.additionalInformation} onChange={e => handleBrandDataChange('additionalInformation', e.target.value)} rows={3} className="w-full px-3 py-2 text-black border border-gray-200 -lg focus:outline-none focus:border-[#ff4b01] transition-colors" />
+                  <textarea id="additionalInformation" value={brandData.additionalInformation} onChange={e => handleBrandDataChange('additionalInformation', e.target.value)} rows={3} className="w-full px-3 py-2 text-black border border-gray-300 -lg focus:outline-none focus:border-[#ff4b01] transition-colors" />
                 </div>
               </div>
             </div>}
 
           {/* Hidden URLs Fields */}
-          {hiddenUrls && <div className="bg-gray-50 -lg p-4 space-y-4 border border-gray-200">
+          {hiddenUrls && <div className="bg-gray-50 -lg p-4 space-y-4 border border-gray-300">
               <div className="flex items-center justify-between">
                 <h3 className="text-base font-semibold text-black">
                   Hidden URLs
@@ -443,7 +443,7 @@ export default function SiteCrawlForm({
               </div>
               <div className="space-y-3">
                 {hiddenUrlsList.map(hiddenUrl => <div key={hiddenUrl.id} className="flex items-center space-x-2">
-                    <input type="url" value={hiddenUrl.url} onChange={e => updateHiddenUrl(hiddenUrl.id, e.target.value)} placeholder="https://example.com/hidden-page" className="flex-1 px-3 py-2 text-black border border-gray-200 -lg focus:outline-none focus:border-[#ff4b01] transition-colors" />
+                    <input type="url" value={hiddenUrl.url} onChange={e => updateHiddenUrl(hiddenUrl.id, e.target.value)} placeholder="https://example.com/hidden-page" className="flex-1 px-3 py-2 text-black border border-gray-300 -lg focus:outline-none focus:border-[#ff4b01] transition-colors" />
                     {hiddenUrlsList.length > 1 && <button type="button" onClick={() => removeHiddenUrl(hiddenUrl.id)} className="p-2 text-gray-600  cursor-pointer">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -455,7 +455,7 @@ export default function SiteCrawlForm({
 
           {/* Plan Information */}
           {/* {planInfo && (
-            <div className="bg-gray-50 -lg p-4 border border-gray-200">
+            <div className="bg-gray-50 -lg p-4 border border-gray-300">
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-sm font-medium text-gray-900">

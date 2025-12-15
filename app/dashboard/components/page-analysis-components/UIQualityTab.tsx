@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { ArrowPathIcon } from '@heroicons/react/24/outline'
+import { ArrowPathIcon, CameraIcon, SparklesIcon } from '@heroicons/react/24/outline'
 import Masonry from 'react-masonry-css'
 import { useUserPlan } from '@/hooks/useUserPlan'
 import { useScreenshot } from '@/lib/api-client'
@@ -901,10 +901,10 @@ export default function UIQualityTab({ page }: UIQualityTabProps) {
   // Only hide AI-powered screenshot analysis
 
   return (
-    <div className=" px-4">
+    <div className=" ">
       {/* Header with Reanalyze Button */}
-      <div className="flex items-center justify-between px-6 pt-4">
-        <h2 className="text-2xl font-bold text-gray-900">UI Quality Analysis</h2>
+      <div className="flex items-center justify-between px-8 pt-4">
+        <h2 className="text-2xl font-bold text-gray-900 ">UI Quality Analysis</h2>
         {(imageAnalysis || screenshotUrl || desktopScreenshotUrl) && hasScreenshotAccess && (
           <button
             onClick={handleRetakeScreenshot}
@@ -927,30 +927,42 @@ export default function UIQualityTab({ page }: UIQualityTabProps) {
 
       {/* AI-Powered Screenshot Analysis Section - Premium Feature */}
       {!hasScreenshotAccess && !imageAnalysis && !desktopScreenshotUrl && !screenshotUrl && (
-        <div className=" mb-8">
-          <div className="flex items-center space-x-4">
-            <div className="text-[#ff4b01]">
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-            </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">AI-Powered Screenshot Analysis</h3>
-              <p className="text-sm text-gray-600 mb-3">
-                Capture screenshots and get AI-powered UI/UX analysis of your web pages. This premium feature provides detailed visual design insights, content analysis, and actionable recommendations.
-              </p>
-              <div className="flex items-center justify-between">
-                <div className="text-xs text-gray-500">
-                  Feature: <span className="font-medium">Capture Screenshot 📸</span>
+        <div className="mb-8  px-8 ">
+          <div className="flex items-start gap-4">
+           
+            <div className="flex-1 space-y-3">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">AI-Powered Screenshot Analysis</h3>
+                  <p className="mt-1 text-sm text-gray-600">
+                    Capture a screenshot and get visual, content, and UX insights with prioritized recommendations.
+                  </p>
                 </div>
-                <button 
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                
+                <button
                   onClick={() => window.location.href = '/dashboard?tab=profile&subtab=plans'}
-                  className="px-4 py-2 bg-[#ff4b01] text-white  hover:bg-[#e64401] transition-colors text-sm font-medium"
+                  className="inline-flex items-center justify-center rounded-lg bg-[#ff4b01] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#e64401]"
                 >
                   Upgrade Plan
                 </button>
               </div>
+              </div>
+              <div className="flex flex-wrap items-center gap-3 text-xs text-gray-600">
+                <div className="flex items-center gap-2 rounded-full bg-white px-3 py-1 ring-1 ring-gray-200">
+                  <span className="h-2 w-2 rounded-full bg-[#ff4b01]"></span>
+                  Visual design review
+                </div>
+                <div className="flex items-center gap-2 rounded-full bg-white px-3 py-1 ring-1 ring-gray-200">
+                  <span className="h-2 w-2 rounded-full bg-[#ff4b01]"></span>
+                  UX heuristics
+                </div>
+                <div className="flex items-center gap-2 rounded-full bg-white px-3 py-1 ring-1 ring-gray-200">
+                  <span className="h-2 w-2 rounded-full bg-[#ff4b01]"></span>
+                  Actionable fixes
+                </div>
+              </div>
+              
             </div>
           </div>
         </div>
@@ -958,10 +970,8 @@ export default function UIQualityTab({ page }: UIQualityTabProps) {
 
       {/* Overall Quality Score */}
       <div className="">
-        <div className="flex items-center justify-between  px-6 border-b border-gray-300 ">
-          <div>
-            <p className="text-gray-600 pb-4">Comprehensive assessment of your page&apos;s user interface and structure</p>
-          </div>
+        <div className="flex items-center justify-between border-b border-gray-300 ">
+          
           {/* <div className="text-right">
             <div className="text-5xl font-bold text-[#ff4b01]">{overallScore}</div>
             <div className="text-sm text-gray-600">Overall Score</div>
@@ -1131,98 +1141,98 @@ export default function UIQualityTab({ page }: UIQualityTabProps) {
       {/* Non-AI Analysis Section - Always visible */}
       {!imageAnalysis && (
         <div className="mt-6">
-          <Masonry
-            breakpointCols={{
-              default: 2,
-              1024: 2,
-              640: 1
-            }}
-            className="masonry-grid"
-            columnClassName="masonry-grid_column"
-          >
-            <PageStructureOverview
-              headingCount={headingCount}
-              imageCount={imageCount}
-              linkCount={linkCount}
-              formCount={formCount}
-              buttonCount={buttonCount}
-              inputCount={inputCount}
-              labelCount={labelCount}
-            />
-            <AccessibilityAnalysisCard
-              hasAltText={hasAltText}
-              hasLabels={hasLabels}
-              hasAriaLabels={hasAriaLabels}
-              hasLangAttribute={hasLangAttribute}
-              hasTitleAttributes={hasTitleAttributes}
-              hasExternalCSS={hasExternalCSS}
-              hasExternalJS={hasExternalJS}
-              hasInlineStyles={hasInlineStyles}
-              hasDeprecatedTags={hasDeprecatedTags}
-              hasSemanticHTML={hasSemanticHTML}
-              hasLazyLoading={hasLazyLoading}
-              hasAsyncScripts={hasAsyncScripts}
-              hasPreloadLinks={hasPreloadLinks}
-              hasViewport={hasViewport}
-              hasResponsiveDesign={hasResponsiveDesign}
-              hasMetaDescription={hasMetaDescription}
-            />
-            <CodeQualityAnalysisCard
-              hasAltText={hasAltText}
-              hasLabels={hasLabels}
-              hasAriaLabels={hasAriaLabels}
-              hasLangAttribute={hasLangAttribute}
-              hasTitleAttributes={hasTitleAttributes}
-              hasExternalCSS={hasExternalCSS}
-              hasExternalJS={hasExternalJS}
-              hasInlineStyles={hasInlineStyles}
-              hasDeprecatedTags={hasDeprecatedTags}
-              hasSemanticHTML={hasSemanticHTML}
-              hasLazyLoading={hasLazyLoading}
-              hasAsyncScripts={hasAsyncScripts}
-              hasPreloadLinks={hasPreloadLinks}
-              hasViewport={hasViewport}
-              hasResponsiveDesign={hasResponsiveDesign}
-              hasMetaDescription={hasMetaDescription}
-            />
-            <PerformanceIndicatorsCard
-              hasAltText={hasAltText}
-              hasLabels={hasLabels}
-              hasAriaLabels={hasAriaLabels}
-              hasLangAttribute={hasLangAttribute}
-              hasTitleAttributes={hasTitleAttributes}
-              hasExternalCSS={hasExternalCSS}
-              hasExternalJS={hasExternalJS}
-              hasInlineStyles={hasInlineStyles}
-              hasDeprecatedTags={hasDeprecatedTags}
-              hasSemanticHTML={hasSemanticHTML}
-              hasLazyLoading={hasLazyLoading}
-              hasAsyncScripts={hasAsyncScripts}
-              hasPreloadLinks={hasPreloadLinks}
-              hasViewport={hasViewport}
-              hasResponsiveDesign={hasResponsiveDesign}
-              hasMetaDescription={hasMetaDescription}
-            />
-            <ModernStandardsCard
-              hasAltText={hasAltText}
-              hasLabels={hasLabels}
-              hasAriaLabels={hasAriaLabels}
-              hasLangAttribute={hasLangAttribute}
-              hasTitleAttributes={hasTitleAttributes}
-              hasExternalCSS={hasExternalCSS}
-              hasExternalJS={hasExternalJS}
-              hasInlineStyles={hasInlineStyles}
-              hasDeprecatedTags={hasDeprecatedTags}
-              hasSemanticHTML={hasSemanticHTML}
-              hasLazyLoading={hasLazyLoading}
-              hasAsyncScripts={hasAsyncScripts}
-              hasPreloadLinks={hasPreloadLinks}
-              hasViewport={hasViewport}
-              hasResponsiveDesign={hasResponsiveDesign}
-              hasMetaDescription={hasMetaDescription}
-            />
-            <ComprehensiveRecommendations recommendations={recommendations} />
-          </Masonry>
+          <div className="grid grid-cols-1  lg:grid-cols-2">
+            <div className="lg:col-span-2 ">
+              <PageStructureOverview
+                headingCount={headingCount}
+                imageCount={imageCount}
+                linkCount={linkCount}
+                formCount={formCount}
+                buttonCount={buttonCount}
+                inputCount={inputCount}
+                labelCount={labelCount}
+              />
+            </div>
+
+            <div className="space-y-4 border-r border-gray-300">
+              <CodeQualityAnalysisCard
+                hasAltText={hasAltText}
+                hasLabels={hasLabels}
+                hasAriaLabels={hasAriaLabels}
+                hasLangAttribute={hasLangAttribute}
+                hasTitleAttributes={hasTitleAttributes}
+                hasExternalCSS={hasExternalCSS}
+                hasExternalJS={hasExternalJS}
+                hasInlineStyles={hasInlineStyles}
+                hasDeprecatedTags={hasDeprecatedTags}
+                hasSemanticHTML={hasSemanticHTML}
+                hasLazyLoading={hasLazyLoading}
+                hasAsyncScripts={hasAsyncScripts}
+                hasPreloadLinks={hasPreloadLinks}
+                hasViewport={hasViewport}
+                hasResponsiveDesign={hasResponsiveDesign}
+                hasMetaDescription={hasMetaDescription}
+              />
+              <ModernStandardsCard
+                hasAltText={hasAltText}
+                hasLabels={hasLabels}
+                hasAriaLabels={hasAriaLabels}
+                hasLangAttribute={hasLangAttribute}
+                hasTitleAttributes={hasTitleAttributes}
+                hasExternalCSS={hasExternalCSS}
+                hasExternalJS={hasExternalJS}
+                hasInlineStyles={hasInlineStyles}
+                hasDeprecatedTags={hasDeprecatedTags}
+                hasSemanticHTML={hasSemanticHTML}
+                hasLazyLoading={hasLazyLoading}
+                hasAsyncScripts={hasAsyncScripts}
+                hasPreloadLinks={hasPreloadLinks}
+                hasViewport={hasViewport}
+                hasResponsiveDesign={hasResponsiveDesign}
+                hasMetaDescription={hasMetaDescription}
+              />
+              <AccessibilityAnalysisCard
+                hasAltText={hasAltText}
+                hasLabels={hasLabels}
+                hasAriaLabels={hasAriaLabels}
+                hasLangAttribute={hasLangAttribute}
+                hasTitleAttributes={hasTitleAttributes}
+                hasExternalCSS={hasExternalCSS}
+                hasExternalJS={hasExternalJS}
+                hasInlineStyles={hasInlineStyles}
+                hasDeprecatedTags={hasDeprecatedTags}
+                hasSemanticHTML={hasSemanticHTML}
+                hasLazyLoading={hasLazyLoading}
+                hasAsyncScripts={hasAsyncScripts}
+                hasPreloadLinks={hasPreloadLinks}
+                hasViewport={hasViewport}
+                hasResponsiveDesign={hasResponsiveDesign}
+                hasMetaDescription={hasMetaDescription}
+              />
+            </div>
+
+            <div className="space-y-4">
+              <PerformanceIndicatorsCard
+                hasAltText={hasAltText}
+                hasLabels={hasLabels}
+                hasAriaLabels={hasAriaLabels}
+                hasLangAttribute={hasLangAttribute}
+                hasTitleAttributes={hasTitleAttributes}
+                hasExternalCSS={hasExternalCSS}
+                hasExternalJS={hasExternalJS}
+                hasInlineStyles={hasInlineStyles}
+                hasDeprecatedTags={hasDeprecatedTags}
+                hasSemanticHTML={hasSemanticHTML}
+                hasLazyLoading={hasLazyLoading}
+                hasAsyncScripts={hasAsyncScripts}
+                hasPreloadLinks={hasPreloadLinks}
+                hasViewport={hasViewport}
+                hasResponsiveDesign={hasResponsiveDesign}
+                hasMetaDescription={hasMetaDescription}
+              />
+              <ComprehensiveRecommendations recommendations={recommendations} />
+            </div>
+          </div>
         </div>
       )}
     </div>

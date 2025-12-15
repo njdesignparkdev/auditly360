@@ -135,7 +135,7 @@ export default function AdminSubscription({ userProfile: _userProfile }: AdminSu
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="bg-white rounded-lg border border-gray-300 p-6">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded w-1/3 mb-2"></div>
             <div className="h-4 bg-gray-200 rounded w-1/2"></div>
@@ -143,7 +143,7 @@ export default function AdminSubscription({ userProfile: _userProfile }: AdminSu
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="bg-white rounded-lg border border-gray-200 p-6">
+            <div key={i} className="bg-white rounded-lg border border-gray-300 p-6">
               <div className="animate-pulse">
                 <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
                 <div className="h-8 bg-gray-200 rounded w-1/2"></div>
@@ -163,7 +163,7 @@ export default function AdminSubscription({ userProfile: _userProfile }: AdminSu
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="bg-white rounded-lg border border-gray-300 p-6">
           <div className="text-center">
             <div className="text-red-600 text-lg font-semibold mb-2">Error Loading Data</div>
             <p className="text-gray-600">{error}</p>
@@ -188,7 +188,7 @@ export default function AdminSubscription({ userProfile: _userProfile }: AdminSu
     >
       {/* Header */}
       <motion.div
-        className="bg-white rounded-lg border border-gray-200 p-6"
+        className="bg-white rounded-lg border border-gray-300 p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
@@ -213,7 +213,7 @@ export default function AdminSubscription({ userProfile: _userProfile }: AdminSu
         ].map((stat, index) => (
           <motion.div
             key={stat.label}
-            className="bg-white rounded-lg border border-gray-200 p-6"
+            className="bg-white rounded-lg border border-gray-300 p-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
@@ -231,7 +231,7 @@ export default function AdminSubscription({ userProfile: _userProfile }: AdminSu
 
       {/* Subscription Plans */}
       <motion.div
-        className="bg-white rounded-lg border border-gray-200 p-6"
+        className="bg-white rounded-lg border border-gray-300 p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
@@ -248,7 +248,7 @@ export default function AdminSubscription({ userProfile: _userProfile }: AdminSu
             subscriptionPlans.map((plan, index) => (
               <motion.div
                 key={`${plan.name}-${plan.type}`}
-                className="border border-gray-200 rounded-lg p-4 hover:border-[#ff4b01] transition-colors min-w-80"
+                className="border border-gray-300 rounded-lg p-4 hover:border-[#ff4b01] transition-colors min-w-80"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }}
@@ -287,7 +287,7 @@ export default function AdminSubscription({ userProfile: _userProfile }: AdminSu
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Revenue Chart */}
         <motion.div
-          className="bg-white rounded-lg border border-gray-200 p-6"
+          className="bg-white rounded-lg border border-gray-300 p-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
@@ -304,7 +304,7 @@ export default function AdminSubscription({ userProfile: _userProfile }: AdminSu
 
         {/* User Growth Chart */}
         <motion.div
-          className="bg-white rounded-lg border border-gray-200 p-6"
+          className="bg-white rounded-lg border border-gray-300 p-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
@@ -322,7 +322,7 @@ export default function AdminSubscription({ userProfile: _userProfile }: AdminSu
 
       {/* Plan Distribution Chart */}
       <motion.div
-        className="bg-white rounded-lg border border-gray-200 p-6"
+        className="bg-white rounded-lg border border-gray-300 p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.6 }}
@@ -339,7 +339,7 @@ export default function AdminSubscription({ userProfile: _userProfile }: AdminSu
 
       {/* Recent Subscriptions */}
       <motion.div
-        className="bg-white rounded-lg border border-gray-200 p-6"
+        className="bg-white rounded-lg border border-gray-300 p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
@@ -413,7 +413,7 @@ export default function AdminSubscription({ userProfile: _userProfile }: AdminSu
       {/* Revenue Analytics */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <motion.div
-          className="bg-white rounded-lg border border-gray-200 p-6"
+          className="bg-white rounded-lg border border-gray-300 p-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
@@ -445,20 +445,20 @@ export default function AdminSubscription({ userProfile: _userProfile }: AdminSu
         </motion.div>
 
         {/* <motion.div
-          className="bg-white rounded-lg border border-gray-200 p-6"
+          className="bg-white rounded-lg border border-gray-300 p-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.7 }}
         >
           <h3 className="text-lg font-semibold text-black mb-4">Quick Actions</h3>
           <div className="space-y-3">
-            <button className="w-full text-left p-3 rounded-lg border border-gray-200 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
+            <button className="w-full text-left p-3 rounded-lg border border-gray-300 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
               <span className="font-medium text-black">Generate Revenue Report</span>
             </button>
-            <button className="w-full text-left p-3 rounded-lg border border-gray-200 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
+            <button className="w-full text-left p-3 rounded-lg border border-gray-300 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
               <span className="font-medium text-black">Export Subscription Data</span>
             </button>
-            <button className="w-full text-left p-3 rounded-lg border border-gray-200 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
+            <button className="w-full text-left p-3 rounded-lg border border-gray-300 hover:border-[#ff4b01] hover:bg-[#ff4b01]/10 transition-colors">
               <span className="font-medium text-black">Manage Billing Settings</span>
             </button>
           </div>

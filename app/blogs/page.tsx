@@ -106,7 +106,7 @@ export default function BlogsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-white border-b border-gray-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -127,7 +127,7 @@ export default function BlogsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="bg-white rounded-lg border border-gray-200 p-4 shadow-sm"
+          className="bg-white rounded-lg border border-gray-300 p-4 shadow-sm"
         >
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1 relative">
@@ -180,7 +180,7 @@ export default function BlogsPage() {
             </button>
           </div>
         ) : blogs.length === 0 ? (
-          <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
+          <div className="bg-white rounded-lg border border-gray-300 p-12 text-center">
             <svg
               className="mx-auto h-12 w-12 text-gray-400 mb-4"
               fill="none"
@@ -210,7 +210,7 @@ export default function BlogsPage() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
                   <Link href={`/blogs/${blog.id}`}>
-                    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full flex flex-col">
+                    <div className="bg-white rounded-lg border border-gray-300 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full flex flex-col">
                       {blog.featured_image_url && (
                         <div className="relative w-full h-48 bg-gray-200">
                           <Image
@@ -272,7 +272,7 @@ export default function BlogsPage() {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-between bg-white rounded-lg border border-gray-200 p-4">
+              <div className="flex items-center justify-between bg-white rounded-lg border border-gray-300 p-4">
                 <div className="text-sm text-gray-600">
                   Showing {(currentPage - 1) * limit + 1} to{' '}
                   {Math.min(currentPage * limit, total)} of {total} blogs

@@ -391,7 +391,7 @@ export default function Profile({
              
 
 
-              {isEditing && <motion.div className="flex space-x-3 pt-4 border-t border-gray-200" initial={{
+              {isEditing && <motion.div className="flex space-x-3 pt-4 border-t border-gray-300" initial={{
               opacity: 0,
               y: 10
             }} animate={{
@@ -422,7 +422,7 @@ export default function Profile({
         duration: 0.5,
         delay: 0.2
       }}>
-          <motion.div className=" border-gray-200 p-6" initial={{
+          <motion.div className=" border-gray-300 p-6" initial={{
           opacity: 0,
           y: 20
         }} animate={{

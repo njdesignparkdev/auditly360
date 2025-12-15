@@ -39,7 +39,7 @@ export default function RecentProjects({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
-      <div className="px-4 sm:px-6 py-4 border-b border-gray-200">
+      <div className="px-4 sm:px-6 py-4 border-b border-gray-300">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold text-black">Recent Projects</h2>
@@ -87,7 +87,7 @@ export default function RecentProjects({
           </div> : <div className="space-y-4">
             {projects.slice(0, 3).map((project, index) => <motion.div 
               key={project.id} 
-              className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 border border-gray-200 -lg hover:border-gray-300 transition-colors"
+              className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 border border-gray-300 -lg hover:border-gray-300 transition-colors"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1, ease: "easeOut" }}
@@ -143,7 +143,7 @@ export default function RecentProjects({
               </motion.div>)}
           </div>}
           
-        <div className="mt-6 pt-4 border-t border-gray-200">
+        <div className="mt-6 pt-4 border-t border-gray-300">
           <button 
             onClick={() => {
               const url = new URL(window.location.href);

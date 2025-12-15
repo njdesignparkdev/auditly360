@@ -217,7 +217,7 @@ export default function SignupPage() {
 
             {/* Email Confirmation Message */}
             {showConfirmationMessage && (
-              <div className="mb-6 p-6 bg-gray-50 border border-gray-200 rounded-lg">
+              <div className="mb-6 p-6 bg-gray-50 border border-gray-300 rounded-lg">
                 <div className="text-center">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Check your email</h3>
                   <p className="text-sm text-gray-600 mb-4">

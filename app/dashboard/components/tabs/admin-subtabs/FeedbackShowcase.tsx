@@ -110,7 +110,7 @@ export default function FeedbackShowcase() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-300 p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-black">User Feedback</h3>
         </div>
@@ -123,10 +123,10 @@ export default function FeedbackShowcase() {
 
   if (error) {
     return (
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-300 p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-black">User Feedback</h3>
-          <button onClick={() => fetchFeedbacks()} className="text-sm px-3 py-1 rounded border border-gray-200 hover:bg-gray-50">Retry</button>
+          <button onClick={() => fetchFeedbacks()} className="text-sm px-3 py-1 rounded border border-gray-300 hover:bg-gray-50">Retry</button>
         </div>
         <div className="text-red-600 text-sm">{error}</div>
       </div>
@@ -135,7 +135,7 @@ export default function FeedbackShowcase() {
 
   if (filteredFeedbacks.length === 0) {
     return (
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-300 p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-black">User Feedback</h3>
         </div>
@@ -146,17 +146,17 @@ export default function FeedbackShowcase() {
 
   if (showAll) {
     return (
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-300 p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-black">User Feedback</h3>
           <div className="flex gap-2">
-            <button onClick={() => fetchFeedbacks()} className="text-sm px-3 py-1 rounded border border-gray-200 hover:bg-gray-50">Refresh</button>
+            <button onClick={() => fetchFeedbacks()} className="text-sm px-3 py-1 rounded border border-gray-300 hover:bg-gray-50">Refresh</button>
             <button onClick={() => setShowAll(false)} className="text-sm px-3 py-1 rounded bg-[#ff4b01] text-white hover:bg-[#e64401]">Carousel</button>
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredFeedbacks.map(item => (
-            <div key={item.id} className="rounded-lg border border-gray-200 p-4 bg-white">
+            <div key={item.id} className="rounded-lg border border-gray-300 p-4 bg-white">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-700 font-semibold">
                   {getDisplayName(item).split(' ').map(n => n[0]).join('').toUpperCase()}
@@ -178,11 +178,11 @@ export default function FeedbackShowcase() {
   const pageItems = filteredFeedbacks.slice(start, start + itemsPerView);
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6">
+    <div className="bg-white rounded-lg border border-gray-300 p-6">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-black">User Feedback</h3>
         <div className="flex gap-2">
-          <button onClick={() => fetchFeedbacks()} className="text-sm px-3 py-1 rounded border border-gray-200 hover:bg-gray-50">Refresh</button>
+          <button onClick={() => fetchFeedbacks()} className="text-sm px-3 py-1 rounded border border-gray-300 hover:bg-gray-50">Refresh</button>
           <button onClick={() => setShowAll(true)} className="text-sm px-3 py-1 rounded bg-[#ff4b01] text-white hover:bg-[#e64401]">Show all</button>
         </div>
       </div>
@@ -219,7 +219,7 @@ export default function FeedbackShowcase() {
           <div className="flex items-center justify-between mt-4">
             <button
               onClick={() => setActivePage(prev => (prev - 1 + totalPages) % totalPages)}
-              className="px-3 py-1 rounded border border-gray-200 hover:bg-gray-50 text-sm"
+              className="px-3 py-1 rounded border border-gray-300 hover:bg-gray-50 text-sm"
             >
               Prev
             </button>
@@ -230,7 +230,7 @@ export default function FeedbackShowcase() {
             </div>
             <button
               onClick={() => setActivePage(prev => (prev + 1) % totalPages)}
-              className="px-3 py-1 rounded border border-gray-200 hover:bg-gray-50 text-sm"
+              className="px-3 py-1 rounded border border-gray-300 hover:bg-gray-50 text-sm"
             >
               Next
             </button>

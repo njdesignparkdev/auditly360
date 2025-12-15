@@ -606,7 +606,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
               </button>
               
               {/* Export Options Dropdown */}
-              <div className="absolute right-0 top-full mt-1 w-48 bg-white border border-gray-200 rounded-md  opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
+              <div className="absolute right-0 top-full mt-1 w-48 bg-white border border-gray-300 rounded-md  opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
                 <div className="py-1">
                   <button
                     onClick={exportToCSV}
@@ -739,7 +739,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
 
         {/* Clear Filters */}
         {(selectedLinkType !== 'all' || searchQuery) && (
-          <div className="mt-4 pt-4 border-t border-gray-200">
+          <div className="mt-4 pt-4 border-t border-gray-300">
             <button
               onClick={() => {
                 setSelectedLinkType('all')
@@ -866,7 +866,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
 
       {/* Pagination Controls */}
       {filteredLinks.length > itemsPerPage && (
-        <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-200">
+        <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-300">
           <div className="flex items-center text-sm text-gray-700">
             <span>
               Page {currentPage} of {totalPages}

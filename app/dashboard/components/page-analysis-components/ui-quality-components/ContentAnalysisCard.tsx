@@ -14,7 +14,7 @@ export default function ContentAnalysisCard({ primaryAnalysis }: ContentAnalysis
 
       {/* Content Detailed Metrics */}
       {primaryAnalysis.content_analysis?.detailed_metrics && (
-        <div className="mb-8  border-b border-gray-200">
+        <div className="mb-8  border-b border-gray-300">
           <h5 className="text-base font-semibold text-gray-900 mb-5 px-8">Content Metrics</h5>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm px-8">
             {primaryAnalysis.content_analysis.detailed_metrics.word_count_estimate !== undefined && (
@@ -62,7 +62,7 @@ export default function ContentAnalysisCard({ primaryAnalysis }: ContentAnalysis
       )}
 
       {primaryAnalysis.content_analysis?.strengths && primaryAnalysis.content_analysis.strengths.length > 0 && (
-        <div className="mb-8 pb-8 border-b border-gray-200">
+        <div className="mb-8 pb-8 border-b border-gray-300">
           <h5 className="text-base font-semibold text-gray-900 mb-4 px-8">Content Strengths</h5>
           <ul className="space-y-3">
             {primaryAnalysis.content_analysis.strengths.map((strength: string, idx: number) => (

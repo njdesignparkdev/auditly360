@@ -772,7 +772,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
 
         {/* Clear Filters */}
         {(selectedImageType !== 'all' || searchQuery) && (
-          <div className="mt-4 pt-4 border-t border-gray-200">
+          <div className="mt-4 pt-4 border-t border-gray-300">
             <button
               onClick={() => {
                 setSelectedImageType('all')
@@ -1029,7 +1029,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                     {expandedRows.has(img.extra_metadata?.id || img.url || '') && (
                       <tr>
                         <td colSpan={7} className="px-6 py-4 bg-gray-50">
-                          <div className="bg-white rounded-lg border border-gray-200 p-4">
+                          <div className="bg-white rounded-lg border border-gray-300 p-4">
                             <h4 className="text-sm font-semibold text-gray-900 mb-4">Reverse Image Search Results</h4>
                             {(() => {
                               const uniqueKey = img.extra_metadata?.id || img.url || ''
@@ -1053,7 +1053,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                                     {results.map((match: any, idx: number) => (
                                       <div 
                                         key={idx} 
-                                        className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+                                        className="bg-white border border-gray-300 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
                                       >
                                         {/* Image */}
                                         {match.image && (
@@ -1157,7 +1157,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
               }
               
               return (
-              <div key={uniqueKey} className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow">
+              <div key={uniqueKey} className="bg-white border border-gray-300 rounded-lg p-4 hover:shadow-sm transition-shadow">
                 <div className="flex flex-col sm:flex-row gap-4">
                   {/* Image Preview */}
                   <div className="flex-shrink-0 mx-auto sm:mx-0">
@@ -1370,7 +1370,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                       
                       {/* Expanded scan results */}
                       {expandedRows.has(img.extra_metadata?.id || img.url || '') && (
-                        <div className="mt-3 bg-white rounded-lg border border-gray-200 p-4">
+                        <div className="mt-3 bg-white rounded-lg border border-gray-300 p-4">
                           <h4 className="text-sm font-semibold text-gray-900 mb-4">Reverse Image Search Results</h4>
                           {(() => {
                             const uniqueKey = img.extra_metadata?.id || img.url || ''
@@ -1394,7 +1394,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                                   {results.map((match: any, idx: number) => (
                                     <div 
                                       key={idx} 
-                                      className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+                                      className="bg-white border border-gray-300 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
                                     >
                                       {/* Image */}
                                       {match.image && (
@@ -1490,7 +1490,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
 
       {/* Pagination Controls */}
       {filteredImages.length > itemsPerPage && (
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-6 pt-4 border-t border-gray-200">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-6 pt-4 border-t border-gray-300">
           <div className="flex items-center justify-center sm:justify-start text-sm text-gray-700">
             <span>
               Page {currentPage} of {totalPages}
@@ -1556,7 +1556,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg max-w-4xl max-h-[90vh] w-full overflow-hidden border border-gray-300 ">
             {/* Modal Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-200">
+            <div className="flex items-center justify-between p-4 border-b border-gray-300">
               <h3 className="text-lg font-semibold text-gray-900">Image Details</h3>
               <button
                 onClick={closeModal}

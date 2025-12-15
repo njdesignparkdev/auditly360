@@ -125,7 +125,7 @@ export default function PlanFormModal({
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="border-b border-gray-200 px-6 py-4">
+        <div className="border-b border-gray-300 px-6 py-4">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-semibold text-black">
               {isEditing ? 'Edit Plan' : 'Add New Plan'}
@@ -336,7 +336,7 @@ export default function PlanFormModal({
               <h3 className="text-lg font-semibold text-black mb-4">Custom Features</h3>
               <div className="space-y-4">
                 {/* Add New Heading */}
-                <div className="border border-gray-200 rounded-lg p-4">
+                <div className="border border-gray-300 rounded-lg p-4">
                   <h4 className="font-medium text-black mb-3">Add Heading</h4>
                   <div className="flex gap-2">
                     <input 
@@ -362,7 +362,7 @@ export default function PlanFormModal({
 
                 {/* Add Tool to Selected Heading */}
                 {formData.features.length > 0 && (
-                  <div className="border border-gray-200 rounded-lg p-4">
+                  <div className="border border-gray-300 rounded-lg p-4">
                     <h4 className="font-medium text-black mb-3">Add Tool</h4>
                     <div className="space-y-3">
                       <select 
@@ -413,7 +413,7 @@ export default function PlanFormModal({
                     </div>
                   ) : (
                     formData.features.map((feature, headingIndex) => (
-                      <div key={headingIndex} className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                      <div key={headingIndex} className="border border-gray-300 rounded-lg p-4 bg-gray-50">
                         <div className="flex items-center justify-between mb-3">
                           <h5 className="font-semibold text-black text-lg">{feature.heading}</h5>
                           <button
@@ -430,7 +430,7 @@ export default function PlanFormModal({
                             feature.tools.map((tool, toolIndex) => (
                               <div 
                                 key={toolIndex} 
-                                className="flex items-center justify-between p-2 bg-white rounded border border-gray-200"
+                                className="flex items-center justify-between p-2 bg-white rounded border border-gray-300"
                               >
                                 <span className="text-sm text-gray-700">• {tool}</span>
                                 <button
@@ -451,7 +451,7 @@ export default function PlanFormModal({
             </div>
 
             {/* Settings */}
-            <div className="mt-6 pt-6 border-t border-gray-200">
+            <div className="mt-6 pt-6 border-t border-gray-300">
               <h3 className="text-lg font-semibold text-black mb-4">Settings</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="flex items-center">
@@ -502,7 +502,7 @@ export default function PlanFormModal({
         </div>
 
         {/* Action Buttons */}
-        <div className="border-t border-gray-200 px-6 py-4 bg-gray-50">
+        <div className="border-t border-gray-300 px-6 py-4 bg-gray-50">
           <div className="flex gap-3 justify-end">
             <button 
               onClick={onClose} 

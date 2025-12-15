@@ -284,7 +284,7 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
   });
   
   if (hasFeatureAccess === false || accessDenied) {
-    return <div className="bg-white rounded-lg border border-gray-200 p-4">
+    return <div className="bg-white rounded-lg border border-gray-300 p-4">
         <div className="flex items-center space-x-4">
           <div className="text-blue-500">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -316,7 +316,7 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
   if (isAnalyzing) {
     return (
       <div className="space-y-6">
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="bg-white rounded-lg border border-gray-300 p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold text-gray-900">Performance Analysis</h2>
             <div className="flex items-center space-x-2">
@@ -365,7 +365,7 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
   if (error) {
     return (
       <div className="space-y-6">
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="bg-white rounded-lg border border-gray-300 p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold text-gray-900">Performance Analysis</h2>
             <span className="text-sm text-red-600">Analysis failed</span>
@@ -416,7 +416,7 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
   if (!performanceData && !isAnalyzing) {
     return (
       <div className="space-y-6">
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="bg-white rounded-lg border border-gray-300 p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold text-gray-900">Performance Analysis</h2>
             <div className="flex items-center space-x-2">
@@ -533,7 +533,7 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
   return (
     <div className="space-y-6">
       {/* Overall Scores */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-300 p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-6">Overall Scores</h3>
         <div className="flex flex-wrap flex-row justify-around gap-6">
           <ScoreChart 
@@ -574,7 +574,7 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
         columnClassName="masonry-grid_column"
       >
         {/* Performance Metrics (top priority) */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 break-inside-avoid">
+        <div className="bg-white rounded-lg border border-gray-300 p-6 break-inside-avoid">
           <h3 className="text-lg font-semibold text-gray-900 mb-6">Performance Metrics</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <MetricCard
@@ -609,7 +609,7 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
         </div>
 
         {/* Core Web Vitals */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 break-inside-avoid">
+        <div className="bg-white rounded-lg border border-gray-300 p-6 break-inside-avoid">
           <h3 className="text-lg font-semibold text-gray-900 mb-6">Core Web Vitals</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <MetricCard
@@ -637,7 +637,7 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
         </div>
 
         {/* Additional Metrics */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 break-inside-avoid">
+        <div className="bg-white rounded-lg border border-gray-300 p-6 break-inside-avoid">
           <h3 className="text-lg font-semibold text-gray-900 mb-6">Additional Metrics</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <MetricCard
@@ -666,7 +666,7 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
 
         {/* Real User Experience */}
         {loadingExperience?.metrics && (
-          <div className="bg-white rounded-lg border border-gray-200 p-6 break-inside-avoid">
+          <div className="bg-white rounded-lg border border-gray-300 p-6 break-inside-avoid">
             <h3 className="text-lg font-semibold text-gray-900 mb-6">Real User Experience</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {Object.entries(loadingExperience.metrics).map(([key, metric]) => {
@@ -688,7 +688,7 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
         )}
 
         {/* Technical Details */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 break-inside-avoid">
+        <div className="bg-white rounded-lg border border-gray-300 p-6 break-inside-avoid">
           <h3 className="text-lg font-semibold text-gray-900 mb-6">Technical Details</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3">

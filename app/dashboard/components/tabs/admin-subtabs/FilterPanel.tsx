@@ -38,7 +38,7 @@ export default function FilterPanel({ onFiltersChange, plans }: FilterPanelProps
   }
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
+    <div className="bg-white rounded-lg border border-gray-300 p-6 mb-6">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-black">Filters</h3>
         <button

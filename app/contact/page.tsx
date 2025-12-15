@@ -172,7 +172,7 @@ export default function ContactPage() {
             </button>
           </form>
 
-          <div className="mt-12 md:mt-16 pt-8 md:pt-12 border-t border-gray-200">
+          <div className="mt-12 md:mt-16 pt-8 md:pt-12 border-t border-gray-300">
             <h2 className="text-xl md:text-2xl font-semibold text-[#FF4D04] mb-6">
               Other Ways to Reach Us
             </h2>

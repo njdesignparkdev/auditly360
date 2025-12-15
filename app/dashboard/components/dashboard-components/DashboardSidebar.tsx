@@ -193,7 +193,7 @@ export default function DashboardSidebar({
 
       {/* Mobile Sidebar */}
       <AnimatePresence>
-        {isOpen && <motion.div className="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 lg:hidden" initial={{
+        {isOpen && <motion.div className="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-300 lg:hidden" initial={{
         x: -256
       }} animate={{
         x: 0
@@ -205,7 +205,7 @@ export default function DashboardSidebar({
       }}>
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between  border-b p-4 border-gray-200">
+          <div className="flex items-center justify-between  border-b p-4 border-gray-300">
             <Link href="/dashboard" className="flex items-center">
               <Image
                 src="/orange-black-auditly.png"
@@ -223,7 +223,7 @@ export default function DashboardSidebar({
           </div>
 
           {/* User Info */}
-          <div className="p-6 border-b border-gray-200">
+          <div className="p-6 border-b border-gray-300">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
                 <span className="text-gray-700 font-medium text-sm">
@@ -264,7 +264,7 @@ export default function DashboardSidebar({
           </nav>
 
           {/* Plan Information */}
-          <div className="p-4 border-t border-gray-200">
+          <div className="p-4 border-t border-gray-300">
             {planLoading ? <div className="bg-gray-50 rounded-lg p-3">
                 <div className="flex items-center justify-center">
                   <div className="w-4 h-4 border-2 border-[#FF4B01] border-t-transparent rounded-full animate-spin"></div>
@@ -300,7 +300,7 @@ export default function DashboardSidebar({
           </div>
 
           {/* Sign Out Button */}
-          <div className="p-4 border-t border-gray-200">
+          <div className="p-4 border-t border-gray-300">
             <button onClick={handleSignOut} className="w-full flex items-center space-x-3 px-3 py-3 rounded text-sm font-medium text-gray-700">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -313,7 +313,7 @@ export default function DashboardSidebar({
       </AnimatePresence>
 
       {/* Desktop Sidebar - Always visible on large screens */}
-      <motion.div className="hidden lg:block fixed inset-y-0 left-0 z-30 w-64 bg-white border-r border-gray-200" initial={{
+      <motion.div className="hidden lg:block fixed inset-y-0 left-0 z-30 w-64 bg-white border-r border-gray-300" initial={{
       opacity: 0,
       x: -20
     }} animate={{
@@ -325,7 +325,7 @@ export default function DashboardSidebar({
     }}>
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center p-6 border-b border-gray-200">
+          <div className="flex items-center p-6 border-b border-gray-300">
             <Link href="/dashboard" className="flex items-center">
               <Image
                 src="/orange-black-auditly.png"
@@ -338,7 +338,7 @@ export default function DashboardSidebar({
           </div>
 
           {/* User Info */}
-          <div className="p-6 border-b border-gray-200">
+          <div className="p-6 border-b border-gray-300">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
                 <span className="text-gray-700 font-medium text-sm">
@@ -376,7 +376,7 @@ export default function DashboardSidebar({
           </nav>
 
           {/* Plan Information */}
-          <div className="p-4 border-t border-gray-200">
+          <div className="p-4 border-t border-gray-300">
             {planLoading ? <div className="bg-gray-50 rounded-lg p-3">
                 <div className="flex items-center justify-center">
                   <div className="w-4 h-4 border-2 border-[#FF4B01] border-t-transparent rounded-full animate-spin"></div>
@@ -412,7 +412,7 @@ export default function DashboardSidebar({
           </div>
 
           {/* Sign Out Button */}
-          <div className="p-4 border-t border-gray-200">
+          <div className="p-4 border-t border-gray-300">
             <button onClick={handleSignOut} className="w-full flex items-center space-x-3 px-3 py-3 rounded text-sm font-medium text-gray-700">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

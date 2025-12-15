@@ -39,7 +39,7 @@ export default function OverviewTab({ page, project }: OverviewTabProps) {
   return (
     <div className=" mt-6">
       {/* Page Header */}
-      {/* <div className="bg-white rounded-lg border border-gray-200 p-6">
+      {/* <div className="bg-white rounded-lg border border-gray-300 p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">{page.title || 'Untitled Page'}</h1>
@@ -103,7 +103,7 @@ export default function OverviewTab({ page, project }: OverviewTabProps) {
 
         {/* Right Column: Page Summary and Quick Stats */}
         <div className="space-y-6">
-          <div className="bg-white  border-b border-gray-200 p-6">
+          <div className="bg-white  border-b border-gray-300 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Page Summary</h3>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -140,7 +140,7 @@ export default function OverviewTab({ page, project }: OverviewTabProps) {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg border-r border-gray-200 p-6">
+          <div className="bg-white rounded-lg border-r border-gray-300 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h3>
             <div className="space-y-3">
               <div className="flex justify-between">
