@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { AuditProject } from '@/types/audit';
 import { ProjectCardSkeleton, StatsCardSkeleton } from '../SkeletonLoader';
 import EditProjectModal from '../modals/EditProjectModal';
@@ -41,6 +42,7 @@ export default function ProjectsTab({
   onDeleteProject,
   onRecrawlProject
 }: Omit<ProjectsTabProps, 'userProfile'>) {
+  const router = useRouter();
   // Use Zustand store for projects data
   const { projects, loading: projectsLoading, error: projectsError, refreshProjects } = useProjectsStore();
   const { getAuditProject } = useSupabase();
@@ -224,7 +226,8 @@ export default function ProjectsTab({
   const completedProjects = projects.filter(p => p.status === 'completed').length;
   const inProgressProjects = projects.filter(p => p.status === 'in_progress').length;
   const totalIssues = projects.reduce((sum, p) => sum + p.issues_count, 0);
-  return <motion.div initial={{
+  return (
+   <motion.div initial={{
     opacity: 0,
     y: 20
   }} animate={{
@@ -233,7 +236,7 @@ export default function ProjectsTab({
   }} transition={{
     duration: 0.4,
     ease: "easeOut"
-  }} className="space-y-8 lg:px-4">
+  }} className="min-h-[calc(100vh-65px)] max-w-7xl mx-auto border-x border-gray-300">
       {/* Header */}
       <motion.div initial={{
       opacity: 0,
@@ -249,7 +252,17 @@ export default function ProjectsTab({
           <h1 className="text-2xl font-semibold text-black mb-2">Projects</h1>
           <p className="text-gray-600">Manage and monitor your web audit projects</p>
         </div>
-       
+        <div className="p-4">
+          <button
+            onClick={() => router.push('/dashboard?tab=dashboard')}
+            className="flex items-center gap-2 px-4 py-2 bg-[#FF4B01] text-white font-medium rounded-lg hover:bg-[#FF4B01]/90 transition-colors cursor-pointer"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Add Project
+          </button>
+        </div>
       </motion.div>
 
       {/* Quick Stats Summary */}
@@ -974,5 +987,6 @@ export default function ProjectsTab({
             </div>
           </div>
         </div>}
-    </motion.div>;
+    </motion.div>
+  );
 }

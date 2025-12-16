@@ -277,9 +277,9 @@ export default function DashboardOverview({
   };
 
   return (
-    <div className=" py-8 max-w-7xl mx-auto ">
+    <div className=" py-8 max-w-7xl mx-auto border-x border-gray-300 min-h-[calc(100vh-65px)] ">
       {/* Welcome Section */}
-      <div className="mb-4 ">
+      <div className="mb-4 px-4">
         <h1 className="text-2xl sm:text-3xl font-bold text-black mb-2">
           Welcome back, {getDisplayName()}!
         </h1>
@@ -288,14 +288,14 @@ export default function DashboardOverview({
         </p>
       </div>
  {/* Stats Cards - Takes full width on mobile, 1/3 width on lg+ */}
- <div className="w-full ">
+ <div className="w-full border-y border-gray-300 ">
           <StatsCards 
             projects={projects}
             projectsLoading={projectsLoading}
           />
         </div>
       {/* Main Content Row - Site Crawl and Stats Cards */}
-      <div className="flex flex-col gap-4  border-gray-300 lg:flex-row  lg:items-stretch">
+      <div className="flex flex-col border-y  border-gray-300 lg:flex-row  lg:items-stretch">
         {/* Site Crawl Form - Takes full width on mobile, 2/3 width on lg+ */}
         <div className="w-full ">
           <SiteCrawlForm 

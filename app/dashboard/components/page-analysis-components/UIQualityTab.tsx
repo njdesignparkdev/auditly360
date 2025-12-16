@@ -904,7 +904,7 @@ export default function UIQualityTab({ page }: UIQualityTabProps) {
   return (
     <div className=" ">
       {/* Header with Reanalyze Button */}
-      <div className="flex items-center justify-between px-8 pt-4">
+      <div className="flex items-center justify-between px-8 py-4">
         <h2 className="text-2xl font-bold text-gray-900 ">UI Quality Analysis</h2>
         {(imageAnalysis || screenshotUrl || desktopScreenshotUrl) && hasScreenshotAccess && (
           <button

@@ -152,7 +152,7 @@ export default function AnalysisHeader({
   };
 
   return (
-    <div className="border border-gray-300 rounded-lg bg-white">
+    <div className=" bg-white">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 px-4 pt-4">
         <div className="flex flex-col space-y-3 min-w-0 px-6">
           {currentTab === "page-analysis" && (

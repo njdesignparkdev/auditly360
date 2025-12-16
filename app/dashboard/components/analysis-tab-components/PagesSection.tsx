@@ -340,7 +340,7 @@ export default function PagesSection({
   // Show loading state while checking plan
   if (isLoadingPlan) {
     return (
-      <div className="bg-white rounded-lg border border-gray-300 p-6">
+      <div className="bg-white -lg border border-gray-300 p-6">
         <div className="text-center py-8">
           <div className="inline-flex items-center">
             <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-[#ff4b01]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -357,7 +357,7 @@ export default function PagesSection({
   // Show feature unavailable card if user doesn't have access
   if (!hasPagesTabAccess) {
     return (
-      <div className="bg-white rounded-lg border border-gray-300 p-6">
+      <div className="bg-white -lg border border-gray-300 p-6">
         <FeatureUnavailableCard
           title="Pages Tab"
           description="This feature is not available in your current plan. Upgrade to access pages tab functionality."
@@ -377,7 +377,7 @@ export default function PagesSection({
           <button
             onClick={fetchPages}
             disabled={isLoading}
-            className="px-3 py-1.5 cursor-pointer bg-[#ff4b01] text-white text-sm font-medium rounded-md hover:bg-[#e64401] disabled:bg-[#ff4b01]/50 disabled:cursor-not-allowed transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff4b01] focus:ring-offset-2"
+            className="px-3 py-1.5 cursor-pointer bg-[#ff4b01] text-white text-sm font-medium -md hover:bg-[#e64401] disabled:bg-[#ff4b01]/50 disabled:cursor-not-allowed transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff4b01] focus:ring-offset-2"
           >
             {isLoading ? 'Refreshing...' : 'Refresh'}
           </button>
@@ -385,7 +385,7 @@ export default function PagesSection({
       </div>
 
       {/* Filters and Sorting */}
-      <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-2 sm:gap-4 mb-4 p-3 bg-gray-50 rounded-lg">
+      <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-2 sm:gap-4 mb-4 p-3 bg-gray-50 -lg">
         {/* Search Input */}
         <div className="flex items-center space-x-2 w-full sm:w-auto flex-1 sm:flex-initial">
           <label className="text-sm font-medium text-gray-700 whitespace-nowrap">Search:</label>
@@ -395,7 +395,7 @@ export default function PagesSection({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by name or URL..."
-              className="px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4b01] flex-1 sm:w-48"
+              className="px-2 py-1 border border-gray-300  text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4b01] flex-1 sm:w-48"
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.currentTarget.blur()
@@ -421,7 +421,7 @@ export default function PagesSection({
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value as 'all' | 'success' | 'error' | 'redirect')}
-            className="px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4b01]"
+            className="px-2 py-1 border border-gray-300  text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4b01]"
           >
             <option value="all">All Pages</option>
             <option value="success">Success (200-299)</option>
@@ -437,7 +437,7 @@ export default function PagesSection({
           <select
             value={itemsPerPage}
             onChange={(e) => setItemsPerPage(Number(e.target.value))}
-            className="px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4b01]"
+            className="px-2 py-1 border border-gray-300  text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4b01]"
           >
             <option value={5}>5</option>
             <option value={10}>10</option>
@@ -450,7 +450,7 @@ export default function PagesSection({
         {/* View Toggle */}
         <div className="flex items-center space-x-2 border-l border-gray-300 pl-4">
           <label className="text-sm font-medium text-gray-700">View:</label>
-          <div className="flex items-center border border-gray-300 rounded">
+          <div className="flex items-center border border-gray-300 ">
             <button
               onClick={() => setViewMode('table')}
               className={`px-3 py-1 text-sm font-medium transition-colors ${
@@ -477,7 +477,7 @@ export default function PagesSection({
 
       {/* Error State */}
       {error && (
-        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <div className="mb-4 p-4 bg-red-50 border border-red-200 -lg">
           <div className="flex items-start">
             <svg className="w-5 h-5 text-red-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -514,7 +514,7 @@ export default function PagesSection({
 
           {/* Table View */}
           {viewMode === 'table' && (
-            <div className="overflow-x-auto border border-gray-300 rounded-lg">
+            <div className="overflow-x-auto border border-gray-300 -lg">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
@@ -570,9 +570,9 @@ export default function PagesSection({
                               console.warn('No page ID available for analysis')
                             }
                           }}
-                          className="text-[#ff4b01] hover:text-[#e64401] font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff4b01] focus:ring-offset-2 rounded px-2 py-1"
+                          className="text-[#ff4b01] hover:text-[#e64401] font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff4b01] focus:ring-offset-2  px-2 py-1"
                         >
-                          Analyze
+                          View Details
                         </button>
                       </td>
                     </tr>
@@ -586,7 +586,7 @@ export default function PagesSection({
           {viewMode === 'grid' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {paginatedPages.map((page, index) => (
-                <div key={page.id || index} className="border border-gray-300 rounded-lg p-4 transition-colors duration-200 hover:shadow-md flex flex-col">
+                <div key={page.id || index} className="border border-gray-300 -lg p-4 transition-colors duration-200 hover:shadow-md flex flex-col">
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <h4 
                       onClick={() => {
@@ -616,7 +616,7 @@ export default function PagesSection({
                       }}
                       className="text-[#ff4b01] text-xs font-medium hover:text-[#e64401] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ff4b01] focus:ring-offset-2 flex-shrink-0"
                     >
-                      Analyze
+                      View Details
                     </button>
                   </div>
                   {page.description && (
@@ -670,7 +670,7 @@ export default function PagesSection({
                 {/* <button
                   onClick={() => setCurrentPage(1)}
                   disabled={currentPage === 1}
-                  className="px-2 py-1 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                  className="px-2 py-1 text-sm border border-gray-300  disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
                 >
                   <span className="hidden sm:inline">First</span>
                   <span className="sm:hidden">«</span>
@@ -678,7 +678,7 @@ export default function PagesSection({
                 <button
                   onClick={() => setCurrentPage(currentPage - 1)}
                   disabled={currentPage === 1}
-                  className="px-2 py-1 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                  className="px-2 py-1 text-sm border border-gray-300  disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
                 >
                   <span className="hidden sm:inline">Previous</span>
                   <span className="sm:hidden">‹</span>
@@ -689,7 +689,7 @@ export default function PagesSection({
                 <button
                   onClick={() => setCurrentPage(currentPage + 1)}
                   disabled={currentPage === totalPages}
-                  className="px-2 py-1 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                  className="px-2 py-1 text-sm border border-gray-300  disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
                 >
                   <span className="hidden sm:inline">Next</span>
                   <span className="sm:hidden">›</span>
@@ -697,7 +697,7 @@ export default function PagesSection({
                 {/* <button
                   onClick={() => setCurrentPage(totalPages)}
                   disabled={currentPage === totalPages}
-                  className="px-2 py-1 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                  className="px-2 py-1 text-sm border border-gray-300  disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
                 >
                   <span className="hidden sm:inline">Last</span>
                   <span className="sm:hidden">»</span>
@@ -709,7 +709,7 @@ export default function PagesSection({
                 <select
                   value={currentPage}
                   onChange={(e) => setCurrentPage(Number(e.target.value))}
-                  className="px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4b01]"
+                  className="px-2 py-1 border border-gray-300  text-sm focus:outline-none focus:ring-2 focus:ring-[#ff4b01]"
                 >
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map(pageNum => (
                     <option key={pageNum} value={pageNum}>
@@ -743,7 +743,7 @@ export default function PagesSection({
                     setHasLoadedPages(false)
                     fetchPages()
                   }}
-                  className="px-4 py-2 bg-[#ff4b01] text-white text-sm font-medium rounded-md hover:bg-[#e64401] transition-colors duration-200"
+                  className="px-4 py-2 bg-[#ff4b01] text-white text-sm font-medium -md hover:bg-[#e64401] transition-colors duration-200"
                 >
                   Try fetching pages
                 </button>
@@ -754,7 +754,7 @@ export default function PagesSection({
                     setPages([])
                     setError(null)
                   }}
-                  className="px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-md hover:bg-gray-700 transition-colors duration-200"
+                  className="px-4 py-2 bg-gray-600 text-white text-sm font-medium -md hover:bg-gray-700 transition-colors duration-200"
                 >
                   Reset State
                 </button>

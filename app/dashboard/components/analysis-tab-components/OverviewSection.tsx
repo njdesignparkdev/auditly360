@@ -133,7 +133,7 @@ export default function OverviewSection({ project, scrapedPages = [] }: Overview
           </div>
         </div>
         {seoAnalysis && (
-          <div className="bg-white border-b border-gray-300  pb-6 space-y-6">
+          <div className="bg-white pb-6 space-y-6">
             <div>
               <div className="flex items-center justify-between  ">
                 <span className="text-lg font-semibold text-gray-900 px-6">SEO Score</span>
@@ -195,7 +195,7 @@ export default function OverviewSection({ project, scrapedPages = [] }: Overview
         )}
 
         {/* Social Preview */}
-        <div className=" p-6">
+        <div className=" ">
           <SocialPreviewTab project={project} />
         </div>
 

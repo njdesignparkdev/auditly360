@@ -264,13 +264,13 @@ export default function GrammarContentTab({
           {issues.map((issue, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg border border-gray-300 p-4"
+              className="bg-white -lg border border-gray-300 p-4"
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
                     <span
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      className={`px-2 py-1 -full text-xs font-medium ${
                         issue.severity === 'high'
                           ? 'bg-red-100 text-red-800'
                           : issue.severity === 'medium'
@@ -309,14 +309,14 @@ export default function GrammarContentTab({
     );
   };
   return (
-    <div className="border border-gray-300 rounded-lg bg-white">
+    <div className=" bg-white">
       {/* Header with Cached Status */}
-      <div className="border-b border-gray-300 p-6">
-        <div className="flex items-center justify-between mb-6">
+      <div className="border-b border-gray-300 ">
+        <div className="flex items-center justify-between mb-6 py-4">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">Grammar & Content Quality</h3>
+            <h3 className="text-lg font-semibold text-gray-900 px-4">Grammar & Content Quality</h3>
             {geminiAnalysis?.analysis_timestamp && (
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-gray-500 mt-1 px-4">
                 Content analysis (from {formatTimestamp(geminiAnalysis.analysis_timestamp)})
               </p>
             )}
@@ -325,7 +325,7 @@ export default function GrammarContentTab({
             <button
               onClick={handleReAnalyze}
               disabled={isStreaming}
-              className="px-4 cursor-pointer py-2 bg-[#ff4b01] text-white rounded-lg hover:bg-[#e64401] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+              className="px-4 cursor-pointer py-2 bg-[#ff4b01] text-white -lg hover:bg-[#e64401] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -345,7 +345,7 @@ export default function GrammarContentTab({
           <div className="text-center py-12">
             <div className="flex flex-col items-center space-y-4">
               <div className="relative">
-                <div className="w-16 h-16 border-4 border-[#ff4b01]/30 border-t-[#ff4b01] rounded-full animate-spin"></div>
+                <div className="w-16 h-16 border-4 border-[#ff4b01]/30 border-t-[#ff4b01] -full animate-spin"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <svg className="w-6 h-6 text-[#ff4b01]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -359,11 +359,11 @@ export default function GrammarContentTab({
                 <p className="text-gray-600">Our AI is analyzing your content for grammar, consistency, and readability...</p>
                 
                 <div className="mt-4 flex justify-center space-x-1">
-                  <div className="w-2 h-2 bg-[#ff4b01] rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-[#ff4b01] rounded-full animate-bounce" style={{
+                  <div className="w-2 h-2 bg-[#ff4b01] -full animate-bounce"></div>
+                  <div className="w-2 h-2 bg-[#ff4b01] -full animate-bounce" style={{
                     animationDelay: '0.1s'
                   }}></div>
-                  <div className="w-2 h-2 bg-[#ff4b01] rounded-full animate-bounce" style={{
+                  <div className="w-2 h-2 bg-[#ff4b01] -full animate-bounce" style={{
                     animationDelay: '0.2s'
                   }}></div>
                 </div>
@@ -417,7 +417,7 @@ export default function GrammarContentTab({
                   >
                     <span className="flex items-center gap-2">
                       {tab.label}
-                      <span className={`px-2 py-1 rounded-full text-xs ${
+                      <span className={`px-2 py-1 -full text-xs ${
                         activeTab === tab.id
                           ? 'bg-[#ff4b01]/20 text-[#ff4b01]'
                           : 'bg-gray-100 text-gray-600'

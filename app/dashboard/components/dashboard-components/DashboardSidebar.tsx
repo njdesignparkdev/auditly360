@@ -166,6 +166,15 @@ export default function DashboardSidebar({
         </svg>
     });
 
+    // Billing tab - redirects to profile billing subtab
+    baseItems.push({
+      id: 'billing',
+      name: 'Billing',
+      icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7h18M3 11h18M7 15h2m4 0h2m-8 4h8a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+    });
+
     // Add admin tab if user is admin
     if (isAdmin === true) {
       baseItems.push({
@@ -277,9 +286,9 @@ export default function DashboardSidebar({
                   <p className="text-sm font-semibold text-black truncate">
                     {displayName}
                   </p>
-                  <p className="text-xs text-gray-600 truncate">
+                  {/* <p className="text-xs text-gray-600 truncate">
                     {userProfile?.email || user?.email || ''}
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>
@@ -306,9 +315,9 @@ export default function DashboardSidebar({
                         <p className="text-sm font-semibold text-black truncate">
                           {displayName}
                         </p>
-                        <p className="text-xs text-gray-600 truncate">
+                        {/* <p className="text-xs text-gray-600 truncate">
                           {userProfile?.email || user?.email || ''}
-                        </p>
+                        </p> */}
                       </div>
                     </div>
                   </div>
@@ -362,15 +371,26 @@ export default function DashboardSidebar({
 
           {/* Navigation */}
           <nav className="flex-1 px-4 py-6 space-y-1">
-            {navigationItems.map(item => <button key={item.id} onClick={() => {
-              onTabChange(item.id);
-              onClose();
-            }} className={`w-full cursor-pointer flex items-center space-x-3 px-3 py-3 rounded text-sm font-medium ${activeTab === item.id ? ' text-[#FF4B01]' : 'text-gray-700'}`}>
+            {navigationItems.map(item => (
+              <button
+                key={item.id}
+                onClick={() => {
+                  if (item.id === 'billing') {
+                    router.push('/dashboard?tab=profile&subtab=billing');
+                    onClose();
+                    return;
+                  }
+                  onTabChange(item.id);
+                  onClose();
+                }}
+                className={`w-full cursor-pointer flex items-center space-x-3 px-3 py-3 rounded text-sm font-medium ${activeTab === item.id ? ' text-[#FF4B01]' : 'text-gray-700'}`}
+              >
                 <span className={activeTab === item.id ? 'text-[#FF4B01]' : 'text-gray-500'}>
                   {item.icon}
                 </span>
                 <span>{item.name}</span>
-              </button>)}
+              </button>
+            ))}
           </nav>
 
           {/* Plan Information */}
@@ -445,12 +465,24 @@ export default function DashboardSidebar({
 
           {/* Navigation */}
           <nav className="flex-1 px-4 py-6 space-y-1">
-            {navigationItems.map(item => <button key={item.id} onClick={() => onTabChange(item.id)} className={` cursor-pointer w-full flex items-center space-x-3 px-3 py-3 rounded text-sm font-medium ${activeTab === item.id ? ' text-[#FF4B01]' : 'text-gray-700'}`}>
+            {navigationItems.map(item => (
+              <button
+                key={item.id}
+                onClick={() => {
+                  if (item.id === 'billing') {
+                    router.push('/dashboard?tab=profile&subtab=billing');
+                    return;
+                  }
+                  onTabChange(item.id);
+                }}
+                className={` cursor-pointer w-full flex items-center space-x-3 px-3 py-3 rounded text-sm font-medium ${activeTab === item.id ? ' text-[#FF4B01]' : 'text-gray-700'}`}
+              >
                 <span className={activeTab === item.id ? 'text-[#FF4B01]' : 'text-gray-500'}>
                   {item.icon}
                 </span>
                 <span>{item.name}</span>
-              </button>)}
+              </button>
+            ))}
           </nav>
 
           {/* Plan Information */}
@@ -508,9 +540,9 @@ export default function DashboardSidebar({
                   <p className="text-sm font-semibold text-black truncate">
                     {displayName}
                   </p>
-                  <p className="text-xs text-gray-600 truncate">
+                  {/* <p className="text-xs text-gray-600 truncate">
                     {userProfile?.email || user?.email || ''}
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>
@@ -537,9 +569,9 @@ export default function DashboardSidebar({
                         <p className="text-sm font-semibold text-black truncate">
                           {displayName}
                         </p>
-                        <p className="text-xs text-gray-600 truncate">
+                        {/* <p className="text-xs text-gray-600 truncate">
                           {userProfile?.email || user?.email || ''}
-                        </p>
+                        </p> */}
                       </div>
                     </div>
                   </div>

@@ -641,7 +641,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
           <div className="text-sm text-gray-500">
             {isProcessing ? (
               <span className="flex items-center gap-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900"></div>
+                <div className="animate-spin -full h-4 w-4 border-b-2 border-gray-900"></div>
                 Processing links...
               </span>
             ) : (
@@ -657,11 +657,11 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
             <div className="relative group px-6">
               <button
                 disabled={isExporting}
-                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 -md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isExporting ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900"></div>
+                    <div className="animate-spin -full h-4 w-4 border-b-2 border-gray-900"></div>
                     Exporting...
                   </>
                 ) : (
@@ -675,7 +675,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
               </button>
               
               {/* Export Options Dropdown */}
-              <div className="absolute right-0 top-full mt-1 w-48 bg-white border border-gray-300 rounded-md  opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
+              <div className="absolute right-0 top-full mt-1 w-48 bg-white border border-gray-300 -md  opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
                 <div className="py-1">
                   <button
                     onClick={exportToCSV}
@@ -750,11 +750,11 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by URL, text, title, or page..."
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 px-3 py-2 border border-gray-300 -md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <button
                 onClick={handleSearch}
-                className="px-4 py-2 bg-[#ff4b01] text-white rounded-md hover:bg-[#e64401] transition-colors"
+                className="px-4 py-2 bg-[#ff4b01] text-white -md hover:bg-[#e64401] transition-colors"
               >
                 Search
               </button>
@@ -767,7 +767,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
             <select
               value={selectedLinkType}
               onChange={(e) => setSelectedLinkType(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 -md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="all">All Types</option>
               <option value="internal">Internal</option>
@@ -783,11 +783,11 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
               <button
                 onClick={checkAllLinksBroken}
                 disabled={checkingBrokenLinks || links.length === 0}
-                className="w-full px-3 py-2 text-sm font-medium text-white bg-[#ff4b01] border border-[#ff4b01] rounded-md hover:bg-[#e64401] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#ff4b01] transition-colors"
+                className="w-full px-3 py-2 text-sm font-medium text-white bg-[#ff4b01] border border-[#ff4b01] -md hover:bg-[#e64401] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#ff4b01] transition-colors"
               >
                 {checkingBrokenLinks ? (
                   <span className="flex items-center justify-center gap-2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    <div className="animate-spin -full h-4 w-4 border-b-2 border-white"></div>
                     Checking...
                   </span>
                 ) : (
@@ -795,7 +795,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
                 )}
               </button>
             ) : (
-              <div className="w-full px-3 py-2 text-sm font-medium text-gray-500 bg-gray-100 border border-gray-300 rounded-md flex items-center justify-center gap-1.5 cursor-not-allowed" title="Broken Links Check is not available in your current plan">
+              <div className="w-full px-3 py-2 text-sm font-medium text-gray-500 bg-gray-100 border border-gray-300 -md flex items-center justify-center gap-1.5 cursor-not-allowed" title="Broken Links Check is not available in your current plan">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
@@ -878,7 +878,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                      <span className={`inline-flex px-2 py-1 text-xs font-medium -full ${
                         link.type === 'internal' 
                           ? 'bg-gray-100 text-gray-900' 
                           : 'bg-gray-200 text-gray-900'
@@ -903,15 +903,15 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {linkStatus === 'broken' ? (
-                        <span className="inline-flex px-2 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800">
+                        <span className="inline-flex px-2 py-1 text-xs font-medium -full bg-red-100 text-red-800">
                           Broken
                         </span>
                       ) : linkStatus === 'working' ? (
-                        <span className="inline-flex px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800">
+                        <span className="inline-flex px-2 py-1 text-xs font-medium -full bg-green-100 text-green-800">
                           Working
                         </span>
                       ) : (
-                        <span className="inline-flex px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-600">
+                        <span className="inline-flex px-2 py-1 text-xs font-medium -full bg-gray-100 text-gray-600">
                           Unknown
                         </span>
                       )}
@@ -947,7 +947,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
             <button
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white"
+              className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 -md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white"
             >
               Previous
             </button>
@@ -970,7 +970,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
                   <button
                     key={pageNum}
                     onClick={() => setCurrentPage(pageNum)}
-                    className={`px-3 py-1.5 text-sm font-medium rounded-md ${
+                    className={`px-3 py-1.5 text-sm font-medium -md ${
                       currentPage === pageNum
                         ? 'bg-gray-900 text-white'
                         : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
@@ -986,7 +986,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
             <button
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
-              className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white"
+              className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 -md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white"
             >
               Next
             </button>

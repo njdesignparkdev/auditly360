@@ -5,7 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useSupabase } from '@/contexts/SupabaseContext';
 import { AuditProject } from '@/types/audit';
 import { useSearchParams } from 'next/navigation';
-import { DashboardSidebar, DashboardHeader, DashboardContent } from './components/dashboard-components';
+import { DashboardNavbar, DashboardContent } from './components/dashboard-components';
 import AnalysisTab from './components/tabs/AnalysisTab';
 import PageAnalysisTab from './components/tabs/PageAnalysisTab';
 import ConnectionStatus from './components/ConnectionStatus';
@@ -25,7 +25,6 @@ function DashboardContentWrapper() {
     deleteAuditProject
   } = useSupabase();
   const searchParams = useSearchParams();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
@@ -278,7 +277,7 @@ function DashboardContentWrapper() {
 
   // Show loading state
   if (loading) {
-    return <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    return <div className="max-w-7xl mx-auto min-h-[calc(100vh-65px)] bg-gray-50 flex items-center justify-center">
       <div className="text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff4b01] mx-auto"></div>
         <p className="mt-4 text-gray-600">Loading dashboard...</p>
@@ -288,7 +287,7 @@ function DashboardContentWrapper() {
 
   // Redirect if not authenticated
   if (!user) {
-    return <div className="min-h-screen bg-white flex items-center justify-center">
+    return <div className="max-w-7xl mx-auto min-h-[calc(100vh-65px)] bg-white flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h1>
           <p className="text-gray-600 mb-6">You need to be logged in to access the dashboard.</p>
@@ -298,17 +297,19 @@ function DashboardContentWrapper() {
         </div>
       </div>;
   }
-  return <div className="min-h-screen bg-white overflow-x-hidden">
-      {/* Sidebar */}
-      <DashboardSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} activeTab={activeTab} onTabChange={handleTabChange} userProfile={userProfile} selectedProjectId={selectedProjectId} />
+  return <div className="max-w-7xl mx-auto min-h-[calc(100vh-65px)] border-x border-gray-300 bg-white overflow-x-hidden">
+      {/* Top Navbar */}
+      <DashboardNavbar 
+        activeTab={activeTab} 
+        onTabChange={handleTabChange} 
+        userProfile={userProfile} 
+        selectedProjectId={selectedProjectId} 
+      />
 
     {/* Main Content */}
-    <div className="lg:pl-60 pb-8">
-      {/* Header */}
-      <DashboardHeader onMenuClick={() => setSidebarOpen(true)} userProfile={userProfile} />
-
+    <div className="">
       {/* Content */}
-      <div className="mb-8">
+      <div className="">
         {activeTab === 'analysis' && selectedProjectId ? <div className="">
           <AnalysisTab key={selectedProjectId} // Prevent unnecessary re-mounting
             projectId={selectedProjectId} cachedData={getCachedAnalysisData(selectedProjectId)} onDataUpdate={(project, scrapedPages) => setCachedAnalysisData(selectedProjectId, project, scrapedPages)} onPageSelect={handlePageSelect} />

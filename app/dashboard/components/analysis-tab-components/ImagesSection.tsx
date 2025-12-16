@@ -733,7 +733,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
         <div className="text-sm text-gray-500">
           {isLoading || isProcessing ? (
             <span className="flex items-center gap-2">
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900"></div>
+              <div className="animate-spin -full h-4 w-4 border-b-2 border-gray-900"></div>
               {isLoading ? 'Loading images...' : 'Processing images...'}
             </span>
           ) : (
@@ -791,11 +791,11 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by URL, alt text, title, or page..."
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 px-3 py-2 border border-gray-300 -md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <button
                 onClick={handleSearch}
-                className="px-4 py-2 bg-[#ff4b01] text-white rounded-md hover:bg-[#e64401] transition-colors w-full sm:w-auto"
+                className="px-4 py-2 bg-[#ff4b01] text-white -md hover:bg-[#e64401] transition-colors w-full sm:w-auto"
               >
                 Search
               </button>
@@ -808,7 +808,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
             <select
               value={selectedImageType}
               onChange={(e) => setSelectedImageType(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 -md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="all">All Types</option>
               <option value="JPEG">JPEG</option>
@@ -886,7 +886,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                       </svg>
                     </div>
                     {showActionsTooltip && (
-                      <div className="absolute z-50 top-full right-0 mt-1 w-64 p-3 bg-white text-black text-xs rounded-lg shadow-lg pointer-events-none">
+                      <div className="absolute z-50 top-full right-0 mt-1 w-64 p-3 bg-white text-black text-xs -lg shadow-lg pointer-events-none">
                         
                         <p className="text-black font-medium mb-1">Search Image Usage</p>
                         <p className="text-black text-xs leading-relaxed">
@@ -923,7 +923,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                     <tr className="hover:bg-gray-50">
                     <td className="px-6 py-2 whitespace-nowrap">
                       <div 
-                        className="w-16 h-16 bg-gray-100 rounded border overflow-hidden flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors"
+                        className="w-16 h-16 bg-gray-100  border overflow-hidden flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors"
                         onClick={() => handleImageClick(img)}
                       >
                         <Image
@@ -965,7 +965,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="inline-flex px-2 py-1 text-xs font-medium bg-gray-100 text-gray-900 rounded-full">
+                      <span className="inline-flex px-2 py-1 text-xs font-medium bg-gray-100 text-gray-900 -full">
                         {img.type || 'Unknown'}
                       </span>
                     </td>
@@ -1024,7 +1024,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                                   }
                                   toggleScanResults(e, displayKey)
                                 }}
-                                className="px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors flex items-center justify-center gap-1"
+                                className="px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 -md hover:bg-gray-50 transition-colors flex items-center justify-center gap-1"
                               >
                                 {expandedRows.has(displayKey) ? (
                                   <>
@@ -1052,12 +1052,12 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                               <button
                                 onClick={(e) => handleScanImage(e, img, scanKey)}
                                 disabled={isScanning}
-                                className="px-3 py-1.5 text-xs font-medium text-white bg-[#ff4b01] rounded-md hover:bg-[#e64401] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-1.5"
+                                className="px-3 py-1.5 text-xs font-medium text-white bg-[#ff4b01] -md hover:bg-[#e64401] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-1.5"
                                 title={img.extra_metadata?.id ? 'Scan image from database' : 'Scan image (will be saved to database)'}
                               >
                                 {isScanning ? (
                                   <>
-                                    <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
+                                    <div className="animate-spin -full h-3 w-3 border-b-2 border-white"></div>
                                     Scanning...
                                   </>
                                 ) : (
@@ -1074,7 +1074,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                           
                           // Show upgrade required message
                           return (
-                            <div className="px-3 py-1.5 text-xs font-medium text-gray-500 bg-gray-100 rounded-md flex items-center justify-center gap-1.5 cursor-not-allowed" title="Reverse Image Search is not available in your current plan">
+                            <div className="px-3 py-1.5 text-xs font-medium text-gray-500 bg-gray-100 -md flex items-center justify-center gap-1.5 cursor-not-allowed" title="Reverse Image Search is not available in your current plan">
                               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                               </svg>
@@ -1090,7 +1090,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                     {expandedRows.has(uniqueKey) && (
                       <tr>
                         <td colSpan={7} className="px-6 py-4 bg-gray-50">
-                          <div className="bg-white rounded-lg border border-gray-300 p-4">
+                          <div className="bg-white -lg border border-gray-300 p-4">
                             <h4 className="text-sm font-semibold text-gray-900 mb-4">Reverse Image Search Results</h4>
                             {(() => {
                               const displayKey = uniqueKey
@@ -1118,7 +1118,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                                     {results.map((match: any, idx: number) => (
                                       <div 
                                         key={idx} 
-                                        className="bg-white border border-gray-300 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+                                        className="bg-white border border-gray-300 -lg overflow-hidden hover:shadow-md transition-shadow"
                                       >
                                         {/* Image */}
                                         {match.image && (
@@ -1149,7 +1149,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                                               <img 
                                                 src={match.logo} 
                                                 alt={match.domain || 'Domain logo'}
-                                                className="w-4 h-4 rounded"
+                                                className="w-4 h-4 "
                                                 onError={(e) => {
                                                   e.currentTarget.style.display = 'none'
                                                 }}
@@ -1224,12 +1224,12 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
               const fallbackUrlKey = img.url || ''
               
               return (
-              <div key={uniqueKey} className="bg-white border border-gray-300 rounded-lg p-4 hover:shadow-sm transition-shadow">
+              <div key={uniqueKey} className="bg-white border border-gray-300 -lg p-4 hover:shadow-sm transition-shadow">
                 <div className="flex flex-col sm:flex-row gap-4">
                   {/* Image Preview */}
                   <div className="flex-shrink-0 mx-auto sm:mx-0">
                     <div 
-                      className="w-24 h-24 bg-gray-100 rounded border overflow-hidden flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors"
+                      className="w-24 h-24 bg-gray-100  border overflow-hidden flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors"
                       onClick={() => handleImageClick(img)}
                     >
                       <Image
@@ -1284,7 +1284,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                       <div className="flex-1">
                         <label className="text-xs font-medium text-gray-500 uppercase tracking-wider">Type</label>
                         <div className="mt-1">
-                          <span className="inline-flex px-2 py-1 text-xs font-medium bg-gray-100 text-gray-900 rounded-full">
+                          <span className="inline-flex px-2 py-1 text-xs font-medium bg-gray-100 text-gray-900 -full">
                             {img.type || 'Unknown'}
                           </span>
                         </div>
@@ -1330,7 +1330,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                         </svg>
                       </label>
                       {showActionsTooltip && (
-                        <div className="absolute z-50 top-full left-0 mt-1 w-64 p-3 bg-red-900 text-white text-xs rounded-lg shadow-lg pointer-events-none">
+                        <div className="absolute z-50 top-full left-0 mt-1 w-64 p-3 bg-red-900 text-white text-xs -lg shadow-lg pointer-events-none">
                           <div className="absolute -top-1 left-4 w-2 h-2 bg-gray-900 transform rotate-45"></div>
                           <p className="text-white font-medium mb-1">Search Image Usage</p>
                           <p className="text-gray-300 text-xs leading-relaxed">
@@ -1376,7 +1376,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                                   }
                                   toggleScanResults(e, displayKey)
                                 }}
-                                className="w-full px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors flex items-center justify-center gap-1"
+                                className="w-full px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 -md hover:bg-gray-50 transition-colors flex items-center justify-center gap-1"
                               >
                                 {expandedRows.has(displayKey) ? (
                                   <>
@@ -1403,12 +1403,12 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                               <button
                                 onClick={(e) => handleScanImage(e, img)}
                                 disabled={scanningImages.has(uniqueKey) || scanningImages.has(imageId)}
-                                className="w-full sm:w-auto px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-1.5"
+                                className="w-full sm:w-auto px-3 py-1.5 text-xs font-medium text-white bg-blue-600 -md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-1.5"
                                 title={img.extra_metadata?.id ? 'Scan image from database' : 'Scan image (will be saved to database)'}
                               >
                                 {(scanningImages.has(uniqueKey) || scanningImages.has(imageId)) ? (
                                   <>
-                                    <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
+                                    <div className="animate-spin -full h-3 w-3 border-b-2 border-white"></div>
                                     Scanning...
                                   </>
                                 ) : (
@@ -1425,7 +1425,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                           
                           // Show upgrade required message
                           return (
-                            <div className="w-full px-3 py-1.5 text-xs font-medium text-gray-500 bg-gray-100 rounded-md flex items-center justify-center gap-1.5 cursor-not-allowed" title="Reverse Image Search is not available in your current plan">
+                            <div className="w-full px-3 py-1.5 text-xs font-medium text-gray-500 bg-gray-100 -md flex items-center justify-center gap-1.5 cursor-not-allowed" title="Reverse Image Search is not available in your current plan">
                               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                               </svg>
@@ -1437,7 +1437,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                       
                       {/* Expanded scan results */}
                       {expandedRows.has(uniqueKey) && (
-                        <div className="mt-3 bg-white rounded-lg border border-gray-300 p-4">
+                        <div className="mt-3 bg-white -lg border border-gray-300 p-4">
                           <h4 className="text-sm font-semibold text-gray-900 mb-4">Reverse Image Search Results</h4>
                           {(() => {
                             const scanData =
@@ -1464,7 +1464,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                                   {results.map((match: any, idx: number) => (
                                     <div 
                                       key={idx} 
-                                      className="bg-white border border-gray-300 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+                                      className="bg-white border border-gray-300 -lg overflow-hidden hover:shadow-md transition-shadow"
                                     >
                                       {/* Image */}
                                       {match.image && (
@@ -1495,7 +1495,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                                             <img 
                                               src={match.logo} 
                                               alt={match.domain || 'Domain logo'}
-                                              className="w-4 h-4 rounded"
+                                              className="w-4 h-4 "
                                               onError={(e) => {
                                                 e.currentTarget.style.display = 'none'
                                               }}
@@ -1572,7 +1572,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
             <button
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white"
+              className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 -md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white"
             >
               <span className="hidden sm:inline">Previous</span>
               <span className="sm:hidden">‹</span>
@@ -1596,7 +1596,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                   <button
                     key={pageNum}
                     onClick={() => setCurrentPage(pageNum)}
-                    className={`px-3 py-1.5 text-sm font-medium rounded-md ${
+                    className={`px-3 py-1.5 text-sm font-medium -md ${
                       currentPage === pageNum
                         ? 'bg-gray-900 text-white'
                         : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
@@ -1612,7 +1612,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
             <button
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
-              className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white"
+              className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 -md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white"
             >
               <span className="hidden sm:inline">Next</span>
               <span className="sm:hidden">›</span>
@@ -1624,7 +1624,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
       {/* Image Modal */}
       {showModal && selectedImage && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-4xl max-h-[90vh] w-full overflow-hidden border border-gray-300 ">
+          <div className="bg-white -lg max-w-4xl max-h-[90vh] w-full overflow-hidden border border-gray-300 ">
             {/* Modal Header */}
             <div className="flex items-center justify-between p-4 border-b border-gray-300">
               <h3 className="text-lg font-semibold text-gray-900">Image Details</h3>
@@ -1643,13 +1643,13 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Large Image */}
                 <div className="space-y-4">
-                  <div className="bg-gray-100 rounded-lg p-4 flex items-center justify-center min-h-[300px]">
+                  <div className="bg-gray-100 -lg p-4 flex items-center justify-center min-h-[300px]">
                     <Image
                       src={selectedImage.url || selectedImage.src || ''}
                       alt={selectedImage.alt || 'No alt text'}
                       width={400}
                       height={400}
-                      className="max-w-full max-h-[400px] object-contain rounded-lg "
+                      className="max-w-full max-h-[400px] object-contain -lg "
                       onError={(e) => {
                         const target = e.currentTarget
                         target.style.display = 'none'
@@ -1667,13 +1667,13 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                       href={selectedImage.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 bg-[#ff4b01] text-white px-4 py-2 rounded-md hover:bg-[#e64401] transition-colors text-center"
+                      className="flex-1 bg-[#ff4b01] text-white px-4 py-2 -md hover:bg-[#e64401] transition-colors text-center"
                     >
                       Open in New Tab
                     </a>
                     <button
                       onClick={() => navigator.clipboard.writeText(selectedImage.url || selectedImage.src || '')}
-                      className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
+                      className="px-4 py-2 border border-gray-300 text-gray-700 -md hover:bg-gray-50 transition-colors"
                     >
                       Copy URL
                     </button>
@@ -1682,7 +1682,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
 
                 {/* Image Details */}
                 <div className="space-y-4">
-                  <div className="bg-gray-50 rounded-lg p-4">
+                  <div className="bg-gray-50 -lg p-4">
                     <h4 className="font-medium text-gray-900 mb-3">Image Information</h4>
                     <div className="space-y-3">
                       <div>
@@ -1738,16 +1738,16 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                   </div>
 
                   {/* Accessibility Check */}
-                  <div className="bg-gray-50 rounded-lg p-4">
+                  <div className="bg-gray-50 -lg p-4">
                     <h4 className="font-medium text-gray-900 mb-3">Accessibility</h4>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         {selectedImage.alt && selectedImage.alt.trim() !== '' ? (
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                          <span className="inline-flex items-center px-2 py-1 -full text-xs font-medium bg-green-100 text-green-800">
                             ✓ Has Alt Text
                           </span>
                         ) : (
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                          <span className="inline-flex items-center px-2 py-1 -full text-xs font-medium bg-red-100 text-red-800">
                             ✗ Missing Alt Text
                           </span>
                         )}

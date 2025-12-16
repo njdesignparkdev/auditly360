@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useMemo, useCallback } from 'react'
-import Masonry from 'react-masonry-css'
 import { PageSpeedInsightsData } from '@/types/audit'
 import { useAuth } from '@/hooks/useAuth'
 import { useUserPlan } from '@/hooks/useUserPlan'
@@ -284,7 +283,7 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
   });
   
   if (hasFeatureAccess === false || accessDenied) {
-    return <div className="bg-white rounded-lg border border-gray-300 p-4">
+    return <div className="bg-white -lg border border-gray-300 p-4">
         <div className="flex items-center space-x-4">
           <div className="text-blue-500">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -302,7 +301,7 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
               </div>
               <button 
                 onClick={() => window.location.href = '/dashboard?tab=profile&subtab=plans'}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                className="px-4 py-2 bg-blue-600 text-white -lg hover:bg-blue-700 transition-colors text-sm font-medium"
               >
                 Upgrade Plan
               </button>
@@ -316,17 +315,17 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
   if (isAnalyzing) {
     return (
       <div className="space-y-6">
-        <div className="bg-white rounded-lg border border-gray-300 p-6">
+        <div className="bg-white -lg border border-gray-300 p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold text-gray-900">Performance Analysis</h2>
             <div className="flex items-center space-x-2">
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600"></div>
+              <div className="animate-spin -full h-5 w-5 border-b-2 border-blue-600"></div>
               <span className="text-sm text-gray-600">Analyzing performance...</span>
             </div>
           </div>
           
           {/* Enhanced loading message */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <div className="bg-blue-50 border border-blue-200 -lg p-4 mb-6">
             <div className="flex items-start">
               <div className="flex-shrink-0">
                 <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
@@ -345,13 +344,13 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
           
           <div className="space-y-4">
             <div className="animate-pulse">
-              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+              <div className="h-4 bg-gray-200  w-3/4 mb-2"></div>
+              <div className="h-4 bg-gray-200  w-1/2"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="animate-pulse">
-                  <div className="h-24 bg-gray-200 rounded-lg"></div>
+                  <div className="h-24 bg-gray-200 -lg"></div>
                 </div>
               ))}
             </div>
@@ -365,13 +364,13 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
   if (error) {
     return (
       <div className="space-y-6">
-        <div className="bg-white rounded-lg border border-gray-300 p-6">
+        <div className="bg-white -lg border border-gray-300 p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold text-gray-900">Performance Analysis</h2>
             <span className="text-sm text-red-600">Analysis failed</span>
           </div>
           
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="bg-red-50 border border-red-200 -lg p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
@@ -389,11 +388,11 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
               <button
                 onClick={performPerformanceAnalysis}
                 disabled={isAnalyzing}
-                className="inline-flex items-center px-3 py-2 border border-red-300  text-sm leading-4 font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center px-3 py-2 border border-red-300  text-sm leading-4 font-medium -md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isAnalyzing ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-red-600 mr-2"></div>
+                    <div className="animate-spin -full h-4 w-4 border-b-2 border-red-600 mr-2"></div>
                     Retrying...
                   </>
                 ) : (
@@ -416,11 +415,11 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
   if (!performanceData && !isAnalyzing) {
     return (
       <div className="space-y-6">
-        <div className="bg-white rounded-lg border border-gray-300 p-6">
+        <div className="bg-white -lg border border-gray-300 p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold text-gray-900">Performance Analysis</h2>
             <div className="flex items-center space-x-2">
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600"></div>
+              <div className="animate-spin -full h-5 w-5 border-b-2 border-blue-600"></div>
               <span className="text-sm text-gray-600">Starting analysis...</span>
             </div>
           </div>
@@ -486,7 +485,7 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
           </div>
         </div>
         <h3 className="text-sm font-medium text-gray-900 mt-2 text-center">{title}</h3>
-        <span className={`text-xs px-2 py-1 rounded-full mt-1 ${getScoreBgColor(score)} ${getScoreColor(score)}`}>
+        <span className={`text-xs px-2 py-1 -full mt-1 ${getScoreBgColor(score)} ${getScoreColor(score)}`}>
           {formatPageSpeedScore(score)}
         </span>
       </div>
@@ -513,10 +512,10 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
     const titleSize = compact ? 'text-xs md:text-sm' : 'text-sm'
     
     return (
-      <div className={`bg-gray-50 rounded-lg ${cardPadding}`}>
+      <div className={`bg-gray-50 -lg ${cardPadding} h-full flex flex-col`}>
         <div className="flex items-center mb-1.5 md:mb-2">
           <h4 className={`${titleSize} font-medium text-gray-900`}>{title}</h4>
-          <span className={`text-xs px-2 py-1 rounded-full ${getScoreBgColor(score)} ${getScoreColor(score)}`}>
+          <span className={`text-xs px-2 py-1 -full ${getScoreBgColor(score)} ${getScoreColor(score)}`}>
             {formatPageSpeedScore(score)}
           </span>
         </div>
@@ -526,16 +525,16 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
         {description && (
           <p className="text-xs text-gray-500 leading-snug">{description}</p>
         )}
+        <div className="flex-1" />
       </div>
     )
   }
 
   return (
-    <div className="space-y-6">
-      {/* Overall Scores */}
-      <div className="bg-white rounded-lg border border-gray-300 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-6">Overall Scores</h3>
-        <div className="flex flex-wrap flex-row justify-around gap-6">
+    <div>
+      <div className="border-b border-gray-300 p-6">
+        <h3 className="text-lg font-semibold text-gray-900">Overall Scores</h3>
+        <div className="flex flex-wrap flex-row justify-around gap-6 mt-4">
           <ScoreChart 
             score={categories.performance?.score || 0} 
             title="Performance" 
@@ -563,186 +562,176 @@ export default function PerformanceTab({ page, cachedAnalysis }: PerformanceTabP
         </div>
       </div>
 
-      {/* Masonry Grid Layout for Sections */}
-      <Masonry
-        breakpointCols={{
-          default: 2,
-          1024: 2,
-          640: 1
-        }}
-        className="masonry-grid"
-        columnClassName="masonry-grid_column"
-      >
-        {/* Performance Metrics (top priority) */}
-        <div className="bg-white rounded-lg border border-gray-300 p-6 break-inside-avoid">
-          <h3 className="text-lg font-semibold text-gray-900 mb-6">Performance Metrics</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <MetricCard
-              title="Speed Index"
-              value={audits['speed-index']?.displayValue || 'N/A'}
-              score={audits['speed-index']?.score || 0}
-              description="Visual loading speed"
-              compact
-            />
-            <MetricCard
-              title="Total Blocking Time"
-              value={audits['total-blocking-time']?.displayValue || 'N/A'}
-              score={audits['total-blocking-time']?.score || 0}
-              description="Time blocked by long tasks"
-              compact
-            />
-            <MetricCard
-              title="Time to Interactive"
-              value={audits['interactive']?.displayValue || 'N/A'}
-              score={audits['interactive']?.score || 0}
-              description="Time until page is interactive"
-              compact
-            />
-            <MetricCard
-              title="First Input Delay"
-              value={audits['max-potential-fid']?.displayValue || 'N/A'}
-              score={audits['max-potential-fid']?.score || 0}
-              description="Input responsiveness"
-              compact
-            />
-          </div>
-        </div>
-
-        {/* Core Web Vitals */}
-        <div className="bg-white rounded-lg border border-gray-300 p-6 break-inside-avoid">
-          <h3 className="text-lg font-semibold text-gray-900 mb-6">Core Web Vitals</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <MetricCard
-              title="First Contentful Paint"
-              value={audits['first-contentful-paint']?.displayValue || 'N/A'}
-              score={audits['first-contentful-paint']?.score || 0}
-              description="Time to first content render"
-              compact
-            />
-            <MetricCard
-              title="Largest Contentful Paint"
-              value={audits['largest-contentful-paint']?.displayValue || 'N/A'}
-              score={audits['largest-contentful-paint']?.score || 0}
-              description="Time to largest content render"
-              compact
-            />
-            <MetricCard
-              title="Cumulative Layout Shift"
-              value={audits['cumulative-layout-shift']?.displayValue || 'N/A'}
-              score={audits['cumulative-layout-shift']?.score || 0}
-              description="Visual stability measure"
-              compact
-            />
-          </div>
-        </div>
-
-        {/* Additional Metrics */}
-        <div className="bg-white rounded-lg border border-gray-300 p-6 break-inside-avoid">
-          <h3 className="text-lg font-semibold text-gray-900 mb-6">Additional Metrics</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <MetricCard
-              title="Server Response Time"
-              value={audits['server-response-time']?.displayValue || 'N/A'}
-              score={audits['server-response-time']?.score || 0}
-              description="Time for server to respond"
-              compact
-            />
-            <MetricCard
-              title="Total Resource Size"
-              value={audits['total-byte-weight']?.displayValue || 'N/A'}
-              score={audits['total-byte-weight']?.score || 0}
-              description="Total bytes downloaded"
-              compact
-            />
-            <MetricCard
-              title="DOM Size"
-              value={audits['dom-size']?.displayValue || 'N/A'}
-              score={audits['dom-size']?.score || 0}
-              description="Number of DOM elements"
-              compact
-            />
-          </div>
-        </div>
-
-        {/* Real User Experience */}
-        {loadingExperience?.metrics && (
-          <div className="bg-white rounded-lg border border-gray-300 p-6 break-inside-avoid">
-            <h3 className="text-lg font-semibold text-gray-900 mb-6">Real User Experience</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {Object.entries(loadingExperience.metrics).map(([key, metric]) => {
-                const metricData = metric as { percentile?: number; category?: string }
-                const hasValue = metricData.percentile !== undefined && metricData.percentile !== null
-                return (
-                  <MetricCard
-                    key={key}
-                    title={key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                    value={hasValue ? `${metricData.percentile}ms` : 'N/A'}
-                    score={metricData.category === 'FAST' ? 0.9 : metricData.category === 'AVERAGE' ? 0.7 : 0.4}
-                    description={`Real user data - ${metricData.category}`}
-                    compact
-                  />
-                )
-              })}
+      <div className="grid grid-cols-1 lg:grid-cols-2">
+        <div className="border-r border-gray-300">
+          <div className="border-b border-gray-300 p-6 break-inside-avoid bg-white">
+            <h3 className="text-lg font-semibold text-gray-900 mb-6">Performance Metrics</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
+              <MetricCard
+                title="Speed Index"
+                value={audits['speed-index']?.displayValue || 'N/A'}
+                score={audits['speed-index']?.score || 0}
+                description="Visual loading speed"
+                compact
+              />
+              <MetricCard
+                title="Total Blocking Time"
+                value={audits['total-blocking-time']?.displayValue || 'N/A'}
+                score={audits['total-blocking-time']?.score || 0}
+                description="Time blocked by long tasks"
+                compact
+              />
+              <MetricCard
+                title="Time to Interactive"
+                value={audits['interactive']?.displayValue || 'N/A'}
+                score={audits['interactive']?.score || 0}
+                description="Time until page is interactive"
+                compact
+              />
+              <MetricCard
+                title="First Input Delay"
+                value={audits['max-potential-fid']?.displayValue || 'N/A'}
+                score={audits['max-potential-fid']?.score || 0}
+                description="Input responsiveness"
+                compact
+              />
             </div>
           </div>
-        )}
 
-        {/* Technical Details */}
-        <div className="bg-white rounded-lg border border-gray-300 p-6 break-inside-avoid">
-          <h3 className="text-lg font-semibold text-gray-900 mb-6">Technical Details</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-gray-700 mb-4">Test Configuration</h4>
-              {lighthouseResult.configSettings.formFactor && (
-                <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-sm text-gray-600">Form Factor:</span>
-                  <span className="text-sm font-medium text-gray-900 capitalize">{lighthouseResult.configSettings.formFactor}</span>
-                </div>
-              )}
-              {lighthouseResult.configSettings.locale && (
-                <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-sm text-gray-600">Locale:</span>
-                  <span className="text-sm font-medium text-gray-900">{lighthouseResult.configSettings.locale}</span>
-                </div>
-              )}
-              {lighthouseResult.userAgent && (
-                <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-sm text-gray-600">User Agent:</span>
-                  <span className="text-xs font-medium text-gray-900 truncate max-w-48" title={lighthouseResult.userAgent}>
-                    {lighthouseResult.userAgent}
-                  </span>
-                </div>
-              )}
-            </div>
-            
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-gray-700 mb-4">Analysis Information</h4>
-              {lighthouseResult.finalUrl && (
-                <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-sm text-gray-600">Final URL:</span>
-                  <span className="text-xs font-medium text-gray-900 truncate max-w-48" title={lighthouseResult.finalUrl}>
-                    {lighthouseResult.finalUrl}
-                  </span>
-                </div>
-              )}
-              {performanceData?.version && performanceData.version.major !== undefined && performanceData.version.minor !== undefined && (
-                <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-sm text-gray-600">Version:</span>
-                  <span className="text-sm font-medium text-gray-900">{performanceData.version.major}.{performanceData.version.minor}</span>
-                </div>
-              )}
-              {lighthouseResult.runWarnings && (
-                <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-sm text-gray-600">Warnings:</span>
-                  <span className={`text-sm font-medium ${lighthouseResult.runWarnings.length > 0 ? 'text-yellow-600' : 'text-green-600'}`}>
-                    {lighthouseResult.runWarnings.length}
-                  </span>
-                </div>
-              )}
+          <div className="border-b border-gray-300 p-6 break-inside-avoid bg-white">
+            <h3 className="text-lg font-semibold text-gray-900 mb-6">Additional Metrics</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-stretch">
+              <MetricCard
+                title="Server Response Time"
+                value={audits['server-response-time']?.displayValue || 'N/A'}
+                score={audits['server-response-time']?.score || 0}
+                description="Time for server to respond"
+                compact
+              />
+              <MetricCard
+                title="Total Resource Size"
+                value={audits['total-byte-weight']?.displayValue || 'N/A'}
+                score={audits['total-byte-weight']?.score || 0}
+                description="Total bytes downloaded"
+                compact
+              />
+              <MetricCard
+                title="DOM Size"
+                value={audits['dom-size']?.displayValue || 'N/A'}
+                score={audits['dom-size']?.score || 0}
+                description="Number of DOM elements"
+                compact
+              />
             </div>
           </div>
         </div>
-      </Masonry>
+
+        <div className="space-y-6">
+          <div className="border-b border-gray-300 p-6 break-inside-avoid bg-white">
+            <h3 className="text-lg font-semibold text-gray-900 mb-6">Core Web Vitals</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-stretch">
+              <MetricCard
+                title="First Contentful Paint"
+                value={audits['first-contentful-paint']?.displayValue || 'N/A'}
+                score={audits['first-contentful-paint']?.score || 0}
+                description="Time to first content render"
+                compact
+              />
+              <MetricCard
+                title="Largest Contentful Paint"
+                value={audits['largest-contentful-paint']?.displayValue || 'N/A'}
+                score={audits['largest-contentful-paint']?.score || 0}
+                description="Time to largest content render"
+                compact
+              />
+              <MetricCard
+                title="Cumulative Layout Shift"
+                value={audits['cumulative-layout-shift']?.displayValue || 'N/A'}
+                score={audits['cumulative-layout-shift']?.score || 0}
+                description="Visual stability measure"
+                compact
+              />
+            </div>
+          </div>
+
+          <div className="border-b border-gray-300 p-6 break-inside-avoid bg-white">
+            <h3 className="text-lg font-semibold text-gray-900 mb-6">Technical Details</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold text-gray-700 mb-4">Test Configuration</h4>
+                {lighthouseResult.configSettings.formFactor && (
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-sm text-gray-600">Form Factor:</span>
+                    <span className="text-sm font-medium text-gray-900 capitalize">{lighthouseResult.configSettings.formFactor}</span>
+                  </div>
+                )}
+                {lighthouseResult.configSettings.locale && (
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-sm text-gray-600">Locale:</span>
+                    <span className="text-sm font-medium text-gray-900">{lighthouseResult.configSettings.locale}</span>
+                  </div>
+                )}
+                {lighthouseResult.userAgent && (
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-sm text-gray-600">User Agent:</span>
+                    <span className="text-xs font-medium text-gray-900 truncate max-w-48" title={lighthouseResult.userAgent}>
+                      {lighthouseResult.userAgent}
+                    </span>
+                  </div>
+                )}
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold text-gray-700 mb-4">Analysis Information</h4>
+                {lighthouseResult.finalUrl && (
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-sm text-gray-600">Final URL:</span>
+                    <span className="text-xs font-medium text-gray-900 truncate max-w-48" title={lighthouseResult.finalUrl}>
+                      {lighthouseResult.finalUrl}
+                    </span>
+                  </div>
+                )}
+                {performanceData?.version && performanceData.version.major !== undefined && performanceData.version.minor !== undefined && (
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-sm text-gray-600">Version:</span>
+                    <span className="text-sm font-medium text-gray-900">{performanceData.version.major}.{performanceData.version.minor}</span>
+                  </div>
+                )}
+                {lighthouseResult.runWarnings && (
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-sm text-gray-600">Warnings:</span>
+                    <span className={`text-sm font-medium ${lighthouseResult.runWarnings.length > 0 ? 'text-yellow-600' : 'text-green-600'}`}>
+                      {lighthouseResult.runWarnings.length}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {loadingExperience?.metrics && (
+            <div className="border-b border-gray-300 p-6 break-inside-avoid bg-white">
+              <h3 className="text-lg font-semibold text-gray-900 mb-6">Real User Experience</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-stretch">
+                {Object.entries(loadingExperience.metrics).map(([key, metric]) => {
+                  const metricData = metric as { percentile?: number; category?: string }
+                  const hasValue = metricData.percentile !== undefined && metricData.percentile !== null
+                  return (
+                    <MetricCard
+                      key={key}
+                      title={key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                      value={hasValue ? `${metricData.percentile}ms` : 'N/A'}
+                      score={metricData.category === 'FAST' ? 0.9 : metricData.category === 'AVERAGE' ? 0.7 : 0.4}
+                      description={`Real user data - ${metricData.category}`}
+                      compact
+                    />
+                  )
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
