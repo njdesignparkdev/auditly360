@@ -56,7 +56,7 @@ export function HeroSection3() {
                                     </p>
 
                                     <form className="mt-8 max-w-lg">
-                                        <div className="bg-background relative grid grid-cols-[1fr_auto] p-1.5 items-center rounded-2xl border shadow-sm has-[input:focus]:ring-2 has-[input:focus]:ring-muted">
+                                        <div className="bg-background relative grid grid-cols-[1fr_auto] p-1.5 items-center rounded-none border has-[input:focus]:ring-2 has-[input:focus]:ring-muted">
                                             <LinkIcon className="pointer-events-none absolute left-4 size-4" />
                                             <input
                                                 placeholder="Upload your website url"
@@ -65,7 +65,7 @@ export function HeroSection3() {
                                             />
                                             <Button
                                                 aria-label="submit"
-                                                className="h-9 px-8 rounded-xl bg-[#ff6a00] hover:bg-[#e66000] text-white font-bold">
+                                                className="h-9 px-8 rounded-none bg-[#ff6a00] hover:bg-[#e66000] text-white font-bold">
                                                 <span className="hidden md:block">Search</span>
                                                 <SendHorizonal className="md:hidden size-5" strokeWidth={2} />
                                             </Button>
@@ -76,11 +76,11 @@ export function HeroSection3() {
 
                             <div className="relative mt-12 lg:mt-0 flex justify-center lg:justify-end">
                                 <div className="relative max-w-md w-full">
-                                    <div className="bg-background border-border/50 absolute inset-0 mx-auto w-full max-w-[320px] -translate-x-4 -translate-y-8 rounded-2xl border p-2 opacity-50 lg:-translate-x-8 lg:-translate-y-12">
-                                        <div className="relative h-96 overflow-hidden rounded-xl border p-2 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+                                    <div className="bg-background border-border/50 absolute inset-0 mx-auto w-full max-w-[320px] -translate-x-4 -translate-y-8 rounded-none border p-2 opacity-50 lg:-translate-x-8 lg:-translate-y-12">
+                                        <div className="relative h-96 overflow-hidden rounded-none border p-2 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
                                     </div>
-                                    <div className="bg-muted border-border/50 mx-auto w-full max-w-[320px] translate-x-4 rounded-2xl border p-2 backdrop-blur-sm lg:translate-x-8">
-                                        <div className="bg-background overflow-hidden rounded-xl border p-2 shadow-xl">
+                                    <div className="bg-muted border-border/50 mx-auto w-full max-w-[320px] translate-x-4 rounded-none border p-2 backdrop-blur-sm lg:translate-x-8">
+                                        <div className="bg-background overflow-hidden rounded-none border p-2 shadow-xl">
                                             <AppComponent />
                                         </div>
                                     </div>
@@ -116,7 +116,7 @@ export function HeroSection3() {
 }
 
 const AppComponent = () => (
-    <div className="relative space-y-3 rounded-xl bg-gray-50 p-4">
+    <div className="relative space-y-3 rounded-none bg-gray-50 p-4">
         <div className="flex items-center gap-1.5 text-orange-400">
             <svg className="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
@@ -133,7 +133,7 @@ const AppComponent = () => (
                         <span className="text-foreground text-xl font-medium">95</span>
                         <span className="text-muted-foreground text-xs">Performance</span>
                     </div>
-                    <div className="flex h-5 items-center rounded bg-gradient-to-l from-emerald-400 to-blue-600 px-2 text-xs text-white">
+                <div className="flex h-5 items-center rounded-none bg-gradient-to-l from-emerald-400 to-blue-600 px-2 text-xs text-white">
                         After Audit
                     </div>
                 </div>
@@ -142,7 +142,7 @@ const AppComponent = () => (
                         <span className="text-foreground text-xl font-medium">65</span>
                         <span className="text-muted-foreground text-xs">Performance</span>
                     </div>
-                    <div className="text-foreground bg-muted flex h-5 w-2/3 items-center rounded px-2 text-xs">
+                <div className="text-foreground bg-muted flex h-5 w-2/3 items-center rounded-none px-2 text-xs">
                         Before Audit
                     </div>
                 </div>  

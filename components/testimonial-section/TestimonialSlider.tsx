@@ -163,8 +163,8 @@ const TestimonialSlider: React.FC = () => {
                   <motion.div 
                     className="bg-gray-50 rounded-lg p-6 h-full relative flex flex-col overflow-hidden"
                     variants={{
-                      rest: { scale: 1, y: 0, boxShadow: "none" },
-                      hover: { scale: 1.02, y: -5, boxShadow: "0 10px 25px -5px rgba(255, 102, 6, 0.4)" }
+                      rest: { scale: 1, y: 0,  },
+                      hover: { scale: 1.02, y: -5, }
                     }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
                   >

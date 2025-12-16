@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { Mail } from 'lucide-react';
 import AuditlyLogo from '@/components/blocks/auditly-logo';
 
+import { AnimatedGroup } from '@/components/ui/animated-group';
+
 export function Footer() {
     return (
         <footer className="w-full text-slate-300 py-16 mt-0 relative overflow-hidden bg-slate-950 z-10">
@@ -15,7 +17,44 @@ export function Footer() {
                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
             </div>
 
-            <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Bottom Large Title - Background Layer */}
+            <AnimatedGroup
+                className="absolute bottom-0 left-0 w-full text-center select-none pointer-events-none overflow-hidden leading-none z-0"
+                variants={{
+                    container: { visible: { transition: { staggerChildren: 0.1 } } },
+                    item: { 
+                        hidden: { opacity: 0, y: 50 }, 
+                        visible: { opacity: 1, y: 0, transition: { duration: 1.5, ease: "easeOut" } } 
+                    }
+                }}
+            >
+                 <h1 className="text-[13vw] font-bold text-white tracking-tight opacity-[0.03] font-jakarta translate-y-[10%]">
+                    Auditly360
+                 </h1>
+            </AnimatedGroup>
+
+            <AnimatedGroup 
+                className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8"
+                variants={{
+                  container: {
+                      visible: {
+                          transition: {
+                              staggerChildren: 0.05,
+                              delayChildren: 0.2,
+                          },
+                      },
+                  },
+                  item: {
+                      hidden: { opacity: 0, filter: 'blur(12px)', y: 12 },
+                      visible: { 
+                          opacity: 1, 
+                          filter: 'blur(0px)', 
+                          y: 0,
+                          transition: { type: 'spring', bounce: 0.3, duration: 1.5 }
+                      },
+                  },
+                }}
+            >
                 {/* Top Separator Line */}
                 <div className="w-full h-px bg-white/10 mb-8"></div>
 
@@ -107,7 +146,7 @@ export function Footer() {
                 <div className="text-[11px] text-slate-600 text-center leading-relaxed max-w-5xl mx-auto opacity-70 mt-8 font-poppins font-medium">
                     Disclaimer: Auditly360, Inc is not affiliated, associated, authorized, endorsed by, or in any way officially connected with Microsoft or LinkedIn, or any of their subsidiaries or affiliates. The name LinkedIn, as well as related names, marks, logos, emblems, and images are registered trademarks of their respective owners.
                 </div>
-            </div>
+            </AnimatedGroup>
         </footer>
     );
 }

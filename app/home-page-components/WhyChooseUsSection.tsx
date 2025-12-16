@@ -20,7 +20,7 @@ const AnimationDisplay = ({ type, icon, color }: { type: string, icon: React.Rea
       <div className="relative z-10 flex flex-col items-center justify-center transform scale-90 md:scale-100">
         {type === "scanning" && (
           <div className="relative flex flex-col items-center">
-             {/* Feature Image with Animation */}
+              {/* Feature Image with Animation */}
              <motion.div
                animate={{ 
                  y: [0, -10, 0],
@@ -178,7 +178,7 @@ const AnimationDisplay = ({ type, icon, color }: { type: string, icon: React.Rea
                
                {/* Glow Effect */}
                <motion.div
-                 className="absolute inset-0 bg-purple-400/20 blur-3xl rounded-full"
+              className="absolute inset-0 bg-purple-400/20 blur-3xl rounded-none"
                  animate={{ 
                    scale: [1, 1.2, 1],
                    opacity: [0.3, 0.5, 0.3]
@@ -193,7 +193,7 @@ const AnimationDisplay = ({ type, icon, color }: { type: string, icon: React.Rea
 
              {/* Status Badge */}
              <motion.div
-               className="mt-4 bg-purple-50 border border-purple-200 px-4 py-1.5 rounded-full"
+               className="mt-4 bg-purple-50 border border-purple-200 px-4 py-1.5 rounded-none"
                animate={{ opacity: [0.7, 1, 0.7] }}
                transition={{ duration: 2, repeat: Infinity }}
              >
@@ -283,7 +283,7 @@ export default function WhyChooseUsSection() {
                 onClick={() => setActiveFeature(index)}
                 className={`group p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
                   activeFeature === index 
-                    ? `bg-white shadow-lg ${feature.accent} scale-[1.02]` 
+                    ? `bg-white ${feature.accent} scale-[1.02]` 
                     : 'border-transparent hover:bg-slate-50'
                 }`}
               >
@@ -312,7 +312,7 @@ export default function WhyChooseUsSection() {
           </div>
 
           {/* Right Column: Animation Display */}
-          <div className="relative h-[400px] w-full max-w-[500px] mx-auto bg-white rounded-[2rem] border border-slate-200 p-4 md:p-6 overflow-hidden shadow-2xl order-first lg:order-last">
+          <div className="relative h-[400px] w-full max-w-[500px] mx-auto bg-white rounded-[2rem] border border-slate-200 p-4 md:p-6 overflow-hidden -2xl order-first lg:order-last">
 
              
              <AnimatePresence mode="wait">
