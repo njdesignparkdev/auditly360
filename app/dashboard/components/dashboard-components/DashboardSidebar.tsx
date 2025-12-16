@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSupabase } from '@/contexts/SupabaseContext';
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { roleVerifier } from '@/lib/role-utils';
 import { useUserPlan } from '@/hooks/useUserPlan';
 import UpgradePlanButton from '../UpgradePlanButton';
@@ -42,6 +42,10 @@ export default function DashboardSidebar({
   const [roleLoading, setRoleLoading] = useState(true);
   const [displayName, setDisplayName] = useState<string>('');
   const [userInitial, setUserInitial] = useState<string>('U');
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showUserMenuMobile, setShowUserMenuMobile] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+  const userMenuMobileRef = useRef<HTMLDivElement>(null);
 
   // Get user plan information
   const {
@@ -178,6 +182,40 @@ export default function DashboardSidebar({
     await signOut();
     router.push('/');
   };
+
+  // Close user menu when clicking outside (Desktop)
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setShowUserMenu(false);
+      }
+    };
+
+    if (showUserMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showUserMenu]);
+
+  // Close user menu when clicking outside (Mobile)
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuMobileRef.current && !userMenuMobileRef.current.contains(event.target as Node)) {
+        setShowUserMenuMobile(false);
+      }
+    };
+
+    if (showUserMenuMobile) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showUserMenuMobile]);
   return <>
       {/* Mobile Overlay */}
       <AnimatePresence>
@@ -223,32 +261,103 @@ export default function DashboardSidebar({
             </button>
           </div>
 
-          {/* User Info */}
-          <div className="p-6 border-b border-gray-300">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                <span className="text-gray-700 font-medium text-sm">
-                  {userInitial}
-                </span>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-black">
-                  {displayName} 
-                </p>
-                {/* <div className="flex items-center space-x-2">
-                  <p className="text-xs text-gray-600 capitalize">
-                    {userProfile?.role || 'user'}
+          {/* User Info - Clickable */}
+          <div className="p-6 border-b border-gray-300 relative" ref={userMenuMobileRef}>
+            <div 
+              className="cursor-pointer hover:bg-gray-50 rounded-lg p-2 -m-2 transition-colors"
+              onClick={() => setShowUserMenuMobile(!showUserMenuMobile)}
+            >
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-[#ff4b01] rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-white font-medium text-sm">
+                    {userInitial}
+                  </span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-black truncate">
+                    {displayName}
                   </p>
-                  {roleLoading && <div className="w-3 h-3 border-2 border-[#ff4b01] border-t-transparent rounded-full animate-spin"></div>}
-                  {isAdmin === true && <span className="text-xs bg-[#ff4b01]/20 text-[#ff4b01] px-2 py-0.5 rounded">
-                      Admin
-                    </span>}
-                  {isAdmin === false && !roleLoading && userProfile?.role === 'admin' && <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded">
-                      Role Pending
-                    </span>}
-                </div> */}
+                  <p className="text-xs text-gray-600 truncate">
+                    {userProfile?.email || user?.email || ''}
+                  </p>
+                </div>
               </div>
             </div>
+
+            {/* User Menu Dropdown - Mobile */}
+            <AnimatePresence>
+              {showUserMenuMobile && (
+                <motion.div
+                  className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg z-50"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {/* User Info Section */}
+                  <div className="p-4 border-b border-gray-200">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-[#ff4b01] rounded-lg flex items-center justify-center flex-shrink-0">
+                        <span className="text-white font-medium text-sm">
+                          {userInitial}
+                        </span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-black truncate">
+                          {displayName}
+                        </p>
+                        <p className="text-xs text-gray-600 truncate">
+                          {userProfile?.email || user?.email || ''}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Menu Options */}
+                  <div className="py-2">
+                    <button
+                      onClick={() => {
+                        onTabChange('profile');
+                        setShowUserMenuMobile(false);
+                        onClose();
+                      }}
+                      className="w-full flex items-center space-x-3 px-4 py-3 text-sm text-black hover:bg-gray-50 transition-colors"
+                    >
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      <span>Profile</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        onTabChange('profile');
+                        setShowUserMenuMobile(false);
+                        onClose();
+                      }}
+                      className="w-full flex items-center space-x-3 px-4 py-3 text-sm text-black hover:bg-gray-50 transition-colors"
+                    >
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <span>Settings</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowUserMenuMobile(false);
+                        handleSignOut();
+                      }}
+                      className="w-full flex items-center space-x-3 px-4 py-3 text-sm text-black hover:bg-gray-50 transition-colors"
+                    >
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                      </svg>
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Navigation */}
@@ -303,15 +412,6 @@ export default function DashboardSidebar({
               </div>}
           </div>
 
-          {/* Sign Out Button */}
-          <div className="p-4 border-t border-gray-300">
-            <button onClick={handleSignOut} className="w-full flex items-center space-x-3 px-3 py-3 rounded text-sm font-medium text-gray-700">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-              </svg>
-              <span>Sign Out</span>
-            </button>
-          </div>
         </div>
           </motion.div>}
       </AnimatePresence>
@@ -341,33 +441,7 @@ export default function DashboardSidebar({
             </Link>
           </div>
 
-          {/* User Info */}
-          <div className="p-6 border-b border-gray-300">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                <span className="text-gray-700 font-medium text-sm">
-                  {userInitial}
-                </span>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-black">
-                  {displayName}
-                </p>
-                {/* <div className="flex items-center space-x-2">
-                  <p className="text-xs text-gray-600 capitalize">
-                    {userProfile?.role || 'user'}
-                  </p>
-                  {roleLoading && <div className="w-3 h-3 border-2 border-[#ff4b01] border-t-transparent rounded-full animate-spin"></div>}
-                  {isAdmin === true && <span className="text-xs bg-[#ff4b01]/20 text-[#ff4b01] px-2 py-0.5 rounded">
-                      Admin
-                    </span>}
-                  {isAdmin === false && !roleLoading && userProfile?.role === 'admin' && <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded">
-                      Role Pending
-                    </span>}
-                </div> */}
-              </div>
-            </div>
-          </div>
+       
 
           {/* Navigation */}
           <nav className="flex-1 px-4 py-6 space-y-1">
@@ -418,14 +492,102 @@ export default function DashboardSidebar({
               </div>}
           </div>
 
-          {/* Sign Out Button */}
-          <div className="p-4 border-t border-gray-300">
-            <button onClick={handleSignOut} className="cursor-pointer w-full flex items-center space-x-3 px-3 py-3 rounded text-sm font-medium text-gray-700">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-              </svg>
-              <span>Sign Out</span>
-            </button>
+          {/* User Info - Clickable */}
+          <div className="p-4 border-t border-gray-300 relative" ref={userMenuRef}>
+            <div 
+              className="p-4 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors"
+              onClick={() => setShowUserMenu(!showUserMenu)}
+            >
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-[#ff4b01] rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-white font-medium text-sm">
+                    {userInitial}
+                  </span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-black truncate">
+                    {displayName}
+                  </p>
+                  <p className="text-xs text-gray-600 truncate">
+                    {userProfile?.email || user?.email || ''}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* User Menu Dropdown */}
+            <AnimatePresence>
+              {showUserMenu && (
+                <motion.div
+                  className="absolute bottom-full left-4 right-4 mb-2 bg-white border border-gray-300 rounded-lg shadow-lg z-50"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {/* User Info Section */}
+                  <div className="p-4 border-b border-gray-200">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-[#ff4b01] rounded-lg flex items-center justify-center flex-shrink-0">
+                        <span className="text-white font-medium text-sm">
+                          {userInitial}
+                        </span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-black truncate">
+                          {displayName}
+                        </p>
+                        <p className="text-xs text-gray-600 truncate">
+                          {userProfile?.email || user?.email || ''}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Menu Options */}
+                  <div className="py-2">
+                    <button
+                      onClick={() => {
+                        onTabChange('profile');
+                        setShowUserMenu(false);
+                      }}
+                      className="w-full flex items-center space-x-3 px-4 py-3 text-sm text-black hover:bg-gray-50 transition-colors"
+                    >
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      <span>Profile</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        onTabChange('profile');
+                        setShowUserMenu(false);
+                        // You can add a subtab for settings if needed
+                      }}
+                      className="w-full flex items-center space-x-3 px-4 py-3 text-sm text-black hover:bg-gray-50 transition-colors"
+                    >
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <span>Settings</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowUserMenu(false);
+                        handleSignOut();
+                      }}
+                      className="w-full flex items-center space-x-3 px-4 py-3 text-sm text-black hover:bg-gray-50 transition-colors"
+                    >
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                      </svg>
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </motion.div>

@@ -34,12 +34,12 @@ export default function RecentProjects({
     }
   };
   return <motion.div 
-      className="bg-white  overflow-hidden"
+      className="bg-white border border-gray-300 overflow-hidden"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
-      <div className="px-4 sm:px-6 py-4 border-b border-gray-300">
+      <div className="px-4 sm:px-6 py-4  border-gray-300">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold text-black">Recent Projects</h2>

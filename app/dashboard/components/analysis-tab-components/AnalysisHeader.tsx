@@ -204,7 +204,7 @@ export default function AnalysisHeader({
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div
                   key={i}
-                  className="flex items-center space-x-2 flex-shrink-0"
+                  className="flex items-center space-x-2 flex-shrink-0 cursor-pointer"
                 >
                   <div className="w-4 h-4 bg-gray-200 rounded animate-pulse"></div>
                   <div className="w-16 h-4 bg-gray-200 rounded animate-pulse"></div>
@@ -243,7 +243,7 @@ export default function AnalysisHeader({
                   <button
                     key={tab.id}
                     onClick={() => onSectionChange(tab.id)}
-                    className={`py-4 px-6 font-medium text-sm transition-colors duration-300 whitespace-nowrap flex-shrink-0 ${
+                    className={`cursor-pointer py-4 px-6 font-medium text-sm transition-colors duration-300 whitespace-nowrap flex-shrink-0 ${
                       index < tabsArray.length - 1 ? 'border-r border-gray-300' : ''
                     } ${
                       activeSection === tab.id

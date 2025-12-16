@@ -497,7 +497,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
   }
 
   // Handle image scanning
-  const handleScanImage = async (e: React.MouseEvent, image: ImageData) => {
+  const handleScanImage = async (e: React.MouseEvent, image: ImageData, scanKeyOverride?: string) => {
     e.stopPropagation() // Prevent event bubbling
     e.preventDefault() // Prevent any default behavior
     
@@ -507,10 +507,11 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
       return
     }
     
-    const imageId = image.extra_metadata?.id || image.url || ''
-    const uniqueKey = image.extra_metadata?.id || image.url || ''
+    const imageIdRaw = image.extra_metadata?.id || ''
+    const fallbackUrlKey = image.url || ''
+    const scanKey = scanKeyOverride || `img-${imageIdRaw || fallbackUrlKey || 'unknown'}`
     
-    if (!uniqueKey || !image.url) {
+    if (!scanKey || !image.url) {
       console.warn('❌ Cannot scan image: missing image URL')
       return
     }
@@ -523,7 +524,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
       scrapedPageId: image.extra_metadata?.scraped_page_id
     })
 
-    setScanningImages(prev => new Set(prev).add(uniqueKey))
+    setScanningImages(prev => new Set(prev).add(scanKey))
     
     try {
       // Get session token for API call
@@ -627,10 +628,12 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
       if (result.data) {
         setScanResults(prev => ({
           ...prev,
-          [uniqueKey]: result.data
+          [scanKey]: result.data,
+          ...(imageIdRaw ? { [imageIdRaw]: result.data } : {}),
+          ...(fallbackUrlKey ? { [fallbackUrlKey]: result.data } : {})
         }))
         // Auto-expand the row to show results
-        setExpandedRows(prev => new Set(prev).add(uniqueKey))
+        setExpandedRows(prev => new Set(prev).add(scanKey))
         
         // If image has database ID, update the extra_metadata
         if (image.extra_metadata?.id) {
@@ -692,7 +695,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
       }
 
       console.log('✅ Image scan completed:', {
-        uniqueKey,
+        uniqueKey: scanKey,
         hasData: !!result.data,
         imageId: result.imageId,
         dataSaved: !result.saveError && !!result.imageId,
@@ -703,7 +706,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
     } finally {
       setScanningImages(prev => {
         const next = new Set(prev)
-        next.delete(uniqueKey)
+        next.delete(scanKey)
         return next
       })
     }
@@ -900,7 +903,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                   // Priority: database ID > URL + page_url + global index > fallback
                   const globalIndex = startIndex + index; // Use global index, not paginated index
                   
-                  // Generate a stable unique key
+                  // Generate a stable unique key (used for React keys AND scan state)
                   let uniqueKey: string;
                   if (img.extra_metadata?.id) {
                     // Use database ID if available (most reliable)
@@ -911,6 +914,9 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                     const pageHash = img.page_url ? img.page_url.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '') : 'no-page';
                     uniqueKey = `img-${globalIndex}-${urlHash}-${pageHash}`;
                   }
+                  // Also keep the raw DB id (without prefix) for data lookups
+                  const imageIdRaw = img.extra_metadata?.id || '';
+                  const fallbackUrlKey = img.url || '';
                   
                   return (
                   <React.Fragment key={uniqueKey}>
@@ -981,25 +987,25 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex flex-col gap-2">
                         {(() => {
-                          // Determine unique key for this image - must match the key used when loading from database
-                          // Priority: database ID, then URL
-                          const imageId = img.extra_metadata?.id || ''
-                          const uniqueKey = imageId || img.url || ''
+                          // Use the same key for state + UI to avoid conflicts when URLs repeat
+                          const scanKey = uniqueKey
                           
                           // Check if scan data exists - check multiple possible keys
-                          // 1. Check by database ID (primary key)
-                          // 2. Check by full uniqueKey (ID or URL)
-                          // 3. Check in metadata
+                          // 1. By database ID (raw id without prefix)
+                          // 2. By scanKey (prefixed React key)
+                          // 3. By raw URL (legacy)
+                          // 4. Metadata from DB
                           const hasScanData = !!(
-                            (imageId && scanResults[imageId]) ||
-                            scanResults[uniqueKey] ||
+                            (imageIdRaw && scanResults[imageIdRaw]) ||
+                            scanResults[scanKey] ||
+                            scanResults[fallbackUrlKey] ||
                             img.extra_metadata?.open_web_ninja_data
                           )
                           
                           // If scan data exists, show "Show/Hide Results" button
                           if (hasScanData) {
-                            // Use the database ID as the key if available, otherwise use uniqueKey
-                            const displayKey = imageId || uniqueKey
+                            // Prefer the prefixed key; still allow raw id
+                            const displayKey = scanKey
                             
                             return (
                               <button
@@ -1007,11 +1013,12 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                                   // Load data from database if not already loaded in state
                                   const dataToLoad = img.extra_metadata?.open_web_ninja_data
                                   if (dataToLoad) {
-                                    // Load using both possible keys to ensure it's found
+                                    // Load using multiple keys to ensure it's found
                                     setScanResults(prev => {
                                       const updated = { ...prev }
-                                      if (imageId) updated[imageId] = dataToLoad
-                                      if (uniqueKey) updated[uniqueKey] = dataToLoad
+                                      if (imageIdRaw) updated[imageIdRaw] = dataToLoad
+                                      updated[scanKey] = dataToLoad
+                                      if (fallbackUrlKey) updated[fallbackUrlKey] = dataToLoad
                                       return updated
                                     })
                                   }
@@ -1040,14 +1047,15 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                           
                           // If no scan data exists, show "Scan Image" button or "Upgrade Required"
                           if (hasImageScanFeature) {
+                            const isScanning = scanningImages.has(scanKey)
                             return (
                               <button
-                                onClick={(e) => handleScanImage(e, img)}
-                                disabled={scanningImages.has(uniqueKey) || scanningImages.has(imageId)}
+                                onClick={(e) => handleScanImage(e, img, scanKey)}
+                                disabled={isScanning}
                                 className="px-3 py-1.5 text-xs font-medium text-white bg-[#ff4b01] rounded-md hover:bg-[#e64401] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-1.5"
                                 title={img.extra_metadata?.id ? 'Scan image from database' : 'Scan image (will be saved to database)'}
                               >
-                                {(scanningImages.has(uniqueKey) || scanningImages.has(imageId)) ? (
+                                {isScanning ? (
                                   <>
                                     <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
                                     Scanning...
@@ -1079,14 +1087,18 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                     </tr>
                     
                     {/* Expanded row with scan results */}
-                    {expandedRows.has(img.extra_metadata?.id || img.url || '') && (
+                    {expandedRows.has(uniqueKey) && (
                       <tr>
                         <td colSpan={7} className="px-6 py-4 bg-gray-50">
                           <div className="bg-white rounded-lg border border-gray-300 p-4">
                             <h4 className="text-sm font-semibold text-gray-900 mb-4">Reverse Image Search Results</h4>
                             {(() => {
-                              const uniqueKey = img.extra_metadata?.id || img.url || ''
-                              const scanData = scanResults[uniqueKey] || img.extra_metadata?.open_web_ninja_data
+                              const displayKey = uniqueKey
+                              const scanData =
+                                scanResults[displayKey] ||
+                                (imageIdRaw ? scanResults[imageIdRaw] : undefined) ||
+                                (fallbackUrlKey ? scanResults[fallbackUrlKey] : undefined) ||
+                                img.extra_metadata?.open_web_ninja_data
                               
                               if (!scanData) return <p className="text-xs text-gray-500">No results available</p>
                               
@@ -1208,6 +1220,8 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                 const pageHash = img.page_url ? img.page_url.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '') : 'no-page';
                 uniqueKey = `img-mobile-${globalIndex}-${urlHash}-${pageHash}`;
               }
+              const imageIdRaw = img.extra_metadata?.id || ''
+              const fallbackUrlKey = img.url || ''
               
               return (
               <div key={uniqueKey} className="bg-white border border-gray-300 rounded-lg p-4 hover:shadow-sm transition-shadow">
@@ -1422,12 +1436,15 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
                       </div>
                       
                       {/* Expanded scan results */}
-                      {expandedRows.has(img.extra_metadata?.id || img.url || '') && (
+                      {expandedRows.has(uniqueKey) && (
                         <div className="mt-3 bg-white rounded-lg border border-gray-300 p-4">
                           <h4 className="text-sm font-semibold text-gray-900 mb-4">Reverse Image Search Results</h4>
                           {(() => {
-                            const uniqueKey = img.extra_metadata?.id || img.url || ''
-                            const scanData = scanResults[uniqueKey] || img.extra_metadata?.open_web_ninja_data
+                            const scanData =
+                              scanResults[uniqueKey] ||
+                              (imageIdRaw ? scanResults[imageIdRaw] : undefined) ||
+                              (fallbackUrlKey ? scanResults[fallbackUrlKey] : undefined) ||
+                              img.extra_metadata?.open_web_ninja_data
                             
                             if (!scanData) return <p className="text-xs text-gray-500">No results available</p>
                             

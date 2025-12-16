@@ -123,10 +123,7 @@ export default function OverviewTab({ page, project }: OverviewTabProps) {
                   )}
                 </div>
               </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Content Length:</span>
-                <span className="font-medium">{page.html_content_length || 0} characters</span>
-              </div>
+              
               <div className="flex justify-between">
                 <span className="text-gray-600">Response Time:</span>
                 <span className="font-medium">{page.response_time || 'N/A'}ms</span>

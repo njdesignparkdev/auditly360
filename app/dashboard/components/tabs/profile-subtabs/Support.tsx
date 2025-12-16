@@ -208,11 +208,11 @@ export default function Support({
       duration: 0.5,
       delay: 0.1
     }}>
-        <nav className="-mb-px flex space-x-8 py-2">
-          <button onClick={() => setActiveTab('tickets')} className={`py-2 px-1 border-b-2 font-medium text-sm transition-colors duration-300 ${activeTab === 'tickets' ? 'border-[#ff4b01] text-gray-900' : 'border-transparent text-gray-600 hover:text-gray-800 hover:border-gray-300'}`}>
+        <nav className="-mb-px flex space-x-8  px-4">
+          <button onClick={() => setActiveTab('tickets')} className={`py-2 px-1 border-b-2 font-medium text-sm transition-colors duration-300 ${activeTab === 'tickets' ? 'border-b-gray-900  text-gray-900' : 'border-transparent text-gray-600 hover:text-gray-800 hover:border-gray-300'}`}>
             <i className="fas fa-ticket-alt mr-2"></i>My Tickets ({tickets.length})
           </button>
-          <button onClick={() => setActiveTab('new')} className={`py-2 px-1 border-b-2 font-medium text-sm transition-colors duration-300 ${activeTab === 'new' ? 'border-[#ff4b01] text-gray-900' : 'border-transparent text-gray-600 hover:text-gray-800 hover:border-gray-300'}`}>
+          <button onClick={() => setActiveTab('new')} className={`py-2 px-1 border-b-2 font-medium text-sm transition-colors duration-300 ${activeTab === 'new' ? 'border-b-gray-900  text-gray-900' : 'border-transparent text-gray-600 hover:text-gray-800 hover:border-gray-300'}`}>
             <i className="fas fa-plus mr-2"></i>Create New Ticket
           </button>
         </nav>
@@ -230,33 +230,33 @@ export default function Support({
       delay: 0.2
     }}>
           {ticketsLoading ? <div className="flex items-center justify-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-600"></div>
+              <div className="animate-spin -full h-8 w-8 border-b-2 border-gray-600"></div>
             </div> : ticketsError ? <div className="text-center py-8">
               <div className="text-red-500 mb-2">
                 <i className="fas fa-exclamation-triangle text-4xl mb-2"></i>
               </div>
               <p className="text-red-600 font-medium">{ticketsError}</p>
-              {ticketsError.includes('not set up') || ticketsError.includes('does not exist') ? <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg max-w-md mx-auto">
+              {ticketsError.includes('not set up') || ticketsError.includes('does not exist') ? <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 -lg max-w-md mx-auto">
                   <p className="text-sm text-yellow-800 mb-2">
                     <strong><i className="fas fa-exclamation-circle mr-1"></i>Setup Required:</strong> The ticket system database tables haven&apos;t been created yet.
                   </p>
                   <p className="text-xs text-yellow-700 mb-2">
-                    <strong>Quick Fix:</strong> Go to your Supabase dashboard → SQL Editor → Run the <code className="bg-yellow-100 px-1 rounded">create-tickets-table-fixed.sql</code> script.
+                    <strong>Quick Fix:</strong> Go to your Supabase dashboard → SQL Editor → Run the <code className="bg-yellow-100 px-1 ">create-tickets-table-fixed.sql</code> script.
                   </p>
                   <p className="text-xs text-yellow-600">
                     This will create the necessary tables and enable the full ticket system functionality.
                   </p>
-                </div> : ticketsError.includes('permission denied') ? <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg max-w-md mx-auto">
+                </div> : ticketsError.includes('permission denied') ? <div className="mt-4 p-4 bg-red-50 border border-red-200 -lg max-w-md mx-auto">
                   <p className="text-sm text-red-800 mb-2">
                     <strong><i className="fas fa-lock mr-1"></i>Permission Issue:</strong> Database access is restricted by Row Level Security policies.
                   </p>
                   <p className="text-xs text-red-700 mb-2">
-                    <strong>Solution:</strong> Run the <code className="bg-red-100 px-1 rounded">create-tickets-table-fixed.sql</code> script to set up proper RLS policies.
+                    <strong>Solution:</strong> Run the <code className="bg-red-100 px-1 ">create-tickets-table-fixed.sql</code> script to set up proper RLS policies.
                   </p>
                   <p className="text-xs text-red-600">
                     This will create the tables and configure the necessary permissions.
                   </p>
-                </div> : <button onClick={loadTickets} className="mt-2 text-[#ff4b01] hover:text-[#e64401] text-sm font-medium px-4 py-2 bg-[#ff4b01]/10 rounded-lg hover:bg-[#ff4b01]/20 transition-colors">
+                </div> : <button onClick={loadTickets} className="mt-2 text-[#ff4b01] hover:text-[#e64401] text-sm font-medium px-4 py-2 bg-[#ff4b01]/10 -lg hover:bg-[#ff4b01]/20 transition-colors">
                   <i className="fas fa-redo mr-2"></i>Try again
                 </button>}
             </div> : tickets.length === 0 ? <motion.div className="text-center py-8" initial={{
@@ -296,7 +296,7 @@ export default function Support({
         </motion.div>}
 
       {/* Create New Ticket */}
-      {activeTab === 'new' && <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
+      {activeTab === 'new' && <motion.div className="bg-white -lg border border-gray-300 p-6" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -330,7 +330,7 @@ export default function Support({
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 <i className="fas fa-heading mr-1"></i>Ticket Title
               </label>
-              <input type="text" name="title" value={newTicket.title} onChange={handleInputChange} className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#ff4b01] focus:border-[#ff4b01]" placeholder="Brief description of your issue" required />
+              <input type="text" name="title" value={newTicket.title} onChange={handleInputChange} className="w-full px-3 py-2 border border-gray-300  focus:ring-2 focus:ring-[#ff4b01] focus:border-[#ff4b01]" placeholder="Brief description of your issue" required />
             </motion.div>
 
             <motion.div initial={{
@@ -346,7 +346,7 @@ export default function Support({
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 <i className="fas fa-flag mr-1"></i>Priority
               </label>
-              <select name="priority" value={newTicket.priority} onChange={handleInputChange} className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#ff4b01] focus:border-[#ff4b01]">
+              <select name="priority" value={newTicket.priority} onChange={handleInputChange} className="w-full px-3 py-2 border border-gray-300  focus:ring-2 focus:ring-[#ff4b01] focus:border-[#ff4b01]">
                 <option value="low">Low - General question or minor issue</option>
                 <option value="medium">Medium - Standard support request</option>
                 <option value="high">High - Important issue affecting usage</option>
@@ -367,7 +367,7 @@ export default function Support({
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 <i className="fas fa-align-left mr-1"></i>Description
               </label>
-              <textarea name="description" value={newTicket.description} onChange={handleInputChange} rows={6} className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#ff4b01] focus:border-[#ff4b01]" placeholder="Please provide detailed information about your issue, including steps to reproduce if applicable..." required />
+              <textarea name="description" value={newTicket.description} onChange={handleInputChange} rows={6} className="w-full px-3 py-2 border border-gray-300  focus:ring-2 focus:ring-[#ff4b01] focus:border-[#ff4b01]" placeholder="Please provide detailed information about your issue, including steps to reproduce if applicable..." required />
             </motion.div>
 
             <motion.div className="flex space-x-3" initial={{
@@ -380,7 +380,7 @@ export default function Support({
           duration: 0.4,
           delay: 0.7
         }}>
-              <button type="submit" disabled={isCreatingTicket} className="bg-[#ff4b01] text-white px-6 py-2 rounded hover:bg-[#e64401] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center">
+              <button type="submit" disabled={isCreatingTicket} className="bg-[#ff4b01] text-white px-6 py-2  hover:bg-[#e64401] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center">
                 <i className={`fas ${isCreatingTicket ? 'fa-spinner fa-spin' : 'fa-plus-circle'} mr-2`}></i>
                 {isCreatingTicket ? 'Creating Ticket...' : 'Create Ticket'}
               </button>
@@ -388,7 +388,7 @@ export default function Support({
             title: '',
             description: '',
             priority: 'medium'
-          })} className="bg-gray-300 text-gray-700 px-6 py-2 rounded hover:bg-gray-400 transition-colors flex items-center">
+          })} className="bg-gray-300 text-gray-700 px-6 py-2  hover:bg-gray-400 transition-colors flex items-center">
                 <i className="fas fa-eraser mr-2"></i>Clear Form
               </button>
             </motion.div>
@@ -396,7 +396,7 @@ export default function Support({
         </motion.div>}
 
       {/* Support Resources */}
-      <motion.div className="bg-gray-50 rounded p-6" initial={{
+      <motion.div className="bg-gray-50  p-6" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -420,7 +420,7 @@ export default function Support({
           duration: 0.4,
           delay: 0.4
         }}>
-            <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+            <div className="w-8 h-8 bg-gray-100  flex items-center justify-center">
               <i className="fas fa-book text-gray-600 text-sm"></i>
             </div>
             <div>
@@ -438,7 +438,7 @@ export default function Support({
           duration: 0.4,
           delay: 0.5
         }}>
-            <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+            <div className="w-8 h-8 bg-gray-100  flex items-center justify-center">
               <i className="fas fa-comments text-gray-600 text-sm"></i>
             </div>
             <div>
@@ -456,7 +456,7 @@ export default function Support({
           duration: 0.4,
           delay: 0.6
         }}>
-            <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+            <div className="w-8 h-8 bg-gray-100  flex items-center justify-center">
               <i className="fas fa-play-circle text-gray-600 text-sm"></i>
             </div>
             <div>
@@ -474,7 +474,7 @@ export default function Support({
           duration: 0.4,
           delay: 0.7
         }}>
-            <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+            <div className="w-8 h-8 bg-gray-100  flex items-center justify-center">
               <i className="fas fa-question-circle text-gray-600 text-sm"></i>
             </div>
             <div>

@@ -16,7 +16,7 @@ export default function StatsCards({ projects, projectsLoading }: StatsCardsProp
   const completedProjects = projects.filter(p => p.status === 'completed').length
   const successRate = totalProjects > 0 ? Math.round((completedProjects / totalProjects) * 100) : 0
   return (
-    <div className="flex flex-col gap-4 sm:gap-6 h-full p-6">
+    <div className="flex flex-row justify-between gap-4 sm:gap-6 h-full mb-4">
       <motion.div 
         className="bg-white border border-gray-300  p-4 sm:p-6"
         initial={{ opacity: 0, y: 20 }}

@@ -277,9 +277,9 @@ export default function DashboardOverview({
   };
 
   return (
-    <div className="lg:px-4 py-8 ">
+    <div className=" py-8 max-w-7xl mx-auto ">
       {/* Welcome Section */}
-      <div className="mb-4 px-8">
+      <div className="mb-4 ">
         <h1 className="text-2xl sm:text-3xl font-bold text-black mb-2">
           Welcome back, {getDisplayName()}!
         </h1>
@@ -287,32 +287,33 @@ export default function DashboardOverview({
           Here&apos;s what&apos;s happening with your web audits today.
         </p>
       </div>
-
+ {/* Stats Cards - Takes full width on mobile, 1/3 width on lg+ */}
+ <div className="w-full ">
+          <StatsCards 
+            projects={projects}
+            projectsLoading={projectsLoading}
+          />
+        </div>
       {/* Main Content Row - Site Crawl and Stats Cards */}
-      <div className="flex flex-col border-y border-gray-300 lg:flex-row  lg:items-stretch">
+      <div className="flex flex-col gap-4  border-gray-300 lg:flex-row  lg:items-stretch">
         {/* Site Crawl Form - Takes full width on mobile, 2/3 width on lg+ */}
-        <div className="w-full lg:w-[70%]">
+        <div className="w-full ">
           <SiteCrawlForm 
             onSubmit={handleFormSubmit}
             isSubmitting={isSubmitting}
             submitStatus={submitStatus}
           />
         </div>
-        {/* Stats Cards - Takes full width on mobile, 1/3 width on lg+ */}
-        <div className="w-full lg:w-[30%] ">
-          <StatsCards 
-            projects={projects}
-            projectsLoading={projectsLoading}
-          />
-        </div>
-      </div>
-
-      {/* Recent Projects */}
-      <div className="">
+       
+          {/* Recent Projects */}
+      <div className="w-full  ">
         <RecentProjects 
           onProjectSelect={onProjectSelect}
         />
       </div>
+      </div>
+
+    
       {/* Features Showcase */}
       {/* <FeaturesShowcase features={features} /> */}
 
