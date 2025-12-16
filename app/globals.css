@@ -35,10 +35,11 @@ body{
 }
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  /* Make all standard radius tokens square (no rounded corners) */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -73,7 +74,8 @@ body{
 }
 
 :root {
-  --radius: 0.625rem;
+  /* Base radius set to 0 so new components are square by default */
+  --radius: 0;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -144,6 +146,7 @@ body{
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    border-radius: 0 !important;
   }
   body {
     @apply bg-background text-foreground;

@@ -6,6 +6,7 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { Link as LinkIcon, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+
 import { useScroll } from '@/components/ui/use-scroll';
 import { createPortal } from 'react-dom';
 
@@ -55,16 +56,21 @@ export default function Navbar() {
 			})}
 		>
 			<nav className="relative mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-6 lg:px-0">
-				<div className="hover:bg-accent rounded-md lg:-ml-14">
-					<Image 
-						src="/orange-black-auditly.png" 
-						alt="Auditly360" 
-						width={124} 
-						height={43} 
-						className="h-8 md:h-10 w-auto"
-						priority
-					/>
-				</div>
+                <Link
+                    href="/"
+                    aria-label="home"
+                    className="lg:-ml-14 cursor-pointer select-none focus:outline-none active:outline-none"
+                >
+                    <Image
+                        src="/orange-black-auditly.png"
+                        alt="Auditly360"
+                        width={124}
+                        height={43}
+                        draggable={false}
+                        className="h-8 md:h-10 w-auto bg-transparent mix-blend-multiply cursor-pointer select-none"
+                        priority
+                    />
+                </Link>
 
 				{/* Centered Links */}
 				<div className="hidden md:flex absolute left-[42%] top-1/2 transform -translate-x-1/2 -translate-y-1/2 items-center gap-6">

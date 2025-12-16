@@ -6,21 +6,25 @@ import { Plus, Minus } from 'lucide-react';
 
 const faqs = [
   {
-    question: "How does the audit process work?",
-    answer: "Our AI-powered engine scans your website URL to identify performance bottlenecks, SEO issues, accessibility errors, and security vulnerabilities. It generates a comprehensive report with actionable fixes in seconds."
+    question: 'How does the audit process work?',
+    answer:
+      'Our AI-powered engine scans your website URL to identify performance bottlenecks, SEO issues, accessibility errors, and security vulnerabilities. It generates a comprehensive report with actionable fixes in seconds.',
   },
   {
-    question: "Is there a free trial available?",
-    answer: "Yes! You can run a basic audit on your homepage for free. For advanced features like multi-page scanning, automated monitoring, and team collaboration, you can upgrade to our Pro plans."
+    question: 'Is there a free trial available?',
+    answer:
+      'Yes! You can run a basic audit on your homepage for free. For advanced features like multi-page scanning, automated monitoring, and team collaboration, you can upgrade to our Pro plans.',
   },
   {
-    question: "Can I audit client websites?",
-    answer: "Yes! Our tool is perfect for agencies and freelancers. You can generate professional reports to share with clients, helping you demonstrate value and prioritize their website improvements."
+    question: 'Can I audit client websites?',
+    answer:
+      'Yes! Our tool is perfect for agencies and freelancers. You can generate professional reports to share with clients, helping you demonstrate value and prioritize their website improvements.',
   },
   {
-    question: "Do you offer support implementation?",
-    answer: "Our Enterprise plan includes dedicated support for implementation. For other plans, we provide detailed documentation and a community forum where you can get help from our team and other users."
-  }
+    question: 'Do you offer support implementation?',
+    answer:
+      'Our Enterprise plan includes dedicated support for implementation. For other plans, we provide detailed documentation and a community forum where you can get help from our team and other users.',
+  },
 ];
 
 export default function FaqSection() {
@@ -51,8 +55,16 @@ export default function FaqSection() {
                 <span className="font-semibold text-gray-900 font-jakarta pr-8">
                   {faq.question}
                 </span>
-                <span className={`flex-shrink-0 transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`}>
-                   {openIndex === index ? <Minus size={20} className="text-orange-500" /> : <Plus size={20} className="text-gray-400" />}
+                <span
+                  className={`flex-shrink-0 transition-transform duration-300 ${
+                    openIndex === index ? 'rotate-180' : ''
+                  }`}
+                >
+                  {openIndex === index ? (
+                    <Minus size={20} className="text-orange-500" />
+                  ) : (
+                    <Plus size={20} className="text-gray-400" />
+                  )}
                 </span>
               </button>
               
@@ -60,9 +72,9 @@ export default function FaqSection() {
                 {openIndex === index && (
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
+                    animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
                     <div className="px-6 pb-6 text-gray-600 leading-relaxed">
                       {faq.answer}

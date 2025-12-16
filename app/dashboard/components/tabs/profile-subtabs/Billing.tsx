@@ -174,7 +174,7 @@ export default function Billing({
       // Load Razorpay script
       const loadRazorpayScript = async (): Promise<boolean> => {
         if (typeof window === 'undefined') return false;
-        if (window.Razorpay) return true;
+        if ((window as any).Razorpay) return true;
 
         const existingScript = document.querySelector('script[src*="checkout.razorpay.com"]');
         if (existingScript) {
@@ -193,7 +193,7 @@ export default function Billing({
           document.body.appendChild(script);
           
           setTimeout(() => {
-            if (!window.Razorpay) {
+            if (!(window as any).Razorpay) {
               resolve(false);
             }
           }, 5000);
@@ -234,7 +234,7 @@ export default function Billing({
       const orderData = await orderResponse.json();
 
       // Initialize Razorpay checkout
-      const razorpay = new window.Razorpay({
+      const razorpay = new (window as any).Razorpay({
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         order_id: orderData.orderId,
         name: 'Web Audit Pro',

@@ -5,12 +5,35 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+import { AnimatedGroup } from '@/components/ui/animated-group';
+
 export default function CtaSection() {
   return (
     <section className="w-full py-6 relative overflow-hidden bg-transparent">
       {/* Background removed as per request - now transparent */}
       
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <AnimatedGroup 
+        className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center"
+        variants={{
+          container: {
+              visible: {
+                  transition: {
+                      staggerChildren: 0.05,
+                      delayChildren: 0.2,
+                  },
+              },
+          },
+          item: {
+              hidden: { opacity: 0, filter: 'blur(12px)', y: 12 },
+              visible: { 
+                  opacity: 1, 
+                  filter: 'blur(0px)', 
+                  y: 0,
+                  transition: { type: 'spring', bounce: 0.3, duration: 1.5 }
+              },
+          },
+        }}
+      >
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-jakarta text-gray-900 dark:text-white mb-6 tracking-tight">
           Ready to optimize your website?
         </h2>
@@ -22,7 +45,7 @@ export default function CtaSection() {
           <Button 
             asChild 
             size="lg" 
-            className="rounded-full bg-orange-500 hover:bg-orange-600 text-white px-8 h-14 text-lg shadow-lg hover:shadow-xl transition-all"
+            className="rounded-full bg-orange-500 hover:bg-orange-600 text-white px-8 h-14 text-lg -lg hover:-xl transition-all"
           >
             <Link href="/signup">
               Get Started for Free
@@ -44,7 +67,7 @@ export default function CtaSection() {
         <p className="mt-8 text-sm text-gray-500">
           No credit card required · Free 14-day trial · Cancel anytime
         </p>
-      </div>
+      </AnimatedGroup>
     </section>
   );
 }
