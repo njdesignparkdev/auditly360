@@ -734,7 +734,7 @@ export default function PagesSection({
             <p className="text-sm text-gray-500 mt-2">Data will persist when switching tabs</p>
           )}
          
-          {projectId && (
+          {/* {projectId && (
             <div className="space-y-2">
               <div className="space-y-2">
                 <button
@@ -763,7 +763,7 @@ export default function PagesSection({
                 Debug: Project ID: {projectId}
               </div>
             </div>
-          )}
+          )} */}
         </div>
       ) : null}
     </div>

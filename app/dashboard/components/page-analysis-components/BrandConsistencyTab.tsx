@@ -338,11 +338,11 @@ export default function BrandConsistencyTab({
 
       // Step 1: Save to database using Supabase
       const { data, error } = await updateAuditProject(page.audit_project_id, {
-        brand_data: updatedBrandData
+        brand_consistency_data: updatedBrandData
       });
 
       if (error) {
-        throw new Error(error.message || 'Failed to save brand data');
+        throw new Error(error.message || 'Failed to save brand consistency data');
       }
 
       // Step 2: Fetch updated project data from database
@@ -353,9 +353,9 @@ export default function BrandConsistencyTab({
         console.warn('Step 3 Warning: Could not fetch updated project data:', fetchError);
         // Continue with local state update as fallback
         setBrandData(updatedBrandData);
-      } else if (updatedProject?.brand_data) {
+      } else if (updatedProject?.brand_consistency_data) {
 
-        setBrandData(updatedProject.brand_data);
+        setBrandData(updatedProject.brand_consistency_data);
       } else {
 
         setBrandData(updatedBrandData);
@@ -369,7 +369,7 @@ export default function BrandConsistencyTab({
 
       // Step 5: Notify parent component about the update
       if (onBrandDataUpdate) {
-        const finalBrandData = updatedProject?.brand_data || updatedBrandData;
+        const finalBrandData = updatedProject?.brand_consistency_data || updatedBrandData;
         onBrandDataUpdate(finalBrandData);
 
       }
@@ -381,8 +381,8 @@ export default function BrandConsistencyTab({
       setTimeout(() => {
 
         // Force re-analysis with the latest brand data
-        if (updatedProject?.brand_data || updatedBrandData) {
-          const latestBrandData = updatedProject?.brand_data || updatedBrandData;
+        if (updatedProject?.brand_consistency_data || updatedBrandData) {
+          const latestBrandData = updatedProject?.brand_consistency_data || updatedBrandData;
 
           // Run analysis directly with the latest brand data
           analyzeBrandConsistency(latestBrandData);
@@ -407,7 +407,7 @@ export default function BrandConsistencyTab({
   // Show upgrade card if user doesn't have access to brand consistency analysis
   if (hasFeatureAccess === false) {
     return (
-      <div className="bg-white rounded-lg border border-gray-300 p-4">
+      <div className="bg-white -lg border border-gray-300 p-4">
         <div className="flex items-center space-x-4">
           <div className="text-blue-500">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -425,7 +425,7 @@ export default function BrandConsistencyTab({
               </div>
               <button
                 onClick={() => window.location.href = '/dashboard?tab=profile&subtab=plans'}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                className="px-4 py-2 bg-blue-600 text-white -lg hover:bg-blue-700 transition-colors text-sm font-medium"
               >
                 Upgrade Plan
               </button>
@@ -458,13 +458,13 @@ export default function BrandConsistencyTab({
       <div className="p-6 text-center">
         <p className="text-gray-500">No brand data available for consistency analysis.</p>
         <p className="text-sm text-gray-400 mt-2">Brand consistency data is required to perform this analysis.</p>
-        <div className="mt-4 p-4 bg-gray-100 rounded-lg text-left">
+        <div className="mt-4 p-4 bg-gray-100 -lg text-left">
           <p className="text-xs text-gray-600 mb-2">Debug Info:</p>
           <p className="text-xs text-gray-500">Project Brand Data: {JSON.stringify(projectBrandData, null, 2)}</p>
         </div>
 
         {/* Temporary test button - remove this later */}
-        <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+        <div className="mt-4 p-4 bg-blue-50 -lg">
           <p className="text-sm text-blue-800 mb-2">Test: Add sample brand data</p>
           <button
             onClick={() => {
@@ -477,7 +477,7 @@ export default function BrandConsistencyTab({
               };
               setBrandData(testBrandData);
             }}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+            className="px-4 py-2 bg-blue-600 text-white -lg hover:bg-blue-700 transition-colors text-sm"
           >
             Add Test Brand Data
           </button>
@@ -506,18 +506,18 @@ export default function BrandConsistencyTab({
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-lg border border-gray-300 p-6">
+      <div className="bg-white -lg border border-gray-300 px-8 py-4">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">Brand Consistency Analysis</h3>
-            <p className="text-sm text-gray-500 mt-1">
+            <h3 className="text-lg font-semibold text-gray-900 px-4">Brand Consistency Analysis</h3>
+            <p className="text-sm text-gray-500 mt-1 px-4">
               Checking content against brand guidelines
             </p>
           </div>
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsEditModalOpen(true)}
-              className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center gap-2"
+              className="px-4 py-2 bg-gray-600 text-white -lg hover:bg-gray-700 transition-colors flex items-center gap-2"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -527,7 +527,7 @@ export default function BrandConsistencyTab({
             {/* <button
               onClick={analyzeBrandConsistency}
               disabled={isAnalyzing}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+              className="px-4 py-2 bg-blue-600 text-white -lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -538,7 +538,7 @@ export default function BrandConsistencyTab({
         </div>
 
         {analysisError && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+          <div className="bg-red-50 border border-red-200 -lg p-4 mb-6">
             <p className="text-red-800">{analysisError}</p>
           </div>
         )}
@@ -547,7 +547,7 @@ export default function BrandConsistencyTab({
           <div className="text-center py-12">
             <div className="flex flex-col items-center space-y-4">
               <div className="relative">
-                <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+                <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 -full animate-spin"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -565,7 +565,7 @@ export default function BrandConsistencyTab({
         ) : analysisResults.length > 0 ? (
           <>
             {/* Brand Data Summary */}
-            <div key={`brand-guidelines-${refreshKey}`} className="bg-gray-50 rounded-lg p-4 mb-6">
+            <div key={`brand-guidelines-${refreshKey}`} className="bg-gray-50 -lg p-4 mb-6">
               <h4 className="font-medium text-gray-900 mb-3">Brand Guidelines</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 {brandData?.companyName && (
@@ -596,16 +596,16 @@ export default function BrandConsistencyTab({
             </div>
 
             {/* Issues by Type */}
-            <div className="space-y-6">
+            <div className="space-y-6 flex justify-around">
               {issueTypes.map(type => {
                 const issues = groupedIssues[type.key] || [];
                 if (issues.length === 0) return null;
 
                 return (
-                  <div key={type.key} className="border border-gray-300 rounded-lg p-4">
+                  <div key={type.key} className="border border-gray-300 -lg p-4">
                     <div className="flex items-center gap-2 mb-4">
                       <h4 className="font-medium text-gray-900">{type.label}</h4>
-                      <span className="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs font-medium">
+                      <span className="px-2 py-1 bg-gray-100 text-gray-800 -full text-xs font-medium">
                         {issues.length} issue{issues.length !== 1 ? 's' : ''}
                       </span>
                     </div>
@@ -614,12 +614,12 @@ export default function BrandConsistencyTab({
                       {issues.map((issue, index) => (
                         <div
                           key={index}
-                          className="p-4 rounded-lg border border-gray-300 bg-gray-50"
+                          className="p-4 -lg border border-gray-300 bg-gray-50"
                         >
                           <div className="flex items-start justify-between">
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-2">
-                                <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                <span className="px-2 py-1 -full text-xs font-medium bg-blue-100 text-blue-800">
                                   {issue.severity.toUpperCase()}
                                 </span>
                                 <span className="text-sm font-medium text-gray-700 capitalize">
@@ -712,7 +712,7 @@ function EditBrandDataModal({ brandData, onSave, onClose, isSaving }: EditBrandD
 
   return (
     <div className="fixed inset-0 bg-black/20 bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+      <div className="bg-white -lg p-6 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-semibold text-gray-900">Edit Brand Data</h3>
           <button
@@ -734,7 +734,7 @@ function EditBrandDataModal({ brandData, onSave, onClose, isSaving }: EditBrandD
               type="text"
               value={formData.companyName}
               onChange={(e) => handleChange('companyName', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 -lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter company name"
             />
           </div>
@@ -747,7 +747,7 @@ function EditBrandDataModal({ brandData, onSave, onClose, isSaving }: EditBrandD
               type="tel"
               value={formData.phoneNumber}
               onChange={(e) => handleChange('phoneNumber', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 -lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter phone number"
             />
           </div>
@@ -760,7 +760,7 @@ function EditBrandDataModal({ brandData, onSave, onClose, isSaving }: EditBrandD
               type="email"
               value={formData.emailAddress}
               onChange={(e) => handleChange('emailAddress', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 -lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter email address"
             />
           </div>
@@ -773,7 +773,7 @@ function EditBrandDataModal({ brandData, onSave, onClose, isSaving }: EditBrandD
               type="text"
               value={formData.address}
               onChange={(e) => handleChange('address', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 -lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter address"
             />
           </div>
@@ -786,7 +786,7 @@ function EditBrandDataModal({ brandData, onSave, onClose, isSaving }: EditBrandD
               value={formData.additionalInformation}
               onChange={(e) => handleChange('additionalInformation', e.target.value)}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 -lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter additional information"
             />
           </div>
@@ -802,7 +802,7 @@ function EditBrandDataModal({ brandData, onSave, onClose, isSaving }: EditBrandD
             <button
               type="submit"
               disabled={isSaving}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+              className="px-4 py-2 bg-blue-600 text-white -lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
             >
               {isSaving ? (
                 <>

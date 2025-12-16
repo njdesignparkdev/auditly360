@@ -8,6 +8,7 @@ import { ProjectCardSkeleton, StatsCardSkeleton } from '../SkeletonLoader';
 import EditProjectModal from '../modals/EditProjectModal';
 import { useProjectsStore } from '@/lib/stores/projectsStore';
 import FaviconDisplay from '../FaviconDisplay';
+import { useSupabase } from '@/contexts/SupabaseContext';
 interface BrandConsistencyData {
   companyName: string;
   phoneNumber: string;
@@ -42,11 +43,13 @@ export default function ProjectsTab({
 }: Omit<ProjectsTabProps, 'userProfile'>) {
   // Use Zustand store for projects data
   const { projects, loading: projectsLoading, error: projectsError, refreshProjects } = useProjectsStore();
+  const { getAuditProject } = useSupabase();
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
   const previousProjectsRef = useRef<AuditProject[]>([]);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<AuditProject | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loadingProject, setLoadingProject] = useState(false);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState<string | null>(null);
 
@@ -77,9 +80,56 @@ export default function ProjectsTab({
       return newSet;
     });
   };
-  const handleEditProject = (project: AuditProject) => {
-    setSelectedProject(project);
-    setEditModalOpen(true);
+  const handleEditProject = async (project: AuditProject) => {
+    setLoadingProject(true);
+    try {
+      // Fetch full project data to ensure brand_consistency_data is included
+      if (getAuditProject) {
+        const { data: fullProject, error } = await getAuditProject(project.id);
+        if (error) {
+          console.error('Error fetching full project data:', error);
+          // Fallback to using the project from store
+          setSelectedProject(project);
+        } else if (fullProject) {
+          // Ensure brand_consistency_data is properly included
+          const projectWithBrandData = {
+            ...fullProject,
+            brand_consistency: (fullProject as any).brand_consistency ?? false,
+            brand_consistency_data: (fullProject as any).brand_consistency_data ?? null,
+            hidden_urls_data: (fullProject as any).hidden_urls_data ?? null,
+            page_type: (fullProject as any).page_type || 'single',
+            hidden_urls: (fullProject as any).hidden_urls ?? false,
+            keys_check: (fullProject as any).keys_check ?? false
+          } as AuditProject & {
+            brand_consistency?: boolean;
+            brand_consistency_data?: BrandConsistencyData | null;
+            hidden_urls_data?: HiddenUrl[] | null;
+            page_type?: 'single' | 'multiple';
+            hidden_urls?: boolean;
+            keys_check?: boolean;
+          };
+          console.log('📋 Loaded full project for editing:', {
+            id: projectWithBrandData.id,
+            brand_consistency: projectWithBrandData.brand_consistency,
+            has_brand_consistency_data: !!projectWithBrandData.brand_consistency_data,
+            brand_consistency_data: projectWithBrandData.brand_consistency_data
+          });
+          setSelectedProject(projectWithBrandData as AuditProject);
+        } else {
+          setSelectedProject(project);
+        }
+      } else {
+        setSelectedProject(project);
+      }
+      setEditModalOpen(true);
+    } catch (error) {
+      console.error('Error loading project for editing:', error);
+      // Fallback to using the project from store
+      setSelectedProject(project);
+      setEditModalOpen(true);
+    } finally {
+      setLoadingProject(false);
+    }
   };
   const handleSaveProject = async (projectId: string, data: {
     siteUrl: string;

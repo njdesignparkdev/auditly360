@@ -180,6 +180,8 @@ import type { AuditProject } from '@/types/audit';
 
         brand_data: projectData.brand_data || null,
 
+        brand_consistency_data: projectData.brand_consistency_data || null,
+
         hidden_urls_data: projectData.hidden_urls_data || null,
       };
 
@@ -268,6 +270,8 @@ import type { AuditProject } from '@/types/audit';
             .from("audit_projects")
             .update({
               brand_data: projectData.brand_data,
+
+              brand_consistency_data: projectData.brand_consistency_data,
 
               hidden_urls_data: projectData.hidden_urls_data,
 
@@ -507,6 +511,8 @@ import type { AuditProject } from '@/types/audit';
 
             brand_data,
 
+            brand_consistency_data,
+
             scraping_data,
 
             meta_tags_data,
@@ -584,6 +590,7 @@ import type { AuditProject } from '@/types/audit';
         data = fallbackResult.data?.map((project: any) => ({
           ...project,
           brand_data: null,
+          brand_consistency_data: null,
           scraping_data: null,
           meta_tags_data: null,
           social_meta_tags_data: null,
@@ -668,6 +675,8 @@ import type { AuditProject } from '@/types/audit';
           ...(project as any),
 
           brand_data: (project as any).brand_data || null,
+
+          brand_consistency_data: (project as any).brand_consistency_data || null,
 
           scraping_data: (project as any).scraping_data || null,
 

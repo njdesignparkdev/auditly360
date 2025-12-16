@@ -63,8 +63,8 @@ interface PageData {
   updated_at: string
 }
 
-interface ProjectWithBrandData extends Omit<AuditProject, 'brand_data'> {
-  brand_data: BrandConsistencyData | null;
+interface ProjectWithBrandData extends AuditProject {
+  brand_consistency_data: BrandConsistencyData | null;
   brand_consistency?: boolean;
 }
 
@@ -220,7 +220,18 @@ export default function PageAnalysisTab({ pageId }: PageAnalysisTabProps) {
             console.error('Error fetching audit project:', projectError)
           }
           if (!projectError && projectData) {
-            setProject(projectData as ProjectWithBrandData)
+            // Ensure brand_consistency is properly included
+            const projectWithBrand: ProjectWithBrandData = {
+              ...projectData,
+              brand_consistency: (projectData as any).brand_consistency ?? false,
+              brand_consistency_data: (projectData as any).brand_consistency_data ?? null
+            }
+            console.log('📋 Loaded project data:', {
+              id: projectWithBrand.id,
+              brand_consistency: projectWithBrand.brand_consistency,
+              has_brand_consistency_data: !!projectWithBrand.brand_consistency_data
+            })
+            setProject(projectWithBrand)
           }
         }
 
@@ -258,7 +269,17 @@ export default function PageAnalysisTab({ pageId }: PageAnalysisTabProps) {
     // Special case for brand-consistency: check both plan feature access AND project brand_consistency column
     if (tabId === 'brand-consistency') {
       const hasPlanAccess = hasFeature(featureId)
-      const hasProjectAccess = project?.brand_consistency === true
+      // Check if brand_consistency is enabled OR if brand_consistency_data exists (fallback)
+      const hasProjectAccess = project?.brand_consistency === true || 
+                               (project?.brand_consistency !== false && project?.brand_consistency_data !== null && project?.brand_consistency_data !== undefined)
+      console.log('🔍 Brand Consistency Tab Access Check:', {
+        tabId,
+        hasPlanAccess,
+        brand_consistency: project?.brand_consistency,
+        has_brand_consistency_data: !!project?.brand_consistency_data,
+        hasProjectAccess,
+        finalAccess: hasPlanAccess && hasProjectAccess
+      })
       return hasPlanAccess && hasProjectAccess
     }
 
@@ -315,6 +336,35 @@ export default function PageAnalysisTab({ pageId }: PageAnalysisTabProps) {
     }
   }
 
+  // Map page analysis tabs to the AnalysisHeader format
+  // MUST be called before early returns to follow Rules of Hooks
+  const pageAnalysisTabs = useMemo(() => {
+    const tabs = [
+      { id: 'overview', name: 'Overview', icon: '📊' },
+      { id: 'links', name: 'Links', icon: '🔗' },
+      { id: 'images', name: 'Images', icon: '🖼️' },
+      { id: 'grammar-content', name: 'Grammar & Content', icon: '📝' }
+    ]
+    
+    // Only include brand-consistency tab if project has brand_consistency enabled
+    // Check both the boolean flag and if brand_consistency_data exists
+    const shouldShowBrandTab = project?.brand_consistency === true || 
+                               (project?.brand_consistency !== false && project?.brand_consistency_data !== null && project?.brand_consistency_data !== undefined)
+    
+    if (shouldShowBrandTab) {
+      tabs.push({ id: 'brand-consistency', name: 'Brand Consistency', icon: '🎯' })
+    }
+    
+    tabs.push(
+      { id: 'seo-structure', name: 'SEO & Structure', icon: '🔍' },
+      { id: 'ui-quality', name: 'UI Quality', icon: '🎨' },
+      // { id: 'technical', name: 'Technical', icon: '⚙️' },
+      { id: 'performance', name: 'Performance', icon: '⚡' }
+    )
+    
+    return tabs
+  }, [project?.brand_consistency, project?.brand_consistency_data])
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center overflow-x-hidden w-[100vw]">
@@ -341,8 +391,7 @@ export default function PageAnalysisTab({ pageId }: PageAnalysisTabProps) {
   const mockProject: AuditProject = project ? {
     ...project,
     score: 85, // You can calculate this based on page analysis
-    status: 'completed' as const,
-    brand_data: project.brand_data ?? null
+    status: 'completed' as const
   } : {
     id: 'mock',
     site_url: page?.url || 'Unknown URL',
@@ -380,6 +429,7 @@ export default function PageAnalysisTab({ pageId }: PageAnalysisTabProps) {
     social_meta_tags_data: null,
     detected_keys: null,
     brand_data: null,
+    brand_consistency_data: null,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   }
@@ -401,8 +451,7 @@ export default function PageAnalysisTab({ pageId }: PageAnalysisTabProps) {
 
     // Convert ProjectWithBrandData to AuditProject for components that require it
     const auditProject: AuditProject | null = project ? {
-      ...project,
-      brand_data: project.brand_data ?? null
+      ...project
     } : null;
 
     switch (activeTab) {
@@ -431,8 +480,8 @@ export default function PageAnalysisTab({ pageId }: PageAnalysisTabProps) {
         )
       case 'brand-consistency':
 
-        // Test: Try to create a project with brand data to see if it works
-        if (!project?.brand_data) {
+        // Test: Try to create a project with brand consistency data to see if it works
+        if (!project?.brand_consistency_data) {
 
           // This is just for debugging - we'll remove this later
         }
@@ -440,10 +489,10 @@ export default function PageAnalysisTab({ pageId }: PageAnalysisTabProps) {
         return (
           <BrandConsistencyTab
             page={page!}
-            projectBrandData={project?.brand_data as BrandConsistencyData | null | undefined}
+            projectBrandData={project?.brand_consistency_data as BrandConsistencyData | null | undefined}
             onBrandDataUpdate={(newBrandData) => {
-              // Update the project state with new brand data
-              setProject(prev => prev ? { ...prev, brand_data: newBrandData as BrandConsistencyData } : null);
+              // Update the project state with new brand consistency data
+              setProject(prev => prev ? { ...prev, brand_consistency_data: newBrandData as BrandConsistencyData } : null);
             }}
           />
         )
@@ -459,20 +508,6 @@ export default function PageAnalysisTab({ pageId }: PageAnalysisTabProps) {
         return <OverviewTab page={page} project={auditProject} />
     }
   }
-
-  // Map page analysis tabs to the AnalysisHeader format
-  const pageAnalysisTabs = [
-    { id: 'overview', name: 'Overview', icon: '📊' },
-    { id: 'links', name: 'Links', icon: '🔗' },
-    { id: 'images', name: 'Images', icon: '🖼️' },
-    { id: 'grammar-content', name: 'Grammar & Content', icon: '📝' },
-    // Only include brand-consistency tab if project has brand_consistency enabled
-    ...(project?.brand_consistency === true ? [{ id: 'brand-consistency', name: 'Brand Consistency', icon: '🎯' }] : []),
-    { id: 'seo-structure', name: 'SEO & Structure', icon: '🔍' },
-    { id: 'ui-quality', name: 'UI Quality', icon: '🎨' },
-    // { id: 'technical', name: 'Technical', icon: '⚙️' },
-    { id: 'performance', name: 'Performance', icon: '⚡' }
-  ]
 
   return (
     <div className="">

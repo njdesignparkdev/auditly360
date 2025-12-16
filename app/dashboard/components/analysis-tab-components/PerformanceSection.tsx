@@ -125,7 +125,7 @@ export default function PerformanceSection({ project, onDataUpdate }: Performanc
                 <h3 className="text-sm font-medium text-[#ff4b01]">Performance Analysis in Progress</h3>
                 <div className="mt-2 text-sm text-[#ff4b01]">
                   <p>We&apos;re running comprehensive performance tests on your website. This typically takes 30-60 seconds to complete.</p>
-                  <p className="mt-1 text-xs text-[#ff4b01]/80">Please don&apos;t close this page while the analysis is running.</p>
+                  
                 </div>
               </div>
             </div>

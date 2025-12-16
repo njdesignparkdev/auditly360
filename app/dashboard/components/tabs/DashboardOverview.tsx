@@ -127,7 +127,8 @@ export default function DashboardOverview({
         brand_consistency: formData.brandConsistency,
         hidden_urls: formData.hiddenUrls,
         keys_check: formData.keysCheck,
-        brand_data: formData.brandConsistency ? formData.brandData : null,
+        brand_data: null, // Keep for favicons, logos, etc.
+        brand_consistency_data: formData.brandConsistency ? formData.brandData : null,
         hidden_urls_data: formData.hiddenUrls ? formData.hiddenUrlsList.filter(url => url.url.trim() !== '') : null,
         status: 'pending' as const,
         progress: 0,

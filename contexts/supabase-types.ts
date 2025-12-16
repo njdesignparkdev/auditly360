@@ -35,7 +35,8 @@ interface UserProfile {
     brand_consistency: boolean;
     hidden_urls: boolean;
     keys_check: boolean;
-    brand_data: any | null;
+    brand_data: any | null; // For favicons, logos, etc.
+    brand_consistency_data: any | null; // For brand consistency form data
     hidden_urls_data: any | null;
     pages_per_second: number;
     total_response_time: number;

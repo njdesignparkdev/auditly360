@@ -62,17 +62,28 @@ export default function EditProjectForm({
         brand_consistency?: boolean;
         hidden_urls?: boolean;
         keys_check?: boolean;
-        brand_data?: BrandConsistencyData;
+        brand_consistency_data?: BrandConsistencyData;
         hidden_urls_data?: HiddenUrl[];
       };
       const p = project as AuditProject & ProjectExtras;
+      
+      console.log('📝 EditProjectForm: Loading project data:', {
+        projectId: project.id,
+        brand_consistency: p.brand_consistency,
+        has_brand_consistency_data: !!p.brand_consistency_data,
+        brand_consistency_data: p.brand_consistency_data,
+        page_type: p.page_type,
+        hidden_urls: p.hidden_urls,
+        keys_check: p.keys_check
+      });
+      
       setFormData({
         siteUrl: project.site_url || '',
         pageType: p.page_type || 'single',
         brandConsistency: p.brand_consistency || false,
         hiddenUrls: p.hidden_urls || false,
         keysCheck: p.keys_check || false,
-        brandData: p.brand_data || {
+        brandData: p.brand_consistency_data || {
           companyName: '',
           phoneNumber: '',
           emailAddress: '',
