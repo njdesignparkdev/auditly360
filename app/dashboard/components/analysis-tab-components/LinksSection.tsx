@@ -146,7 +146,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
     
     // Use the page's URL as the base for resolving relative URLs
     try {
-git       // Prefer page.url, but fall back to project.site_url if page.url is not available
+   // Prefer page.url, but fall back to project.site_url if page.url is not available
       // Never use auditly360.com as base - if baseUrl is auditly360.com, use project.site_url
       let base = baseUrl || project.site_url
       if (base && base.includes('auditly360.com')) {
