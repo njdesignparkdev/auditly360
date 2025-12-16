@@ -388,10 +388,26 @@ export default function SiteCrawlForm({
          
 
           {/* Brand Consistency Fields */}
-          {brandConsistency && <div className="p-4 sm:p-6 space-y-4 border border-[#ff4b01]/20">
-              <h3 className="text-sm font-semibold text-black mb-2">
-                Brand Consistency Information
-              </h3>
+          {brandConsistency && <div className="p-4 sm:p-6 space-y-4 border border-[#ff4b01]/20 ">
+              <div className="flex flex-col gap-2 mb-2">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-sm font-semibold text-black">
+                    Brand Consistency Information
+                  </h3>
+                  <div className="relative group cursor-default">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-[#ff4b01]/5 px-2 py-0.5 text-[11px] font-medium text-[#ff4b01] border border-[#ff4b01]/20">
+                      <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#ff4b01]/10 text-[10px]">
+                        i
+                      </span>
+                      Consistency check
+                    </span>
+                    <div className="pointer-events-none absolute left-0 top-7 z-20 w-64 rounded-md border border-gray-200 bg-white px-3 py-2 text-xs text-gray-700 shadow-lg opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-150">
+                      We scan your website pages for these brand details and flag missing information,
+                      inconsistencies, or obvious typos so your company data stays accurate everywhere.
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="grid grid-cols-1 gap-4">
                 <div>
                   <label htmlFor="companyName" className="block text-sm font-medium text-black mb-1">

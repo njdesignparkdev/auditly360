@@ -287,12 +287,12 @@ export default function DashboardSidebar({
                     {planInfo.max_projects === -1 ? 'Unlimited' : planInfo.max_projects || 0} projects
                   </span>
                 </div>
-                  <div className="w-full mt-2">
-                    <UpgradePlanButton
-                      href="/dashboard?tab=profile&subtab=billing"
-                      className="w-full text-xs px-3 py-2 font-semibold"
-                    />
-                  </div>
+                <div className="w-full mt-2">
+                  <UpgradePlanButton
+                    href="/dashboard?tab=profile&subtab=billing"
+                    className="w-full text-xs px-3 py-2 font-semibold"
+                  />
+                </div>
               </div> : <div className="bg-gray-50 rounded-lg p-3">
                 <div className="text-sm text-gray-600 text-center">
                   No plan information available
@@ -402,15 +402,12 @@ export default function DashboardSidebar({
                     {planInfo.max_projects === -1 ? 'Unlimited' : planInfo.max_projects || 0} projects
                   </span>
                 </div>
-                {planInfo.plan_type === 'Starter' && (
-                  <div className="w-full mt-2">
-
+                <div className="w-full mt-2">
                   <UpgradePlanButton
                     href="/dashboard?tab=profile&subtab=billing"
                     className="w-full"
-                    />
-                    </div>
-                )}
+                  />
+                </div>
               </div> : <div className="bg-gray-50 rounded-lg p-3">
                 <div className="text-sm text-gray-600 text-center">
                   No plan information available

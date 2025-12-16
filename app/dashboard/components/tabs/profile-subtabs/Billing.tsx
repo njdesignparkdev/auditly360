@@ -367,7 +367,7 @@ export default function Billing({
     duration: 0.5
   }}>
       {/* Plan Expiry Warning */}
-      {planExpiryStatus && planExpiryStatus.expires_at && <motion.div className={`rounded-lg border p-4 mb-6 ${planExpiryStatus.is_expired ? 'bg-red-50 border-red-200' : planExpiryStatus.days_until_expiry && planExpiryStatus.days_until_expiry <= 7 ? 'bg-yellow-50 border-yellow-200' : 'bg-[#ff4b01]/10 border-[#ff4b01]/30'}`} initial={{
+      {planExpiryStatus && planExpiryStatus.expires_at && <motion.div className={` border-b p-4 mb-6 ${planExpiryStatus.is_expired ? 'bg-red-50 border-red-200' : planExpiryStatus.days_until_expiry && planExpiryStatus.days_until_expiry <= 7 ? 'bg-yellow-50 border-yellow-200' : 'bg-[#ff4b01]/10 border-[#ff4b01]/30'}`} initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -378,7 +378,7 @@ export default function Billing({
       delay: 0.05
     }}>
           <div className="flex items-center">
-            <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${planExpiryStatus.is_expired ? 'bg-red-100' : planExpiryStatus.days_until_expiry && planExpiryStatus.days_until_expiry <= 7 ? 'bg-yellow-100' : 'bg-[#ff4b01]/20'}`}>
+            <div className={`flex-shrink-0 w-8 h-8  flex items-center justify-center ${planExpiryStatus.is_expired ? 'bg-red-100' : planExpiryStatus.days_until_expiry && planExpiryStatus.days_until_expiry <= 7 ? 'bg-yellow-100' : 'bg-[#ff4b01]/20'}`}>
               <span className={`text-lg ${planExpiryStatus.is_expired ? 'text-red-600' : planExpiryStatus.days_until_expiry && planExpiryStatus.days_until_expiry <= 7 ? 'text-yellow-600' : 'text-[#ff4b01]'}`}>
                 {planExpiryStatus.is_expired ? '⚠️' : '⏰'}
               </span>

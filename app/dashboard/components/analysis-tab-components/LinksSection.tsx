@@ -135,6 +135,52 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
     loadExistingStatuses()
   }, [scrapedPages])
 
+  // Helper function to resolve relative URLs using the page's URL as base
+  const resolveUrl = useCallback((href: string, baseUrl: string): string => {
+    if (!href || href === '#') return href
+    
+    // If already absolute, return as is
+    if (href.startsWith('http://') || href.startsWith('https://')) {
+      return href
+    }
+    
+    // Use the page's URL as the base for resolving relative URLs
+    try {
+git       // Prefer page.url, but fall back to project.site_url if page.url is not available
+      // Never use auditly360.com as base - if baseUrl is auditly360.com, use project.site_url
+      let base = baseUrl || project.site_url
+      if (base && base.includes('auditly360.com')) {
+        // If baseUrl is auditly360.com, use project.site_url instead
+        base = project.site_url
+      }
+      
+      if (!base) return href
+      
+      // Use URL constructor to properly resolve relative URLs
+      const resolvedUrl = new URL(href, base).href
+      
+      // Convert HTTP to HTTPS
+      if (resolvedUrl.startsWith('http://')) {
+        return resolvedUrl.replace('http://', 'https://')
+      }
+      
+      return resolvedUrl
+    } catch (error) {
+      // Fallback to manual resolution if URL constructor fails
+      let base = baseUrl || project.site_url
+      if (base && base.includes('auditly360.com')) {
+        base = project.site_url
+      }
+      if (!base) return href
+      
+      if (href.startsWith('/')) {
+        return `${base}${href}`
+      } else {
+        return `${base}/${href}`
+      }
+    }
+  }, [project.site_url])
+
   // Extract links from original scraping data or HTML content
   const links = useMemo(() => {
     setIsProcessing(true)
@@ -146,38 +192,48 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
       
       
       originalScrapingData.pages.forEach((page: ScrapedPageOverride) => {
+        // Use page.url as the base URL for resolving relative links from this page
+        const pageBaseUrl = page.url || project.site_url
+        
         if (page.links && Array.isArray(page.links)) {
           page.links.forEach((link) => {
             const href = link.url || ''
-            if (href && href !== '#') {
-              // Filter out localhost URLs
-              if (href.includes('localhost') || href.includes('127.0.0.1')) {
-                return
-              }
-              
-              // Convert relative URLs to absolute
-              let absoluteUrl = href.startsWith('http') ? href : 
-                href.startsWith('/') ? `${project.site_url}${href}` : 
-                `${project.site_url}/${href}`
-              
-              // Convert HTTP to HTTPS
-              if (absoluteUrl.startsWith('http://')) {
-                absoluteUrl = absoluteUrl.replace('http://', 'https://')
-              }
-              
-              const isInternal = href.startsWith('/') || 
-                (href.startsWith('http') && href.includes(baseDomain))
-              
-              allLinks.push({
-                url: absoluteUrl,
-                text: link.text || null,
-                title: link.title || null,
-                type: isInternal ? 'internal' : 'external',
-                page_url: page.url,
-                target: '_self',
-                rel: undefined
-              })
+            if (!href || href === '#') {
+              return
             }
+            
+            // Filter out localhost URLs
+            if (href.includes('localhost') || href.includes('127.0.0.1')) {
+              return
+            }
+            
+            // Filter out any URLs that contain auditly360.com (incorrectly resolved links)
+            if (href.includes('auditly360.com')) {
+              return
+            }
+            
+            // Resolve relative URLs using the page's URL as base
+            const absoluteUrl = resolveUrl(href, pageBaseUrl)
+            
+            // Double-check: filter out resolved URLs that contain auditly360.com
+            if (absoluteUrl.includes('auditly360.com')) {
+              return
+            }
+            
+            // Determine if link is internal based on the crawled website's domain
+            const isInternal = href.startsWith('/') || 
+              href.startsWith('#') ||
+              (absoluteUrl.startsWith('http') && absoluteUrl.includes(baseDomain))
+            
+            allLinks.push({
+              url: absoluteUrl,
+              text: link.text || null,
+              title: link.title || null,
+              type: isInternal ? 'internal' : 'external',
+              page_url: page.url,
+              target: '_self',
+              rel: undefined
+            })
           })
         }
       })
@@ -188,6 +244,9 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
       
       
       scrapedPages.forEach((page: ScrapedPageOverride) => {
+        // Use page.url as the base URL for resolving relative links from this page
+        const pageBaseUrl = page.url || project.site_url
+        
         if (page.html_content) {
           try {
             // Create a temporary DOM parser to extract links
@@ -201,36 +260,46 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
             
             linkElements.forEach((link) => {
               const anchorElement = link as HTMLAnchorElement
-              const href = anchorElement.href || anchorElement.getAttribute('href') || ''
-              if (href && href !== '#') {
-                // Filter out localhost URLs
-                if (href.includes('localhost') || href.includes('127.0.0.1')) {
-                  return
-                }
-                
-                // Convert relative URLs to absolute
-                let absoluteUrl = href.startsWith('http') ? href : 
-                  href.startsWith('/') ? `${project.site_url}${href}` : 
-                  `${project.site_url}/${href}`
-                
-                // Convert HTTP to HTTPS
-                if (absoluteUrl.startsWith('http://')) {
-                  absoluteUrl = absoluteUrl.replace('http://', 'https://')
-                }
-                
-                const isInternal = href.startsWith('/') || 
-                  (href.startsWith('http') && href.includes(baseDomain))
-                
-                allLinks.push({
-                  url: absoluteUrl,
-                  text: anchorElement.textContent?.trim() || null,
-                  title: anchorElement.title || null,
-                  type: isInternal ? 'internal' : 'external',
-                  page_url: page.url,
-                  target: anchorElement.target || '_self',
-                  rel: anchorElement.rel || undefined
-                })
+              // ONLY use getAttribute to get the raw href value - NEVER use anchorElement.href
+              // as it's already resolved by the browser to the current page's URL
+              const rawHref = anchorElement.getAttribute('href')
+              
+              if (!rawHref || rawHref === '#') {
+                return
               }
+              
+              // Filter out localhost URLs
+              if (rawHref.includes('localhost') || rawHref.includes('127.0.0.1')) {
+                return
+              }
+              
+              // Filter out any URLs that contain auditly360.com (incorrectly resolved links)
+              if (rawHref.includes('auditly360.com')) {
+                return
+              }
+              
+              // Resolve relative URLs using the page's URL as base
+              const absoluteUrl = resolveUrl(rawHref, pageBaseUrl)
+              
+              // Double-check: filter out resolved URLs that contain auditly360.com
+              if (absoluteUrl.includes('auditly360.com')) {
+                return
+              }
+              
+              // Determine if link is internal based on the crawled website's domain
+              const isInternal = rawHref.startsWith('/') || 
+                rawHref.startsWith('#') ||
+                (absoluteUrl.startsWith('http') && absoluteUrl.includes(baseDomain))
+              
+              allLinks.push({
+                url: absoluteUrl,
+                text: anchorElement.textContent?.trim() || null,
+                title: anchorElement.title || null,
+                type: isInternal ? 'internal' : 'external',
+                page_url: page.url,
+                target: anchorElement.target || '_self',
+                rel: anchorElement.rel || undefined
+              })
             })
           } catch (error) {
             console.warn('Error parsing HTML for links:', error)
@@ -241,7 +310,7 @@ export default function LinksSection({ project, scrapedPages, originalScrapingDa
     
     setIsProcessing(false)
     return allLinks
-  }, [scrapedPages, project.site_url, originalScrapingData])
+  }, [scrapedPages, project.site_url, originalScrapingData, resolveUrl])
 
   // Function to update link statuses in database
   const updateLinkStatusesInDB = useCallback(async (

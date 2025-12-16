@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { AuditProject } from '@/types/audit'
 import { ScrapedPage } from '../analysis-tab/types'
@@ -101,6 +101,52 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
     }
   }
 
+  // Helper function to resolve relative URLs using the page's URL as base
+  const resolveImageUrl = useCallback((src: string, baseUrl: string): string => {
+    if (!src) return src
+    
+    // If already absolute, return as is
+    if (src.startsWith('http://') || src.startsWith('https://')) {
+      return src
+    }
+    
+    // Use the page's URL as the base for resolving relative URLs
+    try {
+      // Prefer page.url, but fall back to project.site_url if page.url is not available
+      // Never use auditly360.com as base - if baseUrl is auditly360.com, use project.site_url
+      let base = baseUrl || project.site_url
+      if (base && base.includes('auditly360.com')) {
+        // If baseUrl is auditly360.com, use project.site_url instead
+        base = project.site_url
+      }
+      
+      if (!base) return src
+      
+      // Use URL constructor to properly resolve relative URLs
+      const resolvedUrl = new URL(src, base).href
+      
+      // Convert HTTP to HTTPS
+      if (resolvedUrl.startsWith('http://')) {
+        return resolvedUrl.replace('http://', 'https://')
+      }
+      
+      return resolvedUrl
+    } catch (error) {
+      // Fallback to manual resolution if URL constructor fails
+      let base = baseUrl || project.site_url
+      if (base && base.includes('auditly360.com')) {
+        base = project.site_url
+      }
+      if (!base) return src
+      
+      if (src.startsWith('/')) {
+        return `${base}${src}`
+      } else {
+        return `${base}/${src}`
+      }
+    }
+  }, [project.site_url])
+
 
   // Helper function to parse fullTag HTML and extract image attributes
   const parseImageFromFullTag = (fullTag: string) => {
@@ -115,9 +161,10 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
       }
       
       // Extract all relevant attributes
-      const src = imgElement.src || imgElement.getAttribute('src') || ''
-      const alt = imgElement.alt || imgElement.getAttribute('alt') || null
-      const title = imgElement.title || imgElement.getAttribute('title') || null
+      // Prioritize getAttribute to get raw values, not resolved properties
+      const src = imgElement.getAttribute('src') || imgElement.src || ''
+      const alt = imgElement.getAttribute('alt') || imgElement.alt || null
+      const title = imgElement.getAttribute('title') || imgElement.title || null
       const width = imgElement.width || imgElement.getAttribute('width') || null
       const height = imgElement.height || imgElement.getAttribute('height') || null
       const className = imgElement.className || imgElement.getAttribute('class') || null
@@ -206,61 +253,63 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
         const type = img.type || getImageType(src)
         const pageUrl = img.scraped_pages?.url || ''
         
-        if (src) {
-          // Filter out localhost URLs
-          if (src.includes('localhost') || src.includes('127.0.0.1')) {
-            return
-          }
-          
-          // Convert relative URLs to absolute
-          let absoluteUrl = src
-          if (!src.startsWith('http')) {
-            const baseUrl = project.site_url || 'https://example.com'
-            if (src.startsWith('/')) {
-              absoluteUrl = `${baseUrl}${src}`
-            } else {
-              absoluteUrl = `${baseUrl}/${src}`
-            }
-          }
-          
-          // Convert HTTP to HTTPS
-          if (absoluteUrl.startsWith('http://')) {
-            absoluteUrl = absoluteUrl.replace('http://', 'https://')
-          }
-          
-          // Note: Existing scan data is now loaded in useEffect above
-          // This avoids setting state inside useMemo
-          
-          allImages.push({
-            url: absoluteUrl,
-            src: absoluteUrl,
-            alt: alt,
-            alt_text: alt,
-            title: title,
-            title_text: title,
-            width: width,
-            height: height,
-            type: type,
-            page_url: pageUrl,
-            // Store the full scraped image record for future actions
-            extra_metadata: {
-              id: img.id,
-              scraped_page_id: img.scraped_page_id,
-              audit_project_id: img.audit_project_id,
-              size_bytes: img.size_bytes,
-              scan_results: img.scan_results,
-              open_web_ninja_data: img.open_web_ninja_data,
-              created_at: img.created_at,
-              updated_at: img.updated_at
-            }
-          })
+        if (!src) {
+          return
         }
+        
+        // Filter out localhost URLs
+        if (src.includes('localhost') || src.includes('127.0.0.1')) {
+          return
+        }
+        
+        // Filter out any URLs that contain auditly360.com (incorrectly resolved images)
+        if (src.includes('auditly360.com')) {
+          return
+        }
+        
+        // Resolve relative URLs using the page's URL as base
+        const absoluteUrl = resolveImageUrl(src, pageUrl)
+        
+        // Double-check: filter out resolved URLs that contain auditly360.com
+        if (absoluteUrl.includes('auditly360.com')) {
+          return
+        }
+        
+        // Note: Existing scan data is now loaded in useEffect above
+        // This avoids setting state inside useMemo
+        
+        allImages.push({
+          url: absoluteUrl,
+          src: absoluteUrl,
+          alt: alt,
+          alt_text: alt,
+          title: title,
+          title_text: title,
+          width: width,
+          height: height,
+          type: type,
+          page_url: pageUrl,
+          // Store the full scraped image record for future actions
+          extra_metadata: {
+            id: img.id,
+            scraped_page_id: img.scraped_page_id,
+            audit_project_id: img.audit_project_id,
+            size_bytes: img.size_bytes,
+            scan_results: img.scan_results,
+            open_web_ninja_data: img.open_web_ninja_data,
+            created_at: img.created_at,
+            updated_at: img.updated_at
+          }
+        })
       })
     }
     
     // Fallback: If no images from database, try to extract from original scraping data
     if (allImages.length === 0 && originalScrapingData?.pages && Array.isArray(originalScrapingData.pages)) {
       originalScrapingData.pages.forEach((page: ScrapedPageOverride) => {
+        // Use page.url as the base URL for resolving relative image URLs from this page
+        const pageBaseUrl = page.url || project.site_url
+        
         if (page.images && Array.isArray(page.images)) {
           page.images.forEach((img: ImageData) => {
             let src = img.src || img.url || ''
@@ -282,38 +331,37 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
               }
             }
             
-            if (src) {
-              // Filter out localhost URLs
-              if (src.includes('localhost') || src.includes('127.0.0.1')) {
-                return
-              }
-              
-              // Convert relative URLs to absolute
-              let absoluteUrl = src
-              if (!src.startsWith('http')) {
-                const baseUrl = project.site_url || 'https://example.com'
-                if (src.startsWith('/')) {
-                  absoluteUrl = `${baseUrl}${src}`
-                } else {
-                  absoluteUrl = `${baseUrl}/${src}`
-                }
-              }
-              
-              // Convert HTTP to HTTPS
-              if (absoluteUrl.startsWith('http://')) {
-                absoluteUrl = absoluteUrl.replace('http://', 'https://')
-              }
-              
-              allImages.push({
-                url: absoluteUrl,
-                alt: alt,
-                title: title,
-                width: width,
-                height: height,
-                type: getImageType(src),
-                page_url: page.url
-              })
+            if (!src) {
+              return
             }
+            
+            // Filter out localhost URLs
+            if (src.includes('localhost') || src.includes('127.0.0.1')) {
+              return
+            }
+            
+            // Filter out any URLs that contain auditly360.com (incorrectly resolved images)
+            if (src.includes('auditly360.com')) {
+              return
+            }
+            
+            // Resolve relative URLs using the page's URL as base
+            const absoluteUrl = resolveImageUrl(src, pageBaseUrl)
+            
+            // Double-check: filter out resolved URLs that contain auditly360.com
+            if (absoluteUrl.includes('auditly360.com')) {
+              return
+            }
+            
+            allImages.push({
+              url: absoluteUrl,
+              alt: alt,
+              title: title,
+              width: width,
+              height: height,
+              type: getImageType(src),
+              page_url: page.url
+            })
           })
         }
       })
@@ -322,6 +370,9 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
     // Final fallback: Parse from HTML content
     if (allImages.length === 0 && scrapedPages && scrapedPages.length > 0) {
       scrapedPages.forEach((page: ScrapedPageOverride) => {
+        // Use page.url as the base URL for resolving relative image URLs from this page
+        const pageBaseUrl = page.url || project.site_url
+        
         if (page.html_content) {
           try {
             if (typeof DOMParser === 'undefined') {
@@ -333,42 +384,44 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
             const imgElements = doc.querySelectorAll('img')
             
             imgElements.forEach((img: HTMLImageElement) => {
-              const src = img.src || img.getAttribute('src') || ''
+              // ONLY use getAttribute to get the raw src value - NEVER use img.src
+              // as it's already resolved by the browser to the current page's URL
+              const rawSrc = img.getAttribute('src')
+              
+              if (!rawSrc) {
+                return
+              }
+              
+              // Filter out localhost URLs
+              if (rawSrc.includes('localhost') || rawSrc.includes('127.0.0.1')) {
+                return
+              }
+              
+              // Filter out any URLs that contain auditly360.com (incorrectly resolved images)
+              if (rawSrc.includes('auditly360.com')) {
+                return
+              }
+              
+              // Resolve relative URLs using the page's URL as base
+              const absoluteUrl = resolveImageUrl(rawSrc, pageBaseUrl)
+              
+              // Double-check: filter out resolved URLs that contain auditly360.com
+              if (absoluteUrl.includes('auditly360.com')) {
+                return
+              }
+              
               const alt = img.alt || img.getAttribute('alt') || null
               const title = img.title || img.getAttribute('title') || null
               
-              if (src) {
-                // Filter out localhost URLs
-                if (src.includes('localhost') || src.includes('127.0.0.1')) {
-                  return
-                }
-                
-                // Convert relative URLs to absolute
-                let absoluteUrl = src
-                if (!src.startsWith('http')) {
-                  const baseUrl = project.site_url || 'https://example.com'
-                  if (src.startsWith('/')) {
-                    absoluteUrl = `${baseUrl}${src}`
-                  } else {
-                    absoluteUrl = `${baseUrl}/${src}`
-                  }
-                }
-                
-                // Convert HTTP to HTTPS
-                if (absoluteUrl.startsWith('http://')) {
-                  absoluteUrl = absoluteUrl.replace('http://', 'https://')
-                }
-                
-                allImages.push({
-                  url: absoluteUrl,
-                  alt: alt,
-                  title: title,
-                  width: img.width || undefined,
-                  height: img.height || undefined,
-                  type: getImageType(src),
-                  page_url: page.url
-                })
-              }
+              allImages.push({
+                url: absoluteUrl,
+                alt: alt,
+                title: title,
+                width: img.width || undefined,
+                height: img.height || undefined,
+                type: getImageType(rawSrc),
+                page_url: page.url
+              })
             })
           } catch (error) {
             console.warn('❌ Error parsing HTML for images:', error)
@@ -379,7 +432,7 @@ export default function ImagesSection({ project, scrapedPages, originalScrapingD
     
     setIsProcessing(false)
     return allImages
-  }, [scrapedImagesData, scrapedPages, project.site_url, originalScrapingData])
+  }, [scrapedImagesData, scrapedPages, project.site_url, originalScrapingData, resolveImageUrl])
 
   // Filter images based on selected criteria
   const filteredImages = useMemo(() => {
