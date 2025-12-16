@@ -7,13 +7,6 @@ import { useUserPlan } from '@/hooks/useUserPlan';
 import { supabase } from '@/lib/supabase-client';
 import { handleAuthError } from '@/lib/auth-utils';
 
-// Extend Window type locally for Razorpay
-declare global {
-  interface Window {
-    Razorpay?: any;
-  }
-}
-
 // Razorpay type is already declared in layout.tsx or elsewhere
 interface PaymentHistory {
   id: string;
