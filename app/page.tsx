@@ -33,7 +33,7 @@ export default function Page() {
             <div className="sm:mx-auto lg:mr-auto text-left mb-8">
               <div className="space-y-3">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 font-jakarta">
-                  Features & Use Cases
+                 Use Cases
                 </h2>
                 <p className="text-gray-600 text-sm sm:text-base font-poppins max-w-2xl">
                   Tailored solutions for every member of your team.

@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 const plans = [
     {
@@ -17,6 +19,7 @@ const plans = [
             'Weekly Scan Reports'
         ],
         buttonText: 'Get Started Free',
+        href: '/signup',
         popular: false
     },
     {
@@ -35,6 +38,7 @@ const plans = [
             'Unlimited Access to All Tools'
         ],
         buttonText: 'Get Started Now',
+        href: '/signup',
         popular: true
     },
     {
@@ -52,6 +56,7 @@ const plans = [
             'Includes All Pro Features'
         ],
         buttonText: 'Contact Sales',
+        href: '/contact',
         popular: false
     }
 ];
@@ -87,13 +92,13 @@ export default function Pricing(props: PricingProps = {}) {
                             <div className="bg-gray-100 p-1 rounded-full flex items-center relative">
                                 <button 
                                     onClick={() => setIsYearly(false)}
-                                    className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 cursor-pointer ${!isYearly ? 'bg-white -sm text-gray-900' : 'text-gray-500'}`}
+                                    className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 cursor-pointer ${!isYearly ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500'}`}
                                 >
                                     Monthly
                                 </button>
                                 <button 
                                     onClick={() => setIsYearly(true)}
-                                    className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 cursor-pointer ${isYearly ? 'bg-white -sm text-gray-900' : 'text-gray-500'}`}
+                                    className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 cursor-pointer ${isYearly ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500'}`}
                                 >
                                     Yearly
                                 </button>
@@ -114,10 +119,10 @@ export default function Pricing(props: PricingProps = {}) {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
-                            className={`p-8 rounded-3xl border ${plan.popular ? 'border-orange-500 -xl relative' : 'border-gray-100 bg-gray-50/50'} flex flex-col`}
+                            className={`p-8 rounded-3xl border ${plan.popular ? 'border-orange-500 shadow-xl relative' : 'border-gray-100 bg-gray-50/50'} flex flex-col`}
                         >
                             {plan.popular && (
-                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-bold -md">
+                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-md">
                                     Most Popular
                                 </div>
                             )}
@@ -139,13 +144,18 @@ export default function Pricing(props: PricingProps = {}) {
                                 </div>
                             </div>
 
-                            <button className={`w-full py-3 rounded-xl font-bold mb-8 transition-colors duration-200 cursor-pointer ${
-                                plan.popular 
-                                    ? 'bg-orange-500 text-white hover:bg-orange-600 -lg -orange-500/30' 
-                                    : 'border-2 border-orange-500 text-orange-600 hover:bg-orange-50'
-                            }`}>
-                                {plan.buttonText}
-                            </button>
+                            <Button
+                                asChild
+                                className={`w-full py-3 rounded-xl font-bold mb-8 transition-colors duration-200 ${
+                                    plan.popular 
+                                        ? 'bg-orange-500 text-white hover:bg-orange-600 shadow-lg shadow-orange-500/30' 
+                                        : 'border-2 border-orange-500 text-orange-600 hover:bg-orange-50 bg-transparent'
+                                }`}
+                            >
+                                <Link href={plan.href || '/signup'}>
+                                    {plan.buttonText}
+                                </Link>
+                            </Button>
 
                             <div className="space-y-4 flex-1">
                                 {plan.features.map((feature, i) => (

@@ -82,8 +82,12 @@ export default function Navbar() {
 
 				{/* Right Side Buttons */}
 				<div className="hidden items-center gap-4 md:flex -mr-8">
-					<Button variant="outline" className="hidden lg:flex rounded-xl font-bold px-6">Sign In</Button>
-					<Button className="bg-[#ff6a00] hover:bg-[#e66000] text-white border-none -md rounded-xl font-bold px-6">Get Started</Button>
+					<Button variant="outline" className="hidden lg:flex rounded-xl font-bold px-6" asChild>
+						<Link href="/login">Sign In</Link>
+					</Button>
+					<Button className="bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold px-6" asChild>
+						<Link href="/signup">Get Started</Link>
+					</Button>
 				</div>
 				<Button
 					size="icon"
@@ -113,10 +117,12 @@ export default function Navbar() {
 					))}
 				</div>
 				<div className="flex flex-col gap-3 mt-auto pt-6">
-					<Button variant="outline" className="w-full bg-transparent h-12 text-base rounded-xl border-gray-300">
-						Sign In
+					<Button variant="outline" className="w-full bg-transparent h-12 text-base rounded-xl border-gray-300" asChild>
+						<Link href="/login">Sign In</Link>
 					</Button>
-					<Button className="w-full bg-[#ff6a00] hover:bg-[#e66000] text-white border-none -md rounded-xl font-bold h-12 text-base">Get Started</Button>
+					<Button className="w-full bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold h-12 text-base" asChild>
+						<Link href="/signup">Get Started</Link>
+					</Button>
 				</div>
 			</MobileMenu>
 		</header>

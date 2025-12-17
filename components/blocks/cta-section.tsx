@@ -45,7 +45,7 @@ export default function CtaSection() {
           <Button 
             asChild 
             size="lg" 
-            className="rounded-full bg-orange-500 hover:bg-orange-600 text-white px-8 h-14 text-lg -lg hover:-xl transition-all"
+            className="rounded-full bg-orange-500 hover:bg-orange-600 text-white px-8 h-14 text-lg shadow-lg hover:shadow-xl transition-all"
           >
             <Link href="/signup">
               Get Started for Free

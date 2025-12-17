@@ -60,7 +60,7 @@ export default function ContactPage() {
         >
           ← Back to Home
         </Link>
-        <div className="bg-white rounded-lg shadow-sm border border-[#FF4D04]/20 p-6 md:p-8 lg:p-10">
+        <div className="bg-white rounded-lg -sm border border-[#FF4D04]/20 p-6 md:p-8 lg:p-10">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#FF4D04] mb-4 md:mb-6">
             Contact Us
           </h1>

@@ -1,6 +1,5 @@
 'use client'
 
-// import { motion } from 'framer-motion' // Unused import
 import { useState } from 'react'
 import { useSupabase } from '@/contexts/SupabaseContext'
 import { useUserPlan } from '@/hooks/useUserPlan'

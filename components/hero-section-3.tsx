@@ -80,7 +80,7 @@ export function HeroSection3() {
                                         <div className="relative h-96 overflow-hidden rounded-none border p-2 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
                                     </div>
                                     <div className="bg-muted border-border/50 mx-auto w-full max-w-[320px] translate-x-4 rounded-none border p-2 backdrop-blur-sm lg:translate-x-8">
-                                        <div className="bg-background overflow-hidden rounded-none border p-2 shadow-xl">
+                                        <div className="bg-background overflow-hidden rounded-none border p-2">
                                             <AppComponent />
                                         </div>
                                     </div>

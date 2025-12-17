@@ -18,16 +18,16 @@ export default function HowItWorks() {
   const steps = [
     {
       id: 0,
-      title: "Sign Up",
+      title: "Sign In",
       description: "Create your free account in seconds.",
       icon: <UserPlus className="w-6 h-6 text-orange-600" />,
       visual: (
-        <div className="bg-white p-6 rounded-none -sm border border-slate-100 flex flex-col items-center justify-center h-full w-full relative overflow-hidden">
+        <div className="bg-white p-6 rounded-none shadow-sm border border-slate-100 flex flex-col items-center justify-center h-full w-full relative overflow-hidden">
            {/* Abstract Profile Card */}
            <motion.div 
              initial={{ y: 20, opacity: 0 }}
              animate={{ y: 0, opacity: 1 }}
-             className="w-56 bg-white border border-slate-100 rounded-none -xl -slate-200/50 p-5 space-y-4 z-10"
+             className="w-56 bg-white border border-slate-100 rounded-none shadow-xl shadow-slate-200/50 p-5 space-y-4 z-10"
            >
               <div className="flex gap-3 items-center border-b border-slate-50 pb-3">
                  <div className="w-10 h-10 rounded-none bg-orange-50 flex items-center justify-center border border-orange-100">
@@ -43,7 +43,7 @@ export default function HowItWorks() {
                     <div className="h-1.5 w-12 bg-slate-200 rounded-none"></div>
                  </div>
                  <motion.div 
-                   className="h-9 w-full bg-orange-500 rounded-none flex items-center justify-center -lg -orange-500/20"
+                   className="h-9 w-full bg-orange-500 rounded-none flex items-center justify-center shadow-lg shadow-orange-500/20"
                    animate={{ scale: [1, 1.02, 1] }}
                    transition={{ repeat: Infinity, duration: 2 }}
                  >
@@ -73,7 +73,7 @@ export default function HowItWorks() {
            <motion.div 
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="w-64 bg-white rounded-none -xl -slate-200/50 border border-slate-100 p-6 space-y-5 relative z-10"
+              className="w-64 bg-white rounded-none shadow-xl shadow-slate-200/50 border border-slate-100 p-6 space-y-5 relative z-10"
            >
               {/* Lines */}
               <div className="space-y-2.5">
@@ -119,7 +119,7 @@ export default function HowItWorks() {
       description: "Receive actionable insights instantly.",
       icon: <FileCheck className="w-6 h-6 text-green-600" />,
       visual: (
-        <div className="bg-white p-6 rounded-none -sm border border-slate-100 flex flex-col h-full w-full relative overflow-hidden justify-center bg-[radial-gradient(#f1f5f9_1px,transparent_1px)] [background-size:16px_16px]">
+        <div className="bg-white p-6 rounded-none shadow-sm border border-slate-100 flex flex-col h-full w-full relative overflow-hidden justify-center bg-[radial-gradient(#f1f5f9_1px,transparent_1px)] [background-size:16px_16px]">
            {/* Header Mock */}
            <div className="flex items-center justify-between mb-6 border-b border-slate-50 pb-3 relative z-10">
               <div className="flex flex-col">
@@ -198,7 +198,7 @@ export default function HowItWorks() {
           <div className="flex flex-col gap-6 order-2 lg:order-1">
             <div>
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-jakarta text-gray-900 leading-tight mb-4">
-                How <span className="text-orange-600">Auditly</span> Works
+                How Auditly Works
                 </h2>
                  <p className="text-base text-gray-600 font-poppins leading-relaxed max-w-lg">
                 We've simplified the complex world of website auditing into a streamlined process. Get detailed insights in seconds.
@@ -209,10 +209,10 @@ export default function HowItWorks() {
                {steps.map((step) => (
                  <div 
                    key={step.id}
-                    className={`group flex items-start gap-4 p-4 rounded-none transition-all duration-300 border ${currentStep === step.id ? 'bg-orange-50/50 border-orange-100 -sm' : 'border-transparent hover:bg-slate-50'}`}
+                    className={`group flex items-start gap-4 p-4 rounded-none transition-all duration-300 border ${currentStep === step.id ? 'bg-orange-50/50 border-orange-100 shadow-sm' : 'border-transparent hover:bg-slate-50'}`}
                    onClick={() => setCurrentStep(step.id)}
                  >
-                     <div className={`p-2.5 rounded-none transition-colors duration-300 ${currentStep === step.id ? 'bg-white -sm' : 'bg-slate-100 group-hover:bg-white'}`}>
+                     <div className={`p-2.5 rounded-none transition-colors duration-300 ${currentStep === step.id ? 'bg-white shadow-sm' : 'bg-slate-100 group-hover:bg-white'}`}>
                        {step.icon}
                     </div>
                     <div>
