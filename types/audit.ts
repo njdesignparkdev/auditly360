@@ -49,6 +49,10 @@ export interface SEOIssue {
   description: string
   fix: string
   impact: 'high' | 'medium' | 'low'
+  location?: string // Where the problem is located (e.g., "<head> section", "Line 45", "Image #3")
+  element?: string // The specific HTML element or selector
+  example?: string // Example code showing the fix
+  detailedFix?: string // More detailed explanation of how to fix
 }
 
 export interface SEOHighlight {

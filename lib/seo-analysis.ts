@@ -5,6 +5,10 @@ export interface SEOIssue {
   description: string
   fix: string
   impact: 'high' | 'medium' | 'low'
+  location?: string // Where the problem is located (e.g., "<head> section", "Line 45", "Image #3")
+  element?: string // The specific HTML element or selector
+  example?: string // Example code showing the fix
+  detailedFix?: string // More detailed explanation of how to fix
 }
 
 export interface SEOHighlight {
@@ -55,7 +59,11 @@ export function analyzeSEO(htmlContent: string, url: string): SEOAnalysisResult 
       title: 'Missing Title Tag',
       description: 'The page is missing a title tag or it is empty.',
       fix: 'Add a descriptive title tag between 50-60 characters.',
-      impact: 'high'
+      impact: 'high',
+      location: '<head> section',
+      element: '<title>',
+      example: '<title>Your Descriptive Page Title Here - Brand Name</title>',
+      detailedFix: 'Add a <title> tag inside the <head> section of your HTML. The title should be unique for each page, descriptive, and include your primary keyword. Keep it between 50-60 characters to avoid truncation in search results.'
     })
     score -= 20
   } else {
@@ -67,7 +75,11 @@ export function analyzeSEO(htmlContent: string, url: string): SEOAnalysisResult 
         title: 'Title Too Short',
         description: `Title is only ${titleText.length} characters. Recommended length is 50-60 characters.`,
         fix: 'Expand the title to be more descriptive and include relevant keywords.',
-        impact: 'medium'
+        impact: 'medium',
+        location: '<head> section',
+        element: '<title>',
+        example: `<title>${titleText} - Additional Descriptive Text Here</title>`,
+        detailedFix: `Your current title "${titleText}" is too short. Expand it to 50-60 characters by adding more descriptive text, your brand name, or relevant keywords. Make sure it still accurately describes the page content.`
       })
       score -= 5
     } else if (titleText.length > 60) {
@@ -77,7 +89,11 @@ export function analyzeSEO(htmlContent: string, url: string): SEOAnalysisResult 
         title: 'Title Too Long',
         description: `Title is ${titleText.length} characters. Recommended length is 50-60 characters.`,
         fix: 'Shorten the title to avoid truncation in search results.',
-        impact: 'medium'
+        impact: 'medium',
+        location: '<head> section',
+        element: '<title>',
+        example: `<title>${titleText.substring(0, 55)}...</title>`,
+        detailedFix: `Your current title "${titleText}" is ${titleText.length} characters long and may be truncated in search results. Shorten it to 50-60 characters by removing unnecessary words while keeping the most important keywords and brand name.`
       })
       score -= 3
     } else {
@@ -101,7 +117,11 @@ export function analyzeSEO(htmlContent: string, url: string): SEOAnalysisResult 
       title: 'Missing Meta Description',
       description: 'The page is missing a meta description tag.',
       fix: 'Add a compelling meta description between 150-160 characters.',
-      impact: 'high'
+      impact: 'high',
+      location: '<head> section',
+      element: '<meta name="description">',
+      example: '<meta name="description" content="Your compelling description that summarizes the page content in 150-160 characters.">',
+      detailedFix: 'Add a <meta name="description"> tag inside the <head> section. Write a compelling summary of your page content (150-160 characters) that encourages users to click. Include your primary keyword naturally and make it unique for each page.'
     })
     score -= 15
   } else {
@@ -113,7 +133,11 @@ export function analyzeSEO(htmlContent: string, url: string): SEOAnalysisResult 
         title: 'Meta Description Too Short',
         description: `Meta description is only ${descContent.length} characters. Recommended length is 150-160 characters.`,
         fix: 'Expand the meta description to be more descriptive.',
-        impact: 'medium'
+        impact: 'medium',
+        location: '<head> section',
+        element: '<meta name="description">',
+        example: `<meta name="description" content="${descContent} Additional compelling details about your page content here.">`,
+        detailedFix: `Your current meta description "${descContent}" is only ${descContent.length} characters. Expand it to 150-160 characters by adding more details about what users will find on the page, including benefits or a call-to-action.`
       })
       score -= 5
     } else if (descContent.length > 160) {
@@ -123,7 +147,11 @@ export function analyzeSEO(htmlContent: string, url: string): SEOAnalysisResult 
         title: 'Meta Description Too Long',
         description: `Meta description is ${descContent.length} characters. Recommended length is 150-160 characters.`,
         fix: 'Shorten the meta description to avoid truncation.',
-        impact: 'medium'
+        impact: 'medium',
+        location: '<head> section',
+        element: '<meta name="description">',
+        example: `<meta name="description" content="${descContent.substring(0, 155)}...">`,
+        detailedFix: `Your current meta description "${descContent}" is ${descContent.length} characters and will be truncated in search results. Shorten it to 150-160 characters by removing less important words while keeping the most compelling information and keywords.`
       })
       score -= 3
     } else {
@@ -149,17 +177,26 @@ export function analyzeSEO(htmlContent: string, url: string): SEOAnalysisResult 
       title: 'Missing H1 Tag',
       description: 'The page is missing an H1 tag.',
       fix: 'Add a single, descriptive H1 tag that summarizes the main content.',
-      impact: 'high'
+      impact: 'high',
+      location: '<body> section',
+      element: '<h1>',
+      example: '<h1>Your Main Page Heading Here</h1>',
+      detailedFix: 'Add a single <h1> tag near the top of your main content area. The H1 should clearly describe the main topic of the page and include your primary keyword. It should be the most prominent heading on the page and match or complement your title tag.'
     })
     score -= 15
   } else if (h1Tags.length > 1) {
+    const h1Locations = Array.from(h1Tags).map((h1, idx) => `H1 #${idx + 1}: "${h1.textContent?.substring(0, 50)}"`).join(', ')
     issues.push({
       type: 'warning',
       category: 'Headings',
       title: 'Multiple H1 Tags',
       description: `Found ${h1Tags.length} H1 tags. Only one H1 should be used per page.`,
       fix: 'Use only one H1 tag per page and structure other headings with H2-H6.',
-      impact: 'medium'
+      impact: 'medium',
+      location: '<body> section',
+      element: '<h1> (multiple instances)',
+      example: 'Keep: <h1>Main Heading</h1>\nChange others to: <h2>Secondary Heading</h2>',
+      detailedFix: `Found ${h1Tags.length} H1 tags on the page: ${h1Locations}. Keep only the most important one as H1 and change the others to H2, H3, etc. This creates a proper heading hierarchy that helps both users and search engines understand your content structure.`
     })
     score -= 8
   } else {
@@ -201,13 +238,22 @@ export function analyzeSEO(htmlContent: string, url: string): SEOAnalysisResult 
   const imagesWithoutAlt = Array.from(images).filter(img => !img.getAttribute('alt'))
   
   if (imagesWithoutAlt.length > 0) {
+    const imageExamples = Array.from(imagesWithoutAlt).slice(0, 3).map((img, idx) => {
+      const src = img.getAttribute('src') || 'unknown'
+      const filename = src.split('/').pop() || src
+      return `Image ${idx + 1}: ${filename.substring(0, 30)}`
+    }).join(', ')
     issues.push({
       type: 'error',
       category: 'Images',
       title: 'Images Missing Alt Text',
       description: `${imagesWithoutAlt.length} image(s) are missing alt text.`,
       fix: 'Add descriptive alt text to all images for accessibility and SEO.',
-      impact: 'high'
+      impact: 'high',
+      location: 'Throughout page content',
+      element: '<img> tags',
+      example: '<img src="example.jpg" alt="Descriptive text about the image">',
+      detailedFix: `Found ${imagesWithoutAlt.length} image(s) without alt text (e.g., ${imageExamples}). Add an "alt" attribute to each <img> tag with a descriptive text that explains what the image shows. For decorative images, use alt="". For images with text, include the text in the alt attribute.`
     })
     score -= Math.min(imagesWithoutAlt.length * 3, 15)
   } else if (images.length > 0) {
@@ -235,7 +281,11 @@ export function analyzeSEO(htmlContent: string, url: string): SEOAnalysisResult 
       title: 'No Internal Links',
       description: 'The page has no internal links to other pages on the site.',
       fix: 'Add relevant internal links to improve site structure and user navigation.',
-      impact: 'medium'
+      impact: 'medium',
+      location: 'Page content area',
+      element: '<a href> tags',
+      example: '<a href="/about">Learn more about us</a>',
+      detailedFix: 'Add internal links (links to other pages on your site) throughout your content. These help users navigate, distribute page authority, and help search engines understand your site structure. Place them naturally within your content, not just in navigation menus.'
     })
     score -= 5
   }
@@ -270,7 +320,11 @@ export function analyzeSEO(htmlContent: string, url: string): SEOAnalysisResult 
       title: 'Missing Viewport Meta Tag',
       description: 'The page is missing a viewport meta tag for mobile responsiveness.',
       fix: 'Add <meta name="viewport" content="width=device-width, initial-scale=1.0"> to the head.',
-      impact: 'high'
+      impact: 'high',
+      location: '<head> section',
+      element: '<meta name="viewport">',
+      example: '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
+      detailedFix: 'Add a viewport meta tag inside the <head> section. This tag tells mobile browsers how to scale and display your page. Without it, mobile users will see a desktop-sized page that requires zooming and panning, which hurts user experience and SEO rankings.'
     })
     score -= 15
   } else {
@@ -293,7 +347,11 @@ export function analyzeSEO(htmlContent: string, url: string): SEOAnalysisResult 
       title: 'Missing Canonical URL',
       description: 'The page is missing a canonical URL to prevent duplicate content issues.',
       fix: 'Add a canonical link tag pointing to the preferred version of the page.',
-      impact: 'medium'
+      impact: 'medium',
+      location: '<head> section',
+      element: '<link rel="canonical">',
+      example: `<link rel="canonical" href="${url}">`,
+      detailedFix: `Add a canonical link tag in the <head> section pointing to the preferred URL version of this page. This tells search engines which URL to index when you have duplicate content (e.g., www vs non-www, HTTP vs HTTPS, URL parameters). Use: <link rel="canonical" href="${url}">`
     })
     score -= 8
   }
@@ -302,6 +360,10 @@ export function analyzeSEO(htmlContent: string, url: string): SEOAnalysisResult 
   const ogTitle = doc.querySelector('meta[property="og:title"]')
   const ogDescription = doc.querySelector('meta[property="og:description"]')
   const ogImage = doc.querySelector('meta[property="og:image"]')
+  const missingOgTags = []
+  if (!ogTitle) missingOgTags.push('og:title')
+  if (!ogDescription) missingOgTags.push('og:description')
+  if (!ogImage) missingOgTags.push('og:image')
 
   if (!ogTitle || !ogDescription || !ogImage) {
     issues.push({
@@ -310,7 +372,11 @@ export function analyzeSEO(htmlContent: string, url: string): SEOAnalysisResult 
       title: 'Incomplete Open Graph Tags',
       description: 'Missing some Open Graph meta tags for social media sharing.',
       fix: 'Add og:title, og:description, and og:image meta tags.',
-      impact: 'medium'
+      impact: 'medium',
+      location: '<head> section',
+      element: '<meta property="og:*">',
+      example: `<meta property="og:title" content="Page Title">\n<meta property="og:description" content="Page description">\n<meta property="og:image" content="https://example.com/image.jpg">`,
+      detailedFix: `Missing Open Graph tags: ${missingOgTags.join(', ')}. Add these meta tags in the <head> section to control how your page appears when shared on social media platforms like Facebook, LinkedIn, and Twitter. The og:image should be at least 1200x630 pixels for best results.`
     })
     score -= 5
   }
@@ -324,7 +390,18 @@ export function analyzeSEO(htmlContent: string, url: string): SEOAnalysisResult 
       title: 'No Structured Data',
       description: 'The page has no structured data markup.',
       fix: 'Consider adding JSON-LD structured data to help search engines understand your content.',
-      impact: 'low'
+      impact: 'low',
+      location: '<head> or <body> section',
+      element: '<script type="application/ld+json">',
+      example: `<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Page Title",
+  "description": "Page description"
+}
+</script>`,
+      detailedFix: 'Add JSON-LD structured data using <script type="application/ld+json"> tags. This helps search engines understand your content better and can enable rich snippets in search results. Common schemas include WebPage, Article, Organization, and LocalBusiness. You can use Google\'s Structured Data Testing Tool to validate your markup.'
     })
     score -= 3
   } else {
@@ -429,7 +506,11 @@ export function analyzeSEO(htmlContent: string, url: string): SEOAnalysisResult 
       title: 'Missing Charset Declaration',
       description: 'No charset meta tag found. This can cause encoding issues.',
       fix: 'Add <meta charset="UTF-8"> as the first meta tag in the head section.',
-      impact: 'high'
+      impact: 'high',
+      location: '<head> section (should be first)',
+      element: '<meta charset>',
+      example: '<meta charset="UTF-8">',
+      detailedFix: 'Add <meta charset="UTF-8"> as the very first element in the <head> section, before any other meta tags or content. This ensures proper character encoding and prevents display issues with special characters, emojis, and international text.'
     })
     score -= 10
   }
@@ -443,7 +524,11 @@ export function analyzeSEO(htmlContent: string, url: string): SEOAnalysisResult 
       title: 'Missing Favicon',
       description: 'No favicon found. This affects branding in browser tabs and bookmarks.',
       fix: 'Add a favicon link tag in the head section.',
-      impact: 'medium'
+      impact: 'medium',
+      location: '<head> section',
+      element: '<link rel="icon">',
+      example: '<link rel="icon" type="image/x-icon" href="/favicon.ico">',
+      detailedFix: 'Add a favicon link tag in the <head> section. Create a favicon.ico file (16x16 or 32x32 pixels) and place it in your root directory, then add the link tag. Modern browsers also support PNG favicons. This improves branding and user recognition in browser tabs and bookmarks.'
     })
     score -= 5
   }

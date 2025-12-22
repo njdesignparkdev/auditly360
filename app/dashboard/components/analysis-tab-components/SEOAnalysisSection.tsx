@@ -1,6 +1,6 @@
 "use client";
 
-import { SEOAnalysisResult, SEOHighlight } from "@/types/audit";
+import { SEOAnalysisResult, SEOHighlight, SEOIssue } from "@/types/audit";
 import { analyzeSEO } from "@/lib/seo-analysis";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useSupabase } from "@/contexts/SupabaseContext";
@@ -45,6 +45,7 @@ export default function SEOAnalysisSection({
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [expandedIssues, setExpandedIssues] = useState<Set<number>>(new Set());
   const analysisTriggered = useRef(false);
   const { updateAuditProject, getScrapedPages } = useSupabase();
   useEffect(() => {
@@ -248,23 +249,23 @@ export default function SEOAnalysisSection({
     seoAnalysis,
   ]);
   const getScoreColor = (score: number) => {
-    if (score >= 80) return "text-green-600";
-    if (score >= 60) return "text-yellow-600";
-    return "text-red-600";
+    if (score >= 80) return "text-gray-900";
+    if (score >= 60) return "text-gray-700";
+    return "text-gray-600";
   };
   const getScoreBgColor = (score: number) => {
-    if (score >= 80) return "bg-green-100";
-    if (score >= 60) return "bg-yellow-100";
-    return "bg-red-100";
+    if (score >= 80) return "bg-gray-200";
+    if (score >= 60) return "bg-gray-300";
+    return "bg-gray-400";
   };
   const getIssueIcon = (type: string) => {
     switch (type) {
       case "error":
-        return "fas fa-times-circle text-red-600";
+        return "fas fa-times-circle text-gray-700";
       case "warning":
-        return "fas fa-exclamation-triangle text-yellow-600";
+        return "fas fa-exclamation-triangle text-gray-600";
       case "info":
-        return "fas fa-info-circle text-[#ff4b01]";
+        return "fas fa-info-circle text-gray-600";
       default:
         return "fas fa-file-alt text-gray-500";
     }
@@ -322,7 +323,7 @@ export default function SEOAnalysisSection({
         </div>
         <div className="text-center py-8">
           <div className="text-4xl mb-2">
-            <i className="fas fa-exclamation-triangle text-red-500"></i>
+            <i className="fas fa-exclamation-triangle text-gray-600"></i>
           </div>
           <p className="text-gray-600">{error}</p>
         </div>
@@ -408,7 +409,7 @@ export default function SEOAnalysisSection({
                 </h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="text-center border-r border-gray-300">
-                    <div className="text-2xl font-bold text-[#ff4b01]">
+                    <div className="text-2xl font-bold text-gray-900">
                       {seoAnalysis.score}
                     </div>
                     <div className="text-xs text-gray-600">SEO Score</div>
@@ -416,7 +417,7 @@ export default function SEOAnalysisSection({
                   {seoAnalysis.highlights &&
                     seoAnalysis.highlights.length > 0 && (
                       <div className="text-center border-r border-gray-300">
-                        <div className="text-2xl font-bold text-[#ff4b01]">
+                        <div className="text-2xl font-bold text-gray-900">
                           {seoAnalysis.summary?.totalHighlights || 0}
                         </div>
                         <div className="text-xs text-gray-600">Highlights</div>
@@ -425,13 +426,13 @@ export default function SEOAnalysisSection({
                   {seoAnalysis.issues && seoAnalysis.issues.length > 0 && (
                     <>
                       <div className="text-center border-r border-gray-300">
-                        <div className="text-2xl font-bold text-[#ff4b01]">
+                        <div className="text-2xl font-bold text-gray-900">
                           {seoAnalysis.summary?.errors || 0}
                         </div>
                         <div className="text-xs text-gray-600">Errors</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-[#ff4b01]">
+                        <div className="text-2xl font-bold text-gray-900">
                           {seoAnalysis.summary?.warnings || 0}
                         </div>
                         <div className="text-xs text-gray-600">Warnings</div>
@@ -460,10 +461,10 @@ export default function SEOAnalysisSection({
                           <i
                             className={
                               highlight.type === "achievement"
-                                ? "fas fa-trophy text-yellow-600"
+                                ? "fas fa-trophy text-gray-600"
                                 : highlight.type === "good-practice"
-                                ? "fas fa-check-circle text-green-600"
-                                : "fas fa-bolt text-blue-500"
+                                ? "fas fa-check-circle text-gray-600"
+                                : "fas fa-bolt text-gray-600"
                             }
                           ></i>
                         </span>
@@ -480,7 +481,7 @@ export default function SEOAnalysisSection({
                         <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 ">
                           {highlight.category}
                         </span>
-                        <span className="text-xs bg-green-100 text-green-700 px-2 py-1 ">
+                        <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 ">
                           {highlight.impact}
                         </span>
                       </div>
@@ -505,7 +506,7 @@ export default function SEOAnalysisSection({
                       className="flex items-start bg-white border border-gray-300  p-3"
                     >
                       <span className="mr-3 mt-0.5">
-                        <i className="fas fa-lightbulb text-blue-500"></i>
+                        <i className="fas fa-lightbulb text-gray-600"></i>
                       </span>
                       <p className="text-sm text-gray-700">{recommendation}</p>
                     </div>
@@ -522,64 +523,136 @@ export default function SEOAnalysisSection({
               Issues & Fixes
             </h4>
             <div className="space-y-2">
-              {seoAnalysis.issues.map((issue, index) => (
+              {seoAnalysis.issues.map((issue, index) => {
+                const isExpanded = expandedIssues.has(index);
+                return (
                 <div
                   key={index}
                   className="bg-white border border-gray-300  p-3 "
                 >
                   <div className="flex items-start justify-between mb-2">
-                    <div className="flex items-center space-x-3">
+                    <div className="flex items-center space-x-3 flex-1">
                       <span className="text-lg">
                         <i className={getIssueIcon(issue.type)}></i>
                       </span>
-                      <div>
+                      <div className="flex-1">
                         <div className="font-medium text-gray-900">
                           {issue.title}
                         </div>
-                        <div className="text-xs text-gray-500">
+                        <div className="text-xs text-gray-500 mt-1">
                           {issue.description}
                         </div>
+                        {/* Location and Element Info */}
+                        {(issue.location || issue.element) && (
+                          <div className="flex flex-wrap items-center gap-2 mt-2">
+                            {issue.location && (
+                              <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 border border-gray-300">
+                                <i className="fas fa-map-marker-alt mr-1"></i>
+                                {issue.location}
+                              </span>
+                            )}
+                            {issue.element && (
+                              <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 border border-gray-300 font-mono">
+                                <i className="fas fa-code mr-1"></i>
+                                {issue.element}
+                              </span>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 ">
-                        {issue.category}
-                      </span>
-                      <span
-                        className={`text-xs px-2 py-1  ${
-                          issue.impact === "high"
-                            ? "bg-red-100 text-red-700"
-                            : issue.impact === "medium"
-                            ? "bg-yellow-100 text-yellow-700"
-                            : "bg-blue-100 text-blue-700"
-                        }`}
-                      >
-                        {issue.impact}
-                      </span>
+                    <div className="flex flex-col items-end space-y-2 ml-4">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 ">
+                          {issue.category}
+                        </span>
+                        <span
+                          className={`text-xs px-2 py-1  ${
+                            issue.impact === "high"
+                              ? "bg-gray-200 text-gray-900"
+                              : issue.impact === "medium"
+                              ? "bg-gray-100 text-gray-700"
+                              : "bg-gray-50 text-gray-600"
+                          }`}
+                        >
+                          {issue.impact}
+                        </span>
+                      </div>
+                      {(issue.example || issue.detailedFix) && (
+                        <button
+                          onClick={() => {
+                            const newExpanded = new Set(expandedIssues);
+                            if (isExpanded) {
+                              newExpanded.delete(index);
+                            } else {
+                              newExpanded.add(index);
+                            }
+                            setExpandedIssues(newExpanded);
+                          }}
+                          className="text-xs text-gray-700 hover:text-gray-900 flex items-center gap-1 transition-colors"
+                        >
+                          <i className={`fas fa-chevron-${isExpanded ? 'up' : 'down'} text-xs`}></i>
+                          {isExpanded ? 'Hide Details' : 'Show Details'}
+                        </button>
+                      )}
                     </div>
                   </div>
+                  
+                  {/* Quick Fix */}
                   <div className="ml-8 mt-2">
-                    <div className="text-xs text-gray-600 bg-gray-50 p-2 ">
-                      <span className="font-medium">Fix:</span> {issue.fix}
+                    <div className="text-xs text-gray-600 bg-gray-50 p-2 border border-gray-200">
+                      <span className="font-medium">Quick Fix:</span> {issue.fix}
                     </div>
                   </div>
+
+                  {/* Expanded Details */}
+                  {isExpanded && (issue.example || issue.detailedFix) && (
+                    <div className="ml-8 mt-3 space-y-3 border-t border-gray-200 pt-3">
+                      {issue.detailedFix && (
+                        <div className="bg-gray-50 border border-gray-300 p-3">
+                          <div className="flex items-start">
+                            <i className="fas fa-info-circle text-gray-600 mr-2 mt-0.5"></i>
+                            <div>
+                              <div className="text-xs font-semibold text-gray-900 mb-1">Detailed Explanation</div>
+                              <div className="text-xs text-gray-700 leading-relaxed">
+                                {issue.detailedFix}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {issue.example && (
+                        <div className="bg-gray-900 border border-gray-700 p-3">
+                          <div className="flex items-start">
+                            <i className="fas fa-code text-gray-400 mr-2 mt-0.5"></i>
+                            <div className="flex-1">
+                              <div className="text-xs font-semibold text-gray-300 mb-2">Example Code</div>
+                              <pre className="text-xs text-gray-300 font-mono whitespace-pre-wrap overflow-x-auto">
+                                {issue.example}
+                              </pre>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
-              ))}
+              )})}
             </div>
           </div>
         )}
       </div>
 
       {(!seoAnalysis.issues || seoAnalysis.issues.length === 0) && (
-        <div className="bg-green-50 border border-green-200  p-6 text-center">
+        <div className="bg-gray-50 border border-gray-300  p-6 text-center">
           <div className="text-4xl mb-2">
-            <i className="fas fa-check-circle text-green-500"></i>
+            <i className="fas fa-check-circle text-gray-600"></i>
           </div>
           <p className="text-gray-700 font-medium">
             Excellent! No SEO issues found.
           </p>
           {seoAnalysis.highlights && seoAnalysis.highlights.length > 0 && (
-            <p className="text-sm text-green-600 mt-2">
+            <p className="text-sm text-gray-600 mt-2">
               Your page is following {seoAnalysis.highlights.length} SEO best
               practice{seoAnalysis.highlights.length !== 1 ? "s" : ""}!
             </p>
