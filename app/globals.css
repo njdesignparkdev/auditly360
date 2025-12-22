@@ -19,16 +19,22 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-*{
+* {
 
   scroll-behavior: smooth;
 
 }
-body{
+
+body {
   overflow-x: hidden;
   scroll-behavior: smooth;
 
@@ -146,16 +152,21 @@ body{
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    border-radius: 0 !important;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 
 @keyframes scroll-y {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-50%); }
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-50%);
+  }
 }
 
 .animate-scroll-y {
