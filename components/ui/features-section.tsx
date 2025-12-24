@@ -1,7 +1,14 @@
-'use client';
+"use client";
 
 import React from "react";
-import { Code, ShoppingBag, FileText, Briefcase, GraduationCap, Scale } from "lucide-react";
+import {
+  Code,
+  ShoppingBag,
+  FileText,
+  Briefcase,
+  GraduationCap,
+  Scale,
+} from "lucide-react";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 
 type FeatureCard = {
@@ -70,31 +77,33 @@ export function FeaturesSection() {
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         variants={{
           container: {
-              visible: {
-                  transition: {
-                      staggerChildren: 0.05,
-                      delayChildren: 0.2,
-                  },
+            visible: {
+              transition: {
+                staggerChildren: 0.05,
+                delayChildren: 0.2,
               },
+            },
           },
           item: {
-              hidden: { opacity: 0, filter: 'blur(12px)', y: 12 },
-              visible: { 
-                  opacity: 1, 
-                  filter: 'blur(0px)', 
-                  y: 0,
-                  transition: { type: 'spring', bounce: 0.3, duration: 1.5 }
-              },
+            hidden: { opacity: 0, filter: "blur(12px)", y: 12 },
+            visible: {
+              opacity: 1,
+              filter: "blur(0px)",
+              y: 0,
+              transition: { type: "spring", bounce: 0.3, duration: 1.5 },
+            },
           },
         }}
       >
         {features.map((feature, index) => (
-        <div
-          key={index}
-          className="group relative bg-white rounded-none p-8 border border-gray-300 transition-transform duration-300 hover:-translate-y-1 active:!border-white focus:!border-white active:!shadow-none outline-none focus:outline-none select-none cursor-pointer h-full"
-        >
+          <div
+            key={index}
+            className="group relative bg-white rounded-none p-8 border border-gray-300 transition-transform duration-300 hover:-translate-y-1 hover:border-orange-200 active:!border-white focus:!border-white active:!shadow-none outline-none focus:outline-none select-none cursor-pointer h-full"
+          >
             {/* Icon */}
-            <div className={`inline-flex items-center justify-center w-12 h-12 rounded-none ${feature.iconBgColor} ${feature.iconColor} mb-5`}>
+            <div
+              className={`inline-flex items-center justify-center w-12 h-12 rounded-none ${feature.iconBgColor} ${feature.iconColor} mb-5`}
+            >
               {feature.icon}
             </div>
 

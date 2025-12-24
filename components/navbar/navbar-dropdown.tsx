@@ -1,165 +1,186 @@
-'use client';
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { Link as LinkIcon, Menu, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
+"use client";
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Link as LinkIcon, Menu, X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-
-import { useScroll } from '@/components/ui/use-scroll';
-import { createPortal } from 'react-dom';
+import { useScroll } from "@/components/ui/use-scroll";
+import { createPortal } from "react-dom";
 
 export default function Navbar() {
-	const [open, setOpen] = React.useState(false);
-	const scrolled = useScroll(10);
+  const [open, setOpen] = React.useState(false);
+  const scrolled = useScroll(10);
 
-	const links = [
-		{
-			label: 'Home',
-			href: '/',
-		},
-		{
-			label: 'Features',
-			href: '#features',
-		},
-		{
-			label: 'Pricing',
-			href: '#pricing',
-		},
-		{
-			label: 'How it Works',
-			href: '#how-it-works',
-		},
-		{
-			label: 'Testimonials',
-			href: '#testimonials',
-		},
-	];
+  const links = [
+    {
+      label: "Home",
+      href: "/",
+    },
+    {
+      label: "Features",
+      href: "#features",
+    },
+    {
+      label: "Pricing",
+      href: "#pricing",
+    },
+    {
+      label: "How it Works",
+      href: "#how-it-works",
+    },
+    {
+      label: "Testimonials",
+      href: "#testimonials",
+    },
+  ];
 
-	React.useEffect(() => {
-		if (open) {
-			document.body.style.overflow = 'hidden';
-		} else {
-			document.body.style.overflow = '';
-		}
-		return () => {
-			document.body.style.overflow = '';
-		};
-	}, [open]);
+  React.useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
-	return (
-		<header
-			className={cn('sticky top-0 z-50 w-full border-b border-gray-300 dark:border-border', {
-				'bg-background/95 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg':
-					scrolled,
-			})}
-		>
-			<nav className="relative mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-6 lg:px-0">
-                <Link
-                    href="/"
-                    aria-label="home"
-                    className="lg:-ml-14 cursor-pointer select-none focus:outline-none active:outline-none"
-                >
-                    <Image
-                        src="/orange-black-auditly.png"
-                        alt="Auditly360"
-                        width={124}
-                        height={43}
-                        draggable={false}
-                        className="h-8 md:h-10 w-auto bg-transparent mix-blend-multiply cursor-pointer select-none"
-                        priority
-                    />
-                </Link>
+  return (
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full border-b border-gray-300 dark:border-border",
+        {
+          "bg-background/95 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg":
+            scrolled,
+        }
+      )}
+    >
+      <nav className="relative mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-6 lg:px-0">
+        <Link
+          href="/"
+          aria-label="home"
+          className="lg:-ml-14 cursor-pointer select-none focus:outline-none active:outline-none"
+        >
+          <Image
+            src="/orange-black-auditly.png"
+            alt="Auditly360"
+            width={124}
+            height={43}
+            draggable={false}
+            className="h-8 md:h-10 w-auto bg-transparent mix-blend-multiply cursor-pointer select-none"
+            priority
+          />
+        </Link>
 
-				{/* Centered Links */}
-				<div className="hidden md:flex absolute left-[42%] top-1/2 transform -translate-x-1/2 -translate-y-1/2 items-center gap-6">
-					{links.map((link) => (
-						<a key={link.label} className={buttonVariants({ variant: 'ghost', className: 'text-base font-medium' })} href={link.href}>
-							{link.label}
-						</a>
-					))}
-				</div>
+        {/* Centered Links */}
+        <div className="hidden md:flex absolute left-[42%] top-1/2 transform -translate-x-1/2 -translate-y-1/2 items-center gap-6">
+          {links.map((link) => (
+            <a
+              key={link.label}
+              className={buttonVariants({
+                variant: "ghost",
+                className: "text-base font-medium",
+              })}
+              href={link.href}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
 
-				{/* Right Side Buttons */}
-				<div className="hidden items-center gap-4 md:flex -mr-8">
-					<Link href="/login">
-						<Button variant="outline" className="hidden lg:flex rounded-xl font-bold px-6">Sign In</Button>
-					</Link>
-					<Link href="/signup">
-						<Button className="bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold px-6">Get Started</Button>
-					</Link>
-				</div>
-				<Button
-					size="icon"
-					variant="outline"
-					onClick={() => setOpen(!open)}
-					className="md:hidden"
-					aria-expanded={open}
-					aria-controls="mobile-menu"
-					aria-label="Toggle menu"
-				>
-					{open ? <X className="size-6" /> : <Menu className="size-6" />}
-				</Button>
-			</nav>
-			<MobileMenu open={open} className="flex flex-col justify-between gap-2">
-				<div className="grid gap-y-2">
-					{links.map((link) => (
-						<a
-							key={link.label}
-							className={buttonVariants({
-								variant: 'ghost',
-								className: 'justify-start',
-							})}
-							href={link.href}
-						>
-							{link.label}
-						</a>
-					))}
-				</div>
-				<div className="flex flex-col gap-3 mt-auto pt-6">
-					<Link href="/login" className="w-full">
-						<Button variant="outline" className="w-full bg-transparent h-12 text-base rounded-xl border-gray-300">
-							Sign In
-						</Button>
-					</Link>
-					<Link href="/signup" className="w-full">
-						<Button className="w-full bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold h-12 text-base">Get Started</Button>
-					</Link>
-				</div>
-			</MobileMenu>
-		</header>
-	);
+        {/* Right Side Buttons */}
+        <div className="hidden items-center gap-4 md:flex -mr-8">
+          <Link href="/login">
+            <Button
+              variant="outline"
+              className="hidden lg:flex rounded-xl font-bold px-6"
+            >
+              Sign In
+            </Button>
+          </Link>
+          <Link href="/signup">
+            <Button className="bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold px-6">
+              Get Started
+            </Button>
+          </Link>
+        </div>
+        <Button
+          size="icon"
+          variant="outline"
+          onClick={() => setOpen(!open)}
+          className="md:hidden"
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+          aria-label="Toggle menu"
+        >
+          {open ? <X className="size-6" /> : <Menu className="size-6" />}
+        </Button>
+      </nav>
+      <MobileMenu open={open} className="flex flex-col justify-between gap-2">
+        <div className="grid gap-y-2">
+          {links.map((link) => (
+            <a
+              key={link.label}
+              className={buttonVariants({
+                variant: "ghost",
+                className: "justify-start",
+              })}
+              href={link.href}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+        <div className="flex flex-col gap-3 mt-auto pt-6">
+          <Link href="/login" className="w-full">
+            <Button
+              variant="outline"
+              className="w-full bg-transparent h-12 text-base rounded-xl border-gray-300"
+            >
+              Sign In
+            </Button>
+          </Link>
+          <Link href="/signup" className="w-full">
+            <Button className="w-full bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold h-12 text-base">
+              Get Started
+            </Button>
+          </Link>
+        </div>
+      </MobileMenu>
+    </header>
+  );
 }
 
-type MobileMenuProps = React.ComponentProps<'div'> & {
-	open: boolean;
+type MobileMenuProps = React.ComponentProps<"div"> & {
+  open: boolean;
 };
 
 function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
-	if (!open || typeof window === 'undefined') return null;
+  if (!open || typeof window === "undefined") return null;
 
-	return createPortal(
-		<div
-			id="mobile-menu"
-			className={cn(
-				'bg-background fixed top-20 right-0 bottom-0 left-0 z-40 flex flex-col overflow-y-auto border-t md:hidden',
-			)}
-		>
-			<div
-				data-slot={open ? 'open' : 'closed'}
-				className={cn(
-					'data-[slot=open]:animate-in data-[slot=open]:zoom-in-97 ease-out',
-					'flex flex-col min-h-full p-6 pb-8',
-					className,
-				)}
-				{...props}
-			>
-				{children}
-			</div>
-		</div>,
-		document.body,
-	);
+  return createPortal(
+    <div
+      id="mobile-menu"
+      className={cn(
+        "bg-background fixed top-20 right-0 bottom-0 left-0 z-40 flex flex-col overflow-y-auto border-t md:hidden"
+      )}
+    >
+      <div
+        data-slot={open ? "open" : "closed"}
+        className={cn(
+          "data-[slot=open]:animate-in data-[slot=open]:zoom-in-97 ease-out",
+          "flex flex-col min-h-full p-6 pb-8",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </div>
+    </div>,
+    document.body
+  );
 }
 
 export const WordmarkIcon = (props: React.ComponentProps<"svg">) => (

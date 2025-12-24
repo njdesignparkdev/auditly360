@@ -1,29 +1,29 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Minus } from 'lucide-react';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   {
-    question: 'How does the audit process work?',
+    question: "How does the audit process work?",
     answer:
-      'Our AI-powered engine scans your website URL to identify performance bottlenecks, SEO issues, accessibility errors, and security vulnerabilities. It generates a comprehensive report with actionable fixes in seconds.',
+      "Our AI-powered engine scans your website URL to identify performance bottlenecks, SEO issues, accessibility errors, and security vulnerabilities. It generates a comprehensive report with actionable fixes in seconds.",
   },
   {
-    question: 'Is there a free trial available?',
+    question: "Is there a free trial available?",
     answer:
-      'Yes! You can run a basic audit on your homepage for free. For advanced features like multi-page scanning, automated monitoring, and team collaboration, you can upgrade to our Pro plans.',
+      "Yes! You can run a basic audit on your homepage for free. For advanced features like multi-page scanning, automated monitoring, and team collaboration, you can upgrade to our Pro plans.",
   },
   {
-    question: 'Can I audit client websites?',
+    question: "Can I audit client websites?",
     answer:
-      'Yes! Our tool is perfect for agencies and freelancers. You can generate professional reports to share with clients, helping you demonstrate value and prioritize their website improvements.',
+      "Yes! Our tool is perfect for agencies and freelancers. You can generate professional reports to share with clients, helping you demonstrate value and prioritize their website improvements.",
   },
   {
-    question: 'Do you offer support implementation?',
+    question: "Do you offer support implementation?",
     answer:
-      'Our Enterprise plan includes dedicated support for implementation. For other plans, we provide detailed documentation and a community forum where you can get help from our team and other users.',
+      "Our Enterprise plan includes dedicated support for implementation. For other plans, we provide detailed documentation and a community forum where you can get help from our team and other users.",
   },
 ];
 
@@ -44,9 +44,9 @@ export default function FaqSection() {
 
         <div className="space-y-4">
           {faqs.map((faq, index) => (
-            <div 
-              key={index} 
-              className="border border-gray-300 rounded-2xl bg-white overflow-hidden transition-all duration-200 hover:border-orange-200"
+            <div
+              key={index}
+              className="border border-gray-300 bg-white overflow-hidden transition-all duration-200 hover:border-orange-200"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
@@ -57,7 +57,7 @@ export default function FaqSection() {
                 </span>
                 <span
                   className={`flex-shrink-0 transition-transform duration-300 ${
-                    openIndex === index ? 'rotate-180' : ''
+                    openIndex === index ? "rotate-180" : ""
                   }`}
                 >
                   {openIndex === index ? (
@@ -67,14 +67,14 @@ export default function FaqSection() {
                   )}
                 </span>
               </button>
-              
+
               <AnimatePresence>
                 {openIndex === index && (
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
+                    animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
                     <div className="px-6 pb-6 text-gray-600 leading-relaxed">
                       {faq.answer}

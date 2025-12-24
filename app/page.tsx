@@ -12,13 +12,12 @@ import CtaSection from "@/components/blocks/cta-section";
 
 import Pricing from "@/components/pricing-section/Pricing";
 
-
 export default function Page() {
   return (
     <BgContainer>
       {/* New Hero Section with built-in navbar */}
-      <HeroSection3 />
       <GridOverlay />
+      <HeroSection3 />
       <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* 3. Features (Who It's For) */}
         {/* Note: User requested "Features" next. Using FeaturesSectionWithHoverEffects. */}
