@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useAuth } from '@/hooks/useAuth';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import Image from "next/image";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
   const [firstName, setFirstName] = useState("");
@@ -51,7 +51,12 @@ export default function SignupPage() {
     }
 
     try {
-      const { error, message } = await signUp(email, password, firstName, lastName);
+      const { error, message } = await signUp(
+        email,
+        password,
+        firstName,
+        lastName
+      );
 
       if (error) {
         setError(error.message || "An error occurred during signup");
@@ -68,7 +73,9 @@ export default function SignupPage() {
 
         // Redirect to login page with confirmation message after a short delay
         setTimeout(() => {
-          router.push('/login?message=Please check your email and click the confirmation link to complete your registration.');
+          router.push(
+            "/login?message=Please check your email and click the confirmation link to complete your registration."
+          );
         }, 2000);
       }
     } catch {
@@ -128,7 +135,8 @@ export default function SignupPage() {
         <div
           className="hidden lg:flex lg:w-1/2 flex-col justify-between p-16"
           style={{
-            background: 'linear-gradient(135deg, rgba(255, 75, 1, 0.12) 0%, rgba(255, 75, 1, 0.2) 50%, rgba(255, 255, 255, 0.9) 100%)'
+            background:
+              "linear-gradient(135deg, rgba(255, 75, 1, 0.12) 0%, rgba(255, 75, 1, 0.2) 50%, rgba(255, 255, 255, 0.9) 100%)",
           }}
         >
           {/* Logo */}
@@ -148,10 +156,11 @@ export default function SignupPage() {
             <h2 className="text-5xl font-bold leading-tight text-gray-900">
               Start Your Journey
               <br />
-              <span style={{ color: '#FF4B01' }}>to Better Websites</span>
+              <span style={{ color: "#FF4B01" }}>to Better Websites</span>
             </h2>
             <p className="text-gray-600 text-lg max-w-md">
-              Join thousands of developers and businesses who trust Web Audit for comprehensive website analysis and optimization.
+              Join thousands of developers and businesses who trust Web Audit
+              for comprehensive website analysis and optimization.
             </p>
           </div>
 
@@ -193,10 +202,16 @@ export default function SignupPage() {
 
             {/* Header */}
             <div className="mb-8 lg:mb-10">
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Create an account</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
+                Create an account
+              </h1>
               <p className="text-gray-600 text-sm sm:text-base">
-                Already have an account?{' '}
-                <Link href="/login" style={{ color: '#FF4B01' }} className="hover:opacity-80 transition-opacity font-medium cursor-pointer">
+                Already have an account?{" "}
+                <Link
+                  href="/login"
+                  style={{ color: "#FF4B01" }}
+                  className="hover:opacity-80 transition-opacity font-medium cursor-pointer"
+                >
                   Log in
                 </Link>
               </p>
@@ -204,33 +219,37 @@ export default function SignupPage() {
 
             {/* Error/Success Messages */}
             {error && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 -lg">
                 <p className="text-sm text-red-800">{error}</p>
               </div>
             )}
 
             {success && (
-              <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+              <div className="mb-6 p-4 bg-green-50 border border-green-200 -lg">
                 <p className="text-sm text-green-800">{success}</p>
               </div>
             )}
 
             {/* Email Confirmation Message */}
             {showConfirmationMessage && (
-              <div className="mb-6 p-6 bg-gray-50 border border-gray-300 rounded-lg">
+              <div className="mb-6 p-6 bg-gray-50 border border-gray-300 -lg">
                 <div className="text-center">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Check your email</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    Check your email
+                  </h3>
                   <p className="text-sm text-gray-600 mb-4">
-                    We&apos;ve sent a confirmation link to <strong>{email}</strong>. Please click the link to verify your account.
+                    We&apos;ve sent a confirmation link to{" "}
+                    <strong>{email}</strong>. Please click the link to verify
+                    your account.
                   </p>
                   <div className="space-y-2">
                     <button
                       onClick={handleResendConfirmation}
                       disabled={isLoading}
-                      style={{ color: '#FF4B01' }}
+                      style={{ color: "#FF4B01" }}
                       className="text-sm font-medium hover:opacity-80 transition-opacity disabled:opacity-50 cursor-pointer"
                     >
-                      {isLoading ? 'Sending...' : 'Resend confirmation email'}
+                      {isLoading ? "Sending..." : "Resend confirmation email"}
                     </button>
                     <p className="text-xs text-gray-500">
                       Didn&apos;t receive the email? Check your spam folder.
@@ -245,7 +264,10 @@ export default function SignupPage() {
               {/* Name Fields */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="firstName"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     First name
                   </label>
                   <input
@@ -253,13 +275,16 @@ export default function SignupPage() {
                     id="firstName"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF4B01] focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 -lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF4B01] focus:border-transparent transition-all"
                     placeholder="First name"
                     required
                   />
                 </div>
                 <div>
-                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="lastName"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Last name
                   </label>
                   <input
@@ -267,7 +292,7 @@ export default function SignupPage() {
                     id="lastName"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF4B01] focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 -lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF4B01] focus:border-transparent transition-all"
                     placeholder="Last name"
                     required
                   />
@@ -276,7 +301,10 @@ export default function SignupPage() {
 
               {/* Email Field */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Email
                 </label>
                 <input
@@ -284,7 +312,7 @@ export default function SignupPage() {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF4B01] focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 -lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF4B01] focus:border-transparent transition-all"
                   placeholder="Email"
                   autoComplete="email"
                   required
@@ -293,7 +321,10 @@ export default function SignupPage() {
 
               {/* Password Field */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Password
                 </label>
                 <div className="relative">
@@ -302,7 +333,7 @@ export default function SignupPage() {
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF4B01] focus:border-transparent transition-all pr-12"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 -lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF4B01] focus:border-transparent transition-all pr-12"
                     placeholder="Password"
                     autoComplete="new-password"
                     required
@@ -313,13 +344,38 @@ export default function SignupPage() {
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors cursor-pointer"
                   >
                     {showPassword ? (
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"
+                        />
                       </svg>
                     ) : (
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                        />
                       </svg>
                     )}
                   </button>
@@ -328,7 +384,10 @@ export default function SignupPage() {
 
               {/* Repeat Password Field */}
               <div>
-                <label htmlFor="repeatPassword" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="repeatPassword"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Confirm password
                 </label>
                 <div className="relative">
@@ -337,7 +396,7 @@ export default function SignupPage() {
                     id="repeatPassword"
                     value={repeatPassword}
                     onChange={(e) => setRepeatPassword(e.target.value)}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF4B01] focus:border-transparent transition-all pr-12"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 -lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF4B01] focus:border-transparent transition-all pr-12"
                     placeholder="Confirm password"
                     autoComplete="new-password"
                     required
@@ -348,13 +407,38 @@ export default function SignupPage() {
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors cursor-pointer"
                   >
                     {showRepeatPassword ? (
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"
+                        />
                       </svg>
                     ) : (
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                        />
                       </svg>
                     )}
                   </button>
@@ -368,13 +452,20 @@ export default function SignupPage() {
                   id="agreeToTerms"
                   checked={agreeToTerms}
                   onChange={(e) => setAgreeToTerms(e.target.checked)}
-                  className="w-4 h-4 bg-white border-gray-300 rounded focus:ring-2 focus:ring-[#FF4B01] mt-1 cursor-pointer"
-                  style={{ accentColor: '#FF4B01' }}
+                  className="w-4 h-4 bg-white border-gray-300  focus:ring-2 focus:ring-[#FF4B01] mt-1 cursor-pointer"
+                  style={{ accentColor: "#FF4B01" }}
                   required
                 />
-                <label htmlFor="agreeToTerms" className="ml-2 text-sm text-gray-700">
-                  I agree to the{' '}
-                  <Link href="//terms" style={{ color: '#FF4B01' }} className="hover:opacity-80 transition-opacity font-medium cursor-pointer">
+                <label
+                  htmlFor="agreeToTerms"
+                  className="ml-2 text-sm text-gray-700"
+                >
+                  I agree to the{" "}
+                  <Link
+                    href="//terms"
+                    style={{ color: "#FF4B01" }}
+                    className="hover:opacity-80 transition-opacity font-medium cursor-pointer"
+                  >
                     Terms & Conditions
                   </Link>
                 </label>
@@ -386,19 +477,35 @@ export default function SignupPage() {
                 whileTap={{ scale: isLoading ? 1 : 0.99 }}
                 type="submit"
                 disabled={isLoading}
-                className="w-full text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF4B01] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
-                style={{ backgroundColor: '#FF4B01' }}
+                className="w-full text-white font-semibold py-3 px-4 -lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF4B01] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+                style={{ backgroundColor: "#FF4B01" }}
               >
                 {isLoading ? (
                   <div className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <svg
+                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
                     </svg>
                     Creating account...
                   </div>
                 ) : (
-                  'Create account'
+                  "Create account"
                 )}
               </motion.button>
 
@@ -408,7 +515,9 @@ export default function SignupPage() {
                   <div className="w-full border-t border-gray-300"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                  <span className="px-2 bg-white text-gray-500">
+                    Or continue with
+                  </span>
                 </div>
               </div>
 
@@ -417,12 +526,28 @@ export default function SignupPage() {
                 type="button"
                 onClick={handleGoogleSignUp}
                 disabled={isLoading}
-                className="w-full flex items-center justify-center px-6 py-3 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                className="w-full flex items-center justify-center px-6 py-3 bg-white border border-gray-300 -lg text-gray-700 hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
                 {isLoading ? (
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-600"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
                   </svg>
                 ) : (
                   <Image
@@ -433,7 +558,7 @@ export default function SignupPage() {
                     className="w-5 h-5 mr-2"
                   />
                 )}
-                {isLoading ? 'Signing up...' : 'Continue with Google'}
+                {isLoading ? "Signing up..." : "Continue with Google"}
               </button>
             </form>
           </div>

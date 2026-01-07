@@ -102,7 +102,7 @@ export function Footer() {
             </a>
 
             {/* Social Icons - Below Email */}
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex items-start justify-start gap-4">
               <Link href="#" className="hover:opacity-80 transition-opacity">
                 <Image
                   src="/footer-icons/linkedin.png"
@@ -143,7 +143,7 @@ export function Footer() {
           </div>
 
           {/* Right: Link Columns */}
-          <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-10 lg:gap-16">
+          <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-10 lg:gap-">
             <div className="flex flex-col gap-5">
               <h3 className="font-jakarta font-extrabold text-white">
                 Solutions

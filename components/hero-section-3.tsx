@@ -80,11 +80,11 @@ export function HeroSection3() {
                       />
                       <Button
                         aria-label="submit"
-                        className="h-9 px-8 rounded-none bg-[#ff6a00] hover:bg-[#e66000] text-white font-bold"
+                        className="h-8 md:h-10 px-4 md:px-8 rounded-none bg-[#ff6a00] hover:bg-[#e66000] text-white font-bold"
                       >
                         <span className="hidden md:block">Search</span>
                         <SendHorizonal
-                          className="md:hidden size-5"
+                          className="md:hidden size-4"
                           strokeWidth={2}
                         />
                       </Button>
@@ -95,10 +95,10 @@ export function HeroSection3() {
 
               <div className="relative mt-12 lg:mt-0 flex justify-center lg:justify-end">
                 <div className="relative max-w-md w-full">
-                  <div className="bg-background border-border/50 absolute inset-0 mx-auto w-full max-w-[320px] -translate-x-4 -translate-y-8 rounded-none border p-2 opacity-50 lg:-translate-x-8 lg:-translate-y-12">
-                    <div className="relative h-96 overflow-hidden rounded-none border p-2 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+                  <div className="bg-background border-border/50 absolute inset-0 mx-auto w-full max-w-[280px] sm:max-w-[320px] -translate-x-2 sm:translate-x-[-32px] -translate-y-4 sm:translate-y-[-48px] rounded-none border p-2 opacity-50">
+                    <div className="relative h-80 sm:h-96 overflow-hidden rounded-none border p-2 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
                   </div>
-                  <div className="bg-muted border-border/50 mx-auto w-full max-w-[320px] translate-x-4 rounded-none border p-2 backdrop-blur-sm lg:translate-x-8">
+                  <div className="bg-muted border-border/50 mx-auto w-full max-w-[280px] sm:max-w-[320px] translate-x-2 sm:translate-x-8 rounded-none border p-2 backdrop-blur-sm">
                     <div className="bg-background overflow-hidden rounded-none border p-2 shadow-xl">
                       <AppComponent />
                     </div>

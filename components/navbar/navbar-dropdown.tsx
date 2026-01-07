@@ -20,19 +20,19 @@ export default function Navbar() {
     },
     {
       label: "Features",
-      href: "#features",
+      href: "/#features",
     },
     {
       label: "Pricing",
-      href: "#pricing",
+      href: "/#pricing",
     },
     {
       label: "How it Works",
-      href: "#how-it-works",
+      href: "/#how-it-works",
     },
     {
       label: "Testimonials",
-      href: "#testimonials",
+      href: "/#testimonials",
     },
   ];
 
@@ -50,18 +50,19 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full border-b border-gray-300 dark:border-border",
+        "sticky top-0 z-50 w-full border-b border-gray-300 dark:border-border transition-all duration-200",
         {
-          "bg-background/95 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg":
+          "bg-background/95 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg h-14 md:h-16":
             scrolled,
+          "bg-transparent h-16 md:h-20": !scrolled,
         }
       )}
     >
-      <nav className="relative mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-6 lg:px-0">
+      <nav className="relative mx-auto flex h-full w-full max-w-6xl items-center justify-between px-6 md:px-10 lg:px-10 ">
         <Link
           href="/"
           aria-label="home"
-          className="lg:-ml-14 cursor-pointer select-none focus:outline-none active:outline-none"
+          className="cursor-pointer select-none focus:outline-none active:outline-none shrink-0"
         >
           <Image
             src="/orange-black-auditly.png"
@@ -69,39 +70,42 @@ export default function Navbar() {
             width={124}
             height={43}
             draggable={false}
-            className="h-8 md:h-10 w-auto bg-transparent mix-blend-multiply cursor-pointer select-none"
+            className="h-7 md:h-9 w-auto bg-transparent mix-blend-multiply cursor-pointer select-none"
             priority
           />
         </Link>
 
         {/* Centered Links */}
-        <div className="hidden md:flex absolute left-[42%] top-1/2 transform -translate-x-1/2 -translate-y-1/2 items-center gap-6">
+        {/* Centered Links */}
+        <div className="hidden md:flex items-center gap-1 lg:gap-4 flex-1 justify-center">
           {links.map((link) => (
-            <a
+            <Link
               key={link.label}
-              className={buttonVariants({
-                variant: "ghost",
-                className: "text-base font-medium",
-              })}
+              className={cn(
+                buttonVariants({
+                  variant: "ghost",
+                }),
+                "text-sm font-medium px-2 py-1 lg:px-4 lg:py-2"
+              )}
               href={link.href}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
 
         {/* Right Side Buttons */}
-        <div className="hidden items-center gap-4 md:flex -mr-8">
+        <div className="hidden items-center gap-2 lg:gap-4 md:flex shrink-0">
           <Link href="/login">
             <Button
               variant="outline"
-              className="hidden lg:flex rounded-xl font-bold px-6"
+              className="hidden lg:flex rounded-xl font-bold px-4 lg:px-6"
             >
               Sign In
             </Button>
           </Link>
           <Link href="/signup">
-            <Button className="bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold px-6">
+            <Button className="bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold px-4 lg:px-6 h-9 md:h-10">
               Get Started
             </Button>
           </Link>
@@ -118,19 +122,24 @@ export default function Navbar() {
           {open ? <X className="size-6" /> : <Menu className="size-6" />}
         </Button>
       </nav>
-      <MobileMenu open={open} className="flex flex-col justify-between gap-2">
+      <MobileMenu
+        open={open}
+        className="flex flex-col justify-between gap-2"
+        style={{ top: scrolled ? "56px" : "64px" }}
+      >
         <div className="grid gap-y-2">
           {links.map((link) => (
-            <a
+            <Link
               key={link.label}
               className={buttonVariants({
                 variant: "ghost",
                 className: "justify-start",
               })}
               href={link.href}
+              onClick={() => setOpen(false)}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
         <div className="flex flex-col gap-3 mt-auto pt-6">
@@ -164,8 +173,9 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
     <div
       id="mobile-menu"
       className={cn(
-        "bg-background fixed top-20 right-0 bottom-0 left-0 z-40 flex flex-col overflow-y-auto border-t md:hidden"
+        "bg-background fixed right-0 bottom-0 left-0 z-40 flex flex-col overflow-y-auto md:hidden"
       )}
+      style={props.style}
     >
       <div
         data-slot={open ? "open" : "closed"}

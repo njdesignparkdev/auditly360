@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { DashboardFooter } from './dashboard-footer';
+import { DashboardFooter } from './footer';
 
 export function DashboardFooterSection() {
     return (

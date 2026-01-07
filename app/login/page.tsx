@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useState, useEffect, Suspense } from 'react';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useAuth } from '@/hooks/useAuth';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { supabase } from '@/lib/supabase-client';
+import { useState, useEffect, Suspense } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import Image from "next/image";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter, useSearchParams } from "next/navigation";
+import { supabase } from "@/lib/supabase-client";
 
 function LoginPageContent() {
   const [email, setEmail] = useState("");
@@ -22,14 +22,19 @@ function LoginPageContent() {
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
   const [isSendingReset, setIsSendingReset] = useState(false);
 
-  const { signIn, signInWithGoogle, isAuthenticated, authChecked, resendConfirmation } = useAuth();
+  const {
+    signIn,
+    signInWithGoogle,
+    isAuthenticated,
+    authChecked,
+    resendConfirmation,
+  } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
 
-
   // Handle confirmation message from URL parameters
   useEffect(() => {
-    const message = searchParams.get('message');
+    const message = searchParams.get("message");
     if (message) {
       setSuccess(message);
     }
@@ -38,7 +43,7 @@ function LoginPageContent() {
   // Redirect if already authenticated
   useEffect(() => {
     if (authChecked && isAuthenticated) {
-      router.push('/dashboard');
+      router.push("/dashboard");
     }
   }, [authChecked, isAuthenticated, router]);
 
@@ -52,8 +57,10 @@ function LoginPageContent() {
       const { error } = await signIn(email, password);
 
       if (error) {
-        if (error.message.includes('Email not confirmed')) {
-          setError('Please check your email and click the confirmation link before signing in.');
+        if (error.message.includes("Email not confirmed")) {
+          setError(
+            "Please check your email and click the confirmation link before signing in."
+          );
           setShowResendButton(true);
         } else {
           setError(error.message || "Invalid email or password");
@@ -109,7 +116,10 @@ function LoginPageContent() {
 
       if (error) {
         // Check if it's a rate limiting error
-        if (error.message.includes('For security purposes') || error.message.includes('seconds')) {
+        if (
+          error.message.includes("For security purposes") ||
+          error.message.includes("seconds")
+        ) {
           setError(error.message);
           setIsRateLimited(true);
         } else {
@@ -134,9 +144,9 @@ function LoginPageContent() {
     setIsSendingReset(true);
 
     try {
-      const response = await fetch('/api/auth/send-password-reset', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/auth/send-password-reset", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: forgotPasswordEmail }),
       });
 
@@ -145,7 +155,9 @@ function LoginPageContent() {
       if (!response.ok || !result.success) {
         setError(result.error || "Failed to send password reset email");
       } else {
-        setSuccess("Password reset email sent! Please check your inbox for further instructions.");
+        setSuccess(
+          "Password reset email sent! Please check your inbox for further instructions."
+        );
         setForgotPasswordEmail("");
         setTimeout(() => {
           setShowForgotPassword(false);
@@ -165,7 +177,8 @@ function LoginPageContent() {
         <div
           className="hidden lg:flex lg:w-1/2 flex-col justify-between p-16"
           style={{
-            background: 'linear-gradient(135deg, rgba(255, 75, 1, 0.12) 0%, rgba(255, 75, 1, 0.2)  50%, rgba(255, 255, 255, 0.9) 100%)'
+            background:
+              "linear-gradient(135deg, rgba(255, 75, 1, 0.12) 0%, rgba(255, 75, 1, 0.2)  50%, rgba(255, 255, 255, 0.9) 100%)",
           }}
         >
           {/* Logo */}
@@ -185,10 +198,11 @@ function LoginPageContent() {
             <h2 className="text-5xl font-bold leading-tight text-gray-900">
               Welcome Back to
               <br />
-              <span style={{ color: '#FF4B01' }}>Web Audit</span>
+              <span style={{ color: "#FF4B01" }}>Web Audit</span>
             </h2>
             <p className="text-gray-600 text-lg max-w-md">
-              Continue your journey to better website performance and optimization.
+              Continue your journey to better website performance and
+              optimization.
             </p>
           </div>
 
@@ -231,17 +245,22 @@ function LoginPageContent() {
             {/* Header */}
             <div className="mb-8 lg:mb-10">
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
-                {showForgotPassword ? 'Reset Password' : 'Welcome Back'}
+                {showForgotPassword ? "Reset Password" : "Welcome Back"}
               </h1>
               <p className="text-gray-600 text-sm sm:text-base">
                 {showForgotPassword ? (
                   <>
-                    Enter your email address and we&apos;ll send you a link to reset your password.
+                    Enter your email address and we&apos;ll send you a link to
+                    reset your password.
                   </>
                 ) : (
                   <>
-                    Don&apos;t have an account?{' '}
-                    <Link href="/signup" style={{ color: '#FF4B01' }} className="hover:opacity-80 transition-opacity font-medium cursor-pointer">
+                    Don&apos;t have an account?{" "}
+                    <Link
+                      href="/signup"
+                      style={{ color: "#FF4B01" }}
+                      className="hover:opacity-80 transition-opacity font-medium cursor-pointer"
+                    >
                       Sign up
                     </Link>
                   </>
@@ -251,17 +270,29 @@ function LoginPageContent() {
 
             {/* Error/Success Messages */}
             {error && (
-              <div className={`mb-6 p-4 rounded-lg ${isRateLimited ? 'bg-gray-50 border border-gray-300' : 'bg-red-50 border border-red-200'}`}>
-                <p className={`text-sm ${isRateLimited ? 'text-gray-800' : 'text-red-800'}`}>{error}</p>
+              <div
+                className={`mb-6 p-4 rounded-lg ${
+                  isRateLimited
+                    ? "bg-gray-50 border border-gray-300"
+                    : "bg-red-50 border border-red-200"
+                }`}
+              >
+                <p
+                  className={`text-sm ${
+                    isRateLimited ? "text-gray-800" : "text-red-800"
+                  }`}
+                >
+                  {error}
+                </p>
                 {showResendButton && !showForgotPassword && (
                   <div className="mt-3">
                     <button
                       onClick={handleResendEmail}
                       disabled={isResending}
-                      style={{ color: '#FF4B01' }}
+                      style={{ color: "#FF4B01" }}
                       className="text-sm font-medium hover:opacity-80 transition-opacity disabled:opacity-50 cursor-pointer"
                     >
-                      {isResending ? 'Sending...' : 'Resend Confirmation Email'}
+                      {isResending ? "Sending..." : "Resend Confirmation Email"}
                     </button>
                   </div>
                 )}
@@ -276,10 +307,10 @@ function LoginPageContent() {
                     <button
                       onClick={handleResendEmail}
                       disabled={isResending}
-                      style={{ color: '#FF4B01' }}
+                      style={{ color: "#FF4B01" }}
                       className="text-sm font-medium hover:opacity-80 transition-opacity disabled:opacity-50 cursor-pointer"
                     >
-                      {isResending ? 'Sending...' : 'Resend confirmation email'}
+                      {isResending ? "Sending..." : "Resend confirmation email"}
                     </button>
                   </div>
                 )}
@@ -290,7 +321,10 @@ function LoginPageContent() {
             {showForgotPassword ? (
               <form onSubmit={handleForgotPassword} className="space-y-5">
                 <div>
-                  <label htmlFor="forgotPasswordEmail" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="forgotPasswordEmail"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Email
                   </label>
                   <input
@@ -311,18 +345,34 @@ function LoginPageContent() {
                   type="submit"
                   disabled={isSendingReset}
                   className="w-full text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF4B01] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
-                  style={{ backgroundColor: '#FF4B01' }}
+                  style={{ backgroundColor: "#FF4B01" }}
                 >
                   {isSendingReset ? (
                     <div className="flex items-center justify-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                       Sending...
                     </div>
                   ) : (
-                    'Send Reset Link'
+                    "Send Reset Link"
                   )}
                 </motion.button>
 
@@ -335,7 +385,7 @@ function LoginPageContent() {
                       setSuccess("");
                       setForgotPasswordEmail("");
                     }}
-                    style={{ color: '#FF4B01' }}
+                    style={{ color: "#FF4B01" }}
                     className="text-sm hover:opacity-80 transition-opacity font-medium cursor-pointer"
                   >
                     ← Back to login
@@ -347,7 +397,10 @@ function LoginPageContent() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Email Field */}
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Email
                   </label>
                   <input
@@ -364,7 +417,10 @@ function LoginPageContent() {
 
                 {/* Password Field */}
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Password
                   </label>
                   <div className="relative">
@@ -384,13 +440,38 @@ function LoginPageContent() {
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors cursor-pointer"
                     >
                       {showPassword ? (
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"
+                          />
                         </svg>
                       ) : (
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                          />
                         </svg>
                       )}
                     </button>
@@ -403,9 +484,11 @@ function LoginPageContent() {
                     <input
                       type="checkbox"
                       className="w-4 h-4 bg-white border-gray-300 rounded focus:ring-2 focus:ring-[#FF4B01] cursor-pointer"
-                      style={{ accentColor: '#FF4B01' }}
+                      style={{ accentColor: "#FF4B01" }}
                     />
-                    <span className="ml-2 text-sm text-gray-700">Remember me</span>
+                    <span className="ml-2 text-sm text-gray-700">
+                      Remember me
+                    </span>
                   </label>
                   <button
                     type="button"
@@ -414,7 +497,7 @@ function LoginPageContent() {
                       setError("");
                       setSuccess("");
                     }}
-                    style={{ color: '#FF4B01' }}
+                    style={{ color: "#FF4B01" }}
                     className="text-sm hover:opacity-80 transition-opacity font-medium cursor-pointer"
                   >
                     Forgot password?
@@ -428,18 +511,34 @@ function LoginPageContent() {
                   type="submit"
                   disabled={isLoading}
                   className="w-full text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF4B01] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
-                  style={{ backgroundColor: '#FF4B01' }}
+                  style={{ backgroundColor: "#FF4B01" }}
                 >
                   {isLoading ? (
                     <div className="flex items-center justify-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                       Signing in...
                     </div>
                   ) : (
-                    'Sign In'
+                    "Sign In"
                   )}
                 </motion.button>
 
@@ -449,7 +548,9 @@ function LoginPageContent() {
                     <div className="w-full border-t border-gray-300"></div>
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                    <span className="px-2 bg-white text-gray-500">
+                      Or continue with
+                    </span>
                   </div>
                 </div>
 
@@ -461,9 +562,25 @@ function LoginPageContent() {
                   className="w-full flex items-center justify-center px-6 py-3 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
                   {isLoading ? (
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <svg
+                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-600"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
                     </svg>
                   ) : (
                     <Image
@@ -474,7 +591,7 @@ function LoginPageContent() {
                       className="w-5 h-5 mr-2"
                     />
                   )}
-                  {isLoading ? 'Signing in...' : 'Continue with Google'}
+                  {isLoading ? "Signing in..." : "Continue with Google"}
                 </button>
               </form>
             )}
@@ -487,15 +604,20 @@ function LoginPageContent() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={
-      <div className="h-screen w-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto mb-4" style={{ borderColor: '#FF4B01' }}></div>
-          <p className="text-gray-600">Loading...</p>
+    <Suspense
+      fallback={
+        <div className="h-screen w-screen bg-white flex items-center justify-center">
+          <div className="text-center">
+            <div
+              className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto mb-4"
+              style={{ borderColor: "#FF4B01" }}
+            ></div>
+            <p className="text-gray-600">Loading...</p>
+          </div>
         </div>
-      </div>
-    }>
+      }
+    >
       <LoginPageContent />
     </Suspense>
-  )
+  );
 }

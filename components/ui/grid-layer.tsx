@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 export default function GridOverlay() {
   return (
@@ -18,8 +18,6 @@ export default function GridOverlay() {
 
           {/* Optional: Middle border if you want a split, otherwise just the edges */}
           {/* <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gray-900/10 -translate-x-1/2" /> */}
-
-
         </div>
       </div>
     </div>

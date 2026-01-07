@@ -17,9 +17,9 @@ const AnimationDisplay = ({
   return (
     <div className={`w-full h-full flex items-center justify-center relative`}>
       {/* Background Decor */}
-      <div className={`absolute inset-0 opacity-20 ${color} -[2.5rem]`} />
+      <div className={`absolute inset-0 opacity-20 ${color} rounded-[2rem]`} />
 
-      <div className="relative z-10 flex flex-col items-center justify-center transform scale-90 md:scale-100">
+      <div className="relative z-10 flex flex-col items-center justify-center transform scale-75 sm:scale-90 md:scale-100">
         {type === "scanning" && (
           <div className="relative flex flex-col items-center">
             {/* Feature Image with Animation */}
@@ -37,12 +37,12 @@ const AnimationDisplay = ({
               <img
                 src="/feature-img/seo_vector.png"
                 alt="SEO Optimization"
-                className="w-80 h-80 object-contain"
+                className="w-64 h-64 sm:w-80 sm:h-80 object-contain"
               />
 
               {/* Glow Effect */}
               <motion.div
-                className="absolute inset-0 bg-blue-400/20 blur-3xl -full"
+                className="absolute inset-0 bg-blue-400/20 blur-3xl rounded-full"
                 animate={{
                   scale: [1, 1.2, 1],
                   opacity: [0.3, 0.5, 0.3],
@@ -57,7 +57,7 @@ const AnimationDisplay = ({
 
             {/* Status Badge */}
             <motion.div
-              className="mt-4 bg-blue-50 border border-blue-200 px-4 py-1.5 -full"
+              className="mt-4 bg-blue-50 border border-blue-200 px-4 py-1.5 rounded-full"
               animate={{ opacity: [0.7, 1, 0.7] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
@@ -85,12 +85,12 @@ const AnimationDisplay = ({
               <img
                 src="/feature-img/security_vector.png"
                 alt="Protect Your Site 24/7"
-                className="w-80 h-80 object-contain"
+                className="w-64 h-64 sm:w-80 sm:h-80 object-contain"
               />
 
               {/* Glow Effect */}
               <motion.div
-                className="absolute inset-0 bg-emerald-400/20 blur-3xl -full"
+                className="absolute inset-0 bg-emerald-400/20 blur-3xl rounded-full"
                 animate={{
                   scale: [1, 1.2, 1],
                   opacity: [0.3, 0.5, 0.3],
@@ -105,7 +105,7 @@ const AnimationDisplay = ({
 
             {/* Status Badge */}
             <motion.div
-              className="mt-4 bg-emerald-50 border border-emerald-200 px-4 py-1.5 -full"
+              className="mt-4 bg-emerald-50 border border-emerald-200 px-4 py-1.5 rounded-full"
               animate={{ opacity: [0.7, 1, 0.7] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
@@ -133,12 +133,12 @@ const AnimationDisplay = ({
               <img
                 src="/feature-img/content_vector.png"
                 alt="Grammar & Consistency Check"
-                className="w-80 h-80 object-contain"
+                className="w-64 h-64 sm:w-80 sm:h-80 object-contain"
               />
 
               {/* Glow Effect */}
               <motion.div
-                className="absolute inset-0 bg-orange-400/20 blur-3xl -full"
+                className="absolute inset-0 bg-orange-400/20 blur-3xl rounded-full"
                 animate={{
                   scale: [1, 1.2, 1],
                   opacity: [0.3, 0.5, 0.3],
@@ -153,7 +153,7 @@ const AnimationDisplay = ({
 
             {/* Status Badge */}
             <motion.div
-              className="mt-4 bg-orange-50 border border-orange-200 px-4 py-1.5 -full"
+              className="mt-4 bg-orange-50 border border-orange-200 px-4 py-1.5 rounded-full"
               animate={{ opacity: [0.7, 1, 0.7] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
@@ -181,12 +181,12 @@ const AnimationDisplay = ({
               <img
                 src="/feature-img/speed_vector.png"
                 alt="Deliver Better UX & Speed"
-                className="w-80 h-80 object-contain"
+                className="w-64 h-64 sm:w-80 sm:h-80 object-contain"
               />
 
               {/* Glow Effect */}
               <motion.div
-                className="absolute inset-0 bg-purple-400/20 blur-3xl -none"
+                className="absolute inset-0 bg-purple-400/20 blur-3xl rounded-full"
                 animate={{
                   scale: [1, 1.2, 1],
                   opacity: [0.3, 0.5, 0.3],
@@ -201,7 +201,7 @@ const AnimationDisplay = ({
 
             {/* Status Badge */}
             <motion.div
-              className="mt-4 bg-purple-50 border border-purple-200 px-4 py-1.5 -none"
+              className="mt-4 bg-purple-50 border border-purple-200 px-4 py-1.5 rounded-full"
               animate={{ opacity: [0.7, 1, 0.7] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
@@ -278,11 +278,11 @@ export default function WhyChooseUsSection() {
     <section className="py-6 md:py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1400px] mx-auto">
         {/* Section Header */}
-        <div className="text-left max-w-3xl mb-8 md:mb-12">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 font-jakarta mb-4">
+        <div className="text-center max-w-3xl mx-auto mb-10 md:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 font-jakarta mb-4 tracking-tight">
             Why Choose Us
           </h2>
-          <p className="text-base text-gray-600 font-poppins">
+          <p className="text-base sm:text-lg text-gray-600 font-poppins max-w-2xl mx-auto px-4">
             Our comprehensive toolkit ensures your website is performant,
             secure, and SEO-ready at all times.
           </p>
@@ -295,56 +295,64 @@ export default function WhyChooseUsSection() {
               <div
                 key={feature.id}
                 onClick={() => setActiveFeature(index)}
-                className={`group p-4 -xl border transition-all duration-300 cursor-pointer ${
+                className={`group p-4 rounded-xl border transition-all duration-300 cursor-pointer w-full flex items-start gap-4 min-h-[110px] sm:min-h-[130px] ${
                   activeFeature === index
-                    ? `bg-white ${feature.accent} scale-[1.02]`
+                    ? `bg-white ${feature.accent} shadow-lg shadow-black/5`
                     : "border-transparent hover:bg-slate-50"
                 }`}
               >
-                <div className="flex items-start gap-4">
-                  <div
-                    className={`flex-shrink-0 p-2.5 -lg transition-colors ${
-                      activeFeature === index
-                        ? feature.color
-                        : "bg-slate-100 group-hover:bg-white"
-                    }`}
-                  >
-                    {feature.icon}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-1">
-                      <h3
-                        className={`text-base font-bold font-jakarta ${
-                          activeFeature === index
-                            ? "text-gray-900"
-                            : "text-gray-600"
-                        }`}
-                      >
-                        {feature.title}
-                      </h3>
-                      {activeFeature === index && (
-                        <motion.div layoutId="active-indicator">
-                          <ArrowRight className="w-4 h-4 text-gray-400" />
-                        </motion.div>
-                      )}
-                    </div>
-                    <p
-                      className={`text-sm leading-relaxed transition-colors ${
+                <div
+                  className={`flex-shrink-0 p-2 rounded-lg transition-colors ${
+                    activeFeature === index
+                      ? feature.color
+                      : "bg-slate-50 group-hover:bg-white"
+                  }`}
+                >
+                  {feature.icon}
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-start justify-between mb-0.5">
+                    <h3
+                      className={`text-sm sm:text-base font-bold font-jakarta leading-tight pr-4 line-clamp-2 ${
                         activeFeature === index
-                          ? "text-gray-600"
-                          : "text-gray-500"
+                          ? "text-gray-900"
+                          : "text-gray-600"
                       }`}
                     >
-                      {feature.description}
-                    </p>
+                      {feature.title}
+                    </h3>
+                    {activeFeature === index && (
+                      <motion.div layoutId="active-indicator">
+                        <ArrowRight className="w-4 h-4 text-gray-400" />
+                      </motion.div>
+                    )}
                   </div>
+                  <p
+                    className={`text-xs sm:text-[13px] md:text-sm leading-snug transition-colors line-clamp-3 sm:line-clamp-none ${
+                      activeFeature === index
+                        ? "text-gray-600"
+                        : "text-gray-500"
+                    }`}
+                  >
+                    {feature.description}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Right Column: Animation Display */}
-          <div className="relative h-[400px] w-full max-w-[500px] mx-auto bg-white -[2rem] border border-slate-200 p-4 md:p-6 overflow-hidden -2xl order-first lg:order-last">
+          <div className="relative min-h-[400px] sm:h-[450px] w-full max-w-[500px] mx-auto bg-white border border-slate-200 p-6 md:p-8 overflow-hidden order-first lg:order-last flex flex-col items-center justify-between rounded-2xl shadow-sm">
+            {/* Mobile Header (Visible only on mobile) */}
+            <div className="lg:hidden text-center mb-6">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
+                {features[activeFeature].title}
+              </h3>
+              <p className="text-sm sm:text-base text-gray-600 px-6">
+                {features[activeFeature].description}
+              </p>
+            </div>
+
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeFeature}

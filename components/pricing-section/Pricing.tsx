@@ -59,7 +59,8 @@ export default function PricingSection({
   const [plans, setPlans] = useState<PricingPlan[]>([]);
   const [loadingPlans, setLoadingPlans] = useState(true);
 
-  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const isTablet = useMediaQuery("(min-width: 768px)");
   const [hasTriggeredConfetti, setHasTriggeredConfetti] = useState(false);
 
   // --- Helpers ---
@@ -139,11 +140,11 @@ export default function PricingSection({
         features: [
           "Multi-Page Website Crawling",
           "Up to 10 Active Projects",
-          "AI-Powered UI/UX Quality Review",
+          "AI-Powered UI/UX Review",
           "SEO & Performance Insights",
-          "Advanced Grammar Inspection",
+          "Advanced Grammar Check",
           "Brand Consistency Audit",
-          "Unlimited Access to All Tools & Features",
+          "Unlimited Tool Access",
         ],
         description: "",
         buttonText: "Get Started Now",
@@ -163,11 +164,16 @@ export default function PricingSection({
         yearlyPrice: "1908",
         period: "per year",
         features: [
-          "Unlimited Projects & Workspaces",
-          "Includes All Pro Features",
+          "Unlimited Projects",
+          "All Pro Plan Features",
+          "Enterprise Security",
+          "Custom API Access",
+          "Priority Support",
+          "Dedicated Account Manager",
+          "SLA Guarantees",
         ],
         description: "",
-        buttonText: "Contact Sales",
+        buttonText: "Get Started Now",
         href: "#",
         isPopular: false,
         id: "enterprise",
@@ -274,23 +280,22 @@ export default function PricingSection({
       setLoading(null);
     }
   };
-
   // --- Render (Exact match to provided visual code) ---
   return (
-    <div className={cn("container py-20", className)}>
-      <div className="text-center space-y-4 mb-12">
-        <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
+    <div className={cn("w-full py-2 md:py-10", className)}>
+      <div className="text-center space-y-3 mb-8 md:mb-14">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">
           Simple, Transparent Pricing
         </h2>
-        <p className="text-muted-foreground text-lg whitespace-pre-line">
+        <p className="text-base sm:text-lg text-muted-foreground whitespace-pre-line max-w-2xl mx-auto px-6">
           Choose the plan that works for you{"\n"}
           All plans include access to our platform, lead generation tools, and
           dedicated support.
         </p>
       </div>
 
-      <div className="flex justify-center mb-10">
-        <div className="flex items-center p-1 bg-gray-100 border">
+      <div className="flex justify-center mb-10 md:mb-20">
+        <div className="flex items-center p-1 bg-gray-100 border rounded-lg scale-90 md:scale-95">
           <button
             onClick={() => handleToggle("monthly")}
             className={cn(
@@ -301,7 +306,7 @@ export default function PricingSection({
             {isMonthly && (
               <motion.div
                 layoutId="active-pill"
-                className="absolute inset-0 bg-white -sm -z-10"
+                className="absolute inset-0 bg-white rounded-md shadow-sm -z-10"
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               />
             )}
@@ -310,14 +315,14 @@ export default function PricingSection({
           <button
             onClick={() => handleToggle("yearly")}
             className={cn(
-              "relative px-6 py-2 -full text-sm font-semibold transition-all duration-200 flex items-center gap-2 z-10",
+              "relative px-6 py-2 rounded-md text-sm font-semibold transition-all duration-200 flex items-center gap-2 z-10",
               !isMonthly ? "text-foreground" : "text-muted-foreground"
             )}
           >
             {!isMonthly && (
               <motion.div
                 layoutId="active-pill"
-                className="absolute inset-0 bg-white -full -sm -z-10"
+                className="absolute inset-0 bg-white rounded-md shadow-sm -z-10"
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               />
             )}
@@ -326,67 +331,76 @@ export default function PricingSection({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 pt-6 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto px-6 lg:px-8">
         {loadingPlans
           ? Array.from({ length: 3 }).map((_, i) => (
               <div
                 key={i}
-                className="h-96 -2xl bg-muted/10 animate-pulse border"
+                className="h-[450px] -2xl bg-muted/10 animate-pulse border"
               />
             ))
           : plans.map((plan, index) => (
               <motion.div
                 key={index}
-                initial={{ y: 50, opacity: 1 }}
+                initial={{ y: 20, opacity: 0 }}
                 whileInView={
                   isDesktop
                     ? {
                         y: plan.isPopular ? -20 : 0,
                         opacity: 1,
-                        x: index === 2 ? -30 : index === 0 ? 30 : 0,
-                        scale: index === 0 || index === 2 ? 0.94 : 1.0,
+                        x: 0,
+                        scale: index === 0 || index === 2 ? 0.98 : 1.0,
                       }
-                    : {}
+                    : isTablet
+                    ? { y: 0, opacity: 1, x: 0, scale: 1 }
+                    : { y: 0, opacity: 1 }
                 }
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{
-                  duration: 1.6,
+                  duration: 0.8,
                   type: "spring",
                   stiffness: 100,
                   damping: 30,
-                  delay: 0.4,
-                  opacity: { duration: 0.5 },
+                  delay: isTablet ? index * 0.1 : 0,
                 }}
                 className={cn(
-                  `-2xl border-[1px] p-8 text-center lg:flex lg:flex-col lg:justify-center relative bg-background`,
+                  `rounded-xl border-[1px] p-6 md:p-6 lg:p-10 text-center flex flex-col h-full bg-background relative min-h-[550px]`,
                   plan.isPopular
-                    ? "border-[#f7f4ed] border-2 -2xl z-20"
+                    ? "border-[#f7f4ed] border-2 shadow-xl z-20"
                     : "border-border z-10",
-                  "flex flex-col",
-                  !plan.isPopular && "mt-5",
+                  !plan.isPopular && "mt-0 md:mt-4",
                   index === 0 || index === 2
-                    ? "z-0 transform translate-x-0 translate-y-0 -translate-z-[50px] rotate-y-[10deg]"
+                    ? isDesktop
+                      ? "z-0 transform translate-x-0 translate-y-0 -translate-z-[30px] rotate-y-[6deg]"
+                      : ""
                     : "",
-                  index === 0 && "origin-right",
-                  index === 2 && "origin-left"
+                  index === 0 && isDesktop && "origin-right",
+                  index === 2 && isDesktop && "origin-left"
                 )}
               >
                 {plan.isPopular && (
-                  <div className="absolute -top-[12px] left-1/2 -translate-x-1/2 bg-[#fa752d] py-0.5 px-3 rounded-sm z-30 shadow-sm">
-                    <span className="text-white font-bold text-xs tracking-wide">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#fa752d] flex items-center py-1 h-6 px-4 z-30 whitespace-nowrap rounded-full">
+                    <span className="text-white font-bold text-[10px] sm:text-xs uppercase tracking-wider">
                       Most Popular
                     </span>
                   </div>
                 )}
-                <div className="flex-1 flex flex-col items-start text-left">
-                  <p className={cn("text-base font-bold", "text-foreground")}>
+                <div className="flex flex-col items-start text-left">
+                  <p
+                    className={cn(
+                      "text-xl sm:text-2xl font-bold",
+                      "text-foreground"
+                    )}
+                  >
                     {plan.name}
                   </p>
-                  <div className="mt-4 flex items-end gap-x-1">
-                    <span className="text-xl font-bold self-start mt-2">$</span>
+                  <div className="mt-1 md:mt-2 flex items-end gap-x-1 flex-wrap">
+                    <span className="text-lg sm:text-xl font-bold self-center mt-1">
+                      $
+                    </span>
                     <span
                       className={cn(
-                        "text-5xl font-extrabold tracking-tight",
+                        "text-4xl sm:text-5xl font-extrabold tracking-tight",
                         "text-foreground"
                       )}
                     >
@@ -401,8 +415,8 @@ export default function PricingSection({
                           }
                           format={{
                             style: "decimal",
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 0,
                           }}
                           transformTiming={{
                             duration: 500,
@@ -416,26 +430,26 @@ export default function PricingSection({
                     {plan.monthlyPriceNum !== 0 && (
                       <span
                         className={cn(
-                          "text-sm font-semibold leading-6 mb-1.5",
-                          "text-muted-foreground"
+                          "text-[9px] md:text-xs font-semibold leading-tight mb-1",
+                          "text-muted-foreground whitespace-nowrap"
                         )}
                       >
                         {isMonthly ? "per month" : "per year"}
                       </span>
                     )}
                   </div>
-                  <hr className="w-full border-gray-100" />
+                  <hr className="w-full mt-4 border-gray-100" />
                   <button
                     onClick={() => handlePayment(plan)}
                     className={cn(
                       buttonVariants({
                         variant: plan.isPopular ? "default" : "outline",
                       }),
-                      "mt-6 group relative w-full gap-2 overflow-hidden text-lg font-semibold tracking-tighter cursor-pointer",
-                      "transform-gpu ring-offset-current transition-all duration-300 ease-out hover:ring-2 hover:ring-offset-1 hover:scale-[1.02]",
+                      "mt-6 group relative w-full h-11 md:h-10 lg:h-12 gap-2 overflow-hidden text-sm md:text-xs lg:text-base font-semibold tracking-wide cursor-pointer",
+                      "transform-gpu ring-offset-current transition-all duration-300 ease-out hover:ring-2 hover:ring-offset-1 hover:scale-[1.01]",
                       plan.isPopular
                         ? "bg-[#fa752d] text-white hover:bg-[#FF4F00]/90 ring-[#FF4F00]"
-                        : "bg-transparent text-[#0a0a0a] border-2 hover:bg-[#fa752d] hover:text-white ring-[#FF4F00]"
+                        : "bg-transparent text-[#0a0a0a] border-[1px] md:border-2 hover:bg-[#fa752d] hover:text-white ring-[#FF4F00]"
                     )}
                   >
                     {loading === plan.monthlyPlanId ||
@@ -445,21 +459,18 @@ export default function PricingSection({
                       plan.buttonText
                     )}
                   </button>
-
-                  <hr className="w-full my-6 border-gray-100" />
-
-                  <ul className="gap-3 flex flex-col">
+                  <ul className="gap-3 py-4 flex flex-col flex-1 justify-center">
                     {plan.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
+                      <li key={idx} className="flex items-start gap-1.5">
                         <Check
                           className={cn(
-                            "h-4 w-4 mt-1 flex-shrink-0",
-                            "text-foreground"
+                            "h-4 w-4 mt-0.5 flex-shrink-0",
+                            "text-green-500"
                           )}
                         />
                         <span
                           className={cn(
-                            "text-left text-sm",
+                            "text-left text-sm text-muted-foreground",
                             "text-muted-foreground"
                           )}
                         >
@@ -471,7 +482,7 @@ export default function PricingSection({
 
                   <p
                     className={cn(
-                      "mt-6 text-xs leading-5",
+                      "mt-2 text-[9px] sm:text-[10px] leading-4",
                       plan.isPopular
                         ? "text-primary-foreground/70"
                         : "text-muted-foreground"
