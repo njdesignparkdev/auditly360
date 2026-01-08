@@ -9,16 +9,17 @@ import { FeaturesSection } from "@/components/ui/features-section";
 import WhyChooseUsSection from "./home-page-components/WhyChooseUsSection";
 import FaqSection from "@/components/blocks/faq-section";
 import CtaSection from "@/components/blocks/cta-section";
-
 import Pricing from "@/components/pricing-section/Pricing";
+import Navbar from "@/components/navbar/navbar-dropdown";
 
 export default function Page() {
   return (
     <BgContainer>
       {/* New Hero Section with built-in navbar */}
       <GridOverlay />
+      <Navbar />
       <HeroSection3 />
-      <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-16 xl:px-10 2xl:px-10">
         {/* 3. Features (Who It's For) */}
         {/* Note: User requested "Features" next. Using FeaturesSectionWithHoverEffects. */}
         <div
@@ -77,8 +78,8 @@ export default function Page() {
         <CtaSection />
 
         {/* 11. Footer */}
-        <Footer />
       </div>
+      <Footer />
     </BgContainer>
   );
 }

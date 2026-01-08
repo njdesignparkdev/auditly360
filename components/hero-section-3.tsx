@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
-import Navbar from "@/components/navbar/navbar-dropdown";
 
 const FEATURES = [
   { name: "Performance", icon: Zap },
@@ -30,12 +29,11 @@ const FEATURES = [
 export function HeroSection3() {
   return (
     <>
-      <Navbar />
       <main className="overflow-hidden">
         <section>
-          <div className="relative mx-auto max-w-6xl px-6 sm:px-8 lg:px-16 pt-6 lg:pt-20 pb-6">
+          <div className="relative mx-auto max-w-[1440px] px-6 sm:px-8 lg:px-16 xl:px-8 2xl:px-10 pt-4 lg:pt-16 pb-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              <div className="relative z-10 text-left">
+              <div className="relative z-10 pb-0 px-4 sm:px-6 lg:px-8 text-left">
                 <AnimatedGroup
                   variants={{
                     container: {
@@ -109,7 +107,7 @@ export function HeroSection3() {
 
             {/* Feature Icons Slider */}
             <div className="mt-24 lg:mt-32 overflow-hidden">
-              <div className="flex flex-col md:flex-row items-center gap-6">
+              <div className="flex flex-col md:flex-row px-4 sm:px-6 lg:px-8sssssss items-center gap-6">
                 <div className="md:max-w-64 md:border-r md:pr-8 shrink-0">
                   <p className="text-lg font-semibold text-foreground/80">
                     Explore our comprehensive analysis tools
