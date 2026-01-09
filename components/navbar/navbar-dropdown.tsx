@@ -58,7 +58,7 @@ export default function Navbar() {
         }
       )}
     >
-      <nav className="relative mx-auto flex h-full w-full max-w-[1440px] items-center justify-between px-6 sm:px-8 lg:px-16 xl:px-12">
+      <nav className="relative mx-auto flex h-full w-full max-w-[1440px] items-center justify-between px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
         <Link
           href="/"
           aria-label="home"
