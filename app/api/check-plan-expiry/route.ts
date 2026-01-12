@@ -1,0 +1,379 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+
+// Create Supabase client with service role key for admin operations
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const supabaseServiceClient = createClient(supabaseUrl, supabaseServiceKey);
+export async function POST(request: NextRequest) {
+  try {
+    // Get authorization header
+    const authHeader = request.headers.get('authorization');
+    // Try to get user with Bearer token first
+    let user = null;
+    let userError = null;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.replace('Bearer ', '');
+      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+      const supabase = createClient(supabaseUrl, supabaseAnonKey);
+      const {
+        data: {
+          user: tokenUser
+        },
+        error: tokenError
+      } = await supabase.auth.getUser(token);
+      if (tokenUser && !tokenError) {
+        user = tokenUser;
+      } else {
+        console.error('Bearer token authentication failed:', tokenError);
+      }
+    }
+
+    // If Bearer token auth failed, try direct getUser
+    if (!user) {
+      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+      const supabase = createClient(supabaseUrl, supabaseAnonKey);
+      const {
+        data: {
+          user: directUser
+        },
+        error: directError
+      } = await supabase.auth.getUser();
+      user = directUser;
+      userError = directError;
+    }
+    if (userError || !user) {
+      console.error('User not authenticated:', userError);
+      return NextResponse.json({
+        error: 'User not authenticated',
+        details: 'Please log in to check plan expiry',
+        code: 'AUTH_REQUIRED'
+      }, {
+        status: 401
+      });
+    }
+    // Get user's current plan data
+    const {
+      data: userData,
+      error: userDataError
+    } = await supabaseServiceClient.from('users').select('id, plan_type, plan_id, plan_expires_at, billing_cycle').eq('id', user.id).single();
+    if (userDataError || !userData) {
+      // Enhanced error logging with proper error extraction
+      let errorMessage = 'Unknown error';
+      let errorDetails = '';
+      let errorCode = '';
+      let errorHint = '';
+      
+      // Handle different error formats (fetch errors, Supabase errors, etc.)
+      if (userDataError) {
+        if (typeof userDataError === 'string') {
+          errorMessage = userDataError;
+          errorDetails = userDataError;
+        } else if (userDataError instanceof Error) {
+          errorMessage = userDataError.message;
+          errorDetails = userDataError.stack || userDataError.message;
+          // Check for fetch-related errors
+          if (userDataError.name === 'TypeError' && userDataError.message.includes('fetch')) {
+            errorCode = 'FETCH_ERROR';
+            errorDetails = `Network error: ${userDataError.message}`;
+          }
+        } else if (typeof userDataError === 'object') {
+          // Safely extract fields from an unknown object shape
+          const errObj = userDataError as Record<string, unknown>;
+          errorMessage =
+            (typeof errObj.message === 'string' && errObj.message) ||
+            (typeof errObj.error === 'string' && errObj.error) ||
+            'Unknown error';
+          errorDetails =
+            (typeof errObj.details === 'string' && errObj.details) ||
+            (typeof errObj.message === 'string' && errObj.message) ||
+            '';
+          errorCode = typeof errObj.code === 'string' ? errObj.code : '';
+          errorHint = typeof errObj.hint === 'string' ? errObj.hint : '';
+        }
+      }
+      
+      // Try to safely stringify the error for logging
+      let fullErrorString = '';
+      try {
+        if (userDataError instanceof Error) {
+          fullErrorString = JSON.stringify({
+            name: userDataError.name,
+            message: userDataError.message,
+            stack: userDataError.stack,
+            cause: userDataError.cause
+          }, null, 2);
+        } else {
+          fullErrorString = JSON.stringify(userDataError, Object.getOwnPropertyNames(userDataError || {}), 2);
+        }
+      } catch (stringifyError) {
+        fullErrorString = String(userDataError);
+      }
+      
+      const errorLog = {
+        message: errorMessage,
+        details: errorDetails,
+        hint: errorHint,
+        code: errorCode,
+        error: userDataError,
+        fullError: fullErrorString,
+        userId: user.id,
+        supabaseUrl: supabaseUrl ? 'configured' : 'missing',
+        hasServiceKey: !!supabaseServiceKey
+      };
+      
+      console.error('Error fetching user data:', errorLog);
+      
+      // Check for specific error types
+      let userFriendlyMessage = 'Failed to fetch user data';
+      if (errorMessage.includes('fetch failed') || errorMessage.includes('TypeError') || errorCode === 'FETCH_ERROR') {
+        userFriendlyMessage = 'Network error: Unable to connect to database. Please check:\n' +
+          '• Your Supabase URL is correct in .env.local\n' +
+          '• Your network connection is working\n' +
+          '• Supabase service is accessible\n' +
+          '• Firewall/proxy settings allow connections';
+      } else if (errorCode === 'PGRST116') {
+        userFriendlyMessage = 'User not found in database';
+      } else if (errorCode === '42501') {
+        userFriendlyMessage = 'Permission denied: Check RLS policies';
+      } else if (errorCode === 'PGRST301') {
+        userFriendlyMessage = 'Invalid API key or authentication failed';
+      }
+      
+      return NextResponse.json({
+        error: userFriendlyMessage,
+        details: errorDetails || errorMessage || 'User not found',
+        code: errorCode || 'UNKNOWN_ERROR',
+        hint: errorHint
+      }, {
+        status: 500
+      });
+    }
+    // Check if user is on Starter plan (no expiry)
+    if (userData.plan_type === 'Starter') {
+      return NextResponse.json({
+        success: true,
+        message: 'User is on Starter plan (no expiry)',
+        plan_type: userData.plan_type,
+        is_expired: false
+      });
+    }
+
+    // Check if plan has expired
+    const now = new Date();
+    const expiryDate = userData.plan_expires_at ? new Date(userData.plan_expires_at) : null;
+    const isExpired = expiryDate ? expiryDate < now : false;
+    if (!isExpired) {
+      return NextResponse.json({
+        success: true,
+        message: 'Plan is still active',
+        plan_type: userData.plan_type,
+        is_expired: false,
+        expires_at: userData.plan_expires_at
+      });
+    }
+
+    // Plan has expired - downgrade to Starter
+
+    // Get Starter plan details
+    const {
+      data: starterPlan,
+      error: starterPlanError
+    } = await supabaseServiceClient.from('plans').select('id, name, plan_type, can_use_features, max_projects').eq('plan_type', 'Starter').eq('is_active', true).single();
+    if (starterPlanError || !starterPlan) {
+      console.error('Error fetching Starter plan:', starterPlanError);
+      return NextResponse.json({
+        error: 'Failed to fetch Starter plan',
+        details: starterPlanError?.message || 'Starter plan not found'
+      }, {
+        status: 500
+      });
+    }
+
+    // Update user to Starter plan
+    const {
+      data: updateResult,
+      error: updateError
+    } = await supabaseServiceClient.from('users').update({
+      plan_type: 'Starter',
+      plan_id: starterPlan.id,
+      max_projects: starterPlan.max_projects || 1,
+      can_use_features: starterPlan.can_use_features || ['basic_audit'],
+      plan_expires_at: null,
+      // Starter plan doesn't expire
+      billing_cycle: null,
+      updated_at: new Date().toISOString()
+    }).eq('id', user.id).select('id, plan_type, plan_id, max_projects, can_use_features');
+    if (updateError) {
+      console.error('Error updating user plan:', updateError);
+      return NextResponse.json({
+        error: 'Failed to update user plan',
+        details: updateError.message
+      }, {
+        status: 500
+      });
+    }
+    // Create a record of the plan change in payments table (optional)
+    try {
+      await supabaseServiceClient.from('payments').insert({
+        user_id: user.id,
+        plan_id: starterPlan.id,
+        razorpay_payment_id: `expiry_downgrade_${Date.now()}`,
+        amount: 0,
+        currency: 'INR',
+        plan_name: starterPlan.name,
+        plan_type: 'Starter',
+        billing_cycle: 'none',
+        max_projects: starterPlan.max_projects || 1,
+        can_use_features: starterPlan.can_use_features || ['basic_audit'],
+        payment_status: 'completed',
+        payment_method: 'system_downgrade',
+        payment_date: new Date().toISOString(),
+        expires_at: null, // Starter plan doesn't expire
+        notes: `Automatic downgrade due to plan expiry on ${expiryDate?.toISOString()}`
+      });
+    } catch (paymentError) {
+      console.warn('Failed to create payment record for downgrade:', paymentError);
+      // Don't fail the entire operation if payment record creation fails
+    }
+    return NextResponse.json({
+      success: true,
+      message: 'Plan has expired and user has been downgraded to Starter plan',
+      previous_plan: userData.plan_type,
+      new_plan: 'Starter',
+      is_expired: true,
+      downgraded: true,
+      updated_user: updateResult
+    });
+  } catch (error) {
+    console.error('Plan expiry check error:', error);
+    return NextResponse.json({
+      error: 'Failed to check plan expiry',
+      details: (error as Error).message
+    }, {
+      status: 500
+    });
+  }
+}
+
+// GET endpoint for checking plan expiry without making changes
+export async function GET(request: NextRequest) {
+  try {
+    // Get authorization header
+    const authHeader = request.headers.get('authorization');
+    // Try to get user with Bearer token first
+    let user = null;
+    let userError = null;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.replace('Bearer ', '');
+      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+      const supabase = createClient(supabaseUrl, supabaseAnonKey);
+      const {
+        data: {
+          user: tokenUser
+        },
+        error: tokenError
+      } = await supabase.auth.getUser(token);
+      if (tokenUser && !tokenError) {
+        user = tokenUser;
+      } else {
+        console.error('Bearer token authentication failed:', tokenError);
+      }
+    }
+
+    // If Bearer token auth failed, try direct getUser
+    if (!user) {
+      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+      const supabase = createClient(supabaseUrl, supabaseAnonKey);
+      const {
+        data: {
+          user: directUser
+        },
+        error: directError
+      } = await supabase.auth.getUser();
+      user = directUser;
+      userError = directError;
+    }
+    if (userError || !user) {
+      console.error('User not authenticated:', userError);
+      return NextResponse.json({
+        error: 'User not authenticated',
+        details: 'Please log in to check plan expiry',
+        code: 'AUTH_REQUIRED'
+      }, {
+        status: 401
+      });
+    }
+    // Get user's current plan data
+    const {
+      data: userData,
+      error: userDataError
+    } = await supabaseServiceClient.from('users').select('id, plan_type, plan_id, plan_expires_at, billing_cycle').eq('id', user.id).single();
+    if (userDataError || !userData) {
+      // Enhanced error logging
+      const errorDetails = {
+        message: userDataError?.message || 'Unknown error',
+        details: userDataError?.details || '',
+        hint: userDataError?.hint || '',
+        code: userDataError?.code || '',
+        error: userDataError,
+        fullError: JSON.stringify(userDataError, Object.getOwnPropertyNames(userDataError), 2),
+        userId: user.id,
+        supabaseUrl: supabaseUrl ? 'configured' : 'missing'
+      };
+      
+      console.error('Error fetching user data:', errorDetails);
+      
+      // Check for specific error types
+      let errorMessage = 'Failed to fetch user data';
+      if (userDataError?.message?.includes('fetch failed') || userDataError?.message?.includes('TypeError')) {
+        errorMessage = 'Network error: Unable to connect to database. Please check your Supabase configuration and network connection.';
+      } else if (userDataError?.code === 'PGRST116') {
+        errorMessage = 'User not found in database';
+      } else if (userDataError?.code === '42501') {
+        errorMessage = 'Permission denied: Check RLS policies';
+      }
+      
+      return NextResponse.json({
+        error: errorMessage,
+        details: userDataError?.message || userDataError?.details || 'User not found',
+        code: userDataError?.code || 'UNKNOWN_ERROR',
+        hint: userDataError?.hint || ''
+      }, {
+        status: 500
+      });
+    }
+    // Check if user is on Starter plan (no expiry)
+    if (userData.plan_type === 'Starter') {
+      return NextResponse.json({
+        success: true,
+        message: 'User is on Starter plan (no expiry)',
+        plan_type: userData.plan_type,
+        is_expired: false,
+        expires_at: null
+      });
+    }
+
+    // Check if plan has expired
+    const now = new Date();
+    const expiryDate = userData.plan_expires_at ? new Date(userData.plan_expires_at) : null;
+    const isExpired = expiryDate ? expiryDate < now : false;
+    const daysUntilExpiry = expiryDate ? Math.ceil((expiryDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)) : null;
+    return NextResponse.json({
+      success: true,
+      plan_type: userData.plan_type,
+      is_expired: isExpired,
+      expires_at: userData.plan_expires_at,
+      days_until_expiry: daysUntilExpiry,
+      billing_cycle: userData.billing_cycle
+    });
+  } catch (error) {
+    console.error('Plan expiry status check error:', error);
+    return NextResponse.json({
+      error: 'Failed to check plan expiry status',
+      details: (error as Error).message
+    }, {
+      status: 500
+    });
+  }
+}

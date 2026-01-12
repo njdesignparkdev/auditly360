@@ -1,0 +1,664 @@
+"use client";
+
+import { SEOAnalysisResult, SEOHighlight, SEOIssue } from "@/types/audit";
+import { analyzeSEO } from "@/lib/seo-analysis";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { useSupabase } from "@/contexts/SupabaseContext";
+interface Project {
+  id: string;
+  site_url: string;
+  scraping_data?: Record<string, unknown>;
+  seo_analysis?: SEOAnalysisResult | null;
+}
+interface ScrapedPage {
+  id?: string;
+  html_content?: string | null;
+  url?: string;
+  audit_project_id?: string;
+  performance_analysis?: Record<string, unknown>;
+  title?: string | null;
+  status_code?: number | null;
+  created_at?: string;
+  links_count?: number;
+  images_count?: number;
+  meta_tags_count?: number;
+}
+interface SEOAnalysisSectionProps {
+  project?: Project;
+  scrapedPages?: ScrapedPage[];
+  dataVersion?: number;
+  // For single page analysis
+  page?: ScrapedPage;
+  isPageAnalysis?: boolean;
+  cachedAnalysis?: SEOAnalysisResult | null;
+}
+export default function SEOAnalysisSection({
+  project,
+  scrapedPages = [],
+  dataVersion,
+  page,
+  isPageAnalysis = false,
+  cachedAnalysis,
+}: SEOAnalysisSectionProps) {
+  const [seoAnalysis, setSeoAnalysis] = useState<SEOAnalysisResult | null>(
+    cachedAnalysis || (isPageAnalysis ? null : project?.seo_analysis || null)
+  );
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [expandedIssues, setExpandedIssues] = useState<Set<number>>(new Set());
+  const analysisTriggered = useRef(false);
+  const { updateAuditProject, getScrapedPages } = useSupabase();
+  useEffect(() => {
+    // Update local state when project SEO analysis changes or data version changes
+    if (!isPageAnalysis && project?.seo_analysis) {
+      setSeoAnalysis(project.seo_analysis);
+    }
+  }, [project?.seo_analysis, dataVersion, isPageAnalysis]);
+  const analyzePage = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      let htmlContent = "";
+      let siteUrl = "";
+
+      // If no HTML content found in current data, fetch fresh data from database
+      if (
+        !isPageAnalysis &&
+        project &&
+        (!scrapedPages.length ||
+          !scrapedPages.some(
+            (p) => p.html_content && p.html_content.trim().length > 0
+          ))
+      ) {
+        try {
+          const { data: freshPages, error: pagesError } = await getScrapedPages(
+            project.id
+          );
+          if (pagesError) {
+            // Error fetching fresh scraped pages
+          } else if (freshPages && freshPages.length > 0) {
+            // Update scraped pages with fresh data
+            scrapedPages.splice(0, scrapedPages.length, ...freshPages);
+          }
+        } catch {
+          // Error fetching fresh scraped pages
+        }
+      }
+
+      // If still no HTML content, try a direct database query for any page with HTML content
+      if (!htmlContent && !isPageAnalysis && project) {
+        try {
+          const { data: directPages, error: directError } =
+            await getScrapedPages(project.id);
+          if (directError) {
+            // Error in direct database query
+          } else if (directPages && directPages.length > 0) {
+            const pageWithHtml = directPages.find(
+              (p) => p.html_content && p.html_content.trim().length > 0
+            );
+            if (pageWithHtml && pageWithHtml.html_content) {
+              htmlContent = pageWithHtml.html_content;
+              siteUrl = project.site_url;
+            }
+          }
+        } catch {
+          // Error in direct database query
+        }
+      }
+
+      if (isPageAnalysis && page?.html_content) {
+        // For single page analysis
+        htmlContent = page.html_content;
+        siteUrl = page.url || page.audit_project_id || "Unknown URL";
+      } else if (!isPageAnalysis && scrapedPages.length > 0 && project) {
+        // For project analysis - get the first page with HTML content
+        const firstPage = scrapedPages.find(
+          (p) => p.html_content && p.html_content.trim().length > 0
+        );
+        if (firstPage?.html_content) {
+          htmlContent = firstPage.html_content;
+          siteUrl = project.site_url;
+        } else {
+          // Try to get HTML from project scraping data as fallback
+          if (
+            project?.scraping_data?.pages &&
+            Array.isArray(project.scraping_data.pages)
+          ) {
+            const scrapingPage = project.scraping_data.pages.find(
+              (p: { html?: string }) => p.html && p.html.trim().length > 0
+            );
+            if (scrapingPage?.html) {
+              htmlContent = scrapingPage.html;
+              siteUrl = project.site_url;
+            }
+          }
+        }
+
+        // Final fallback: Try to get HTML from any available source
+        if (!htmlContent && project?.scraping_data) {
+          // Try different possible structures in scraping_data
+          const scrapingData = project.scraping_data as Record<string, unknown>;
+          const possibleHtmlSources = [
+            scrapingData.html,
+            scrapingData.content,
+            scrapingData.body,
+            (scrapingData.page as { html?: string })?.html,
+            (scrapingData.homepage as { html?: string })?.html,
+            (scrapingData.main_page as { html?: string })?.html,
+          ];
+
+          for (const source of possibleHtmlSources) {
+            if (
+              source &&
+              typeof source === "string" &&
+              source.trim().length > 0
+            ) {
+              htmlContent = source;
+              siteUrl = project.site_url;
+              break;
+            }
+          }
+        }
+      }
+
+      // Final fallback: If still no HTML content found, create a basic HTML structure
+      if (!htmlContent && !isPageAnalysis && project) {
+        htmlContent = `
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>${project.site_url || "Website Analysis"}</title>
+            <meta name="description" content="Website analysis for ${
+              project.site_url
+            }">
+          </head>
+          <body>
+            <h1>Website Analysis</h1>
+            <p>This is a fallback HTML structure for SEO analysis.</p>
+            <p>URL: ${project.site_url}</p>
+          </body>
+          </html>
+        `;
+        siteUrl = project.site_url;
+      }
+
+      if (htmlContent) {
+        const analysis = analyzeSEO(htmlContent, siteUrl);
+        setSeoAnalysis(analysis);
+        // Store the analysis in the database only for project analysis
+        if (!isPageAnalysis && project) {
+          const { error: updateError } = await updateAuditProject(project.id, {
+            seo_analysis: analysis,
+          });
+          if (updateError) {
+            // Don't set error for database update failures - analysis still completed successfully
+          }
+        }
+      } else {
+        setError("No HTML content available for analysis");
+      }
+    } catch {
+      setError("Failed to analyze SEO content");
+    } finally {
+      setLoading(false);
+    }
+  }, [
+    isPageAnalysis,
+    page?.html_content,
+    page?.url,
+    page?.audit_project_id,
+    scrapedPages,
+    updateAuditProject,
+    getScrapedPages,
+    project,
+  ]);
+  useEffect(() => {
+    // Reset analysis trigger when key dependencies change
+    analysisTriggered.current = false;
+  }, [scrapedPages.length, project?.id, page?.url, isPageAnalysis]);
+
+  useEffect(() => {
+    // For page analysis, analyze immediately if we have page data
+    if (
+      isPageAnalysis &&
+      page?.html_content &&
+      !seoAnalysis &&
+      !analysisTriggered.current
+    ) {
+      analysisTriggered.current = true;
+      analyzePage();
+    }
+    // For project analysis, only run if we have scraped pages and no existing analysis
+    else if (
+      !isPageAnalysis &&
+      scrapedPages.length > 0 &&
+      !project?.seo_analysis &&
+      !analysisTriggered.current
+    ) {
+      analysisTriggered.current = true;
+      analyzePage();
+    }
+  }, [
+    analyzePage,
+    scrapedPages.length,
+    project?.seo_analysis,
+    page?.html_content,
+    isPageAnalysis,
+    seoAnalysis,
+  ]);
+  const getScoreColor = (score: number) => {
+    if (score >= 80) return "text-gray-900";
+    if (score >= 60) return "text-gray-700";
+    return "text-gray-600";
+  };
+  const getScoreBgColor = (score: number) => {
+    if (score >= 80) return "bg-gray-200";
+    if (score >= 60) return "bg-gray-300";
+    return "bg-gray-400";
+  };
+  const getIssueIcon = (type: string) => {
+    switch (type) {
+      case "error":
+        return "fas fa-times-circle text-gray-700";
+      case "warning":
+        return "fas fa-exclamation-triangle text-gray-600";
+      case "info":
+        return "fas fa-info-circle text-gray-600";
+      default:
+        return "fas fa-file-alt text-gray-500";
+    }
+  };
+
+  // const getImpactColor = (impact: string) => {
+  //   switch (impact) {
+  //     case 'high':
+  //       return 'text-red-600 bg-red-50 border-red-200'
+  //     case 'medium':
+  //       return 'text-yellow-600 bg-yellow-50 border-yellow-200'
+  //     case 'low':
+  //       return 'text-blue-600 bg-blue-50 border-blue-200'
+  //     default:
+  //       return 'text-gray-600 bg-gray-50 border-gray-300'
+  //   }
+  // }
+
+  if (loading) {
+    return (
+      <div className="bg-white   border border-gray-300 p-6">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-lg font-semibold text-gray-900">SEO Analysis</h3>
+          <button
+            onClick={analyzePage}
+            disabled
+            className="px-4 py-2 text-sm font-medium bg-gray-100 text-gray-400 cursor-not-allowed -md transition-colors"
+          >
+            Analyzing...
+          </button>
+        </div>
+        <div className="animate-pulse">
+          <div className="h-6 bg-gray-200  w-1/4 mb-4"></div>
+          <div className="space-y-3">
+            <div className="h-4 bg-gray-200  w-full"></div>
+            <div className="h-4 bg-gray-200  w-3/4"></div>
+            <div className="h-4 bg-gray-200  w-1/2"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="bg-white   border border-gray-300 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-gray-900">SEO Analysis</h3>
+          <button
+            onClick={analyzePage}
+            disabled={loading}
+            className="px-4 py-2 text-sm font-medium bg-[#ff4b01] text-white hover:bg-[#e64401] focus:outline-none focus:ring-2 focus:ring-[#ff4b01] focus:ring-offset-2 -md transition-colors"
+          >
+            Retry Analysis
+          </button>
+        </div>
+        <div className="text-center py-8">
+          <div className="text-4xl mb-2">
+            <i className="fas fa-exclamation-triangle text-gray-600"></i>
+          </div>
+          <p className="text-gray-600">{error}</p>
+        </div>
+      </div>
+    );
+  }
+  if (!seoAnalysis) {
+    return (
+      <div className="bg-white   border border-gray-300 p-6">
+        <div className="flex items-center justify-between mb-4 p-6">
+          <h3 className="text-lg font-semibold text-gray-900">SEO Analysis</h3>
+          <button
+            onClick={analyzePage}
+            disabled={loading}
+            className="px-4 py-2 text-sm font-medium bg-[#ff4b01] text-white hover:bg-[#e64401] focus:outline-none focus:ring-2 focus:ring-[#ff4b01] focus:ring-offset-2 -md transition-colors"
+          >
+            Start Analysis
+          </button>
+        </div>
+        <div className="text-center py-8">
+          <div className="text-4xl mb-2">
+            <i className="fas fa-search text-[#ff4b01]/70"></i>
+          </div>
+          <p className="text-gray-600">No data available for SEO analysis</p>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div className=" border-b border-gray-300 ">
+      {/* <div className="flex items-center justify-between mb-6">
+        <h3 className="text-lg font-semibold text-gray-900">SEO Analysis</h3>
+        <button
+          onClick={analyzePage}
+          disabled={loading}
+          className={`px-4 py-2 text-sm font-medium -md transition-colors ${
+            loading
+              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              : 'bg-[#ff4b01] text-white hover:bg-[#e64401] focus:outline-none focus:ring-2 focus:ring-[#ff4b01] focus:ring-offset-2'
+          }`}
+        >
+          {loading ? 'Analyzing...' : seoAnalysis ? 'Re-analyze' : 'Start Analysis'}
+        </button>
+      </div> */}
+      {/* Two Column Grid Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-2  mb-6  ">
+        {/* Left Column: Positive Highlights and Recommendations */}
+        {/* Summary Overview - Clean Row Format */}
+
+        <div className="border-r border-gray-300 ">
+          {/* Positive Highlights */}
+          <div className="border-b pb-4 border-gray-300 p-6">
+            {/* SEO Score */}
+            <div className="">
+              <div className="flex items-center justify-between mb-2 ">
+                <span className="text-lg font-semibold text-gray-900 mb-4 ">
+                  SEO Score
+                </span>
+                <span
+                  className={`text-2xl font-bold ${getScoreColor(
+                    seoAnalysis.score
+                  )}`}
+                >
+                  {seoAnalysis.score}
+                </span>
+              </div>
+              <div className="w-full bg-gray-200  h-3">
+                <div
+                  className={`h-3  transition-all duration-500 ${getScoreBgColor(
+                    seoAnalysis.score
+                  )}`}
+                  style={{
+                    width: `${seoAnalysis.score}%`,
+                  }}
+                ></div>
+              </div>
+            </div>
+
+            <div className="">
+              <div className="bg-gray-50  p-4 mt-4">
+                <h4 className="text-sm font-semibold text-gray-700 mb-3">
+                  Analysis Overview
+                </h4>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="text-center border-r border-gray-300">
+                    <div className="text-2xl font-bold text-gray-900">
+                      {seoAnalysis.score}
+                    </div>
+                    <div className="text-xs text-gray-600">SEO Score</div>
+                  </div>
+                  {seoAnalysis.highlights &&
+                    seoAnalysis.highlights.length > 0 && (
+                      <div className="text-center border-r border-gray-300">
+                        <div className="text-2xl font-bold text-gray-900">
+                          {seoAnalysis.summary?.totalHighlights || 0}
+                        </div>
+                        <div className="text-xs text-gray-600">Highlights</div>
+                      </div>
+                    )}
+                  {seoAnalysis.issues && seoAnalysis.issues.length > 0 && (
+                    <>
+                      <div className="text-center border-r border-gray-300">
+                        <div className="text-2xl font-bold text-gray-900">
+                          {seoAnalysis.summary?.errors || 0}
+                        </div>
+                        <div className="text-xs text-gray-600">Errors</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-gray-900">
+                          {seoAnalysis.summary?.warnings || 0}
+                        </div>
+                        <div className="text-xs text-gray-600">Warnings</div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {seoAnalysis.highlights && seoAnalysis.highlights.length > 0 && (
+            <div className="p-6 border-b border-gray-300">
+              <h4 className="text-sm font-semibold text-gray-700 mb-3">
+                What&apos;s Working Well
+              </h4>
+              <div className="space-y-2">
+                {seoAnalysis.highlights.map(
+                  (highlight: SEOHighlight, index: number) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between bg-white border border-gray-300  p-3 "
+                    >
+                      <div className="flex items-center space-x-3">
+                        <span className="text-lg">
+                          <i
+                            className={
+                              highlight.type === "achievement"
+                                ? "fas fa-trophy text-gray-600"
+                                : highlight.type === "good-practice"
+                                ? "fas fa-check-circle text-gray-600"
+                                : "fas fa-bolt text-gray-600"
+                            }
+                          ></i>
+                        </span>
+                        <div>
+                          <div className="font-medium text-gray-900">
+                            {highlight.title}
+                          </div>
+                          <div className="text-xs text-gray-500">
+                            {highlight.description}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 ">
+                          {highlight.category}
+                        </span>
+                        <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 ">
+                          {highlight.impact}
+                        </span>
+                      </div>
+                    </div>
+                  )
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Recommendations */}
+          {seoAnalysis.recommendations &&
+            seoAnalysis.recommendations.length > 0 && (
+              <div className="p-6 border-b border-gray-300">
+                <h4 className="text-sm font-semibold text-gray-700 mb-3">
+                  Recommendations
+                </h4>
+                <div className="space-y-2">
+                  {seoAnalysis.recommendations.map((recommendation, index) => (
+                    <div
+                      key={index}
+                      className="flex items-start bg-white border border-gray-300  p-3"
+                    >
+                      <span className="mr-3 mt-0.5">
+                        <i className="fas fa-lightbulb text-gray-600"></i>
+                      </span>
+                      <p className="text-sm text-gray-700">{recommendation}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+        </div>
+
+        {/* Right Column: Issues and Fixes */}
+        {seoAnalysis.issues && seoAnalysis.issues.length > 0 && (
+          <div className="p-6 border-b border-gray-300">
+            <h4 className="text-sm font-semibold text-gray-700 mb-3">
+              Issues & Fixes
+            </h4>
+            <div className="space-y-2">
+              {seoAnalysis.issues.map((issue, index) => {
+                const isExpanded = expandedIssues.has(index);
+                return (
+                <div
+                  key={index}
+                  className="bg-white border border-gray-300  p-3 "
+                >
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-center space-x-3 flex-1">
+                      <span className="text-lg">
+                        <i className={getIssueIcon(issue.type)}></i>
+                      </span>
+                      <div className="flex-1">
+                        <div className="font-medium text-gray-900">
+                          {issue.title}
+                        </div>
+                        <div className="text-xs text-gray-500 mt-1">
+                          {issue.description}
+                        </div>
+                        {/* Location and Element Info */}
+                        {(issue.location || issue.element) && (
+                          <div className="flex flex-wrap items-center gap-2 mt-2">
+                            {issue.location && (
+                              <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 border border-gray-300">
+                                <i className="fas fa-map-marker-alt mr-1"></i>
+                                {issue.location}
+                              </span>
+                            )}
+                            {issue.element && (
+                              <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 border border-gray-300 font-mono">
+                                <i className="fas fa-code mr-1"></i>
+                                {issue.element}
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end space-y-2 ml-4">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 ">
+                          {issue.category}
+                        </span>
+                        <span
+                          className={`text-xs px-2 py-1  ${
+                            issue.impact === "high"
+                              ? "bg-gray-200 text-gray-900"
+                              : issue.impact === "medium"
+                              ? "bg-gray-100 text-gray-700"
+                              : "bg-gray-50 text-gray-600"
+                          }`}
+                        >
+                          {issue.impact}
+                        </span>
+                      </div>
+                      {(issue.example || issue.detailedFix) && (
+                        <button
+                          onClick={() => {
+                            const newExpanded = new Set(expandedIssues);
+                            if (isExpanded) {
+                              newExpanded.delete(index);
+                            } else {
+                              newExpanded.add(index);
+                            }
+                            setExpandedIssues(newExpanded);
+                          }}
+                          className="text-xs text-gray-700 hover:text-gray-900 flex items-center gap-1 transition-colors"
+                        >
+                          <i className={`fas fa-chevron-${isExpanded ? 'up' : 'down'} text-xs`}></i>
+                          {isExpanded ? 'Hide Details' : 'Show Details'}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  
+                  {/* Quick Fix */}
+                  <div className="ml-8 mt-2">
+                    <div className="text-xs text-gray-600 bg-gray-50 p-2 border border-gray-200">
+                      <span className="font-medium">Quick Fix:</span> {issue.fix}
+                    </div>
+                  </div>
+
+                  {/* Expanded Details */}
+                  {isExpanded && (issue.example || issue.detailedFix) && (
+                    <div className="ml-8 mt-3 space-y-3 border-t border-gray-200 pt-3">
+                      {issue.detailedFix && (
+                        <div className="bg-gray-50 border border-gray-300 p-3">
+                          <div className="flex items-start">
+                            <i className="fas fa-info-circle text-gray-600 mr-2 mt-0.5"></i>
+                            <div>
+                              <div className="text-xs font-semibold text-gray-900 mb-1">Detailed Explanation</div>
+                              <div className="text-xs text-gray-700 leading-relaxed">
+                                {issue.detailedFix}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {issue.example && (
+                        <div className="bg-gray-900 border border-gray-700 p-3">
+                          <div className="flex items-start">
+                            <i className="fas fa-code text-gray-400 mr-2 mt-0.5"></i>
+                            <div className="flex-1">
+                              <div className="text-xs font-semibold text-gray-300 mb-2">Example Code</div>
+                              <pre className="text-xs text-gray-300 font-mono whitespace-pre-wrap overflow-x-auto">
+                                {issue.example}
+                              </pre>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )})}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {(!seoAnalysis.issues || seoAnalysis.issues.length === 0) && (
+        <div className="bg-gray-50 border border-gray-300  p-6 text-center">
+          <div className="text-4xl mb-2">
+            <i className="fas fa-check-circle text-gray-600"></i>
+          </div>
+          <p className="text-gray-700 font-medium">
+            Excellent! No SEO issues found.
+          </p>
+          {seoAnalysis.highlights && seoAnalysis.highlights.length > 0 && (
+            <p className="text-sm text-gray-600 mt-2">
+              Your page is following {seoAnalysis.highlights.length} SEO best
+              practice{seoAnalysis.highlights.length !== 1 ? "s" : ""}!
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}

@@ -1,0 +1,56 @@
+{
+  "header": {
+    "title": "Contact Us",
+    "description": "Have a question or need help? We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
+    "backButton": "← Back to Home"
+  },
+  "form": {
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Your name"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "your.email@example.com"
+      },
+      "subject": {
+        "label": "Subject",
+        "defaultOption": "Select a subject",
+        "options": [
+          { "value": "support", "label": "Technical Support" },
+          { "value": "billing", "label": "Billing Inquiry" },
+          { "value": "feature", "label": "Feature Request" },
+          { "value": "bug", "label": "Report a Bug" },
+          { "value": "other", "label": "Other" }
+        ]
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Tell us how we can help you..."
+      }
+    },
+    "submitButton": {
+      "idle": "Send Message",
+      "loading": "Sending..."
+    },
+    "messages": {
+      "success": "Thank you for contacting us! We'll get back to you soon.",
+      "error": "Something went wrong. Please try again later."
+    }
+  },
+  "footer": {
+    "title": "Other Ways to Reach Us",
+    "sections": [
+      {
+        "title": "Email Support",
+        "content": "For general inquiries, email us at ",
+        "email": "support@auditly360.com"
+      },
+      {
+        "title": "Response Time",
+        "content": "We typically respond within 24-48 hours during business days."
+      }
+    ]
+  }
+}
