@@ -52,13 +52,13 @@ export default function Navbar() {
       className={cn(
         "sticky top-0 z-50 w-full border-b border-gray-300 dark:border-border transition-all duration-200",
         {
-          "bg-background/95 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg h-14 md:h-16":
+          "bg-background/95 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg h-16 md:h-20":
             scrolled,
           "bg-transparent h-16 md:h-20": !scrolled,
         }
       )}
     >
-      <nav className="relative mx-auto flex h-full w-full max-w-6xl items-center justify-between px-6 md:px-10 lg:px-10 ">
+      <nav className="relative mx-auto flex h-full w-full max-w-[1440px] items-center justify-between px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
         <Link
           href="/"
           aria-label="home"
