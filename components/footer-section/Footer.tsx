@@ -10,11 +10,10 @@ import { AnimatedGroup } from "@/components/ui/animated-group";
 
 export function Footer() {
   return (
-    <footer className="w-full text-slate-300 py-16 mt-0 relative overflow-hidden bg-slate-950 z-10">
-      {/* Background Grid */}
+    <footer className="w-full text-slate-300 py-6 mt-0 relative overflow-hidden bg-slate-950 z-10">
+      {/* Background Atmosphere */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-50" />
       </div>
 
       {/* Bottom Large Title - Background Layer */}
@@ -60,10 +59,10 @@ export function Footer() {
         }}
       >
         {/* Top Separator Line */}
-        <div className="w-full h-px bg-white/10 mb-8"></div>
+        <div className="w-full h-px bg-white/10 mb-2"></div>
 
         {/* Header Row: Logo | Tagline | Copyright */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-8">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-2 gap-8">
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="scale-[0.8] origin-left invert brightness-0 filter">
               <AuditlyLogo />
@@ -82,9 +81,9 @@ export function Footer() {
         <div className="w-full h-px bg-white/10 mb-8"></div>
 
         {/* Main Content Areas */}
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-32 mt-16">
+        <div className="flex flex-col justify-between lg:flex-row gap-16 lg:gap-32 mt-4">
           {/* Left: Contact & Social Icons */}
-          <div className="flex flex-col gap-8 lg:w-1/4">
+          <div className="flex flex-col gap-4 lg:w-1/4">
             <a
               href="mailto:hello@auditly360.com"
               className="inline-flex items-center gap-3 px-5 py-2.5 bg-white/5 border border-white/10 text-slate-200 hover:border-[#EF4600] hover:shadow-[0_4px_15px_rgba(255,139,66,0.25)] hover:scale-105 active:scale-95 transition-all duration-300 shadow-sm w-fit group"
@@ -143,21 +142,13 @@ export function Footer() {
           </div>
 
           {/* Right: Link Columns */}
-          <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-10 lg:gap-">
+          <div className="flex flex-wrap gap-x-16 gap-y-10 lg:gap-x-24">
             <div className="flex flex-col gap-5">
               <h3 className="font-jakarta font-extrabold text-white">
                 Solutions
               </h3>
               <div className="flex flex-col gap-3">
-                {[
-                  "Auditly Prospect",
-                  "Auditly Monitor",
-                  "Auditly Enterprise",
-                  "API",
-                  "Integrations",
-                  "Pricing",
-                  "Get a demo",
-                ].map((item) => (
+                {["Auditly Prospect", "Pricing"].map((item) => (
                   <Link
                     key={item}
                     href="#"
@@ -174,16 +165,7 @@ export function Footer() {
                 Resources
               </h3>
               <div className="flex flex-col gap-3">
-                {[
-                  "Customers",
-                  "Blog",
-                  "Knowledge base",
-                  "Support",
-                  "Status",
-                  "Free email finder",
-                  "Free email verifier",
-                  "Company directory",
-                ].map((item) => (
+                {["Customers", "Blog"].map((item) => (
                   <Link
                     key={item}
                     href="#"
@@ -202,16 +184,8 @@ export function Footer() {
               <div className="flex flex-col gap-3">
                 {[
                   { label: "Feature requests", href: "#" },
-                  { label: "Changelog", href: "#" },
-                  { label: "Become an affiliate", href: "#" },
                   { label: "Terms & Conditions", href: "/terms-condition" },
                   { label: "Privacy policy", href: "/privacy-policy" },
-                  { label: "Vulnerability disclosure", href: "#" },
-                  { label: "Opt out", href: "#" },
-                  {
-                    label: "Do not sell or share my personal information",
-                    href: "#",
-                  },
                 ].map((item) => (
                   <Link
                     key={item.label}

@@ -17,8 +17,8 @@ export default function Page() {
     <BgContainer>
       {/* New Hero Section with built-in navbar */}
       <GridOverlay />
+      <Navbar />
       <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-16 xl:px-10 2xl:px-10">
-        <Navbar />
         <HeroSection3 />
         {/* 3. Features (Who It's For) */}
         {/* Note: User requested "Features" next. Using FeaturesSectionWithHoverEffects. */}
