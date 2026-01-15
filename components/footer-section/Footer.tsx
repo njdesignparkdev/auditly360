@@ -86,7 +86,7 @@ export function Footer() {
           <div className="flex flex-col gap-4 lg:w-1/4">
             <a
               href="mailto:hello@auditly360.com"
-              className="inline-flex items-center gap-3 px-5 py-2.5 bg-white/5 border border-white/10 text-slate-200 hover:border-[#EF4600] hover:shadow-[0_4px_15px_rgba(255,139,66,0.25)] hover:scale-105 active:scale-95 transition-all duration-300 shadow-sm w-fit group"
+              className="inline-flex items-center gap-3 px-2 py-1.5 bg-white/5 border border-white/10 text-slate-200 hover:border-[#EF4600] hover:shadow-[0_4px_15px_rgba(255,139,66,0.25)] hover:scale-105 active:scale-95 transition-all duration-300 shadow-sm w-fit group"
             >
               <Mail
                 size={18}
@@ -104,37 +104,37 @@ export function Footer() {
             <div className="flex items-start justify-start gap-4">
               <Link href="#" className="hover:opacity-80 transition-opacity">
                 <Image
-                  src="/footer-icons/linkedin.png"
+                  src="/footer-icons/linkdn (1).svg"
                   alt="LinkedIn"
-                  width={40}
-                  height={40}
+                  width={30}
+                  height={30}
                   className="hover:scale-105 transition-transform"
                 />
               </Link>
               <Link href="#" className="hover:opacity-80 transition-opacity">
                 <Image
-                  src="/footer-icons/facebook (1).png"
+                  src="/footer-icons/Frame 8.svg"
                   alt="Facebook"
-                  width={40}
-                  height={40}
+                  width={30}
+                  height={30}
                   className="hover:scale-105 transition-transform"
                 />
               </Link>
               <Link href="#" className="hover:opacity-80 transition-opacity">
                 <Image
-                  src="/footer-icons/instagram.png"
+                  src="/footer-icons/Instagram.svg"
                   alt="Instagram"
-                  width={40}
-                  height={40}
+                  width={30}
+                  height={30}
                   className="hover:scale-105 transition-transform"
                 />
               </Link>
               <Link href="#" className="hover:opacity-80 transition-opacity">
                 <Image
-                  src="/footer-icons/Frame 2 (1) (1).png"
+                  src="/footer-icons/Twitter.svg"
                   alt="X (Twitter)"
-                  width={40}
-                  height={40}
+                  width={30}
+                  height={30}
                   className="hover:scale-105 transition-transform"
                 />
               </Link>
@@ -142,7 +142,7 @@ export function Footer() {
           </div>
 
           {/* Right: Link Columns */}
-          <div className="flex flex-wrap gap-x-16 gap-y-10 lg:gap-x-24">
+          <div className="flex flex-col-3 gap-8">
             <div className="flex flex-col gap-5">
               <h3 className="font-jakarta font-extrabold text-white">
                 Solutions
@@ -183,7 +183,6 @@ export function Footer() {
               </h3>
               <div className="flex flex-col gap-3">
                 {[
-                  { label: "Feature requests", href: "#" },
                   { label: "Terms & Conditions", href: "/terms-condition" },
                   { label: "Privacy policy", href: "/privacy-policy" },
                 ].map((item) => (
