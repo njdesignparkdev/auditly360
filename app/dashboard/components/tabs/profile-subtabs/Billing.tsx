@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import PricingSection from '@/components/pricing-section/Pricing';
-import { useUserPlan } from '@/hooks/useUserPlan';
-import { supabase } from '@/lib/supabase-client';
-import { handleAuthError } from '@/lib/auth-utils';
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import PricingSection from "@/components/home/Pricing";
+import { useUserPlan } from "@/hooks/useUserPlan";
+import { supabase } from "@/lib/supabase-client";
+import { handleAuthError } from "@/lib/auth-utils";
 
 // Razorpay type is already declared in layout.tsx or elsewhere
 interface PaymentHistory {
@@ -37,23 +37,17 @@ interface BillingProps {
     last_name: string | null;
     full_name?: string;
     avatar_url?: string;
-    role: 'user' | 'admin';
+    role: "user" | "admin";
     email_confirmed: boolean;
     created_at: string;
     updated_at?: string;
   };
 }
-export default function Billing({
-  userProfile
-}: BillingProps) {
-  const {
-    planInfo,
-    loading: _planLoading,
-    hasFeature
-  } = useUserPlan();
-  
+export default function Billing({ userProfile }: BillingProps) {
+  const { planInfo, loading: _planLoading, hasFeature } = useUserPlan();
+
   // Check if user has Image_scane feature
-  const hasImageScanFeature = hasFeature('Image_scane');
+  const hasImageScanFeature = hasFeature("Image_scane");
   const [paymentHistory, setPaymentHistory] = useState<PaymentHistory[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
   const [planExpiryStatus, setPlanExpiryStatus] = useState<{
@@ -61,44 +55,52 @@ export default function Billing({
     expires_at: string | null;
     days_until_expiry: number | null;
   } | null>(null);
-  const [creditPackages, setCreditPackages] = useState<Array<{id: number | string; credits: number; price: number; label: string; pricePerCredit: string}>>([]);
+  const [creditPackages, setCreditPackages] = useState<
+    Array<{
+      id: number | string;
+      credits: number;
+      price: number;
+      label: string;
+      pricePerCredit: string;
+    }>
+  >([]);
   const [loadingPackages, setLoadingPackages] = useState(false);
-  const [purchasingPackage, setPurchasingPackage] = useState<number | string | null>(null);
+  const [purchasingPackage, setPurchasingPackage] = useState<
+    number | string | null
+  >(null);
 
   // Check plan expiry status
   const checkPlanExpiryStatus = async () => {
     try {
       const {
-        data: {
-          session
-        }
+        data: { session },
       } = await supabase.auth.getSession();
       const token = session?.access_token;
       if (!token) {
-        console.warn('No session token available for plan expiry check');
+        console.warn("No session token available for plan expiry check");
         return;
       }
-      const response = await fetch('/api/check-plan-expiry', {
-        method: 'GET',
+      const response = await fetch("/api/check-plan-expiry", {
+        method: "GET",
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
       if (response.ok) {
         const data = await response.json();
         setPlanExpiryStatus({
           is_expired: data.is_expired,
           expires_at: data.expires_at,
-          days_until_expiry: data.days_until_expiry
+          days_until_expiry: data.days_until_expiry,
         });
       } else {
-        console.warn('Plan expiry status check failed:', response.status);
+        console.warn("Plan expiry status check failed:", response.status);
       }
     } catch (error) {
-      console.error('Error checking plan expiry status:', error);
+      console.error("Error checking plan expiry status:", error);
       // Handle authentication errors
-      await handleAuthError(error, 'Billing checkPlanExpiryStatus');
+      await handleAuthError(error, "Billing checkPlanExpiryStatus");
     }
   };
 
@@ -108,34 +110,36 @@ export default function Billing({
       setLoadingHistory(true);
       // Get the current session token
       const {
-        data: {
-          session
-        }
+        data: { session },
       } = await supabase.auth.getSession();
       const token = session?.access_token;
-      const response = await fetch('/api/payment-history', {
+      const response = await fetch("/api/payment-history", {
         headers: {
-          'Authorization': token ? `Bearer ${token}` : '',
-          'Content-Type': 'application/json'
-        }
+          Authorization: token ? `Bearer ${token}` : "",
+          "Content-Type": "application/json",
+        },
       });
       if (response.ok) {
         const data = await response.json();
         setPaymentHistory(data.payments || []);
       } else if (response.status === 401) {
-        console.warn('User not authenticated, skipping payment history fetch');
+        console.warn("User not authenticated, skipping payment history fetch");
         setPaymentHistory([]);
       } else {
-        console.error('Failed to fetch payment history:', response.status, response.statusText);
+        console.error(
+          "Failed to fetch payment history:",
+          response.status,
+          response.statusText
+        );
         const errorData = await response.json().catch(() => ({}));
-        console.error('Error details:', errorData);
+        console.error("Error details:", errorData);
         // Set empty array as fallback
         setPaymentHistory([]);
       }
     } catch (error) {
-      console.error('Error fetching payment history:', error);
+      console.error("Error fetching payment history:", error);
       // Handle authentication errors
-      await handleAuthError(error, 'Billing fetchPaymentHistory');
+      await handleAuthError(error, "Billing fetchPaymentHistory");
       // Set empty array as fallback
       setPaymentHistory([]);
     } finally {
@@ -147,13 +151,13 @@ export default function Billing({
   const fetchCreditPackages = async () => {
     try {
       setLoadingPackages(true);
-      const response = await fetch('/api/purchase-credits');
+      const response = await fetch("/api/purchase-credits");
       if (response.ok) {
         const data = await response.json();
         setCreditPackages(data.packages || []);
       }
     } catch (error) {
-      console.error('Error fetching credit packages:', error);
+      console.error("Error fetching credit packages:", error);
     } finally {
       setLoadingPackages(false);
     }
@@ -163,28 +167,30 @@ export default function Billing({
   const handlePurchaseCredits = async (packageId: number | string) => {
     try {
       setPurchasingPackage(packageId);
-      
+
       // Load Razorpay script
       const loadRazorpayScript = async (): Promise<boolean> => {
-        if (typeof window === 'undefined') return false;
+        if (typeof window === "undefined") return false;
         if ((window as any).Razorpay) return true;
 
-        const existingScript = document.querySelector('script[src*="checkout.razorpay.com"]');
+        const existingScript = document.querySelector(
+          'script[src*="checkout.razorpay.com"]'
+        );
         if (existingScript) {
           return new Promise((resolve) => {
-            existingScript.addEventListener('load', () => resolve(true));
-            existingScript.addEventListener('error', () => resolve(false));
+            existingScript.addEventListener("load", () => resolve(true));
+            existingScript.addEventListener("error", () => resolve(false));
           });
         }
 
         return new Promise((resolve) => {
-          const script = document.createElement('script');
-          script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+          const script = document.createElement("script");
+          script.src = "https://checkout.razorpay.com/v1/checkout.js";
           script.async = true;
           script.onload = () => resolve(true);
           script.onerror = () => resolve(false);
           document.body.appendChild(script);
-          
+
           setTimeout(() => {
             if (!(window as any).Razorpay) {
               resolve(false);
@@ -195,32 +201,34 @@ export default function Billing({
 
       const isRazorpayReady = await loadRazorpayScript();
       if (!isRazorpayReady) {
-        alert('Payment system not available. Please try again later.');
+        alert("Payment system not available. Please try again later.");
         return;
       }
 
       // Get session token
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       const token = session?.access_token;
 
       if (!token) {
-        alert('Please log in to purchase credits.');
+        alert("Please log in to purchase credits.");
         return;
       }
 
       // Create order
-      const orderResponse = await fetch('/api/purchase-credits', {
-        method: 'POST',
+      const orderResponse = await fetch("/api/purchase-credits", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ packageId })
+        body: JSON.stringify({ packageId }),
       });
 
       if (!orderResponse.ok) {
         const errorData = await orderResponse.json();
-        alert(errorData.message || 'Failed to create payment order');
+        alert(errorData.message || "Failed to create payment order");
         return;
       }
 
@@ -230,68 +238,80 @@ export default function Billing({
       const razorpay = new (window as any).Razorpay({
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         order_id: orderData.orderId,
-        name: 'Web Audit Pro',
+        name: "Web Audit Pro",
         description: `Purchase ${orderData.credits} Image Scan Credits`,
-        image: '/logo.png',
+        image: "/logo.png",
         prefill: {
-          name: userProfile.first_name && userProfile.last_name 
-            ? `${userProfile.first_name} ${userProfile.last_name}` 
-            : 'Customer',
+          name:
+            userProfile.first_name && userProfile.last_name
+              ? `${userProfile.first_name} ${userProfile.last_name}`
+              : "Customer",
           email: userProfile.email,
         },
         notes: {
           credits: orderData.credits.toString(),
           packageId: orderData.packageId || packageId.toString(),
-          payment_type: 'credit_purchase'
+          payment_type: "credit_purchase",
         },
         theme: {
-          color: '#000000'
+          color: "#000000",
         },
-        handler: async function(response: any) {
+        handler: async function (response: any) {
           try {
             // Call success API
-            const successResponse = await fetch('/api/credit-purchase-success', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-              },
-              body: JSON.stringify({
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_order_id: response.razorpay_order_id,
-                packageId: orderData.packageId || packageId,
-                credits: orderData.credits,
-                amount: orderData.amount / 100, // Convert from paise
-                currency: orderData.currency
-              })
-            });
+            const successResponse = await fetch(
+              "/api/credit-purchase-success",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_order_id: response.razorpay_order_id,
+                  packageId: orderData.packageId || packageId,
+                  credits: orderData.credits,
+                  amount: orderData.amount / 100, // Convert from paise
+                  currency: orderData.currency,
+                }),
+              }
+            );
 
             if (successResponse.ok) {
               const successData = await successResponse.json();
-              alert(`Success! ${successData.creditsAdded} credits have been added to your account.`);
+              alert(
+                `Success! ${successData.creditsAdded} credits have been added to your account.`
+              );
               // Refresh plan info to get updated credits
-              window.dispatchEvent(new Event('planUpdated'));
+              window.dispatchEvent(new Event("planUpdated"));
               fetchPaymentHistory();
             } else {
               const errorData = await successResponse.json();
-              alert(errorData.message || 'Payment successful but credits could not be added. Please contact support.');
+              alert(
+                errorData.message ||
+                  "Payment successful but credits could not be added. Please contact support."
+              );
             }
           } catch (error) {
-            console.error('Error processing credit purchase:', error);
-            alert('Payment successful but there was an error adding credits. Please contact support with payment ID: ' + response.razorpay_payment_id);
+            console.error("Error processing credit purchase:", error);
+            alert(
+              "Payment successful but there was an error adding credits. Please contact support with payment ID: " +
+                response.razorpay_payment_id
+            );
           }
         },
         modal: {
-          ondismiss: function() {
+          ondismiss: function () {
             setPurchasingPackage(null);
-          }
-        }
+          },
+        },
       });
 
       razorpay.open();
     } catch (error) {
-      console.error('Error purchasing credits:', error);
-      alert('An error occurred. Please try again.');
+      console.error("Error purchasing credits:", error);
+      alert("An error occurred. Please try again.");
     } finally {
       setPurchasingPackage(null);
     }
@@ -325,67 +345,140 @@ export default function Billing({
     };
 
     // Add event listeners
-    window.addEventListener('planUpdated', handlePlanUpdate);
-    window.addEventListener('billingRefresh', handleBillingRefresh);
+    window.addEventListener("planUpdated", handlePlanUpdate);
+    window.addEventListener("billingRefresh", handleBillingRefresh);
 
     // Cleanup event listeners
     return () => {
-      window.removeEventListener('planUpdated', handlePlanUpdate);
-      window.removeEventListener('billingRefresh', handleBillingRefresh);
+      window.removeEventListener("planUpdated", handlePlanUpdate);
+      window.removeEventListener("billingRefresh", handleBillingRefresh);
     };
   }, [userProfile?.id]);
 
   // Subscription data for usage display
   const subscription = {
-    plan: planInfo?.plan_name || 'Free',
-    status: 'active',
+    plan: planInfo?.plan_name || "Free",
+    status: "active",
     nextBilling: null,
     usage: {
       projects: planInfo?.current_projects || 0,
       maxProjects: planInfo?.max_projects || 1,
       audits: 8,
-      maxAudits: 100
-    }
+      maxAudits: 100,
+    },
   };
 
   // Debug logging
 
-  return <motion.div className="space-y-6" initial={{
-    opacity: 0,
-    y: 20
-  }} animate={{
-    opacity: 1,
-    y: 0
-  }} transition={{
-    duration: 0.5
-  }}>
+  return (
+    <motion.div
+      className="space-y-6"
+      initial={{
+        opacity: 0,
+        y: 20,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={{
+        duration: 0.5,
+      }}
+    >
       {/* Plan Expiry Warning */}
-      {planExpiryStatus && planExpiryStatus.expires_at && <motion.div className={` border-b p-4 mb-6 ${planExpiryStatus.is_expired ? 'bg-red-50 border-red-200' : planExpiryStatus.days_until_expiry && planExpiryStatus.days_until_expiry <= 7 ? 'bg-yellow-50 border-yellow-200' : 'bg-[#ff4b01]/10 border-[#ff4b01]/30'}`} initial={{
-      opacity: 0,
-      y: 20
-    }} animate={{
-      opacity: 1,
-      y: 0
-    }} transition={{
-      duration: 0.5,
-      delay: 0.05
-    }}>
+      {planExpiryStatus && planExpiryStatus.expires_at && (
+        <motion.div
+          className={` border-b p-4 mb-6 ${
+            planExpiryStatus.is_expired
+              ? "bg-red-50 border-red-200"
+              : planExpiryStatus.days_until_expiry &&
+                planExpiryStatus.days_until_expiry <= 7
+              ? "bg-yellow-50 border-yellow-200"
+              : "bg-[#ff4b01]/10 border-[#ff4b01]/30"
+          }`}
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.5,
+            delay: 0.05,
+          }}
+        >
           <div className="flex items-center">
-            <div className={`flex-shrink-0 w-8 h-8  flex items-center justify-center ${planExpiryStatus.is_expired ? 'bg-red-100' : planExpiryStatus.days_until_expiry && planExpiryStatus.days_until_expiry <= 7 ? 'bg-yellow-100' : 'bg-[#ff4b01]/20'}`}>
-              <span className={`text-lg ${planExpiryStatus.is_expired ? 'text-red-600' : planExpiryStatus.days_until_expiry && planExpiryStatus.days_until_expiry <= 7 ? 'text-yellow-600' : 'text-[#ff4b01]'}`}>
-                {planExpiryStatus.is_expired ? '⚠️' : '⏰'}
+            <div
+              className={`flex-shrink-0 w-8 h-8  flex items-center justify-center ${
+                planExpiryStatus.is_expired
+                  ? "bg-red-100"
+                  : planExpiryStatus.days_until_expiry &&
+                    planExpiryStatus.days_until_expiry <= 7
+                  ? "bg-yellow-100"
+                  : "bg-[#ff4b01]/20"
+              }`}
+            >
+              <span
+                className={`text-lg ${
+                  planExpiryStatus.is_expired
+                    ? "text-red-600"
+                    : planExpiryStatus.days_until_expiry &&
+                      planExpiryStatus.days_until_expiry <= 7
+                    ? "text-yellow-600"
+                    : "text-[#ff4b01]"
+                }`}
+              >
+                {planExpiryStatus.is_expired ? "⚠️" : "⏰"}
               </span>
             </div>
             <div className="ml-3">
-              <h3 className={`text-sm font-medium ${planExpiryStatus.is_expired ? 'text-red-800' : planExpiryStatus.days_until_expiry && planExpiryStatus.days_until_expiry <= 7 ? 'text-yellow-800' : 'text-[#ff4b01]'}`}>
-                {planExpiryStatus.is_expired ? 'Plan Expired' : planExpiryStatus.days_until_expiry && planExpiryStatus.days_until_expiry <= 7 ? 'Plan Expiring Soon' : 'Plan Status'}
+              <h3
+                className={`text-sm font-medium ${
+                  planExpiryStatus.is_expired
+                    ? "text-red-800"
+                    : planExpiryStatus.days_until_expiry &&
+                      planExpiryStatus.days_until_expiry <= 7
+                    ? "text-yellow-800"
+                    : "text-[#ff4b01]"
+                }`}
+              >
+                {planExpiryStatus.is_expired
+                  ? "Plan Expired"
+                  : planExpiryStatus.days_until_expiry &&
+                    planExpiryStatus.days_until_expiry <= 7
+                  ? "Plan Expiring Soon"
+                  : "Plan Status"}
               </h3>
-              <p className={`text-sm ${planExpiryStatus.is_expired ? 'text-red-700' : planExpiryStatus.days_until_expiry && planExpiryStatus.days_until_expiry <= 7 ? 'text-yellow-700' : 'text-[#ff4b01]'}`}>
-                {planExpiryStatus.is_expired ? 'Your plan has expired and you have been downgraded to the Starter plan.' : planExpiryStatus.days_until_expiry ? `Your plan expires in ${planExpiryStatus.days_until_expiry} day${planExpiryStatus.days_until_expiry === 1 ? '' : 's'} on ${new Date(planExpiryStatus.expires_at!).toLocaleDateString()}.` : `Your plan expires on ${new Date(planExpiryStatus.expires_at!).toLocaleDateString()}.`}
+              <p
+                className={`text-sm ${
+                  planExpiryStatus.is_expired
+                    ? "text-red-700"
+                    : planExpiryStatus.days_until_expiry &&
+                      planExpiryStatus.days_until_expiry <= 7
+                    ? "text-yellow-700"
+                    : "text-[#ff4b01]"
+                }`}
+              >
+                {planExpiryStatus.is_expired
+                  ? "Your plan has expired and you have been downgraded to the Starter plan."
+                  : planExpiryStatus.days_until_expiry
+                  ? `Your plan expires in ${
+                      planExpiryStatus.days_until_expiry
+                    } day${
+                      planExpiryStatus.days_until_expiry === 1 ? "" : "s"
+                    } on ${new Date(
+                      planExpiryStatus.expires_at!
+                    ).toLocaleDateString()}.`
+                  : `Your plan expires on ${new Date(
+                      planExpiryStatus.expires_at!
+                    ).toLocaleDateString()}.`}
               </p>
             </div>
           </div>
-        </motion.div>}
+        </motion.div>
+      )}
 
       {/* Current Plan Usage */}
       {/* <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
@@ -478,209 +571,322 @@ export default function Billing({
         </div>
       </motion.div> */}
 
-      
       {/* Pricing Plans */}
-      <motion.div initial={{
-      opacity: 0,
-      y: 20
-    }} animate={{
-      opacity: 1,
-      y: 0
-    }} transition={{
-      duration: 0.5,
-      delay: 0.2
-    }}>
-        <PricingSection currentPlanType={planInfo?.plan_type} currentPlanId={planInfo?.plan_id} currentBillingCycle={planInfo?.billing_cycle} planExpiresAt={planInfo?.plan_expires_at} showBillingToggle={true} showCurrentPlanHighlight={true} className="py-8" />
-      
-      {/* Image Scan Credits Section - Only show if user has Image_scane feature */}
-      {hasImageScanFeature && (
-        <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
+      <motion.div
+        initial={{
           opacity: 0,
-          y: 20
-        }} animate={{
+          y: 20,
+        }}
+        animate={{
           opacity: 1,
-          y: 0
-        }} transition={{
+          y: 0,
+        }}
+        transition={{
           duration: 0.5,
-          delay: 0.15
-        }}>
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h2 className="text-lg font-semibold text-black">Image Scan Credits</h2>
-              <p className="text-sm text-gray-600 mt-1">
-                Credits used for reverse image search scans. Each scan costs 1 credit.
-              </p>
-            </div>
-            <div className="text-right">
-              <div className="text-2xl font-bold text-black">
-                {planInfo?.image_scan_credits ?? 0}
+          delay: 0.2,
+        }}
+      >
+        <PricingSection
+          currentPlanType={planInfo?.plan_type}
+          currentPlanId={planInfo?.plan_id}
+          currentBillingCycle={planInfo?.billing_cycle}
+          planExpiresAt={planInfo?.plan_expires_at}
+          showBillingToggle={true}
+          showCurrentPlanHighlight={true}
+          className="py-8"
+        />
+
+        {/* Image Scan Credits Section - Only show if user has Image_scane feature */}
+        {hasImageScanFeature && (
+          <motion.div
+            className="bg-white rounded-lg border border-gray-300 p-6"
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.5,
+              delay: 0.15,
+            }}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-lg font-semibold text-black">
+                  Image Scan Credits
+                </h2>
+                <p className="text-sm text-gray-600 mt-1">
+                  Credits used for reverse image search scans. Each scan costs 1
+                  credit.
+                </p>
               </div>
-              <p className="text-sm text-gray-500">Available Credits</p>
+              <div className="text-right">
+                <div className="text-2xl font-bold text-black">
+                  {planInfo?.image_scan_credits ?? 0}
+                </div>
+                <p className="text-sm text-gray-500">Available Credits</p>
+              </div>
             </div>
-          </div>
 
-          {loadingPackages ? (
-            <div className="text-center py-8">
-              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#ff4b01] mx-auto"></div>
-              <p className="mt-2 text-sm text-gray-500">Loading credit packages...</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-              {creditPackages.map((pkg, index) => (
-                <motion.div
-                  key={pkg.id || index}
-                  className="border border-gray-300 rounded-lg p-4 hover:border-[#ff4b01]/30 hover:shadow-md transition-all"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.2 + index * 0.05 }}
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-semibold text-black">{pkg.label}</h3>
-                    <span className="text-xs text-gray-500">${pkg.pricePerCredit}/credit</span>
-                  </div>
-                  <p className="text-2xl font-bold text-[#ff4b01] mb-3">${pkg.price}</p>
-                  <button
-                    onClick={() => handlePurchaseCredits(pkg.id || index)}
-                    disabled={purchasingPackage === (pkg.id || index)}
-                    className="w-full px-4 py-2 text-sm font-medium text-white bg-[#ff4b01] rounded-md hover:bg-[#e64401] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            {loadingPackages ? (
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#ff4b01] mx-auto"></div>
+                <p className="mt-2 text-sm text-gray-500">
+                  Loading credit packages...
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+                {creditPackages.map((pkg, index) => (
+                  <motion.div
+                    key={pkg.id || index}
+                    className="border border-gray-300 rounded-lg p-4 hover:border-[#ff4b01]/30 hover:shadow-md transition-all"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.2 + index * 0.05 }}
                   >
-                    {purchasingPackage === (pkg.id || index) ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                        Processing...
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="font-semibold text-black">{pkg.label}</h3>
+                      <span className="text-xs text-gray-500">
+                        ${pkg.pricePerCredit}/credit
                       </span>
-                    ) : (
-                      `Purchase ${pkg.label}`
-                    )}
-                  </button>
-                </motion.div>
-              ))}
-            </div>
-          )}
-        </motion.div>
-      )}
-
+                    </div>
+                    <p className="text-2xl font-bold text-[#ff4b01] mb-3">
+                      ${pkg.price}
+                    </p>
+                    <button
+                      onClick={() => handlePurchaseCredits(pkg.id || index)}
+                      disabled={purchasingPackage === (pkg.id || index)}
+                      className="w-full px-4 py-2 text-sm font-medium text-white bg-[#ff4b01] rounded-md hover:bg-[#e64401] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      {purchasingPackage === (pkg.id || index) ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                          Processing...
+                        </span>
+                      ) : (
+                        `Purchase ${pkg.label}`
+                      )}
+                    </button>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        )}
       </motion.div>
 
       {/* Billing History */}
-      <motion.div className="bg-white rounded-lg border border-gray-300 p-6" initial={{
-      opacity: 0,
-      y: 20
-    }} animate={{
-      opacity: 1,
-      y: 0
-    }} transition={{
-      duration: 0.5,
-      delay: 0.3
-    }}>
-        <h2 className="text-lg font-semibold text-black mb-4">Payment History</h2>
-        
-        {loadingHistory ? <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-2 text-sm text-gray-500">Loading payment history...</p>
-          </div> : !userProfile?.id ? <motion.div className="text-center py-8" initial={{
-        opacity: 0
-      }} animate={{
-        opacity: 1
-      }} transition={{
-        duration: 0.5,
-        delay: 0.4
-      }}>
-            <motion.svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" initial={{
-          scale: 0
-        }} animate={{
-          scale: 1
-        }} transition={{
-          duration: 0.5,
-          delay: 0.5
-        }}>
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </motion.svg>
-            <h3 className="mt-2 text-sm font-medium text-black">Authentication Required</h3>
-            <p className="mt-1 text-sm text-gray-500">Please log in to view payment history.</p>
-          </motion.div> : paymentHistory.length === 0 ? <motion.div className="text-center py-8" initial={{
-        opacity: 0
-      }} animate={{
-        opacity: 1
-      }} transition={{
-        duration: 0.5,
-        delay: 0.4
-      }}>
-            <motion.svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" initial={{
-          scale: 0
-        }} animate={{
-          scale: 1
-        }} transition={{
-          duration: 0.5,
-          delay: 0.5
-        }}>
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </motion.svg>
-            <h3 className="mt-2 text-sm font-medium text-black">No payment history</h3>
-            <p className="mt-1 text-sm text-gray-500">
-              {planInfo?.plan_type === 'Starter' ? "You're currently on the free plan." : "No payment records found for your account."}
-            </p>
-          </motion.div> : <div className="space-y-4">
-            {paymentHistory.map((payment, index) => <motion.div key={payment.id} className="border border-gray-300 rounded-lg p-4 hover:border-gray-300 transition-colors" initial={{
+      <motion.div
+        className="bg-white rounded-lg border border-gray-300 p-6"
+        initial={{
           opacity: 0,
-          y: 20
-        }} animate={{
+          y: 20,
+        }}
+        animate={{
           opacity: 1,
-          y: 0
-        }} transition={{
+          y: 0,
+        }}
+        transition={{
           duration: 0.5,
-          delay: 0.4 + index * 0.1
-        }}>
+          delay: 0.3,
+        }}
+      >
+        <h2 className="text-lg font-semibold text-black mb-4">
+          Payment History
+        </h2>
+
+        {loadingHistory ? (
+          <div className="text-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="mt-2 text-sm text-gray-500">
+              Loading payment history...
+            </p>
+          </div>
+        ) : !userProfile?.id ? (
+          <motion.div
+            className="text-center py-8"
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            transition={{
+              duration: 0.5,
+              delay: 0.4,
+            }}
+          >
+            <motion.svg
+              className="mx-auto h-12 w-12 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              initial={{
+                scale: 0,
+              }}
+              animate={{
+                scale: 1,
+              }}
+              transition={{
+                duration: 0.5,
+                delay: 0.5,
+              }}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+              />
+            </motion.svg>
+            <h3 className="mt-2 text-sm font-medium text-black">
+              Authentication Required
+            </h3>
+            <p className="mt-1 text-sm text-gray-500">
+              Please log in to view payment history.
+            </p>
+          </motion.div>
+        ) : paymentHistory.length === 0 ? (
+          <motion.div
+            className="text-center py-8"
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            transition={{
+              duration: 0.5,
+              delay: 0.4,
+            }}
+          >
+            <motion.svg
+              className="mx-auto h-12 w-12 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              initial={{
+                scale: 0,
+              }}
+              animate={{
+                scale: 1,
+              }}
+              transition={{
+                duration: 0.5,
+                delay: 0.5,
+              }}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </motion.svg>
+            <h3 className="mt-2 text-sm font-medium text-black">
+              No payment history
+            </h3>
+            <p className="mt-1 text-sm text-gray-500">
+              {planInfo?.plan_type === "Starter"
+                ? "You're currently on the free plan."
+                : "No payment records found for your account."}
+            </p>
+          </motion.div>
+        ) : (
+          <div className="space-y-4">
+            {paymentHistory.map((payment, index) => (
+              <motion.div
+                key={payment.id}
+                className="border border-gray-300 rounded-lg p-4 hover:border-gray-300 transition-colors"
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.4 + index * 0.1,
+                }}
+              >
                 <div className="flex items-center justify-between mb-3">
                   <div>
-                    <h3 className="font-medium text-black">{payment.plan_name}</h3>
+                    <h3 className="font-medium text-black">
+                      {payment.plan_name}
+                    </h3>
                     <p className="text-sm text-gray-600">
-                      {payment.plan_type} • {payment.billing_cycle || 'One-time'}
+                      {payment.plan_type} •{" "}
+                      {payment.billing_cycle || "One-time"}
                     </p>
                   </div>
                   <div className="text-right">
                     <p className="font-semibold text-black">
-                      {payment.currency === 'INR' ? '$' : '$'}{payment.amount}
+                      {payment.currency === "INR" ? "$" : "$"}
+                      {payment.amount}
                     </p>
                     <p className="text-sm text-gray-500">
                       {new Date(payment.payment_date).toLocaleDateString()}
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                   <div className="space-y-1">
                     <div className="flex items-center space-x-2">
-                      <span className={`px-2 py-1 rounded text-xs font-medium ${payment.payment_status === 'completed' ? 'bg-green-100 text-green-800' : payment.payment_status === 'failed' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                      <span
+                        className={`px-2 py-1 rounded text-xs font-medium ${
+                          payment.payment_status === "completed"
+                            ? "bg-green-100 text-green-800"
+                            : payment.payment_status === "failed"
+                            ? "bg-red-100 text-red-800"
+                            : "bg-yellow-100 text-yellow-800"
+                        }`}
+                      >
                         {payment.payment_status}
                       </span>
-                      {payment.subscription_status && <span className="px-2 py-1 rounded text-xs font-medium bg-[#ff4b01]/20 text-[#ff4b01]">
+                      {payment.subscription_status && (
+                        <span className="px-2 py-1 rounded text-xs font-medium bg-[#ff4b01]/20 text-[#ff4b01]">
                           {payment.subscription_status}
-                        </span>}
+                        </span>
+                      )}
                     </div>
                     <p className="text-xs text-gray-500">
                       Payment ID: {payment.razorpay_payment_id}
                     </p>
-                    {payment.razorpay_order_id && <p className="text-xs text-gray-500">
+                    {payment.razorpay_order_id && (
+                      <p className="text-xs text-gray-500">
                         Order ID: {payment.razorpay_order_id}
-                      </p>}
+                      </p>
+                    )}
                   </div>
-                  
+
                   <div className="text-right">
                     <p className="text-xs text-gray-500">
-                      Created: {new Date(payment.created_at).toLocaleDateString()}
+                      Created:{" "}
+                      {new Date(payment.created_at).toLocaleDateString()}
                     </p>
-                    {payment.expires_at && <p className="text-xs text-gray-500">
-                        Expires: {new Date(payment.expires_at).toLocaleDateString()}
-                      </p>}
-                    {payment.receipt_number && <p className="text-xs text-gray-500">
+                    {payment.expires_at && (
+                      <p className="text-xs text-gray-500">
+                        Expires:{" "}
+                        {new Date(payment.expires_at).toLocaleDateString()}
+                      </p>
+                    )}
+                    {payment.receipt_number && (
+                      <p className="text-xs text-gray-500">
                         Receipt: {payment.receipt_number}
-                      </p>}
+                      </p>
+                    )}
                   </div>
                 </div>
 
                 {/* Plan Details - Show different info for credit purchases */}
-                {payment.plan_type === 'Credits' ? (
+                {payment.plan_type === "Credits" ? (
                   <div className="border-t border-gray-100 pt-3">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                       <div>
@@ -692,15 +898,17 @@ export default function Billing({
                       <div>
                         <p className="text-gray-500">Payment Method</p>
                         <p className="font-medium text-black">
-                          {payment.payment_method || 'Razorpay'}
+                          {payment.payment_method || "Razorpay"}
                         </p>
                       </div>
                     </div>
-                    
-                    {payment.notes && <div className="mt-2">
+
+                    {payment.notes && (
+                      <div className="mt-2">
                         <p className="text-xs text-gray-500">Notes</p>
                         <p className="text-sm text-gray-700">{payment.notes}</p>
-                      </div>}
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="border-t border-gray-100 pt-3">
@@ -708,7 +916,9 @@ export default function Billing({
                       <div>
                         <p className="text-gray-500">Max Projects</p>
                         <p className="font-medium text-black">
-                          {payment.max_projects === -1 ? 'Unlimited' : payment.max_projects || 'N/A'}
+                          {payment.max_projects === -1
+                            ? "Unlimited"
+                            : payment.max_projects || "N/A"}
                         </p>
                       </div>
                       <div>
@@ -720,19 +930,24 @@ export default function Billing({
                       <div>
                         <p className="text-gray-500">Payment Method</p>
                         <p className="font-medium text-black">
-                          {payment.payment_method || 'Razorpay'}
+                          {payment.payment_method || "Razorpay"}
                         </p>
                       </div>
                     </div>
-                    
-                    {payment.notes && <div className="mt-2">
+
+                    {payment.notes && (
+                      <div className="mt-2">
                         <p className="text-xs text-gray-500">Notes</p>
                         <p className="text-sm text-gray-700">{payment.notes}</p>
-                      </div>}
+                      </div>
+                    )}
                   </div>
                 )}
-              </motion.div>)}
-          </div>}
+              </motion.div>
+            ))}
+          </div>
+        )}
       </motion.div>
-    </motion.div>;
+    </motion.div>
+  );
 }

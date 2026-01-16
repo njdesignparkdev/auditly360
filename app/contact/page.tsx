@@ -2,11 +2,11 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Footer } from "@/components/footer-section/Footer";
+import { Footer } from "@/components/home/Footer";
 import contactData from "./contact.json";
-import BgContainer from "../home-page-components/bg-container";
+import BgContainer from "../../components/ui/bg-container";
 import GridOverlay from "@/components/ui/grid-layer";
-import Navbar from "@/components/navbar/navbar-dropdown";
+import Navbar from "@/components/home/navbar-dropdown";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({

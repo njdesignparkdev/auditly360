@@ -2,10 +2,10 @@
 
 import React from "react";
 import Link from "next/link";
-import { Footer } from "@/components/footer-section/Footer";
+import { Footer } from "@/components/home/Footer";
 import GridOverlay from "@/components/ui/grid-layer";
-import BgContainer from "../home-page-components/bg-container";
-import Navbar from "@/components/navbar/navbar-dropdown";
+import BgContainer from "../../components/ui/bg-container";
+import Navbar from "@/components/home/navbar-dropdown";
 import privacyData from "./privacy.json";
 
 export default function PrivacyPage() {

@@ -23,12 +23,12 @@ export default function Navbar() {
       href: "/#features",
     },
     {
-      label: "Pricing",
-      href: "/#pricing",
-    },
-    {
       label: "How it Works",
       href: "/#how-it-works",
+    },
+    {
+      label: "Pricing",
+      href: "/#pricing",
     },
     {
       label: "Testimonials",

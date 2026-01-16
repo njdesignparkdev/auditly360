@@ -1,32 +1,29 @@
-'use client';
+"use client";
 
-import { useState, useEffect, Suspense, useCallback } from 'react';
-import { useAuth } from '@/hooks/useAuth';
-import { useSupabase } from '@/contexts/SupabaseContext';
-import { AuditProject } from '@/types/audit';
-import { useSearchParams } from 'next/navigation';
-import { DashboardNavbar, DashboardContent } from './components/dashboard-components';
-import AnalysisTab from './components/tabs/AnalysisTab';
-import PageAnalysisTab from './components/tabs/PageAnalysisTab';
-import ConnectionStatus from './components/ConnectionStatus';
-import { ScrapedPage } from './components/analysis-tab/types';
-import { useProjectsStore } from '@/lib/stores/projectsStore';
-import { Footer } from '@/components/footer-section/Footer';
+import { useState, useEffect, Suspense, useCallback } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { useSupabase } from "@/contexts/SupabaseContext";
+import { AuditProject } from "@/types/audit";
+import { useSearchParams } from "next/navigation";
+import {
+  DashboardNavbar,
+  DashboardContent,
+} from "./components/dashboard-components";
+import AnalysisTab from "./components/tabs/AnalysisTab";
+import PageAnalysisTab from "./components/tabs/PageAnalysisTab";
+import ConnectionStatus from "./components/ConnectionStatus";
+import { ScrapedPage } from "./components/analysis-tab/types";
+import { useProjectsStore } from "@/lib/stores/projectsStore";
+
 function DashboardContentWrapper() {
-  const {
-    user,
-    userProfile,
-    loading,
-    isAuthenticated,
-    authChecked
-  } = useAuth();
-  const {
-    getAuditProjectsOptimized,
-    deleteAuditProject
-  } = useSupabase();
+  const { user, userProfile, loading, isAuthenticated, authChecked } =
+    useAuth();
+  const { getAuditProjectsOptimized, deleteAuditProject } = useSupabase();
   const searchParams = useSearchParams();
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("dashboard");
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
+    null
+  );
   const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
 
   // Use Zustand store for projects
@@ -40,29 +37,44 @@ function DashboardContentWrapper() {
     setFetchFunction,
     updateProject,
     removeProject,
-    refreshProjects: storeRefreshProjects
+    refreshProjects: storeRefreshProjects,
   } = useProjectsStore();
 
   // Analysis data cache
-  const [analysisCache, setAnalysisCache] = useState<Map<string, {
-    project: AuditProject | null;
-    scrapedPages: ScrapedPage[];
-    lastFetchTime: number;
-  }>>(new Map());
+  const [analysisCache, setAnalysisCache] = useState<
+    Map<
+      string,
+      {
+        project: AuditProject | null;
+        scrapedPages: ScrapedPage[];
+        lastFetchTime: number;
+      }
+    >
+  >(new Map());
 
   // Handle authentication and redirect if not authenticated
   useEffect(() => {
     if (authChecked && !isAuthenticated) {
-      window.location.href = '/login';
+      window.location.href = "/login";
     }
   }, [authChecked, isAuthenticated]);
 
   // Handle URL parameters for tab detection
   useEffect(() => {
-    const tabParam = searchParams.get('tab');
-    const projectId = searchParams.get('projectId');
-    const pageId = searchParams.get('pageId');
-    if (tabParam && ['dashboard', 'projects', 'profile', 'admin', 'analysis', 'page-analysis'].includes(tabParam)) {
+    const tabParam = searchParams.get("tab");
+    const projectId = searchParams.get("projectId");
+    const pageId = searchParams.get("pageId");
+    if (
+      tabParam &&
+      [
+        "dashboard",
+        "projects",
+        "profile",
+        "admin",
+        "analysis",
+        "page-analysis",
+      ].includes(tabParam)
+    ) {
       setActiveTab(tabParam);
     }
     if (projectId) {
@@ -70,11 +82,11 @@ function DashboardContentWrapper() {
 
       // If we have a projectId but no tab specified, default to analysis
       if (!tabParam) {
-        setActiveTab('analysis');
+        setActiveTab("analysis");
         // Update URL to include the tab parameter
         const url = new URL(window.location.href);
-        url.searchParams.set('tab', 'analysis');
-        window.history.replaceState({}, '', url.toString());
+        url.searchParams.set("tab", "analysis");
+        window.history.replaceState({}, "", url.toString());
       }
     }
     if (pageId) {
@@ -82,18 +94,19 @@ function DashboardContentWrapper() {
 
       // If we have a pageId but no tab specified, default to page-analysis
       if (!tabParam) {
-        setActiveTab('page-analysis');
+        setActiveTab("page-analysis");
         // Update URL to include the tab parameter
         const url = new URL(window.location.href);
-        url.searchParams.set('tab', 'page-analysis');
-        window.history.replaceState({}, '', url.toString());
+        url.searchParams.set("tab", "page-analysis");
+        window.history.replaceState({}, "", url.toString());
       }
     }
   }, [searchParams]);
 
   // Debug AnalysisTab rendering
   useEffect(() => {
-    if (activeTab === 'analysis' && selectedProjectId) { }
+    if (activeTab === "analysis" && selectedProjectId) {
+    }
   }, [activeTab, selectedProjectId]);
 
   // Use store's refreshProjects function
@@ -102,7 +115,7 @@ function DashboardContentWrapper() {
   // Handle browser visibility changes - simplified with Zustand
   useEffect(() => {
     const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
+      if (document.visibilityState === "visible") {
         // Immediately refresh when page becomes visible
         refreshProjects();
       }
@@ -111,11 +124,11 @@ function DashboardContentWrapper() {
       // Immediately refresh when window gains focus
       refreshProjects();
     };
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('focus', handleFocus);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("focus", handleFocus);
     return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('focus', handleFocus);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("focus", handleFocus);
     };
   }, [refreshProjects]);
 
@@ -124,89 +137,93 @@ function DashboardContentWrapper() {
     setActiveTab(tab);
     // Update URL without page reload
     const url = new URL(window.location.href);
-    url.searchParams.set('tab', tab);
-    if (tab !== 'analysis') {
-      url.searchParams.delete('projectId');
+    url.searchParams.set("tab", tab);
+    if (tab !== "analysis") {
+      url.searchParams.delete("projectId");
       setSelectedProjectId(null);
     }
-    if (tab !== 'page-analysis') {
-      url.searchParams.delete('pageId');
+    if (tab !== "page-analysis") {
+      url.searchParams.delete("pageId");
       setSelectedPageId(null);
     }
-    window.history.pushState({}, '', url.toString());
+    window.history.pushState({}, "", url.toString());
   };
 
   // Handle project selection for analysis
   const handleProjectSelect = (projectId: string) => {
     setSelectedProjectId(projectId);
-    setActiveTab('analysis');
+    setActiveTab("analysis");
     // Update URL with both tab and projectId
     const url = new URL(window.location.href);
-    url.searchParams.set('tab', 'analysis');
-    url.searchParams.set('projectId', projectId);
-    window.history.pushState({}, '', url.toString());
+    url.searchParams.set("tab", "analysis");
+    url.searchParams.set("projectId", projectId);
+    window.history.pushState({}, "", url.toString());
   };
 
   // Handle page selection for page analysis
   const handlePageSelect = (pageId: string) => {
     setSelectedPageId(pageId);
-    setActiveTab('page-analysis');
+    setActiveTab("page-analysis");
     // Update URL with both tab and pageId
     const url = new URL(window.location.href);
-    url.searchParams.set('tab', 'page-analysis');
-    url.searchParams.set('pageId', pageId);
-    window.history.pushState({}, '', url.toString());
+    url.searchParams.set("tab", "page-analysis");
+    url.searchParams.set("pageId", pageId);
+    window.history.pushState({}, "", url.toString());
   };
 
   // CRUD operations for projects
-  const handleUpdateProject = async (projectId: string, data: {
-    siteUrl: string;
-    pageType: 'single' | 'multiple';
-    brandConsistency: boolean;
-    hiddenUrls: boolean;
-    keysCheck: boolean;
-    brandData: {
-      companyName: string;
-      phoneNumber: string;
-      emailAddress: string;
-      address: string;
-      additionalInformation: string;
-    };
-    hiddenUrlsList: {
-      id: string;
-      url: string;
-    }[];
-  }) => {
+  const handleUpdateProject = async (
+    projectId: string,
+    data: {
+      siteUrl: string;
+      pageType: "single" | "multiple";
+      brandConsistency: boolean;
+      hiddenUrls: boolean;
+      keysCheck: boolean;
+      brandData: {
+        companyName: string;
+        phoneNumber: string;
+        emailAddress: string;
+        address: string;
+        additionalInformation: string;
+      };
+      hiddenUrlsList: {
+        id: string;
+        url: string;
+      }[];
+    }
+  ) => {
     try {
       // TODO: Implement actual API call to update project
       // For now, just simulate success
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Update the project in local state
       updateProject(projectId, {
         site_url: data.siteUrl,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       });
     } catch (error) {
-      console.error('Dashboard: Error updating project:', error);
+      console.error("Dashboard: Error updating project:", error);
       throw error;
     }
   };
   const handleDeleteProject = async (projectId: string) => {
     try {
       // Call the actual delete API
-      const {
-        error
-      } = await deleteAuditProject(projectId);
+      const { error } = await deleteAuditProject(projectId);
       if (error) {
-        console.error('Dashboard: Error deleting project from database:', error);
+        console.error(
+          "Dashboard: Error deleting project from database:",
+          error
+        );
         throw new Error(`Failed to delete project: ${error.message}`);
       }
 
       // Remove the project from local state
       removeProject(projectId);
     } catch (error) {
-      console.error('Dashboard: Error deleting project:', error);
+      console.error("Dashboard: Error deleting project:", error);
       throw error;
     }
   };
@@ -214,21 +231,23 @@ function DashboardContentWrapper() {
     try {
       // TODO: Implement actual API call to recrawl project
       // For now, just simulate success
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Update the project status to pending
       updateProject(projectId, {
-        status: 'pending',
-        updated_at: new Date().toISOString()
+        status: "pending",
+        updated_at: new Date().toISOString(),
       });
     } catch (error) {
-      console.error('Dashboard: Error recrawling project:', error);
+      console.error("Dashboard: Error recrawling project:", error);
       throw error;
     }
   };
 
   // Analysis cache management
-  const getCachedAnalysisData = (projectId: string): {
+  const getCachedAnalysisData = (
+    projectId: string
+  ): {
     project: AuditProject | null;
     scrapedPages: ScrapedPage[];
     lastFetchTime: number;
@@ -246,13 +265,17 @@ function DashboardContentWrapper() {
     }
     return null;
   };
-  const setCachedAnalysisData = (projectId: string, project: AuditProject | null, scrapedPages: ScrapedPage[]) => {
-    setAnalysisCache(prev => {
+  const setCachedAnalysisData = (
+    projectId: string,
+    project: AuditProject | null,
+    scrapedPages: ScrapedPage[]
+  ) => {
+    setAnalysisCache((prev) => {
       const newCache = new Map(prev);
       newCache.set(projectId, {
         project,
         scrapedPages,
-        lastFetchTime: Date.now()
+        lastFetchTime: Date.now(),
       });
       return newCache;
     });
@@ -265,7 +288,7 @@ function DashboardContentWrapper() {
       setFetchFunction(async () => {
         const { data, error } = await getAuditProjectsOptimized();
         if (error) {
-          throw new Error(error.message || 'Failed to fetch projects');
+          throw new Error(error.message || "Failed to fetch projects");
         }
         return data || [];
       });
@@ -273,64 +296,114 @@ function DashboardContentWrapper() {
       // Load projects
       storeRefreshProjects();
     }
-  }, [authChecked, isAuthenticated, user, getAuditProjectsOptimized, setFetchFunction, storeRefreshProjects]);
+  }, [
+    authChecked,
+    isAuthenticated,
+    user,
+    getAuditProjectsOptimized,
+    setFetchFunction,
+    storeRefreshProjects,
+  ]);
 
   // Show loading state
   if (loading) {
-    return <div className="max-w-7xl mx-auto min-h-[calc(100vh-65px)] bg-gray-50 flex items-center justify-center">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff4b01] mx-auto"></div>
-        <p className="mt-4 text-gray-600">Loading dashboard...</p>
+    return (
+      <div className="max-w-7xl mx-auto min-h-[calc(100vh-65px)] bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff4b01] mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading dashboard...</p>
+        </div>
       </div>
-    </div>;
+    );
   }
 
   // Redirect if not authenticated
   if (!user) {
-    return <div className="max-w-7xl mx-auto min-h-[calc(100vh-65px)] bg-white flex items-center justify-center">
+    return (
+      <div className="max-w-7xl mx-auto min-h-[calc(100vh-65px)] bg-white flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h1>
-          <p className="text-gray-600 mb-6">You need to be logged in to access the dashboard.</p>
-          <a href="/login" className="inline-block bg-[#ff4b01] text-white px-6 py-2 rounded-lg hover:bg-[#e64401] transition-colors">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            Access Denied
+          </h1>
+          <p className="text-gray-600 mb-6">
+            You need to be logged in to access the dashboard.
+          </p>
+          <a
+            href="/login"
+            className="inline-block bg-[#ff4b01] text-white px-6 py-2 rounded-lg hover:bg-[#e64401] transition-colors"
+          >
             Go to Login
           </a>
         </div>
-      </div>;
+      </div>
+    );
   }
-  return <div className="max-w-7xl mx-auto min-h-[calc(100vh-65px)] border-x border-gray-300 bg-white overflow-x-hidden">
+  return (
+    <div className="max-w-7xl mx-auto min-h-[calc(100vh-65px)] border-x border-gray-300 bg-white overflow-x-hidden">
       {/* Top Navbar */}
-      <DashboardNavbar 
-        activeTab={activeTab} 
-        onTabChange={handleTabChange} 
-        userProfile={userProfile} 
-        selectedProjectId={selectedProjectId} 
+      <DashboardNavbar
+        activeTab={activeTab}
+        onTabChange={handleTabChange}
+        userProfile={userProfile}
+        selectedProjectId={selectedProjectId}
       />
 
-    {/* Main Content */}
-    <div className="">
-      {/* Content */}
+      {/* Main Content */}
       <div className="">
-        {activeTab === 'analysis' && selectedProjectId ? <div className="">
-          <AnalysisTab key={selectedProjectId} // Prevent unnecessary re-mounting
-            projectId={selectedProjectId} cachedData={getCachedAnalysisData(selectedProjectId)} onDataUpdate={(project, scrapedPages) => setCachedAnalysisData(selectedProjectId, project, scrapedPages)} onPageSelect={handlePageSelect} />
-        </div> : activeTab === 'page-analysis' && selectedPageId ? <div className="">
-          <PageAnalysisTab key={selectedPageId} // Prevent unnecessary re-mounting
-            pageId={selectedPageId} />
-        </div> : <DashboardContent activeTab={activeTab} userProfile={userProfile as any} onProjectSelect={handleProjectSelect} onUpdateProject={handleUpdateProject} onDeleteProject={handleDeleteProject} onRecrawlProject={handleRecrawlProject} />}
+        {/* Content */}
+        <div className="">
+          {activeTab === "analysis" && selectedProjectId ? (
+            <div className="">
+              <AnalysisTab
+                key={selectedProjectId} // Prevent unnecessary re-mounting
+                projectId={selectedProjectId}
+                cachedData={getCachedAnalysisData(selectedProjectId)}
+                onDataUpdate={(project, scrapedPages) =>
+                  setCachedAnalysisData(
+                    selectedProjectId,
+                    project,
+                    scrapedPages
+                  )
+                }
+                onPageSelect={handlePageSelect}
+              />
+            </div>
+          ) : activeTab === "page-analysis" && selectedPageId ? (
+            <div className="">
+              <PageAnalysisTab
+                key={selectedPageId} // Prevent unnecessary re-mounting
+                pageId={selectedPageId}
+              />
+            </div>
+          ) : (
+            <DashboardContent
+              activeTab={activeTab}
+              userProfile={userProfile as any}
+              onProjectSelect={handleProjectSelect}
+              onUpdateProject={handleUpdateProject}
+              onDeleteProject={handleDeleteProject}
+              onRecrawlProject={handleRecrawlProject}
+            />
+          )}
+        </div>
       </div>
-
-
+      <ConnectionStatus />
     </div>
-    <ConnectionStatus />
-  </div>;
+  );
 }
 export default function DashboardPage() {
-  return <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center">
-    <div className="text-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff4b01] mx-auto mb-4"></div>
-      <p className="text-gray-600">Loading dashboard...</p>
-    </div>
-  </div>}>
-    <DashboardContentWrapper />
-  </Suspense>;
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff4b01] mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading dashboard...</p>
+          </div>
+        </div>
+      }
+    >
+      <DashboardContentWrapper />
+    </Suspense>
+  );
 }

@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { DashboardFooter } from './footer';
+import React from "react";
+import { Footer } from "../home/Footer";
 
 export function DashboardFooterSection() {
-    return (
-        <section className="w-full mt-auto relative z-10 bg-white">
-            <DashboardFooter />
-        </section>
-    );
+  return (
+    <section className="w-full mt-auto relative z-10 bg-white">
+      <Footer variant="dashboard" />
+    </section>
+  );
 }
