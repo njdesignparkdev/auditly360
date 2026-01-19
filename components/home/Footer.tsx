@@ -70,7 +70,7 @@ export function Footer({ variant = "home" }: FooterProps) {
         "w-full py-12 relative overflow-hidden z-10",
         isDashboard
           ? "bg-white text-gray-600 border-t border-gray-100 rounded-t-3xl mt-8 px-6"
-          : "bg-slate-950 text-slate-300 px-4 sm:px-6 lg:px-8 mt-0"
+          : "bg-slate-950 text-slate-300 px-4 sm:px-6 lg:px-8 mt-0",
       )}
     >
       {/* Background Atmosphere - Home Variant Only */}
@@ -144,7 +144,7 @@ export function Footer({ variant = "home" }: FooterProps) {
             <div
               className={cn(
                 "scale-[0.8] origin-left",
-                !isDashboard && "invert brightness-0 filter"
+                !isDashboard && "invert brightness-0 filter",
               )}
             >
               <AuditlyLogo />
@@ -152,13 +152,13 @@ export function Footer({ variant = "home" }: FooterProps) {
             <div
               className={cn(
                 "hidden md:block w-px h-6",
-                isDashboard ? "bg-gray-200" : "bg-white/20"
+                isDashboard ? "bg-gray-200" : "bg-white/20",
               )}
             />
             <span
               className={cn(
                 "text-sm font-poppins font-semibold",
-                isDashboard ? "text-gray-500" : "text-slate-400"
+                isDashboard ? "text-gray-500" : "text-slate-400",
               )}
             >
               The future of website auditing © 2025 Auditly360
@@ -167,7 +167,7 @@ export function Footer({ variant = "home" }: FooterProps) {
           <p
             className={cn(
               "text-sm font-poppins font-semibold",
-              isDashboard ? "text-gray-500" : "text-slate-500"
+              isDashboard ? "text-gray-500" : "text-slate-500",
             )}
           >
             {isDashboard
@@ -177,7 +177,7 @@ export function Footer({ variant = "home" }: FooterProps) {
         </div>
 
         {/* Separator Line after Header */}
-        {!isDashboard && <div className="w-full h-px bg-white/10 mb-8"></div>}
+        {!isDashboard && <div className="w-full h-px bg-white/10 mb-16"></div>}
 
         {/* Main Content Areas */}
         <div className="flex flex-col justify-between lg:flex-row gap-16 lg:gap-32">
@@ -189,7 +189,7 @@ export function Footer({ variant = "home" }: FooterProps) {
                 "inline-flex items-center gap-3 px-5 py-2.5 border transition-all duration-300 shadow-sm w-fit group",
                 isDashboard
                   ? "bg-white border-gray-300 rounded-full text-gray-700 hover:border-[#ff4b01] hover:text-[#ff4b01]"
-                  : "bg-white/5 border-white/10 text-slate-200 hover:border-[#EF4600] hover:shadow-[0_4px_15px_rgba(255,139,66,0.25)] hover:scale-105 active:scale-95"
+                  : "bg-white/5 border-white/10 text-slate-200 hover:border-[#EF4600] hover:shadow-[0_4px_15px_rgba(255,139,66,0.25)] hover:scale-105 active:scale-95",
               )}
             >
               <Mail
@@ -197,7 +197,7 @@ export function Footer({ variant = "home" }: FooterProps) {
                 className={cn(
                   "transition-all duration-300 ease-out",
                   !isDashboard &&
-                    "group-hover:text-[#EF4600] group-hover:rotate-12"
+                    "group-hover:text-[#EF4600] group-hover:rotate-12",
                 )}
               />
               <span className="font-medium text-sm">hello@auditly360.com</span>
@@ -205,7 +205,7 @@ export function Footer({ variant = "home" }: FooterProps) {
                 className={cn(
                   "ml-1 transition-all duration-300",
                   !isDashboard &&
-                    "group-hover:text-[#EF4600] group-hover:translate-x-1"
+                    "group-hover:text-[#EF4600] group-hover:translate-x-1",
                 )}
               >
                 &gt;
@@ -213,7 +213,7 @@ export function Footer({ variant = "home" }: FooterProps) {
             </a>
 
             {/* Social Icons */}
-            <div className="flex items-center gap-4 mt-4">
+            <div className="flex items-center gap-5 mt-2">
               {isDashboard ? (
                 <>
                   <Link
@@ -255,8 +255,8 @@ export function Footer({ variant = "home" }: FooterProps) {
                     <Image
                       src="/footer-icons/linkdn (1).svg"
                       alt="LinkedIn"
-                      width={30}
-                      height={30}
+                      width={35}
+                      height={35}
                       className="hover:scale-105 transition-transform"
                     />
                   </Link>
@@ -267,8 +267,8 @@ export function Footer({ variant = "home" }: FooterProps) {
                     <Image
                       src="/footer-icons/Frame 8.svg"
                       alt="Facebook"
-                      width={30}
-                      height={30}
+                      width={35}
+                      height={35}
                       className="hover:scale-105 transition-transform"
                     />
                   </Link>
@@ -279,8 +279,8 @@ export function Footer({ variant = "home" }: FooterProps) {
                     <Image
                       src="/footer-icons/Instagram.svg"
                       alt="Instagram"
-                      width={30}
-                      height={30}
+                      width={35}
+                      height={35}
                       className="hover:scale-105 transition-transform"
                     />
                   </Link>
@@ -291,8 +291,8 @@ export function Footer({ variant = "home" }: FooterProps) {
                     <Image
                       src="/footer-icons/Twitter.svg"
                       alt="X (Twitter)"
-                      width={30}
-                      height={30}
+                      width={35}
+                      height={35}
                       className="hover:scale-105 transition-transform"
                     />
                   </Link>
@@ -302,12 +302,12 @@ export function Footer({ variant = "home" }: FooterProps) {
           </div>
 
           {/* Right: Link Columns */}
-          <div className="flex grid-cols-3 gap-8">
+          <div className="flex grid-cols-3 gap-16">
             <div className="flex flex-col gap-5">
               <h3
                 className={cn(
                   "font-jakarta font-extrabold",
-                  isDashboard ? "text-gray-900" : "text-white"
+                  isDashboard ? "text-gray-900" : "text-white",
                 )}
               >
                 Solutions
@@ -321,7 +321,7 @@ export function Footer({ variant = "home" }: FooterProps) {
                       "text-sm transition-colors",
                       isDashboard
                         ? "hover:text-[#ff4b01]"
-                        : "text-slate-400 hover:text-[#ff4b01]"
+                        : "text-slate-400 hover:text-[#ff4b01]",
                     )}
                   >
                     {item.label}
@@ -334,7 +334,7 @@ export function Footer({ variant = "home" }: FooterProps) {
               <h3
                 className={cn(
                   "font-jakarta font-extrabold",
-                  isDashboard ? "text-gray-900" : "text-white"
+                  isDashboard ? "text-gray-900" : "text-white",
                 )}
               >
                 Resources
@@ -348,7 +348,7 @@ export function Footer({ variant = "home" }: FooterProps) {
                       "text-sm transition-colors",
                       isDashboard
                         ? "hover:text-[#ff4b01]"
-                        : "text-slate-400 hover:text-[#ff4b01]"
+                        : "text-slate-400 hover:text-[#ff4b01]",
                     )}
                   >
                     {item.label}
@@ -361,7 +361,7 @@ export function Footer({ variant = "home" }: FooterProps) {
               <h3
                 className={cn(
                   "font-jakarta font-extrabold",
-                  isDashboard ? "text-gray-900" : "text-white"
+                  isDashboard ? "text-gray-900" : "text-white",
                 )}
               >
                 Company
@@ -375,7 +375,7 @@ export function Footer({ variant = "home" }: FooterProps) {
                       "text-sm transition-colors",
                       isDashboard
                         ? "hover:text-[#ff4b01]"
-                        : "text-slate-400 hover:text-[#ff4b01]"
+                        : "text-slate-400 hover:text-[#ff4b01]",
                     )}
                   >
                     {item.label}
@@ -399,7 +399,9 @@ export function Footer({ variant = "home" }: FooterProps) {
         <div
           className={cn(
             "text-center leading-relaxed max-w-5xl mx-auto opacity-70 mt-8 font-poppins font-medium",
-            isDashboard ? "text-xs text-gray-400" : "text-[11px] text-slate-600"
+            isDashboard
+              ? "text-xs text-gray-400"
+              : "text-[11px] text-slate-600",
           )}
         >
           Disclaimer: Auditly360, Inc is not affiliated, associated, authorized,
