@@ -3,7 +3,7 @@ import Script from "next/script";
 import { Plus_Jakarta_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import { SupabaseProvider } from "@/contexts/SupabaseContext";
-
+// sdfsdfsdfsdfsfsdfsdfsdfsd
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["200", "300", "400", "500", "600", "700", "800"],
