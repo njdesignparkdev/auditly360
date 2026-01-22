@@ -2,11 +2,11 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Footer } from "@/components/home/Footer";
+import { Footer } from "@/components/home/Footer-section";
 import contactData from "./contact.json";
 import BgContainer from "../../components/ui/bg-container";
 import GridOverlay from "@/components/ui/grid-layer";
-import Navbar from "@/components/home/navbar-dropdown";
+import Navbar from "@/components/home/navbar-section";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -24,7 +24,7 @@ export default function ContactPage() {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     setFormData({
       ...formData,

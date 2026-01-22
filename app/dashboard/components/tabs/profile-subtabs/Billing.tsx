@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import PricingSection from "@/components/home/Pricing";
+import PricingSection from "@/components/home/Pricing-section";
 import { useUserPlan } from "@/hooks/useUserPlan";
 import { supabase } from "@/lib/supabase-client";
 import { handleAuthError } from "@/lib/auth-utils";
@@ -129,7 +129,7 @@ export default function Billing({ userProfile }: BillingProps) {
         console.error(
           "Failed to fetch payment history:",
           response.status,
-          response.statusText
+          response.statusText,
         );
         const errorData = await response.json().catch(() => ({}));
         console.error("Error details:", errorData);
@@ -174,7 +174,7 @@ export default function Billing({ userProfile }: BillingProps) {
         if ((window as any).Razorpay) return true;
 
         const existingScript = document.querySelector(
-          'script[src*="checkout.razorpay.com"]'
+          'script[src*="checkout.razorpay.com"]',
         );
         if (existingScript) {
           return new Promise((resolve) => {
@@ -275,13 +275,13 @@ export default function Billing({ userProfile }: BillingProps) {
                   amount: orderData.amount / 100, // Convert from paise
                   currency: orderData.currency,
                 }),
-              }
+              },
             );
 
             if (successResponse.ok) {
               const successData = await successResponse.json();
               alert(
-                `Success! ${successData.creditsAdded} credits have been added to your account.`
+                `Success! ${successData.creditsAdded} credits have been added to your account.`,
               );
               // Refresh plan info to get updated credits
               window.dispatchEvent(new Event("planUpdated"));
@@ -290,14 +290,14 @@ export default function Billing({ userProfile }: BillingProps) {
               const errorData = await successResponse.json();
               alert(
                 errorData.message ||
-                  "Payment successful but credits could not be added. Please contact support."
+                  "Payment successful but credits could not be added. Please contact support.",
               );
             }
           } catch (error) {
             console.error("Error processing credit purchase:", error);
             alert(
               "Payment successful but there was an error adding credits. Please contact support with payment ID: " +
-                response.razorpay_payment_id
+                response.razorpay_payment_id,
             );
           }
         },
@@ -392,9 +392,9 @@ export default function Billing({ userProfile }: BillingProps) {
             planExpiryStatus.is_expired
               ? "bg-red-50 border-red-200"
               : planExpiryStatus.days_until_expiry &&
-                planExpiryStatus.days_until_expiry <= 7
-              ? "bg-yellow-50 border-yellow-200"
-              : "bg-[#ff4b01]/10 border-[#ff4b01]/30"
+                  planExpiryStatus.days_until_expiry <= 7
+                ? "bg-yellow-50 border-yellow-200"
+                : "bg-[#ff4b01]/10 border-[#ff4b01]/30"
           }`}
           initial={{
             opacity: 0,
@@ -415,9 +415,9 @@ export default function Billing({ userProfile }: BillingProps) {
                 planExpiryStatus.is_expired
                   ? "bg-red-100"
                   : planExpiryStatus.days_until_expiry &&
-                    planExpiryStatus.days_until_expiry <= 7
-                  ? "bg-yellow-100"
-                  : "bg-[#ff4b01]/20"
+                      planExpiryStatus.days_until_expiry <= 7
+                    ? "bg-yellow-100"
+                    : "bg-[#ff4b01]/20"
               }`}
             >
               <span
@@ -425,9 +425,9 @@ export default function Billing({ userProfile }: BillingProps) {
                   planExpiryStatus.is_expired
                     ? "text-red-600"
                     : planExpiryStatus.days_until_expiry &&
-                      planExpiryStatus.days_until_expiry <= 7
-                    ? "text-yellow-600"
-                    : "text-[#ff4b01]"
+                        planExpiryStatus.days_until_expiry <= 7
+                      ? "text-yellow-600"
+                      : "text-[#ff4b01]"
                 }`}
               >
                 {planExpiryStatus.is_expired ? "⚠️" : "⏰"}
@@ -439,41 +439,41 @@ export default function Billing({ userProfile }: BillingProps) {
                   planExpiryStatus.is_expired
                     ? "text-red-800"
                     : planExpiryStatus.days_until_expiry &&
-                      planExpiryStatus.days_until_expiry <= 7
-                    ? "text-yellow-800"
-                    : "text-[#ff4b01]"
+                        planExpiryStatus.days_until_expiry <= 7
+                      ? "text-yellow-800"
+                      : "text-[#ff4b01]"
                 }`}
               >
                 {planExpiryStatus.is_expired
                   ? "Plan Expired"
                   : planExpiryStatus.days_until_expiry &&
-                    planExpiryStatus.days_until_expiry <= 7
-                  ? "Plan Expiring Soon"
-                  : "Plan Status"}
+                      planExpiryStatus.days_until_expiry <= 7
+                    ? "Plan Expiring Soon"
+                    : "Plan Status"}
               </h3>
               <p
                 className={`text-sm ${
                   planExpiryStatus.is_expired
                     ? "text-red-700"
                     : planExpiryStatus.days_until_expiry &&
-                      planExpiryStatus.days_until_expiry <= 7
-                    ? "text-yellow-700"
-                    : "text-[#ff4b01]"
+                        planExpiryStatus.days_until_expiry <= 7
+                      ? "text-yellow-700"
+                      : "text-[#ff4b01]"
                 }`}
               >
                 {planExpiryStatus.is_expired
                   ? "Your plan has expired and you have been downgraded to the Starter plan."
                   : planExpiryStatus.days_until_expiry
-                  ? `Your plan expires in ${
-                      planExpiryStatus.days_until_expiry
-                    } day${
-                      planExpiryStatus.days_until_expiry === 1 ? "" : "s"
-                    } on ${new Date(
-                      planExpiryStatus.expires_at!
-                    ).toLocaleDateString()}.`
-                  : `Your plan expires on ${new Date(
-                      planExpiryStatus.expires_at!
-                    ).toLocaleDateString()}.`}
+                    ? `Your plan expires in ${
+                        planExpiryStatus.days_until_expiry
+                      } day${
+                        planExpiryStatus.days_until_expiry === 1 ? "" : "s"
+                      } on ${new Date(
+                        planExpiryStatus.expires_at!,
+                      ).toLocaleDateString()}.`
+                    : `Your plan expires on ${new Date(
+                        planExpiryStatus.expires_at!,
+                      ).toLocaleDateString()}.`}
               </p>
             </div>
           </div>
@@ -844,8 +844,8 @@ export default function Billing({ userProfile }: BillingProps) {
                           payment.payment_status === "completed"
                             ? "bg-green-100 text-green-800"
                             : payment.payment_status === "failed"
-                            ? "bg-red-100 text-red-800"
-                            : "bg-yellow-100 text-yellow-800"
+                              ? "bg-red-100 text-red-800"
+                              : "bg-yellow-100 text-yellow-800"
                         }`}
                       >
                         {payment.payment_status}

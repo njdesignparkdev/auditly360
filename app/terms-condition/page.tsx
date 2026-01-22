@@ -2,10 +2,10 @@
 
 import React from "react";
 import Link from "next/link";
-import { Footer } from "@/components/home/Footer";
+import { Footer } from "@/components/home/Footer-section";
 import GridOverlay from "@/components/ui/grid-layer";
 import BgContainer from "../../components/ui/bg-container";
-import Navbar from "@/components/home/navbar-dropdown";
+import Navbar from "@/components/home/navbar-section";
 import termsData from "./terms.json";
 
 export default function TermsPage() {

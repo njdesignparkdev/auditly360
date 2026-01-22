@@ -300,7 +300,7 @@ export default function PricingSection({
             onClick={() => handleToggle("monthly")}
             className={cn(
               "relative px-6 py-2 text-sm font-semibold transition-all duration-200 z-10",
-              isMonthly ? "text-foreground" : "text-muted-foreground"
+              isMonthly ? "text-foreground" : "text-muted-foreground",
             )}
           >
             {isMonthly && (
@@ -316,7 +316,7 @@ export default function PricingSection({
             onClick={() => handleToggle("yearly")}
             className={cn(
               "relative px-6 py-2 rounded-md text-sm font-semibold transition-all duration-200 flex items-center gap-2 z-10",
-              !isMonthly ? "text-foreground" : "text-muted-foreground"
+              !isMonthly ? "text-foreground" : "text-muted-foreground",
             )}
           >
             {!isMonthly && (
@@ -331,7 +331,7 @@ export default function PricingSection({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto px-6 lg:px-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {loadingPlans
           ? Array.from({ length: 3 }).map((_, i) => (
               <div
@@ -352,8 +352,8 @@ export default function PricingSection({
                         scale: index === 0 || index === 2 ? 0.98 : 1.0,
                       }
                     : isTablet
-                    ? { y: 0, opacity: 1, x: 0, scale: 1 }
-                    : { y: 0, opacity: 1 }
+                      ? { y: 0, opacity: 1, x: 0, scale: 1 }
+                      : { y: 0, opacity: 1 }
                 }
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{
@@ -375,7 +375,7 @@ export default function PricingSection({
                       : ""
                     : "",
                   index === 0 && isDesktop && "origin-right",
-                  index === 2 && isDesktop && "origin-left"
+                  index === 2 && isDesktop && "origin-left",
                 )}
               >
                 {plan.isPopular && (
@@ -389,7 +389,7 @@ export default function PricingSection({
                   <p
                     className={cn(
                       "text-xl sm:text-2xl font-bold",
-                      "text-foreground"
+                      "text-foreground",
                     )}
                   >
                     {plan.name}
@@ -401,7 +401,7 @@ export default function PricingSection({
                     <span
                       className={cn(
                         "text-4xl sm:text-5xl font-extrabold tracking-tight",
-                        "text-foreground"
+                        "text-foreground",
                       )}
                     >
                       {plan.monthlyPriceNum === 0 ? (
@@ -431,7 +431,7 @@ export default function PricingSection({
                       <span
                         className={cn(
                           "text-[9px] md:text-xs font-semibold leading-tight mb-1",
-                          "text-muted-foreground whitespace-nowrap"
+                          "text-muted-foreground whitespace-nowrap",
                         )}
                       >
                         {isMonthly ? "per month" : "per year"}
@@ -449,7 +449,7 @@ export default function PricingSection({
                       "transform-gpu ring-offset-current transition-all duration-300 ease-out hover:ring-2 hover:ring-offset-1 hover:scale-[1.01]",
                       plan.isPopular
                         ? "bg-[#fa752d] text-white hover:bg-[#FF4F00]/90 ring-[#FF4F00]"
-                        : "bg-transparent text-[#0a0a0a] border-[1px] md:border-2 hover:bg-[#fa752d] hover:text-white ring-[#FF4F00]"
+                        : "bg-transparent text-[#0a0a0a] border-[1px] md:border-2 hover:bg-[#fa752d] hover:text-white ring-[#FF4F00]",
                     )}
                   >
                     {loading === plan.monthlyPlanId ||
@@ -465,13 +465,13 @@ export default function PricingSection({
                         <Check
                           className={cn(
                             "h-4 w-4 mt-0.5 flex-shrink-0",
-                            "text-green-500"
+                            "text-green-500",
                           )}
                         />
                         <span
                           className={cn(
                             "text-left text-sm text-muted-foreground",
-                            "text-muted-foreground"
+                            "text-muted-foreground",
                           )}
                         >
                           {feature}
@@ -485,7 +485,7 @@ export default function PricingSection({
                       "mt-2 text-[9px] sm:text-[10px] leading-4",
                       plan.isPopular
                         ? "text-primary-foreground/70"
-                        : "text-muted-foreground"
+                        : "text-muted-foreground",
                     )}
                   >
                     {plan.description}

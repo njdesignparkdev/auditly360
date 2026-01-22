@@ -55,73 +55,74 @@ export default function Navbar() {
           "bg-background/95 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg h-16 md:h-20":
             scrolled,
           "bg-transparent h-16 md:h-20": !scrolled,
-        }
+        },
       )}
     >
-      <nav className="relative mx-auto flex h-full w-full max-w-[1440px] items-center justify-between px-4 sm:px-6 md:px-8 lg:px-16 xl:px-10 2xl:px-10">
-        <Link
-          href="/"
-          aria-label="home"
-          className="cursor-pointer select-none focus:outline-none active:outline-none shrink-0"
-        >
-          <Image
-            src="/orange-black-auditly.png"
-            alt="Auditly360"
-            width={124}
-            height={43}
-            draggable={false}
-            className="h-7 md:h-9 w-auto bg-transparent mix-blend-multiply cursor-pointer select-none"
-            priority
-          />
-        </Link>
+      <div className="mx-auto h-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
+        <nav className="flex h-full px-4 sm:px-6 lg:px-8 items-center justify-between">
+          <Link
+            href="/"
+            aria-label="home"
+            className="cursor-pointer select-none focus:outline-none active:outline-none shrink-0"
+          >
+            <Image
+              src="/orange-black-auditly.png"
+              alt="Auditly360"
+              width={124}
+              height={43}
+              draggable={false}
+              className="h-7 md:h-9 w-auto bg-transparent mix-blend-multiply cursor-pointer select-none"
+              priority
+            />
+          </Link>
 
-        {/* Centered Links */}
-        {/* Centered Links */}
-        <div className="hidden md:flex items-center gap-1 lg:gap-4 flex-1 justify-center">
-          {links.map((link) => (
-            <Link
-              key={link.label}
-              className={cn(
-                buttonVariants({
-                  variant: "ghost",
-                }),
-                "text-sm font-medium px-2 py-1 lg:px-4 lg:py-2"
-              )}
-              href={link.href}
-            >
-              {link.label}
+          {/* Centered Links */}
+          <div className="hidden md:flex items-center gap-1 lg:gap-4 flex-1 justify-center">
+            {links.map((link) => (
+              <Link
+                key={link.label}
+                className={cn(
+                  buttonVariants({
+                    variant: "ghost",
+                  }),
+                  "text-sm font-medium px-2 py-1 lg:px-4 lg:py-2",
+                )}
+                href={link.href}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Right Side Buttons */}
+          <div className="hidden items-center gap-2 lg:gap-4 md:flex shrink-0">
+            <Link href="/login">
+              <Button
+                variant="outline"
+                className="hidden lg:flex rounded-xl font-bold px-4 lg:px-6"
+              >
+                Sign In
+              </Button>
             </Link>
-          ))}
-        </div>
-
-        {/* Right Side Buttons */}
-        <div className="hidden items-center gap-2 lg:gap-4 md:flex shrink-0">
-          <Link href="/login">
-            <Button
-              variant="outline"
-              className="hidden lg:flex rounded-xl font-bold px-4 lg:px-6"
-            >
-              Sign In
-            </Button>
-          </Link>
-          <Link href="/signup">
-            <Button className="bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold px-4 lg:px-6 h-9 md:h-10">
-              Get Started
-            </Button>
-          </Link>
-        </div>
-        <Button
-          size="icon"
-          variant="outline"
-          onClick={() => setOpen(!open)}
-          className="md:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="size-6" /> : <Menu className="size-6" />}
-        </Button>
-      </nav>
+            <Link href="/signup">
+              <Button className="bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold px-4 lg:px-6 h-9 md:h-10">
+                Get Started
+              </Button>
+            </Link>
+          </div>
+          <Button
+            size="icon"
+            variant="outline"
+            onClick={() => setOpen(!open)}
+            className="md:hidden"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label="Toggle menu"
+          >
+            {open ? <X className="size-6" /> : <Menu className="size-6" />}
+          </Button>
+        </nav>
+      </div>
       <MobileMenu
         open={open}
         className="flex flex-col justify-between gap-2"
@@ -173,7 +174,7 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
     <div
       id="mobile-menu"
       className={cn(
-        "bg-background fixed right-0 bottom-0 left-0 z-40 flex flex-col overflow-y-auto md:hidden"
+        "bg-background fixed right-0 bottom-0 left-0 z-40 flex flex-col overflow-y-auto md:hidden",
       )}
       style={props.style}
     >
@@ -182,14 +183,14 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
         className={cn(
           "data-[slot=open]:animate-in data-[slot=open]:zoom-in-97 ease-out",
           "flex flex-col min-h-full p-6 pb-8",
-          className
+          className,
         )}
         {...props}
       >
         {children}
       </div>
     </div>,
-    document.body
+    document.body,
   );
 }
 

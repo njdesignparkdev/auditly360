@@ -136,10 +136,10 @@ export function Footer({ variant = "home" }: FooterProps) {
         }}
       >
         {/* Top Separator Line */}
-        {!isDashboard && <div className="w-full h-px bg-white/10 mb-2"></div>}
+        {!isDashboard && <div className="w-full h-px bg-white/10 mb-8"></div>}
 
         {/* Header Row: Logo | Tagline | Copyright */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-2 gap-8">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-8">
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div
               className={cn(
@@ -177,7 +177,7 @@ export function Footer({ variant = "home" }: FooterProps) {
         </div>
 
         {/* Separator Line after Header */}
-        {!isDashboard && <div className="w-full h-px bg-white/10 mb-16"></div>}
+        {!isDashboard && <div className="w-full h-px bg-white/10 mb-12"></div>}
 
         {/* Main Content Areas */}
         <div className="flex flex-col justify-between lg:flex-row gap-16 lg:gap-32">
@@ -186,7 +186,7 @@ export function Footer({ variant = "home" }: FooterProps) {
             <a
               href="mailto:hello@auditly360.com"
               className={cn(
-                "inline-flex items-center gap-3 px-5 py-2.5 border transition-all duration-300 shadow-sm w-fit group",
+                "inline-flex items-center gap-3 px-2 py-2 border transition-all duration-300 shadow-sm w-fit group",
                 isDashboard
                   ? "bg-white border-gray-300 rounded-full text-gray-700 hover:border-[#ff4b01] hover:text-[#ff4b01]"
                   : "bg-white/5 border-white/10 text-slate-200 hover:border-[#EF4600] hover:shadow-[0_4px_15px_rgba(255,139,66,0.25)] hover:scale-105 active:scale-95",
