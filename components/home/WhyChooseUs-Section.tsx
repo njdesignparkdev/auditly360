@@ -275,14 +275,14 @@ export default function WhyChooseUsSection() {
   ];
 
   return (
-    <section className="py-6 md:py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-[1400px] mx-auto">
+    <div className="w-full py-6 md:py-10 px-4 sm:px-6 lg:px-8 relative text-gray-900">
+      <div className="max-w-[1440px] mx-auto">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 md:mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 font-jakarta mb-4 tracking-tight">
+        <div className="text-start mb-10 md:mb-16 space-y-2 sm:space-y-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold text-gray-900 font-jakarta">
             Why Choose Us
           </h2>
-          <p className="text-base sm:text-lg text-gray-600 font-poppins max-w-2xl mx-auto px-4">
+          <p className="text-gray-600 text-sm sm:text-base font-poppins max-w-2xl">
             Our comprehensive toolkit ensures your website is performant,
             secure, and SEO-ready at all times.
           </p>
@@ -372,6 +372,6 @@ export default function WhyChooseUsSection() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

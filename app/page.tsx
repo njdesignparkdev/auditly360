@@ -1,5 +1,4 @@
 import { HeroSection3 } from "@/components/home/hero-section";
-import BgContainer from "../components/ui/bg-container";
 import GridOverlay from "@/components/ui/grid-layer";
 import { Footer } from "@/components/home/Footer-section";
 import TestimonialSlider from "@/components/home/Testimonial-section";
@@ -13,10 +12,7 @@ import Navbar from "@/components/home/navbar-section";
 
 export default function Page() {
   return (
-    <BgContainer>
-      {/* Grid Overlay - Provides visual grid lines */}
-      <GridOverlay />
-
+    <GridOverlay>
       {/* Navbar - Sticky header */}
       <Navbar />
 
@@ -98,6 +94,6 @@ export default function Page() {
 
       {/* Footer - Outside main container */}
       <Footer />
-    </BgContainer>
+    </GridOverlay>
   );
 }

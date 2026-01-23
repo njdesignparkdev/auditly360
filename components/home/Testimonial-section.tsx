@@ -119,148 +119,146 @@ const TestimonialSlider: React.FC = () => {
     testimonials.length;
 
   return (
-    <div
-      className="w-full py-8 px-4 sm:px-6 lg:px-8 relative text-gray-900"
-      data-border="true"
-      data-framer-name="Section Structure"
-    >
-      {/* Header */}
-      <div className="mb-12">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 font-jakarta mb-2">
-          Trusted by Professionals
-        </h2>
-        <p className="text-gray-600 text-sm sm:text-base font-poppins">
-          See what our users are saying
-        </p>
-      </div>
-
-      {/* Testimonial Carousel Container */}
-      <div
-        className="relative"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
-        {/* Navigation Arrows */}
-        <div className="absolute -top-16 right-0 flex gap-2 z-10">
-          <button
-            onClick={goPrev}
-            className="p-2 -full border border-gray-300 text-gray-700 hover:border-gray-400 hover:bg-gray-50 transition-all"
-            aria-label="Previous testimonials"
-          >
-            <ChevronLeft size={20} />
-          </button>
-          <button
-            onClick={goNext}
-            className="p-2 -full border border-gray-300 text-gray-700 hover:border-gray-400 hover:bg-gray-50 transition-all"
-            aria-label="Next testimonials"
-          >
-            <ChevronRight size={20} />
-          </button>
+    <div className="w-full py-6 md:py-10 px-4 sm:px-6 lg:px-8 relative text-gray-900">
+      <div className="max-w-[1440px] mx-auto">
+        {/* Header */}
+        <div className="text-start mb-10 md:mb-16 space-y-2 sm:space-y-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold text-gray-900 font-jakarta">
+            Trusted by Professionals
+          </h2>
+          <p className="text-gray-600 text-sm sm:text-base font-poppins max-w-2xl">
+            See what our users are saying
+          </p>
         </div>
 
-        {/* Testimonial Grid with Overflow */}
-        <div className="overflow-hidden">
-          <div
-            className={`flex ${
-              isTransitioning
-                ? "transition-transform duration-500 ease-in-out"
-                : ""
-            }`}
-            style={{
-              transform: `translateX(-${
-                (currentIndex + testimonials.length) * (100 / itemsPerPage)
-              }%)`,
-            }}
-          >
-            {extendedTestimonials.map((testimonial, index) => (
-              <motion.div
-                key={`${testimonial.id}-${index}`}
-                className="flex-shrink-0 px-3"
-                style={{ width: `${100 / itemsPerPage}%` }}
-                initial="rest"
-                whileHover="hover"
-                animate="rest"
-              >
+        {/* Testimonial Carousel Container */}
+        <div
+          className="relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Navigation Arrows */}
+          <div className="absolute -top-16 right-0 flex gap-2 z-10">
+            <button
+              onClick={goPrev}
+              className="p-2 -full border border-gray-300 text-gray-700 hover:border-gray-400 hover:bg-gray-50 transition-all"
+              aria-label="Previous testimonials"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={goNext}
+              className="p-2 -full border border-gray-300 text-gray-700 hover:border-gray-400 hover:bg-gray-50 transition-all"
+              aria-label="Next testimonials"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+
+          {/* Testimonial Grid with Overflow */}
+          <div className="overflow-hidden">
+            <div
+              className={`flex ${
+                isTransitioning
+                  ? "transition-transform duration-500 ease-in-out"
+                  : ""
+              }`}
+              style={{
+                transform: `translateX(-${
+                  (currentIndex + testimonials.length) * (100 / itemsPerPage)
+                }%)`,
+              }}
+            >
+              {extendedTestimonials.map((testimonial, index) => (
                 <motion.div
-                  className="bg-gray-50 -lg p-6 h-full relative flex flex-col overflow-hidden"
-                  variants={{
-                    rest: { scale: 1, y: 0 },
-                    hover: { scale: 1.02, y: -5 },
-                  }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  key={`${testimonial.id}-${index}`}
+                  className="flex-shrink-0 px-3"
+                  style={{ width: `${100 / itemsPerPage}%` }}
+                  initial="rest"
+                  whileHover="hover"
+                  animate="rest"
                 >
-                  {/* Gradient Background on Hover */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-[#FF8B42] via-[#FF6B35] to-[#EF4600]"
+                    className="bg-gray-50 -lg p-6 h-full relative flex flex-col overflow-hidden"
                     variants={{
-                      rest: { opacity: 0 },
-                      hover: { opacity: 1 },
+                      rest: { scale: 1, y: 0 },
+                      hover: { scale: 1.02, y: -5 },
                     }}
-                    transition={{ duration: 0.3 }}
-                  />
-
-                  {/* Quote Text */}
-                  <motion.p
-                    className="text-sm mb-6 leading-relaxed relative z-10 font-poppins font-semibold"
-                    variants={{
-                      rest: { color: "#374151" }, // text-gray-700
-                      hover: { color: "#ffffff" }, // text-white
-                    }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
                   >
-                    {testimonial.quote}
-                  </motion.p>
-
-                  {/* Author Info */}
-                  <motion.div
-                    className="border-t pt-4 relative z-10 mt-auto"
-                    variants={{
-                      rest: { borderColor: "#e5e7eb" }, // border-gray-300
-                      hover: { borderColor: "rgba(255, 255, 255, 0.3)" }, // border-white/30
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <motion.h4
-                      className="font-jakarta font-bold text-sm"
+                    {/* Gradient Background on Hover */}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-br from-[#FF8B42] via-[#FF6B35] to-[#EF4600]"
                       variants={{
-                        rest: { color: "#111827" }, // text-gray-900
+                        rest: { opacity: 0 },
+                        hover: { opacity: 1 },
+                      }}
+                      transition={{ duration: 0.3 }}
+                    />
+
+                    {/* Quote Text */}
+                    <motion.p
+                      className="text-sm mb-6 leading-relaxed relative z-10 font-poppins font-semibold"
+                      variants={{
+                        rest: { color: "#374151" }, // text-gray-700
                         hover: { color: "#ffffff" }, // text-white
                       }}
                       transition={{ duration: 0.3 }}
                     >
-                      {testimonial.name}
-                    </motion.h4>
-                    <motion.p
-                      className="text-xs mt-1 font-poppins font-medium"
+                      {testimonial.quote}
+                    </motion.p>
+
+                    {/* Author Info */}
+                    <motion.div
+                      className="border-t pt-4 relative z-10 mt-auto"
                       variants={{
-                        rest: { color: "#4b5563" }, // text-gray-600
-                        hover: { color: "rgba(255, 255, 255, 0.9)" }, // text-white/90
+                        rest: { borderColor: "#e5e7eb" }, // border-gray-300
+                        hover: { borderColor: "rgba(255, 255, 255, 0.3)" }, // border-white/30
                       }}
                       transition={{ duration: 0.3 }}
                     >
-                      {testimonial.title}
-                    </motion.p>
+                      <motion.h4
+                        className="font-jakarta font-bold text-sm"
+                        variants={{
+                          rest: { color: "#111827" }, // text-gray-900
+                          hover: { color: "#ffffff" }, // text-white
+                        }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {testimonial.name}
+                      </motion.h4>
+                      <motion.p
+                        className="text-xs mt-1 font-poppins font-medium"
+                        variants={{
+                          rest: { color: "#4b5563" }, // text-gray-600
+                          hover: { color: "rgba(255, 255, 255, 0.9)" }, // text-white/90
+                        }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {testimonial.title}
+                      </motion.p>
+                    </motion.div>
                   </motion.div>
                 </motion.div>
-              </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Dot Indicators */}
+          <div className="flex justify-center gap-2 mt-8">
+            {testimonials.map((_, dotIndex) => (
+              <button
+                key={dotIndex}
+                onClick={() => goToSlide(dotIndex)}
+                className={`h-2 -full transition-all ${
+                  dotIndex === visibleDotIndex
+                    ? "bg-gray-900 w-8"
+                    : "bg-gray-300 w-2 hover:bg-gray-400"
+                }`}
+                aria-label={`Go to slide ${dotIndex + 1}`}
+              />
             ))}
           </div>
-        </div>
-
-        {/* Dot Indicators */}
-        <div className="flex justify-center gap-2 mt-8">
-          {testimonials.map((_, dotIndex) => (
-            <button
-              key={dotIndex}
-              onClick={() => goToSlide(dotIndex)}
-              className={`h-2 -full transition-all ${
-                dotIndex === visibleDotIndex
-                  ? "bg-gray-900 w-8"
-                  : "bg-gray-300 w-2 hover:bg-gray-400"
-              }`}
-              aria-label={`Go to slide ${dotIndex + 1}`}
-            />
-          ))}
         </div>
       </div>
     </div>

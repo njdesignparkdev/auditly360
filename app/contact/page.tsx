@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Footer } from "@/components/home/Footer-section";
 import contactData from "./contact.json";
-import BgContainer from "../../components/ui/bg-container";
+
 import GridOverlay from "@/components/ui/grid-layer";
 import Navbar from "@/components/home/navbar-section";
 
@@ -57,8 +57,7 @@ export default function ContactPage() {
   };
 
   return (
-    <BgContainer>
-      <GridOverlay />
+    <GridOverlay>
       <Navbar />
       <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-8xl mx-auto">
@@ -219,6 +218,6 @@ export default function ContactPage() {
         </div>
         <Footer />
       </div>
-    </BgContainer>
+    </GridOverlay>
   );
 }

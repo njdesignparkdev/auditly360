@@ -239,21 +239,20 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className="w-full py-6 md:py-10 relative overflow-hidden">
+    <section className="w-full py-8 relative overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-start mb-10 md:mb-16 space-y-2 sm:space-y-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold text-gray-900 font-jakarta">
+            How Auditly Works
+          </h2>
+          <p className="text-gray-600 text-sm sm:text-base font-poppins max-w-2xl">
+            We've simplified the complex world of website auditing into a
+            streamlined process. Get detailed insights in seconds.
+          </p>
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center">
           {/* Column 1: Text Content */}
           <div className="flex flex-col gap-6 order-2 lg:order-1">
-            <div>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-jakarta text-gray-900 leading-tight mb-4">
-                How Auditly Works
-              </h2>
-              <p className="text-base text-gray-600 font-poppins leading-relaxed max-w-lg">
-                We've simplified the complex world of website auditing into a
-                streamlined process. Get detailed insights in seconds.
-              </p>
-            </div>
-
             <div className="space-y-3">
               {steps.map((step) => (
                 <div

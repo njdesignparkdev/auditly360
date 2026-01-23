@@ -4,14 +4,13 @@ import React from "react";
 import Link from "next/link";
 import { Footer } from "@/components/home/Footer-section";
 import GridOverlay from "@/components/ui/grid-layer";
-import BgContainer from "../../components/ui/bg-container";
+
 import Navbar from "@/components/home/navbar-section";
 import termsData from "./terms.json";
 
 export default function TermsPage() {
   return (
-    <BgContainer>
-      <GridOverlay />
+    <GridOverlay>
       <Navbar />
       <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-8xl p-6 mx-auto">
@@ -79,6 +78,6 @@ export default function TermsPage() {
         </div>
         <Footer />
       </div>
-    </BgContainer>
+    </GridOverlay>
   );
 }
