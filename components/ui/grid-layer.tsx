@@ -18,14 +18,14 @@ export default function GridOverlay({
       {/* Background Grid Lines */}
       <div className="absolute inset-0 pointer-events-none z-0">
         {/* Outer viewport edge lines */}
-        <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-200/80 dark:bg-white/10" />
-        <div className="absolute right-0 top-0 bottom-0 w-px bg-gray-200/80 dark:bg-white/10" />
+        <div className="absolute left-0 top-0 bottom-0 w-px border-r border-gray-300 dark:border-border" />
+        <div className="absolute right-0 top-0 bottom-0 w-px border-r border-gray-300 dark:border-border" />
 
         {/* Inner content border lines */}
         <div className="mx-auto h-full max-w-[1440px] px-4 sm:px-6 lg:px-8">
           <div className="relative h-full w-full">
-            <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-200/80 dark:bg-white/10" />
-            <div className="absolute right-0 top-0 bottom-0 w-px bg-gray-200/80 dark:bg-white/10" />
+            <div className="absolute left-0 top-0 bottom-0 w-px border-l border-gray-300 dark:border-border" />
+            <div className="absolute right-0 top-0 bottom-0 w-px border-l border-gray-300 dark:border-border" />
           </div>
         </div>
       </div>
