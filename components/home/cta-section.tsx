@@ -13,7 +13,7 @@ export default function CtaSection() {
       {/* Background removed as per request - now transparent */}
 
       <AnimatedGroup
-        className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center"
+        className="relative z-10 w-full bg-white/90 backdrop-blur-sm -xl shadow-2xl overflow-hidden border border-white/20 p-8 sm:p-12 text-center"
         variants={{
           container: {
             visible: {

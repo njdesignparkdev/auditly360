@@ -17,7 +17,7 @@ const AnimationDisplay = ({
   return (
     <div className={`w-full h-full flex items-center justify-center relative`}>
       {/* Background Decor */}
-      <div className={`absolute inset-0 opacity-20 ${color} rounded-[2rem]`} />
+      <div className={`absolute inset-0 opacity-20 ${color} -[2rem]`} />
 
       <div className="relative z-10 flex flex-col items-center justify-center transform scale-75 sm:scale-90 md:scale-100">
         {type === "scanning" && (
@@ -42,7 +42,7 @@ const AnimationDisplay = ({
 
               {/* Glow Effect */}
               <motion.div
-                className="absolute inset-0 bg-blue-400/20 blur-3xl rounded-full"
+                className="absolute inset-0 bg-blue-400/20 blur-3xl -full"
                 animate={{
                   scale: [1, 1.2, 1],
                   opacity: [0.3, 0.5, 0.3],
@@ -57,7 +57,7 @@ const AnimationDisplay = ({
 
             {/* Status Badge */}
             <motion.div
-              className="mt-4 bg-blue-50 border border-blue-200 px-4 py-1.5 rounded-full"
+              className="mt-4 bg-blue-50 border border-blue-200 px-4 py-1.5 -full"
               animate={{ opacity: [0.7, 1, 0.7] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
@@ -90,7 +90,7 @@ const AnimationDisplay = ({
 
               {/* Glow Effect */}
               <motion.div
-                className="absolute inset-0 bg-emerald-400/20 blur-3xl rounded-full"
+                className="absolute inset-0 bg-emerald-400/20 blur-3xl -full"
                 animate={{
                   scale: [1, 1.2, 1],
                   opacity: [0.3, 0.5, 0.3],
@@ -105,7 +105,7 @@ const AnimationDisplay = ({
 
             {/* Status Badge */}
             <motion.div
-              className="mt-4 bg-emerald-50 border border-emerald-200 px-4 py-1.5 rounded-full"
+              className="mt-4 bg-emerald-50 border border-emerald-200 px-4 py-1.5 -full"
               animate={{ opacity: [0.7, 1, 0.7] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
@@ -138,7 +138,7 @@ const AnimationDisplay = ({
 
               {/* Glow Effect */}
               <motion.div
-                className="absolute inset-0 bg-orange-400/20 blur-3xl rounded-full"
+                className="absolute inset-0 bg-orange-400/20 blur-3xl -full"
                 animate={{
                   scale: [1, 1.2, 1],
                   opacity: [0.3, 0.5, 0.3],
@@ -153,7 +153,7 @@ const AnimationDisplay = ({
 
             {/* Status Badge */}
             <motion.div
-              className="mt-4 bg-orange-50 border border-orange-200 px-4 py-1.5 rounded-full"
+              className="mt-4 bg-orange-50 border border-orange-200 px-4 py-1.5 -full"
               animate={{ opacity: [0.7, 1, 0.7] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
@@ -186,7 +186,7 @@ const AnimationDisplay = ({
 
               {/* Glow Effect */}
               <motion.div
-                className="absolute inset-0 bg-purple-400/20 blur-3xl rounded-full"
+                className="absolute inset-0 bg-purple-400/20 blur-3xl -full"
                 animate={{
                   scale: [1, 1.2, 1],
                   opacity: [0.3, 0.5, 0.3],
@@ -201,7 +201,7 @@ const AnimationDisplay = ({
 
             {/* Status Badge */}
             <motion.div
-              className="mt-4 bg-purple-50 border border-purple-200 px-4 py-1.5 rounded-full"
+              className="mt-4 bg-purple-50 border border-purple-200 px-4 py-1.5 -full"
               animate={{ opacity: [0.7, 1, 0.7] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
@@ -276,7 +276,7 @@ export default function WhyChooseUsSection() {
 
   return (
     <div className="w-full py-6 md:py-10 px-4 sm:px-6 lg:px-8 relative text-gray-900">
-      <div className="max-w-[1440px] mx-auto">
+      <div className="relative z-10 w-full bg-white/90 backdrop-blur-sm -xl shadow-2xl overflow-hidden border border-white/20 p-8 sm:p-12">
         {/* Section Header */}
         <div className="text-start mb-10 md:mb-16 space-y-2 sm:space-y-3">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold text-gray-900 font-jakarta">
@@ -295,14 +295,14 @@ export default function WhyChooseUsSection() {
               <div
                 key={feature.id}
                 onClick={() => setActiveFeature(index)}
-                className={`group p-4 rounded-xl border transition-all duration-300 cursor-pointer w-full flex items-start gap-4 min-h-[110px] sm:min-h-[130px] ${
+                className={`group p-4 -2xl border transition-all duration-300 cursor-pointer w-full flex items-start gap-4 min-h-[110px] sm:min-h-[130px] ${
                   activeFeature === index
-                    ? `bg-white ${feature.accent} shadow-lg shadow-black/5`
-                    : "border-transparent hover:bg-slate-50"
+                    ? `bg-white/80 backdrop-blur-md ${feature.accent} shadow-xl shadow-black/5`
+                    : "border-transparent hover:bg-white/40 backdrop-blur-sm"
                 }`}
               >
                 <div
-                  className={`flex-shrink-0 p-2 rounded-lg transition-colors ${
+                  className={`flex-shrink-0 p-2 -lg transition-colors ${
                     activeFeature === index
                       ? feature.color
                       : "bg-slate-50 group-hover:bg-white"
@@ -342,7 +342,7 @@ export default function WhyChooseUsSection() {
           </div>
 
           {/* Right Column: Animation Display */}
-          <div className="relative min-h-[400px] sm:h-[450px] w-full max-w-[500px] mx-auto bg-white border border-slate-200 p-6 md:p-8 overflow-hidden order-first lg:order-last flex flex-col items-center justify-between rounded-2xl shadow-sm">
+          <div className="relative min-h-[400px] sm:h-[450px] w-full max-w-[500px] mx-auto bg-white/60 backdrop-blur-lg border border-white/20 p-6 md:p-8 overflow-hidden order-first lg:order-last flex flex-col items-center justify-between -[2.5rem] shadow-xl">
             {/* Mobile Header (Visible only on mobile) */}
             <div className="lg:hidden text-center mb-6">
               <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">

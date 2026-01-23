@@ -120,7 +120,7 @@ const TestimonialSlider: React.FC = () => {
 
   return (
     <div className="w-full py-6 md:py-10 px-4 sm:px-6 lg:px-8 relative text-gray-900">
-      <div className="max-w-[1440px] mx-auto">
+      <div className="relative z-10 w-full bg-white/90 backdrop-blur-sm -xl shadow-2xl overflow-hidden border border-white/20 p-8 sm:p-12">
         {/* Header */}
         <div className="text-start mb-10 md:mb-16 space-y-2 sm:space-y-3">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold text-gray-900 font-jakarta">
@@ -179,7 +179,7 @@ const TestimonialSlider: React.FC = () => {
                   animate="rest"
                 >
                   <motion.div
-                    className="bg-gray-50 -lg p-6 h-full relative flex flex-col overflow-hidden"
+                    className="bg-white/60 backdrop-blur-md -2xl p-6 h-full relative flex flex-col overflow-hidden border border-white/20 shadow-sm transition-all"
                     variants={{
                       rest: { scale: 1, y: 0 },
                       hover: { scale: 1.02, y: -5 },

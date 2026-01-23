@@ -99,13 +99,13 @@ export default function Navbar() {
             <Link href="/login">
               <Button
                 variant="outline"
-                className="hidden lg:flex rounded-xl font-bold px-4 lg:px-6"
+                className="hidden lg:flex -xl font-bold px-4 lg:px-6"
               >
                 Sign In
               </Button>
             </Link>
             <Link href="/signup">
-              <Button className="bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold px-4 lg:px-6 h-9 md:h-10">
+              <Button className="bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md -xl font-bold px-4 lg:px-6 h-9 md:h-10">
                 Get Started
               </Button>
             </Link>
@@ -147,13 +147,13 @@ export default function Navbar() {
           <Link href="/login" className="w-full">
             <Button
               variant="outline"
-              className="w-full bg-transparent h-12 text-base rounded-xl border-gray-300"
+              className="w-full bg-transparent h-12 text-base -xl border-gray-300"
             >
               Sign In
             </Button>
           </Link>
           <Link href="/signup" className="w-full">
-            <Button className="w-full bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md rounded-xl font-bold h-12 text-base">
+            <Button className="w-full bg-[#ff6a00] hover:bg-[#e66000] text-white border-none shadow-md -xl font-bold h-12 text-base">
               Get Started
             </Button>
           </Link>

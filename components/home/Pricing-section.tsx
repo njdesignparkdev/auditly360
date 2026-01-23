@@ -283,7 +283,7 @@ export default function PricingSection({
   // --- Render (Exact match to provided visual code) ---
   return (
     <div className={cn("w-full py-8 text-gray-900", className)}>
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 w-full bg-white/90 backdrop-blur-sm -xl shadow-2xl overflow-hidden border border-white/20 p-8 sm:p-12">
         <div className="text-center mb-6 md:mb-10">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-jakarta text-gray-900 mb-4">
             Simple, Transparent Pricing
@@ -295,7 +295,7 @@ export default function PricingSection({
         </div>
 
         <div className="flex justify-center mb-10 md:mb-20">
-          <div className="flex items-center p-1 bg-gray-100 border rounded-lg scale-90 md:scale-95">
+          <div className="flex items-center p-1 bg-gray-100 border -lg scale-90 md:scale-95">
             <button
               onClick={() => handleToggle("monthly")}
               className={cn(
@@ -306,7 +306,7 @@ export default function PricingSection({
               {isMonthly && (
                 <motion.div
                   layoutId="active-pill"
-                  className="absolute inset-0 bg-white rounded-md shadow-sm -z-10"
+                  className="absolute inset-0 bg-white -md shadow-sm -z-10"
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
               )}
@@ -315,14 +315,14 @@ export default function PricingSection({
             <button
               onClick={() => handleToggle("yearly")}
               className={cn(
-                "relative px-6 py-2 rounded-md text-sm font-semibold transition-all duration-200 flex items-center gap-2 z-10",
+                "relative px-6 py-2 -md text-sm font-semibold transition-all duration-200 flex items-center gap-2 z-10",
                 !isMonthly ? "text-foreground" : "text-muted-foreground",
               )}
             >
               {!isMonthly && (
                 <motion.div
                   layoutId="active-pill"
-                  className="absolute inset-0 bg-white rounded-md shadow-sm -z-10"
+                  className="absolute inset-0 bg-white -md shadow-sm -z-10"
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
               )}
@@ -364,10 +364,10 @@ export default function PricingSection({
                     delay: isTablet ? index * 0.1 : 0,
                   }}
                   className={cn(
-                    `rounded-xl border-[1px] p-6 md:p-6 lg:p-10 text-center flex flex-col h-full bg-background relative min-h-[550px]`,
+                    `-3xl border-[1px] p-6 md:p-6 lg:p-10 text-center flex flex-col h-full bg-white/60 backdrop-blur-md relative min-h-[550px] transition-all duration-300`,
                     plan.isPopular
-                      ? "border-[#f7f4ed] border-2 shadow-xl z-20"
-                      : "border-border z-10",
+                      ? "border-[#fa752d]/30 border-2 shadow-2xl z-20 scale-105"
+                      : "border-white/20 z-10",
                     !plan.isPopular && "mt-0 md:mt-4",
                     index === 0 || index === 2
                       ? isDesktop
@@ -379,7 +379,7 @@ export default function PricingSection({
                   )}
                 >
                   {plan.isPopular && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#fa752d] flex items-center py-1 h-6 px-4 z-30 whitespace-nowrap rounded-full">
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#fa752d] flex items-center py-1 h-6 px-4 z-30 whitespace-nowrap -full">
                       <span className="text-white font-bold text-[10px] sm:text-xs uppercase tracking-wider">
                         Most Popular
                       </span>

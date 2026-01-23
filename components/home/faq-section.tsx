@@ -32,7 +32,7 @@ export default function FaqSection() {
 
   return (
     <section className="w-full py-8 md:py-12 relative" id="faq">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 w-full bg-white/90 backdrop-blur-sm -xl shadow-2xl overflow-hidden border border-white/20 p-6 sm:p-10 lg:p-12">
         <div className="text-center mb-8">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-jakarta text-gray-900 mb-4">
             Frequently Asked Questions
@@ -46,7 +46,7 @@ export default function FaqSection() {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="border border-gray-300 bg-white overflow-hidden transition-all duration-200 hover:border-orange-200"
+              className="border border-gray-100/30 bg-white/60 backdrop-blur-md overflow-hidden transition-all duration-300 hover:border-orange-200 -2xl shadow-sm"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}

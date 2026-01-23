@@ -73,52 +73,65 @@ export function FeaturesSection() {
 
   return (
     <div className="w-full">
-      <AnimatedGroup
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-8"
-        variants={{
-          container: {
-            visible: {
-              transition: {
-                staggerChildren: 0.05,
-                delayChildren: 0.2,
-              },
-            },
-          },
-          item: {
-            hidden: { opacity: 0, filter: "blur(12px)", y: 12 },
-            visible: {
-              opacity: 1,
-              filter: "blur(0px)",
-              y: 0,
-              transition: { type: "spring", bounce: 0.3, duration: 1.5 },
-            },
-          },
-        }}
-      >
-        {features.map((feature, index) => (
-          <div
-            key={index}
-            className="group relative bg-white rounded-none p-8 border border-gray-300 transition-transform duration-300 hover:-translate-y-1 hover:border-orange-200 active:!border-white focus:!border-white active:!shadow-none outline-none focus:outline-none select-none cursor-pointer h-full"
-          >
-            {/* Icon */}
-            <div
-              className={`inline-flex items-center justify-center w-12 h-12 rounded-none ${feature.iconBgColor} ${feature.iconColor} mb-5`}
-            >
-              {feature.icon}
-            </div>
-
-            {/* Title */}
-            <h3 className="text-lg font-bold text-gray-900 mb-3 font-jakarta">
-              {feature.title}
-            </h3>
-
-            {/* Description */}
-            <p className="text-sm text-gray-600 leading-relaxed font-poppins">
-              {feature.description}
+      <div className="relative z-10 w-full bg-white/90 backdrop-blur-sm -xl shadow-2xl overflow-hidden border border-white/20 p-8 md:p-12">
+        <div className="sm:mx-auto lg:mr-auto text-left mb-6 sm:mb-8 px-4 sm:px-6 lg:px-8">
+          <div className="space-y-2 sm:space-y-3">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold text-gray-900 font-jakarta">
+              Features & Use Cases
+            </h2>
+            <p className="text-gray-600 text-sm sm:text-base font-poppins max-w-2xl">
+              Tailored solutions for every member of your team.
             </p>
           </div>
-        ))}
-      </AnimatedGroup>
+        </div>
+
+        <AnimatedGroup
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-8"
+          variants={{
+            container: {
+              visible: {
+                transition: {
+                  staggerChildren: 0.05,
+                  delayChildren: 0.2,
+                },
+              },
+            },
+            item: {
+              hidden: { opacity: 0, filter: "blur(12px)", y: 12 },
+              visible: {
+                opacity: 1,
+                filter: "blur(0px)",
+                y: 0,
+                transition: { type: "spring", bounce: 0.3, duration: 1.5 },
+              },
+            },
+          }}
+        >
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="group relative bg-white/60 backdrop-blur-md -2xl p-8 border border-gray-100/30 transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 active:!border-white focus:!border-white shadow-sm hover:shadow-md outline-none focus:outline-none select-none cursor-pointer h-full"
+            >
+              {/* Icon */}
+              <div
+                className={`inline-flex items-center justify-center w-12 h-12 -none ${feature.iconBgColor} ${feature.iconColor} mb-5`}
+              >
+                {feature.icon}
+              </div>
+
+              {/* Title */}
+              <h3 className="text-lg font-bold text-gray-900 mb-3 font-jakarta">
+                {feature.title}
+              </h3>
+
+              {/* Description */}
+              <p className="text-sm text-gray-600 leading-relaxed font-poppins">
+                {feature.description}
+              </p>
+            </div>
+          ))}
+        </AnimatedGroup>
+      </div>
     </div>
   );
 }
