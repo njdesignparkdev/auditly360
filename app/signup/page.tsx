@@ -55,7 +55,7 @@ export default function SignupPage() {
         email,
         password,
         firstName,
-        lastName
+        lastName,
       );
 
       if (error) {
@@ -74,7 +74,7 @@ export default function SignupPage() {
         // Redirect to login page with confirmation message after a short delay
         setTimeout(() => {
           router.push(
-            "/login?message=Please check your email and click the confirmation link to complete your registration."
+            "/login?message=Please check your email and click the confirmation link to complete your registration.",
           );
         }, 2000);
       }

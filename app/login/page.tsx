@@ -59,7 +59,7 @@ function LoginPageContent() {
       if (error) {
         if (error.message.includes("Email not confirmed")) {
           setError(
-            "Please check your email and click the confirmation link before signing in."
+            "Please check your email and click the confirmation link before signing in.",
           );
           setShowResendButton(true);
         } else {
@@ -156,7 +156,7 @@ function LoginPageContent() {
         setError(result.error || "Failed to send password reset email");
       } else {
         setSuccess(
-          "Password reset email sent! Please check your inbox for further instructions."
+          "Password reset email sent! Please check your inbox for further instructions.",
         );
         setForgotPasswordEmail("");
         setTimeout(() => {

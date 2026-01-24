@@ -173,7 +173,7 @@ const Navbar: React.FC<NavbarProps> = ({
           return (
             <button
               key={index}
-              className={`px-4 py-2 border border-gray-300 -md text-gray-700 hover:bg-gray-50 ${link.className}`}
+              className={`px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 ${link.className}`}
             >
               {link.text}
             </button>
@@ -182,7 +182,7 @@ const Navbar: React.FC<NavbarProps> = ({
           return (
             <button
               key={index}
-              className={`px-4 py-2 bg-orange-500 text-white -md hover:bg-orange-600 font-semibold ${link.className}`}
+              className={`px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 font-semibold ${link.className}`}
             >
               {link.text}
             </button>
@@ -296,7 +296,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           return (
             <button
               key={index}
-              className={`px-4 py-3 border border-gray-300 -md text-gray-700 hover:bg-gray-50 text-lg font-semibold ${link.className}`}
+              className={`px-4 py-3 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 text-lg font-semibold ${link.className}`}
               onClick={onClose}
             >
               {link.text}
@@ -306,7 +306,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           return (
             <button
               key={index}
-              className={`px-4 py-3 bg-orange-500 text-white -md hover:bg-orange-600 font-semibold text-lg ${link.className}`}
+              className={`px-4 py-3 bg-orange-500 text-white rounded-md hover:bg-orange-600 font-semibold text-lg ${link.className}`}
               onClick={onClose}
             >
               {link.text}
@@ -695,7 +695,7 @@ const AppDataTable: React.FC<AppDataTableProps> = ({ headers, data }) => {
   };
 
   return (
-    <div className="bg-white -md shadow-inner overflow-hidden border border-gray-200">
+    <div className="bg-white rounded-md shadow-inner overflow-hidden border border-gray-200">
       {/* Adjusted grid columns for 5 columns */}
       <div className="grid grid-cols-[1.8fr_1.2fr_0.8fr_1fr_1.2fr] gap-4 text-xs text-gray-500 px-4 py-2 border-b border-gray-200 bg-gray-100">
         {headers.map((header) => (
@@ -714,7 +714,7 @@ const AppDataTable: React.FC<AppDataTableProps> = ({ headers, data }) => {
           <div className="flex items-center font-medium">
             {/* Note: Tailwind JIT mode or safelist might be needed for dynamic color classes */}
             <span
-              className={`inline-block w-2.5 h-2.5 bg-${row.statusColor}-500 -full mr-2`}
+              className={`inline-block w-2.5 h-2.5 bg-${row.statusColor}-500 rounded-full mr-2`}
             ></span>
             {row.name}
           </div>
@@ -722,7 +722,7 @@ const AppDataTable: React.FC<AppDataTableProps> = ({ headers, data }) => {
           <div>
             {/* Note: Tailwind JIT mode or safelist might be needed for dynamic color classes */}
             <span
-              className={`inline-block px-2 py-0.5 bg-${row.statusColor}-100 text-${row.statusColor}-800 -full text-xs font-medium`}
+              className={`inline-block px-2 py-0.5 bg-${row.statusColor}-100 text-${row.statusColor}-800 rounded-full text-xs font-medium`}
             >
               {row.status}
             </span>
@@ -744,7 +744,7 @@ const AppPreviewSection: React.FC<AppPreviewSectionProps> = ({
 }) => {
   // Existing AppPreviewSection component code
   return (
-    <div className="relative z-20 px-8 lg:px-12 pb-8 bg-gray-50 -b-xl">
+    <div className="relative z-20 px-8 lg:px-12 pb-8 bg-gray-50 rounded-b-xl">
       <AppPreviewHeader headerControls={headerControls} />
       <AppDataTable headers={appDataTable.headers} data={appDataTable.data} />
     </div>
@@ -769,7 +769,7 @@ export const HeroSection = ({ data }: HeroSectionProps) => {
       <Navbar {...navbar} onMenuOpen={() => setIsMobileMenuOpen(true)} />
 
       <div className="relative z-10 max-w-[1440px] w-full px-4 sm:px-6 lg:px-8 mx-auto">
-        <div className="bg-white/90 backdrop-blur-sm -xl shadow-2xl overflow-hidden mt-8 border border-white/20">
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden mt-8 border border-white/20">
           <HeroContent {...heroContent} />
           <AppPreviewSection {...appPreview} />
         </div>

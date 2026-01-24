@@ -122,7 +122,7 @@ const TestimonialSlider: React.FC = () => {
     <div className="w-full py-6 md:py-10 px-4 sm:px-6 lg:px-8 relative text-gray-900">
       <div className="relative z-10 w-full bg-white/90 backdrop-blur-sm -xl shadow-2xl overflow-hidden border border-white/20 p-8 sm:p-12">
         {/* Header */}
-        <div className="text-start mb-10 md:mb-16 space-y-2 sm:space-y-3">
+        <div className="text-start mb-5 md:mb-8 space-y-2 sm:space-y-3">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold text-gray-900 font-jakarta">
             Trusted by Professionals
           </h2>
