@@ -13,7 +13,7 @@ import Navbar from "@/components/home/navbar-section";
 export default function Page() {
   return (
     <GridOverlay>
-      {/* Navbar - Sticky header */}
+      {/* Navbar - Sticky header  heyy this is my changes */}
       <Navbar />
 
       {/* Main Content Container - Matches grid padding structure */}
